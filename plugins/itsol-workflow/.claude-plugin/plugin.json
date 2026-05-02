@@ -1,0 +1,9 @@
+{
+  "name": "itsol-workflow",
+  "description": "Workflow commands: ultra-plan, create-commit, fix-pr-review",
+  "version": "1.0.0",
+  "author": {
+    "name": "ITSOL Tech",
+    "email": "dev@itsol.tech"
+  }
+}

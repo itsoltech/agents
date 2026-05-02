@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "itsoltech-agents",
+  "version": "1.0.0",
+  "description": "ITSOL organization Claude Code plugins — shared commands, skills and agents",
+  "owner": {
+    "name": "ITSOL Tech",
+    "email": "dev@itsol.tech"
+  },
+  "plugins": [
+    {
+      "name": "itsol-workflow",
+      "description": "Workflow commands for PR/commit/spec workflows used across ITSOL projects",
+      "source": "./plugins/itsol-workflow",
+      "category": "productivity"
+    }
+  ]
+}
