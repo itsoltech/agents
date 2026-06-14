@@ -1,0 +1,4 @@
+interface:
+  display_name: "Application Technology Migration"
+  short_description: "Plan safe app rewrites and migrations"
+  default_prompt: "Use $application-technology-migration to plan this application rewrite or technology migration."

@@ -1,7 +1,7 @@
 {
   "name": "itsolpowers",
-  "version": "0.6.0",
-  "description": "ITSOL engineering skills and Claude Code subagents for task intake, file-based functional planning, subagent execution, TDD, implementation, debugging, review, security, infrastructure, and production readiness.",
+  "version": "0.7.0",
+  "description": "ITSOL engineering skills and Claude Code subagents for task intake, application technology migration, file-based functional planning, subagent execution, TDD, implementation, debugging, review, security, infrastructure, and production readiness.",
   "author": {
     "name": "ITSOL Tech",
     "email": "dev@itsol.tech"
@@ -18,6 +18,9 @@
     "postgresql",
     "mongodb",
     "openapi",
+    "migration",
+    "rewrite",
+    "modernization",
     "code-review",
     "debugging",
     "functional-planning",
@@ -30,8 +33,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "ITSOL Powers",
-    "shortDescription": "ITSOL workflows, planning gates, subagents, TDD, and review.",
-    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across file-based functional planning, approved business and technical plan markdown artifacts, approved technical fix plans for bugs, subagent-driven execution, TDD, implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL best-practice documents.",
+    "shortDescription": "ITSOL workflows, migration, planning gates, TDD, and review.",
+    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across application technology migration and rewrites, file-based functional planning, approved business and technical plan markdown artifacts, approved technical fix plans for bugs, subagent-driven execution, TDD, implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL best-practice documents.",
     "developerName": "ITSOL Tech",
     "category": "Productivity",
     "capabilities": [
@@ -47,6 +50,7 @@
     ],
     "defaultPrompt": [
       "Use ITSOL Powers to classify this task and choose the right skills.",
+      "For application rewrites or technology migrations, inventory behavior, choose a safe migration strategy, and plan incremental slices before implementation.",
       "For functional work, write and require approved Business Plan and Technical Plan markdown files before implementation.",
       "For subagent-driven work, split tasks, set concurrency, review each implementation with a separate subagent, and commit reviewed slices.",
       "For bugfixes, gather evidence and require an approved Technical Fix Plan before implementation.",
