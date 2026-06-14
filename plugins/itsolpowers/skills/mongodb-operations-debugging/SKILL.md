@@ -1,6 +1,6 @@
 ---
 name: mongodb-operations-debugging
-description: Use when diagnosing MongoDB slow queries, missing indexes, aggregation performance, replication lag, sharding problems, balancer or chunk issues, backup or restore failures, connection pool issues, storage growth, index build impact, bulk operation failures, or production incidents.
+description: "MongoDB debugging: slow queries, indexes, aggregation, replication, sharding, backups."
 ---
 
 # MongoDB Operations Debugging

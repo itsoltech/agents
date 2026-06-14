@@ -1,6 +1,6 @@
 ---
 name: tanstack-query-svelte-implementation
-description: Use when implementing TanStack Query v5 for Svelte or SvelteKit, including query keys, createQuery, createMutation, SSR prefetch, invalidation, optimistic updates, pagination, polling, cache behavior, or API client integration.
+description: "TanStack Query Svelte implementation: keys, SSR, mutations, invalidation, errors."
 ---
 
 # TanStack Query Svelte Implementation

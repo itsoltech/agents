@@ -1,6 +1,6 @@
 ---
 name: ui-code-review
-description: Use when reviewing frontend UI/UX pull requests for ITSOL applications, including design-system consistency, component necessity/API, UX states, forms, accessibility, responsiveness, Tailwind/token usage, layout stability, motion, performance, frontend security-sensitive rendering, tests, QA evidence, visual regressions, and large PR subagent decomposition.
+description: "UI code review: design system, states, a11y, responsive, Tailwind, perf, tests, QA."
 ---
 
 # UI Code Review

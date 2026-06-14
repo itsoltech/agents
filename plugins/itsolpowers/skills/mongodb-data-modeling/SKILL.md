@@ -1,6 +1,6 @@
 ---
 name: mongodb-data-modeling
-description: Use when designing or implementing MongoDB collections, document shape, embedding versus references, schema validation, schema versioning, indexes, queries, pagination, aggregation, updates, transactions, idempotency, TTL, change streams, or outbox patterns.
+description: "MongoDB design: collections, validation, indexes, queries, transactions, TTL, outbox."
 ---
 
 # MongoDB Data Modeling

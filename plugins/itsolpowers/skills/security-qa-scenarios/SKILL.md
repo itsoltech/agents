@@ -1,6 +1,6 @@
 ---
 name: security-qa-scenarios
-description: Use when preparing QA scenarios, acceptance criteria, manual tests, DAST checks, negative tests, abuse cases, role/tenant matrices, file/security test cases, webhook tests, or release security gates.
+description: "Security QA scenarios: abuse cases, negative tests, permissions, tenants, repros."
 ---
 
 # Security QA Scenarios

@@ -1,6 +1,6 @@
 ---
 name: ui-view-states-forms
-description: Use when designing, implementing, or reviewing UX for frontend views, information hierarchy, loading/empty/error/permission/partial states, forms, validation, tables, lists, API/cache states, optimistic UI, destructive actions, disabled/readonly behavior, and user feedback after actions.
+description: "UI states/forms: hierarchy, loading, empty, errors, permissions, tables, cache, optimistic UI."
 ---
 
 # UI View States And Forms

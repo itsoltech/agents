@@ -1,6 +1,6 @@
 ---
 name: itsol-qa-handoff
-description: Use when preparing or reviewing ITSOL QA handoffs, QA plans, manual test scenarios, regression scope, bug reports, severity, issue status, release readiness, or development-to-QA and QA-to-development communication.
+description: "QA handoff: test notes, acceptance evidence, bug reports, release readiness."
 ---
 
 # ITSOL QA Handoff

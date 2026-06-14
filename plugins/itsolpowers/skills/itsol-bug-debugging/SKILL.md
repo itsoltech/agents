@@ -1,6 +1,6 @@
 ---
 name: itsol-bug-debugging
-description: Use when diagnosing or fixing an ITSOL bug, regression, failing test, incorrect calculation, broken API behavior, stale UI state, bad data, deployment issue, or production symptom by gathering evidence, identifying root cause, writing a Technical Fix Plan, getting user approval, then implementing the fix.
+description: "ITSOL bugfix workflow: evidence, root cause, Technical Fix Plan approval, tests."
 ---
 
 # ITSOL Bug Debugging

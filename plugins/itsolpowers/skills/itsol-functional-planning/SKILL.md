@@ -1,6 +1,6 @@
 ---
 name: itsol-functional-planning
-description: Use before implementing any ITSOL functional task, feature, behavior change, UI flow, endpoint, integration, or product logic change when the agent must clarify requirements, write a complete Business Plan markdown file and Technical Plan markdown file in the repo, get explicit user approval for both, and choose subagent or inline execution before coding.
+description: "Functional planning: repo Business Plan and Technical Plan, self-review, approval gate."
 ---
 
 # ITSOL Functional Planning

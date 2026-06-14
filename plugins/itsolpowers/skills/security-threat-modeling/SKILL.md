@@ -1,6 +1,6 @@
 ---
 name: security-threat-modeling
-description: Use when planning or reviewing a security-sensitive ITSOL feature, new endpoint, data exposure, file flow, integration, automation, LLM workflow, tenant boundary, or privileged operation that needs assets, actors, trust boundaries, threats, controls, and tests.
+description: "Threat modeling: assets, actors, trust boundaries, threats, controls, residual risk."
 ---
 
 # Security Threat Modeling

@@ -1,6 +1,6 @@
 ---
 name: security-supply-chain-review
-description: Use when implementing or reviewing dependencies, package upgrades, lockfiles, generated clients, containers, CI/CD, SBOM, provenance, build scripts, scanners, release artifacts, or supply-chain controls.
+description: "Security supply chain review: dependencies, lockfiles, scripts, SBOM, licenses, CVEs."
 ---
 
 # Security Supply Chain Review

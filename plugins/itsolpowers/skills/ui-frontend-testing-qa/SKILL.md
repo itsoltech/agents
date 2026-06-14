@@ -1,6 +1,6 @@
 ---
 name: ui-frontend-testing-qa
-description: Use when planning, implementing, reviewing, or handing off frontend UI tests and QA, including component tests, integration tests, E2E tests, accessibility tests, visual regression, performance checks, manual QA matrices, responsive QA, edge cases, stable selectors, flaky test prevention, and UI PR test evidence.
+description: "UI testing/QA: component, integration, E2E, a11y, visual, responsive, edge cases."
 ---
 
 # UI Frontend Testing QA

@@ -1,6 +1,6 @@
 ---
 name: postgres-operations-debugging
-description: Use when diagnosing PostgreSQL slow queries, high CPU, high RAM, OOM, disk growth, replication lag, lock contention, autovacuum issues, PgBouncer problems, connection exhaustion, backup or restore failures, HA/failover, or production database incidents.
+description: "PostgreSQL debugging: slow queries, locks, CPU/RAM/disk, PgBouncer, replication, HA."
 ---
 
 # Postgres Operations Debugging

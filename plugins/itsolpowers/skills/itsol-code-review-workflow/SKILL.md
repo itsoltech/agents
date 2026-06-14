@@ -1,6 +1,6 @@
 ---
 name: itsol-code-review-workflow
-description: Use when reviewing ITSOL pull requests at workflow level, checking PR scope, acceptance criteria, risk, reviewer priorities, comment severity, review handoff, large PR decomposition, or final review verdict.
+description: "ITSOL PR review workflow: coverage map, subagents, severity, risk, final verdict."
 ---
 
 # ITSOL Code Review Workflow

@@ -1,6 +1,6 @@
 ---
 name: itsol-technical-planning
-description: Use when preparing or reviewing ITSOL technical plans, implementation meetings, tech notes, architecture choices, spikes, estimates, rollout, rollback, migration, monitoring, or release planning for risky changes.
+description: "Technical planning: architecture, spikes, rollout, rollback, monitoring, approval gates."
 ---
 
 # ITSOL Technical Planning

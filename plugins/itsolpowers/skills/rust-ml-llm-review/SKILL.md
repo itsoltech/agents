@@ -1,6 +1,6 @@
 ---
 name: rust-ml-llm-review
-description: Use when reviewing Rust ML or LLM code using Rig, Candle, agents, tools, structured output, RAG, vector stores, embeddings, provider clients, local inference, streaming, prompt handling, evals, observability, model artifacts, or LLM security controls.
+description: "Rust ML/LLM review: Rig, Candle, agents, RAG, embeddings, streaming, evals, security."
 ---
 
 # Rust ML LLM Review

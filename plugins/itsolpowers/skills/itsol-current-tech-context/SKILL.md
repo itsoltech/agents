@@ -1,6 +1,6 @@
 ---
 name: itsol-current-tech-context
-description: Use when planning, reviewing, implementing, upgrading, or starting ITSOL work that depends on frameworks, SDKs, runtimes, package managers, libraries, generated clients, infrastructure tooling, Rust editions, .NET SDKs, Node/Bun/npm packages, database drivers, or external APIs, so the agent verifies the repository's actual versions and uses current official documentation or latest package versions unless the user explicitly pins otherwise.
+description: "Current tech context: repo pins, latest stable docs, SDKs, packages, Rust/.NET/Node."
 ---
 
 # ITSOL Current Tech Context

@@ -1,6 +1,6 @@
 ---
 name: svelte-implementation
-description: Use when implementing Svelte or SvelteKit UI, components, routes, load functions, forms, runtime config, API communication, accessibility, async states, error handling, realtime, or frontend tests.
+description: "Svelte implementation: UI, routes, load, forms, API, accessibility, async states, tests."
 ---
 
 # Svelte Implementation

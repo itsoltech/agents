@@ -1,6 +1,6 @@
 ---
 name: security-auth-session-review
-description: Use when implementing or reviewing login, logout, authentication, session handling, cookies, tokens, password flows, MFA, identity provider integration, refresh tokens, or user identity propagation.
+description: "Security auth/session review: cookies, tokens, logout, MFA, CSRF, browser storage."
 ---
 
 # Security Auth Session Review

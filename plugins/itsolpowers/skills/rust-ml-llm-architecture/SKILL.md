@@ -1,6 +1,6 @@
 ---
 name: rust-ml-llm-architecture
-description: Use when designing or implementing Rust ML or LLM systems with Rig, Candle, providers, agents, tools, structured output, RAG, embeddings, vector stores, local inference, training workers, streaming, evals, observability, budgets, or model deployment.
+description: "Rust ML/LLM architecture: Rig, Candle, agents, RAG, embeddings, inference, evals."
 ---
 
 # Rust ML LLM Architecture

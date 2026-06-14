@@ -1,6 +1,6 @@
 ---
 name: infra-backup-dr
-description: Use when implementing or reviewing backups, PITR, restore tests, RPO/RTO, disaster recovery, stateful workloads, database recovery, object storage retention, or production data recovery procedures.
+description: "Backup/DR: restore, RPO/RTO, retention, recovery tests, production recovery."
 ---
 
 # Infra Backup DR

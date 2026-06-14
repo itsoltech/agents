@@ -1,6 +1,6 @@
 ---
 name: hey-api-openapi-codegen
-description: Use when configuring or implementing @hey-api/openapi-ts, OpenAPI TypeScript generation, generated clients, SDK output, fetch client, Zod runtime validation, TanStack Query plugin, SvelteKit integration, Vite plugin, monorepo outputs, or CI contract checks.
+description: "Hey API codegen: OpenAPI TS clients, SDK, fetch, Zod, TanStack Query, SvelteKit, CI."
 ---
 
 # Hey API OpenAPI Codegen

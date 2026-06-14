@@ -1,6 +1,6 @@
 ---
 name: svelte-review
-description: Use when reviewing Svelte or SvelteKit components, routes, stores, forms, API calls, browser security, accessibility, performance, deployment behavior, tests, or frontend dependency changes.
+description: "Svelte review: components, routes, stores, forms, API, security, a11y, perf, tests."
 ---
 
 # Svelte Review

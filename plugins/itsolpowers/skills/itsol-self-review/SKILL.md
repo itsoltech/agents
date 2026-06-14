@@ -1,6 +1,6 @@
 ---
 name: itsol-self-review
-description: Use before handing off an ITSOL code change, PR, patch, migration, deployment config, security-sensitive change, or generated artifact to check correctness, tests, risk, and review readiness.
+description: "Self-review before handoff: tests, edge cases, security, UX, performance, risks."
 ---
 
 # ITSOL Self Review

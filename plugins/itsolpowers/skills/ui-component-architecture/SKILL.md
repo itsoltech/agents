@@ -1,6 +1,6 @@
 ---
 name: ui-component-architecture
-description: Use when decomposing large frontend components, deciding container vs presentational boundaries, separating API/cache logic from UI, refactoring copied UI, designing component ownership, or reviewing whether a component has too many responsibilities.
+description: "UI component architecture: decomposition, container/presentational split, refactor safety."
 ---
 
 # UI Component Architecture

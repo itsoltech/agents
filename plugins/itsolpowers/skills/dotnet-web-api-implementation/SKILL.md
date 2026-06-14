@@ -1,6 +1,6 @@
 ---
 name: dotnet-web-api-implementation
-description: Use when implementing .NET or ASP.NET Core Web API features, Minimal APIs, controllers, DTOs, validation, ProblemDetails, OpenAPI, auth, EF Core, background jobs, cache, rate limiting, health checks, observability, tests, or migrations.
+description: ".NET API implementation: DTOs, validation, OpenAPI, auth, EF Core, jobs, tests."
 ---
 
 # Dotnet Web API Implementation

@@ -1,6 +1,6 @@
 ---
 name: rust-ml-llm-debugging
-description: Use when diagnosing Rust ML or LLM issues involving provider failures, tool calls, prompt injection, bad structured output, RAG retrieval quality, embedding drift, streaming bugs, Candle model loading, GPU/device/dtype errors, tokenization, latency, cost, eval failures, or deployment incidents.
+description: "Rust ML/LLM debugging: providers, tools, RAG, Candle, GPU, tokens, latency, evals."
 ---
 
 # Rust ML LLM Debugging

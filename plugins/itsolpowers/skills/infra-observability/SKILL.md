@@ -1,6 +1,6 @@
 ---
 name: infra-observability
-description: Use when implementing or reviewing infrastructure logging, metrics, tracing, alerting, dashboards, SLOs, health checks, Nomad diagnostics, log cardinality, production troubleshooting, or monitoring coverage.
+description: "Observability: logs, metrics, traces, dashboards, alerts, SLOs, cardinality."
 ---
 
 # Infra Observability

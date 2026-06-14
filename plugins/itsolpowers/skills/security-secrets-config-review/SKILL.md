@@ -1,6 +1,6 @@
 ---
 name: security-secrets-config-review
-description: Use when implementing or reviewing secrets, environment variables, app configuration, credentials, API keys, TLS material, CI secrets, deployment variables, config files, logging of sensitive values, or secret rotation.
+description: "Security secrets/config review: env, logs, CI/CD secrets, public vars, rotation."
 ---
 
 # Security Secrets Config Review

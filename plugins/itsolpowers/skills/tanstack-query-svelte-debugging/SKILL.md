@@ -1,6 +1,6 @@
 ---
 name: tanstack-query-svelte-debugging
-description: Use when diagnosing stale data, missing refetches, duplicate requests, wrong query keys, disabled queries, failed invalidation, optimistic update bugs, SSR hydration issues, logout cache leaks, or TanStack Query performance problems in Svelte.
+description: "TanStack Query Svelte debugging: stale data, keys, invalidation, optimistic UI, SSR."
 ---
 
 # TanStack Query Svelte Debugging

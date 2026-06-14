@@ -1,6 +1,6 @@
 ---
 name: effect-typescript-debugging
-description: Use when diagnosing Effect TypeScript failures, unexpected defects, typed error gaps, Cause or Exit diagnostics, Schema decode failures, Layer wiring issues, fiber leaks, retry storms, timeout behavior, queue backpressure, stream bugs, or resource leaks.
+description: "Effect TS debugging: Schema, Layer, fibers, typed errors, retries, streams, resources."
 ---
 
 # Effect TypeScript Debugging

@@ -1,6 +1,6 @@
 ---
 name: rust-implementation
-description: Use when implementing Rust code involving ownership, borrowing, API design, data structures, allocation, async Tokio, locks, errors, SQLx, Serde, tracing, tests, Cargo dependencies, HTTP APIs, queues, jobs, or generated code.
+description: "Rust implementation: ownership, errors, modules, async, SQLx, Serde, tracing, tests."
 ---
 
 # Rust Implementation

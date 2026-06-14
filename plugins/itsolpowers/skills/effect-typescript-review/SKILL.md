@@ -1,6 +1,6 @@
 ---
 name: effect-typescript-review
-description: Use when reviewing TypeScript code using Effect, Schema, Data errors, services, layers, resource scopes, retry schedules, fibers, queues, streams, observability, security, frontend or backend Effect boundaries, tests, or CI.
+description: "Effect TS review: services, layers, errors, Schema, concurrency, resources, tests."
 ---
 
 # Effect TypeScript Review

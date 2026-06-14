@@ -1,6 +1,6 @@
 ---
 name: infra-container-build-review
-description: Use when implementing or reviewing Dockerfiles, container images, build cache, image size, base images, multi-stage builds, non-root images, SBOM, provenance, registry publishing, or image vulnerability controls.
+description: "Container build review: Dockerfiles, image size, layers, SBOM, CVEs, reproducibility."
 ---
 
 # Infra Container Build Review

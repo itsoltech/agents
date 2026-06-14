@@ -1,6 +1,6 @@
 ---
 name: hey-api-openapi-contract-debugging
-description: Use when diagnosing @hey-api/openapi-ts generation failures, stale generated code, contract drift, wrong TypeScript types, broken SDK methods, fetch client bugs, auth mismatch, runtime validation mismatch, TanStack Query integration bugs, or CI openapi:check failures.
+description: "Hey API debugging: generation, contract drift, stale clients, wrong types, auth, CI."
 ---
 
 # Hey API OpenAPI Contract Debugging

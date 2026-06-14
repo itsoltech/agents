@@ -1,6 +1,6 @@
 ---
 name: infra-capacity-testing
-description: Use when planning or reviewing capacity, resource sizing, load testing, stress testing, autoscaling, multi-region assumptions, latency budgets, throughput limits, or production readiness under load.
+description: "Capacity testing: load, stress, soak, sizing, bottlenecks, autoscaling readiness."
 ---
 
 # Infra Capacity Testing

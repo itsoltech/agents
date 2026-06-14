@@ -1,6 +1,6 @@
 ---
 name: rust-review
-description: Use when reviewing Rust code for ownership, clones, API design, data structures, memory use, async concurrency, locks, error handling, unsafe, SQLx, Serde, tracing, module organization, tests, profiling, Cargo dependencies, lints, secrets, or HTTP boundaries.
+description: "Rust review: ownership, APIs, async, locks, errors, unsafe, SQLx, Serde, tests."
 ---
 
 # Rust Review

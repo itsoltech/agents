@@ -1,6 +1,6 @@
 ---
 name: itsol-subagent-workflow
-description: Use when executing an approved ITSOL plan with multiple subagents, splitting work into tasks, choosing parallelism, delegating implementation, running independent review loops, committing completed task slices with Angular commit convention, validating the full change, and reporting next steps to the user.
+description: "Subagent execution: task split, concurrency, review loops, commits, validation."
 ---
 
 # ITSOL Subagent Workflow

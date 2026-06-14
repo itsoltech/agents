@@ -1,6 +1,6 @@
 ---
 name: dotnet-web-api-debugging
-description: Use when diagnosing .NET or ASP.NET Core bugs, failing endpoints, validation errors, auth failures, EF Core issues, transaction problems, background job failures, cache bugs, rate limiting, health check failures, observability gaps, or production performance incidents.
+description: ".NET API debugging: auth, EF Core, jobs, cache, health, observability, incidents."
 ---
 
 # Dotnet Web API Debugging

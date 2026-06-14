@@ -1,6 +1,6 @@
 ---
 name: infra-nomad-deployment
-description: Use when implementing or reviewing Nomad jobs, task groups, allocations, update/canary/rollback, restart/reschedule, service discovery, templates, Vault/workload identity, placement, resources, storage, ACLs, or autoscaling.
+description: "Nomad deployment: jobs, canaries, rollback, templates, Vault, constraints, runtime."
 ---
 
 # Infra Nomad Deployment

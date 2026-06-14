@@ -1,6 +1,6 @@
 ---
 name: mongodb-review
-description: Use when reviewing MongoDB collections, queries, indexes, aggregation pipelines, updates, transactions, retry/idempotency, TTL, change streams, replica sets, sharding, security, repository layers, API persistence, tests, or data lifecycle changes.
+description: "MongoDB review: schemas, queries, indexes, aggregation, transactions, security, tests."
 ---
 
 # MongoDB Review

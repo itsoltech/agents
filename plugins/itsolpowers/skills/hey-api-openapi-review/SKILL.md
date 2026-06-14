@@ -1,6 +1,6 @@
 ---
 name: hey-api-openapi-review
-description: Use when reviewing @hey-api/openapi-ts config, OpenAPI specs, generated TypeScript clients, SDKs, fetch clients, auth handling, runtime validation, TanStack Query integration, SvelteKit integration, generated code diffs, CI checks, or contract migrations.
+description: "Hey API review: OpenAPI specs, generated clients, SDKs, auth, validation, CI."
 ---
 
 # Hey API OpenAPI Review

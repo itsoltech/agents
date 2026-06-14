@@ -1,6 +1,6 @@
 ---
 name: effect-typescript-implementation
-description: Use when implementing TypeScript code with Effect, Effect.gen, pipe, Schema, typed errors, services, Context, Layer, retry, timeout, concurrency, resource management, streams, backend workers, frontend boundaries, or tests.
+description: "Effect TS implementation: services, layers, Schema, resources, config, concurrency, tests."
 ---
 
 # Effect TypeScript Implementation

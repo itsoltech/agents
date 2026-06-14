@@ -1,6 +1,6 @@
 ---
 name: dotnet-web-api-review
-description: Use when reviewing .NET or ASP.NET Core API code, architecture, endpoints, DTOs, validation, auth, CORS, EF Core, transactions, background jobs, caching, rate limiting, observability, tests, CI, deployment, or migrations.
+description: ".NET API review: architecture, validation, auth, EF Core, jobs, deployment, tests."
 ---
 
 # Dotnet Web API Review

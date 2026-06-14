@@ -1,6 +1,6 @@
 ---
 name: security-files-integrations-review
-description: Use when implementing or reviewing uploads, downloads, object storage, file previews, import/export, webhook handlers, outbound HTTP calls, third-party integrations, background jobs, live events, WebSockets, SSE, or LLM/tool automation.
+description: "Security files/integrations review: uploads, untrusted content, webhooks, SSRF, secrets."
 ---
 
 # Security Files Integrations Review

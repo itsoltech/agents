@@ -1,6 +1,6 @@
 ---
 name: infra-production-readiness-review
-description: Use before releasing or approving infrastructure changes, deployment configs, container runtime changes, Nomad jobs, routing changes, public endpoints, data services, or production environments for ITSOL systems.
+description: "Production readiness review: deploy, rollback, monitoring, capacity, backups, runbooks."
 ---
 
 # Infra Production Readiness Review

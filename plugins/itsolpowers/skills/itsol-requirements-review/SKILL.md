@@ -1,6 +1,6 @@
 ---
 name: itsol-requirements-review
-description: Use when reviewing or preparing ITSOL requirements, user stories, acceptance criteria, Definition of Ready, refinement outcomes, scope boundaries, stakeholder questions, or task readiness before development starts.
+description: "Requirements review: stories, DoR, scope, roles, edge cases, MVP readiness."
 ---
 
 # ITSOL Requirements Review

@@ -1,6 +1,6 @@
 ---
 name: tanstack-query-svelte-review
-description: Use when reviewing Svelte code using TanStack Query v5, query keys, query functions, mutations, invalidation, optimistic updates, SSR, cache, auth logout, tenant separation, forms, polling, or performance.
+description: "TanStack Query Svelte review: keys, cache, SSR, invalidation, mutations, errors."
 ---
 
 # TanStack Query Svelte Review

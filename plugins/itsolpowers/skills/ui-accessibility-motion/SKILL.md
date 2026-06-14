@@ -1,6 +1,6 @@
 ---
 name: ui-accessibility-motion
-description: Use when implementing or reviewing frontend accessibility and motion design, including semantic HTML, labels, buttons vs links, keyboard navigation, focus management, modals, menus, comboboxes, tabs, ARIA, live regions, contrast, touch targets, reduced motion, animation purpose, motion tokens, and accessible transitions.
+description: "UI accessibility/motion: semantic HTML, keyboard, focus, ARIA, labels, reduced motion."
 ---
 
 # UI Accessibility Motion

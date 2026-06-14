@@ -1,6 +1,6 @@
 ---
 name: itsol-tdd-workflow
-description: Use before writing production code for ITSOL feature implementation, bugfixes, behavior changes, or refactors when the agent needs to follow test-driven development with red-green-refactor.
+description: "TDD workflow: RED-GREEN-REFACTOR for features, bugfixes, refactors, migrations."
 ---
 
 # ITSOL TDD Workflow

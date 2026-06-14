@@ -1,6 +1,6 @@
 ---
 name: svelte-debugging
-description: Use when diagnosing Svelte or SvelteKit bugs involving stale UI, broken reactivity, load failures, hydration or SSR issues, form errors, API state, browser cache, routing, realtime, or frontend performance.
+description: "Svelte debugging: routes, load, stores, reactivity, forms, auth, hydration, SSR, tests."
 ---
 
 # Svelte Debugging

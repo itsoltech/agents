@@ -1,6 +1,6 @@
 ---
 name: infra-incident-debugging
-description: Use when diagnosing production or staging incidents involving deploys, Nomad allocations, routing, TLS, proxy behavior, containers, resource exhaustion, health checks, logs, metrics, backups, or infrastructure regressions.
+description: "Infra incident debugging: logs, metrics, routing, containers, Nomad, TLS, capacity."
 ---
 
 # Infra Incident Debugging

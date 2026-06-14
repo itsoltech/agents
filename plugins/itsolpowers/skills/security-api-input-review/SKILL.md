@@ -1,6 +1,6 @@
 ---
 name: security-api-input-review
-description: Use when implementing or reviewing API endpoints, request validation, DTO mapping, OpenAPI contracts, query parameters, IDs from clients, injection risk, SSRF, output encoding, error responses, or backend trust boundaries.
+description: "Security API input review: validation, parsing, injection, mass assignment, rate limits."
 ---
 
 # Security API Input Review

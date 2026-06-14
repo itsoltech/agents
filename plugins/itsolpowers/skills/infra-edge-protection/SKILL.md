@@ -1,6 +1,6 @@
 ---
 name: infra-edge-protection
-description: Use when implementing or reviewing WAF, rate limiting, request body limits, upload limits, public endpoint exposure, edge firewall, CDN cache rules, DDoS mitigation, or API gateway protection.
+description: "Edge protection: WAF, rate limits, bots, DDoS, CDN, headers, exposure."
 ---
 
 # Infra Edge Protection

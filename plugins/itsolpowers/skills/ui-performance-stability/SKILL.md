@@ -1,6 +1,6 @@
 ---
 name: ui-performance-stability
-description: Use when implementing or reviewing frontend performance and visual stability, including Core Web Vitals, LCP, INP, CLS, layout shift, skeleton sizing, image/font/media dimensions, lazy loading, large lists, virtualization, expensive render work, request waterfalls, third-party scripts, bundle weight, and UI behavior with realistic data.
+description: "UI performance/stability: Web Vitals, LCP, INP, CLS, layout shift, bundles, large lists."
 ---
 
 # UI Performance Stability

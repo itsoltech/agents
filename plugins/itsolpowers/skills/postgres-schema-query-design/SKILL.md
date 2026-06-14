@@ -1,6 +1,6 @@
 ---
 name: postgres-schema-query-design
-description: Use when designing or implementing PostgreSQL schema, migrations, indexes, constraints, RLS, tenant modeling, JSONB, partitioning, queries, transactions, connection pooling, application persistence, or database-backed features.
+description: "PostgreSQL design: schemas, queries, migrations, indexes, JSONB, pooling, data access."
 ---
 
 # Postgres Schema Query Design

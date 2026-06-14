@@ -1,6 +1,6 @@
 ---
 name: ui-responsive-media
-description: Use when implementing or reviewing responsive frontend layouts, mobile/tablet/desktop/wide behavior, breakpoint decisions, table-to-card transformations, sidebars/drawers/bottom sheets, touch targets, zoom behavior, safe areas, images, video, iframe, responsive media, and layout behavior across devices.
+description: "Responsive UI/media: mobile, tablet, desktop, breakpoints, touch, zoom, images, iframes."
 ---
 
 # UI Responsive Media

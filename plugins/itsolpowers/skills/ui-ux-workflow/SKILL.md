@@ -1,6 +1,6 @@
 ---
 name: ui-ux-workflow
-description: Use when planning, implementing, self-reviewing, or routing frontend UI/UX work for ITSOL applications, including new views, UI flows, design-system usage, responsive behavior, accessibility, frontend performance, UI tests, QA handoff, and code review coverage across framework-agnostic frontend best practices.
+description: "UI/UX workflow: plan, implement, route, self-review views, flows, a11y, perf, tests."
 ---
 
 # UI/UX Workflow

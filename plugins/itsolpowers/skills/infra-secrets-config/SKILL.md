@@ -1,6 +1,6 @@
 ---
 name: infra-secrets-config
-description: Use when implementing or reviewing infrastructure secrets, runtime config, Vault, Nomad templates, environment variables, TLS secrets, registry credentials, CI/CD deployment credentials, or host-level secret access.
+description: "Secrets/config: env vars, Vault, rotation, exposure, CI/CD secrets, runtime config."
 ---
 
 # Infra Secrets Config

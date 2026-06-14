@@ -1,6 +1,6 @@
 ---
 name: using-itsolpowers
-description: Use when starting ITSOL work, choosing which ITSOL skill applies, or routing tasks across current technology documentation research, application technology migration, functional planning, subagent workflow, requirements review, TDD, feature implementation, bug debugging, technical planning, code review, QA handoff, security, infrastructure, database, UI/UX, frontend, and backend workflows.
+description: "ITSOL router: planning, tech context, migration, TDD, review, UI/UX, security, infra, data."
 ---
 
 # Using Itsolpowers

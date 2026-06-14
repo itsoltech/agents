@@ -1,6 +1,6 @@
 ---
 name: postgres-review
-description: Use when reviewing PostgreSQL schema, migrations, queries, indexes, constraints, transactions, locks, RLS, tenant boundaries, connection pooling, PgBouncer, backups, replication, permissions, monitoring, or database-related application code.
+description: "PostgreSQL review: schema, migrations, queries, indexes, RLS, pooling, backups."
 ---
 
 # Postgres Review

@@ -1,6 +1,6 @@
 ---
 name: rust-debugging
-description: Use when diagnosing Rust compiler errors, borrow or lifetime issues, async deadlocks, lock contention, panics, unsafe behavior, SQLx bugs, Serde mapping errors, tracing gaps, memory or allocation regressions, performance problems, or flaky tests.
+description: "Rust debugging: compiler, borrow/lifetime, async, locks, panics, SQLx, Serde, perf."
 ---
 
 # Rust Debugging

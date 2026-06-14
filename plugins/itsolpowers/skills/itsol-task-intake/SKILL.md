@@ -1,6 +1,6 @@
 ---
 name: itsol-task-intake
-description: Use when beginning an ITSOL engineering task and the agent must classify whether it is requirements/refinement work, a feature, bugfix, technical plan, review, deployment, incident, security-sensitive change, database change, QA handoff, or mixed workflow before choosing implementation steps.
+description: "Task intake: classify work, choose workflow, identify risks, route skills."
 ---
 
 # ITSOL Task Intake

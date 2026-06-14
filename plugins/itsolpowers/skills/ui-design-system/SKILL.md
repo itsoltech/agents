@@ -1,6 +1,6 @@
 ---
 name: ui-design-system
-description: Use when designing, implementing, or reviewing frontend design-system decisions, UI consistency, design tokens, base components, semantic variants, component states, shared layout primitives, Storybook/component examples, or whether a new UI pattern belongs in the system.
+description: "UI design system: tokens, base components, variants, consistency, states, patterns."
 ---
 
 # UI Design System

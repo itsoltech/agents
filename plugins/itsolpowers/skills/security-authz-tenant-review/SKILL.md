@@ -1,6 +1,6 @@
 ---
 name: security-authz-tenant-review
-description: Use when implementing or reviewing authorization, RBAC, ABAC, tenant isolation, object-level permissions, admin operations, workflow permissions, role changes, ownership checks, or access to another user or organization data.
+description: "Security authz/tenant review: roles, permissions, ownership, cross-tenant access."
 ---
 
 # Security Authz Tenant Review

@@ -1,6 +1,6 @@
 ---
 name: infra-container-runtime-review
-description: Use when implementing or reviewing runtime container config, health checks, resources, restart policy, volumes, ports, environment variables, process lifecycle, Docker Compose production use, or service startup behavior.
+description: "Container runtime review: env, secrets, health checks, resources, volumes, shutdown."
 ---
 
 # Infra Container Runtime Review

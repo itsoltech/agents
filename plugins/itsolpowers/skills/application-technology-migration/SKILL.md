@@ -1,6 +1,6 @@
 ---
 name: application-technology-migration
-description: Use when planning, reviewing, or executing an application rewrite or technology migration, such as moving frontend, backend, desktop app, API, worker, integration, library, database access layer, infrastructure layer, monolith, or module from one technology or architecture to another while preserving business behavior, data, contracts, security, rollout safety, observability, and decommissioning.
+description: "App rewrite/migration: parity, contracts, data, rollout, rollback, security, decommissioning."
 ---
 
 # Application Technology Migration

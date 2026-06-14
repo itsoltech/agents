@@ -1,6 +1,6 @@
 ---
 name: security-frontend-browser-review
-description: Use when implementing or reviewing frontend code that handles auth state, browser storage, forms, XSS-sensitive rendering, CSP, CORS, CSRF, cache behavior, logout cleanup, API calls, or data visible in the browser.
+description: "Frontend browser security: XSS, storage, CSP, CORS, CSRF, cache, visible data."
 ---
 
 # Security Frontend Browser Review

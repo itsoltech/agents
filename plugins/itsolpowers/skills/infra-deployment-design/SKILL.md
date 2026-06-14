@@ -1,6 +1,6 @@
 ---
 name: infra-deployment-design
-description: Use when designing ITSOL deployment architecture, choosing single-host versus Nomad, defining layers, service boundaries, runtime topology, rollout model, environment separation, or production deployment assumptions.
+description: "Deployment design: topology, environments, rollout, rollback, config, ownership."
 ---
 
 # Infra Deployment Design

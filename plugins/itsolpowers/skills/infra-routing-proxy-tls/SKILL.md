@@ -1,6 +1,6 @@
 ---
 name: infra-routing-proxy-tls
-description: Use when implementing or reviewing reverse proxy, Traefik, NGINX, routing rules, TLS termination, certificates, load balancing, proxy headers, real client IP, WebSocket/SSE routing, CDN, DNS, or ingress behavior.
+description: "Routing/proxy/TLS: certs, headers, redirects, CORS, ingress, service discovery."
 ---
 
 # Infra Routing Proxy TLS

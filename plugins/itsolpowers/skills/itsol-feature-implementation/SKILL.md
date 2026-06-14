@@ -1,6 +1,6 @@
 ---
 name: itsol-feature-implementation
-description: Use when implementing a new ITSOL feature, behavior change, endpoint, UI flow, integration, or data workflow and the agent needs to translate requirements into a small, testable, reviewable change.
+description: "Approved ITSOL feature implementation: scoped changes, TDD, verification, handoff."
 ---
 
 # ITSOL Feature Implementation

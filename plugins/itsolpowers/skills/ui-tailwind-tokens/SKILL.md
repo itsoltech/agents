@@ -1,6 +1,6 @@
 ---
 name: ui-tailwind-tokens
-description: Use when implementing or reviewing Tailwind CSS, design tokens, theme variables, utility class strategy, semantic colors, spacing/radius/shadow scales, component variants, class composition, arbitrary values, `@apply`, responsive utilities, cva/clsx/tailwind-merge usage, or Tailwind consistency in a frontend project.
+description: "Tailwind/tokens: theme vars, semantic colors, variants, arbitrary values, @apply, cva."
 ---
 
 # UI Tailwind Tokens
