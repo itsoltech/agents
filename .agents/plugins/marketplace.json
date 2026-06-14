@@ -1,0 +1,20 @@
+{
+  "name": "itsoltech-agents",
+  "interface": {
+    "displayName": "ITSOL Tech Agents"
+  },
+  "plugins": [
+    {
+      "name": "itsol-workflow",
+      "source": {
+        "source": "local",
+        "path": "./plugins/itsol-workflow"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

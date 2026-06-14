@@ -1,0 +1,35 @@
+{
+  "name": "itsol-workflow",
+  "version": "1.0.0",
+  "description": "Workflow commands and skills for PR, commit, and spec workflows used across ITSOL projects",
+  "author": {
+    "name": "ITSOL Tech",
+    "email": "dev@itsol.tech"
+  },
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "git",
+    "github",
+    "planning"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "ITSOL Workflow",
+    "shortDescription": "PR, commit, and spec workflows for ITSOL projects.",
+    "longDescription": "ITSOL Workflow provides Codex skills for creating SPEC.md files, preparing Angular-style commits, and addressing unresolved GitHub PR review threads.",
+    "developerName": "ITSOL Tech",
+    "category": "Productivity",
+    "capabilities": [
+      "Planning",
+      "Git",
+      "GitHub",
+      "Code Review"
+    ],
+    "defaultPrompt": [
+      "Create SPEC.md for this change.",
+      "Create an Angular-style commit.",
+      "Fix unresolved PR review comments."
+    ]
+  }
+}
