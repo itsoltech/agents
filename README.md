@@ -28,7 +28,7 @@ Po instalacji dostępne komendy:
 
 #### itsolpowers
 
-Skille ITSOL do routingu zadań, implementacji, debugowania, self-review, security review i infrastruktury.
+Skille ITSOL do routingu zadań, planowania funkcjonalnego, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
 
 ```
 /plugin install itsolpowers@itsoltech-agents
@@ -103,7 +103,7 @@ Po instalacji dostępne są skille:
 - `create-commit` — commit w konwencji Angular
 - `fix-pr-review` — fix nierozwiązanych komentarzy review na PR i resolve wątków
 - `using-itsolpowers` — routing zadań do właściwych skillów ITSOL
-- `itsol-task-intake`, `itsol-requirements-review`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań do QA
+- `itsol-task-intake`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, przez obowiązkowy Business Plan i Technical Plan, podział pracy na sub-agentów, red-green-refactor, do QA
 - `security-*` — rozdrobnione skille security dla threat modelingu, auth, authz, API, frontendu, sekretów, supply chain, QA i obsługi podatności
 - `infra-*` — rozdrobnione skille infrastrukturalne dla deploymentu, kontenerów, Nomada, routingu, edge protection, sekretów, obserwowalności, backupów, capacity i incidentów
 - `svelte-*`, `tanstack-query-svelte-*`, `hey-api-openapi-*` — frontend, server state i klient API generowany z OpenAPI

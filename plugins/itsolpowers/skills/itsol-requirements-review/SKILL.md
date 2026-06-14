@@ -13,6 +13,7 @@ Check whether the work is clear, testable, scoped, and ready for implementation 
 2. Classify the process formalism level by risk, size, number of people, data impact, security, and production impact.
 3. Review story or technical-task structure, acceptance criteria, roles, permissions, data, UI/API/integration impact, and edge cases.
 4. Check Definition of Ready; if it fails, recommend a spike, client question, refinement, prototype, data analysis, or tech notes instead of full implementation.
-5. Distinguish clarification from scope change and make blockers, assumptions, and owners explicit.
+5. For functional work, feed the result into `itsol-functional-planning` as the Business Plan and require explicit user approval before technical planning.
+6. Distinguish clarification from scope change and make blockers, assumptions, and owners explicit.
 
 Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.

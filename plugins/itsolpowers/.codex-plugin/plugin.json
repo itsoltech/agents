@@ -1,7 +1,7 @@
 {
   "name": "itsolpowers",
-  "version": "0.2.0",
-  "description": "ITSOL engineering skills and Claude Code subagents for task intake, implementation, debugging, review, security, infrastructure, and production readiness.",
+  "version": "0.5.0",
+  "description": "ITSOL engineering skills and Claude Code subagents for task intake, functional planning, subagent execution, TDD, implementation, debugging, review, security, infrastructure, and production readiness.",
   "author": {
     "name": "ITSOL Tech",
     "email": "dev@itsol.tech"
@@ -20,17 +20,23 @@
     "openapi",
     "code-review",
     "debugging",
+    "functional-planning",
+    "subagents",
+    "approval-gate",
+    "tdd",
+    "testing",
     "workflow"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "ITSOL Powers",
-    "shortDescription": "ITSOL engineering workflows and review skills.",
-    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL best-practice documents.",
+    "shortDescription": "ITSOL workflows, planning gates, subagents, TDD, and review.",
+    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across functional planning, approved business and technical plans, subagent-driven execution, TDD, implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL best-practice documents.",
     "developerName": "ITSOL Tech",
     "category": "Productivity",
     "capabilities": [
       "Planning",
+      "Testing",
       "Code Review",
       "Security",
       "Infrastructure",
@@ -41,6 +47,9 @@
     ],
     "defaultPrompt": [
       "Use ITSOL Powers to classify this task and choose the right skills.",
+      "For functional work, require an approved Business Plan and Technical Plan before implementation.",
+      "For subagent-driven work, split tasks, set concurrency, review each implementation with a separate subagent, and commit reviewed slices.",
+      "Use ITSOL TDD workflow before changing production code.",
       "Review this change against ITSOL security and infrastructure practices.",
       "Debug this issue using ITSOL task and incident workflows."
     ]

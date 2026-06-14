@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL TDD Workflow"
+  short_description: "Drive code changes with red-green-refactor"
+  default_prompt: "Use $itsol-tdd-workflow before changing production code."

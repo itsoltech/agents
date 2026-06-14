@@ -13,8 +13,7 @@ Do not guess fixes. Reproduce or gather evidence, isolate the failing layer, the
 2. Reproduce locally or collect logs, traces, data samples, failing tests, or deployment evidence.
 3. Locate the boundary: UI, API, domain logic, database, cache, queue, integration, infrastructure, or configuration.
 4. Compare with a working path or similar code.
-5. Add a regression test or minimal diagnostic before changing production code where feasible.
-6. Implement one root-cause fix and verify related paths.
+5. Load `itsol-tdd-workflow` and add a RED regression test or minimal diagnostic before changing production code where feasible.
+6. Implement one root-cause GREEN fix and verify related paths.
 
 Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.
-

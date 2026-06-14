@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Subagent Workflow"
+  short_description: "Coordinate subagent execution loops"
+  default_prompt: "Use $itsol-subagent-workflow to execute this approved plan with subagents."
