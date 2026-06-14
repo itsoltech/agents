@@ -8,6 +8,7 @@ Do not start subagent execution until all are true:
 
 - the Business Plan is approved
 - the Technical Plan is approved
+- both plan file paths are known
 - the user chose subagent-driven execution
 - the main agent understands the current git state and existing user changes
 
@@ -29,6 +30,7 @@ Each task must include:
 - files or bounded areas the subagent may edit
 - files or areas the subagent must not touch
 - required ITSOL skills to load
+- required ITSOL skills from the Technical Plan, plus any narrower review skills discovered during execution
 - RED/GREEN expectation from `itsol-tdd-workflow` when code changes
 - verification command or evidence expected from the subagent
 - output contract: changed files, behavior, tests, risks, and next review target

@@ -4,60 +4,276 @@ Use this reference when a user asks to build, modify, add, remove, or change app
 
 ## Hard Gate
 
-For functional tasks, do not edit production code, tests, configs, migrations, or generated clients until all three conditions are true:
+For functional tasks, do not edit production code, tests, configs, migrations, or generated clients until all conditions are true:
 
-- the user approved the Business Plan
-- the user approved the Technical Plan
+- the Business Plan markdown file exists in the repo
+- the user approved the Business Plan file
+- the Technical Plan markdown file exists in the repo
+- the user approved the Technical Plan file
 - the user chose execution mode: subagents or inline
 
 If the user asks to skip planning, still produce the shortest useful version of both plans and ask for approval.
 
-## Clarification First
+## Plan Files
 
-Before writing plans, inspect the existing code and ask only questions that change the plan. Clarify:
+Persist planning artifacts in the target repository, similar to how Superpowers saves specs and implementation plans before execution.
+
+Default location:
+
+- Business Plan: `.itsol/plans/YYYY-MM-DD-<task-slug>-business.md`
+- Technical Plan: `.itsol/plans/YYYY-MM-DD-<task-slug>-technical.md`
+
+Use a different location only when the repo already has a clear planning convention or the user requests one. Do not use plugin source documentation folders or external best-practices source directories as the default destination.
+
+Before writing:
+
+1. Inspect existing repo conventions for planning docs.
+2. Create the destination directory if missing.
+3. Use the current date and a short lowercase slug from the task.
+4. Keep both plan files under version control unless the user says planning artifacts should stay local.
+5. After each file is written, run the Plan Self-Review and fix placeholders, contradictions, missing sections, vague acceptance criteria, TODOs, unresolved questions, and verification gaps before asking for approval.
+
+## Plan Self-Review
+
+After writing or updating a plan file, review the file before asking the user for approval. Fix issues inline first; do not ask the user to approve a plan with known gaps.
+
+For the Business Plan, check:
+
+- no `TODO`, `TBD`, placeholders, empty sections, or generic filler
+- goal, current behavior, desired behavior, scope, out-of-scope, and acceptance criteria are specific
+- business rules cover edge cases, negative paths, roles, permissions, tenants, and data ownership where relevant
+- UX/API behavior and copy are explicit enough for QA and implementation
+- QA scenarios cover happy path, negative path, permission path, and important regressions
+- risks, assumptions, and open questions are either resolved or explicitly safe to carry forward
+- the plan is small enough to implement as one coherent first scope
+
+For the Technical Plan, check:
+
+- exact files or bounded areas are named wherever reasonably knowable
+- Required ITSOL Skills are complete and mapped to tasks or review phases
+- logical branches include important `if`/else behavior, validation, authorization, tenant isolation, error handling, idempotency, retries, and compatibility where relevant
+- TDD plan has a concrete RED test or diagnostic, expected failure, GREEN scope, and refactor checkpoint
+- each task has files, required skills, steps, verification, and an Angular commit message
+- subagent split and concurrency limit are present when subagent-driven execution is plausible
+- verification commands are concrete and scoped
+- rollout, rollback, monitoring, and data migration notes are covered or explicitly not applicable with reason
+- no task depends on undefined types, functions, external services, or assumptions hidden outside the plan
+
+If self-review finds unresolved items that materially affect scope or implementation, ask targeted follow-up questions before requesting approval. If an item is intentionally deferred, document it in out-of-scope or follow-up scope.
+
+## Scope Gate
+
+Before interviewing in detail, decide whether the request is small enough for one coherent Business Plan and one Technical Plan.
+
+Treat the request as too broad when it includes:
+
+- several independent products, workflows, modules, or user journeys
+- unrelated UI, API, data, infrastructure, and integration changes with separate rollout risks
+- unclear acceptance criteria across multiple stakeholder goals
+- migrations plus large feature work plus operational changes in one request
+- more task slices than can be reviewed and validated as one safe release
+
+When the request is too broad:
+
+1. Explain the risk concretely: broad plans create weak acceptance criteria, missed edge cases, conflicting implementation work, and unreliable verification.
+2. Propose a smaller first scope that can be implemented, reviewed, deployed, and validated independently.
+3. Name the deferred follow-up scopes explicitly.
+4. Ask the user to approve the smaller first scope before continuing the interview.
+5. Plan follow-up changes only after the first plan is implemented and validated, unless the user explicitly asks for a roadmap document rather than an implementation plan.
+
+Do not bury multiple independent projects inside one Technical Plan. A good first plan should produce a useful, testable increment on its own.
+
+## Embedded Deep-Planning Interview
+
+Use the interview pattern embedded directly in this skill. Do not assume any other plugin, slash command, or external planning command is installed. The pattern is: review the current codebase first, then interview the user in depth before writing planning artifacts.
+
+Before writing either plan:
+
+1. Inspect relevant code, routes, API contracts, schemas, tests, configs, existing UI, and recent local conventions.
+2. Ask follow-up questions only after that inspection, so questions are specific and not obvious.
+3. Continue interviewing until the Business Plan and Technical Plan can be written without placeholders, guesses, or vague requirements.
+4. Prefer one focused question at a time. If the runtime provides a dedicated user-question tool, use it; otherwise ask directly in chat.
+5. Group related alternatives into clear choices when that helps the user answer, but ask open-ended questions when the domain requires nuance.
+6. Stop asking only when remaining unknowns can be safely written as explicit assumptions or open questions in the plan file.
+
+Ask about business and product depth:
 
 - who the change is for
 - what behavior changes from the user's perspective
 - what is explicitly out of scope
 - permissions, roles, tenant boundaries, and data ownership
 - edge cases and negative paths
+- states, statuses, workflows, notifications, copy, audit needs, reporting, and support implications
+- rollout, migration, compatibility, and customer communication constraints
+- success criteria, acceptance criteria, and QA scenarios
+
+Ask about technical depth:
+
+- exact UI surfaces, routes, components, API endpoints, background jobs, integrations, generated clients, schemas, migrations, cache, events, queues, and observability touched
+- important tradeoffs, rejected approaches, backwards compatibility, performance, security, tenant isolation, error handling, retries, idempotency, concurrency, and data consistency
+- test strategy, TDD entry point, expected RED failure, verification commands, manual smoke checks, and rollback
+- which ITSOL skills should be used during implementation and review
+
+Ask about UX depth when the change is visible:
+
+- primary user path and alternate paths
+- empty, loading, error, disabled, permission-denied, and success states
+- validation messages, labels, copy, navigation, accessibility, responsiveness, browser behavior, and analytics if relevant
+
+Ask about delivery depth:
+
+- task slicing, subagent suitability, concurrency limit, code review coverage, commit boundaries, release order, and post-release checks
 - rollout, migration, and compatibility constraints
-- what QA should verify
 
 If a detail can be inferred safely from existing code or established patterns, state it as an assumption in the plan instead of asking.
 
+Do not ask checklist questions mechanically. Each question should close a real gap that affects scope, behavior, architecture, testing, or risk.
+
 ## Business Plan
 
-The Business Plan must be understandable without reading code. Include:
+The Business Plan must be understandable without reading code and complete enough for stakeholders, QA, and implementation agents to understand what must change. Use this structure:
 
-- goal and user-visible outcome
-- in-scope behavior
-- out-of-scope behavior
-- acceptance criteria
-- business rules and edge cases
-- affected roles, permissions, tenants, or data ownership
-- QA notes and manual scenarios when relevant
-- assumptions and open questions
+```markdown
+# <Feature or Change> Business Plan
+
+**Status:** Draft | Approved
+**Created:** YYYY-MM-DD
+**Related request:** <short summary or ticket link>
+**Technical Plan:** <path when available>
+
+## Goal
+<One paragraph describing the user-visible outcome and why it matters.>
+
+## Current Behavior
+<What happens now, including pain points or missing capability.>
+
+## Desired Behavior
+<What should happen after the change from the user's point of view.>
+
+## Users And Roles
+<Affected users, roles, permissions, tenant boundaries, data ownership, and actor-specific behavior.>
+
+## Scope
+### In Scope
+- <Concrete behavior included>
+
+### Out Of Scope
+- <Explicit exclusions>
+
+## Business Rules
+- <Rule, condition, edge case, negative path, or policy>
+
+## Acceptance Criteria
+- [ ] <Observable criterion QA and the user can verify>
+
+## UX, Copy, And API Behavior
+<Visible UI/API behavior, messages, empty states, errors, notifications, or response semantics.>
+
+## Data And Audit Expectations
+<What data is read, written, retained, exposed, audited, or migrated.>
+
+## QA Scenarios
+- <Manual or automated scenario, including negative and permission cases>
+
+## Risks
+- <Business, operational, user, legal, data, migration, rollout, or compatibility risk>
+
+## Assumptions
+- <Assumption that must be true for this plan>
+
+## Open Questions
+- <Question or "None">
+```
 
 End with an explicit approval request:
 
-`Approve the Business Plan before I prepare the Technical Plan.`
+`Business Plan saved to <path>. Approve this file before I prepare the Technical Plan.`
 
 ## Technical Plan
 
-The Technical Plan must be implementation-ready. Include:
+The Technical Plan must be implementation-ready and complete enough that an agent can execute it without guessing. It must reference the approved Business Plan. Use this structure:
 
-- files, modules, or bounded areas to inspect or modify
-- data model, API, UI, cache, job, integration, or infrastructure impact
-- concrete logical rules and branches, including important `if` conditions
-- TDD plan: RED test or diagnostic, expected failure, GREEN scope, refactor checkpoint
-- verification commands and expected scope
-- subagent split candidates when surfaces are independent
-- risks and rollback notes when relevant
+```markdown
+# <Feature or Change> Technical Plan
+
+**Status:** Draft | Approved
+**Created:** YYYY-MM-DD
+**Business Plan:** <path>
+**Execution Mode:** Pending | Subagent-driven | Inline
+
+## Implementation Goal
+<One paragraph tying technical work to the Business Plan goal.>
+
+## Repository Context
+<Relevant frameworks, existing patterns, files inspected, and constraints.>
+
+## Files And Ownership
+| Path | Action | Owner/Agent | Purpose |
+| --- | --- | --- | --- |
+| `path/to/file` | Create/Modify/Test | main or subagent name | reason |
+
+## Required ITSOL Skills
+List the exact skills that must be loaded while implementing this plan. Include the reason and when to use each skill.
+
+| Skill | Use During | Reason |
+| --- | --- | --- |
+| `itsol-feature-implementation` | whole implementation | primary feature workflow |
+| `itsol-tdd-workflow` | before production code changes | RED-GREEN-REFACTOR gate |
+| `<domain-skill>` | specific task or review | technology, security, data, infra, or review coverage |
+
+At minimum include the process skills for implementation and TDD. Add focused domain skills for every touched surface: frontend, backend, database, generated clients, security, infrastructure, observability, or QA. Prefer narrow skills such as `security-authz-tenant-review` over broad generic security language.
+
+## Data Flow And Contracts
+<API requests/responses, DTOs, schemas, database collections/tables, events, jobs, cache keys, generated clients, external integrations.>
+
+## Logical Rules And Branches
+- `if <condition>` then <behavior>; else <behavior>
+- validation, authorization, tenant isolation, feature flags, error paths, retries, idempotency, concurrency, and compatibility rules
+
+## TDD Plan
+### RED
+- Test or diagnostic to add first
+- Expected failing output
+
+### GREEN
+- Minimal implementation to pass
+
+### REFACTOR
+- Cleanup allowed only after tests pass
+
+## Task Breakdown
+### Task 1: <name>
+**Goal:** <outcome>
+**Files:** <exact paths or bounded areas>
+**Required Skills:** `<skill-1>`, `<skill-2>`
+**Steps:**
+- [ ] <small executable step>
+**Verification:** `<command>` and expected result
+**Commit:** `<angular commit message>`
+
+## Subagent Plan
+<If subagent-driven is likely: task split, reviewer split, concurrency limit, and handoff expectations. Otherwise explain why inline is better.>
+
+## Verification Plan
+- focused tests
+- integration or contract tests
+- lint/typecheck/build
+- manual QA or smoke checks
+- final diff/self-review
+
+## Rollout And Rollback
+<Migration order, flags, deployment notes, rollback plan, monitoring, compatibility. Use "Not applicable" only with reason.>
+
+## Risks And Mitigations
+- <technical/security/data/operational risk and mitigation>
+
+## Open Questions
+- <Question or "None">
+```
 
 End with an explicit approval request:
 
-`Approve the Technical Plan before I start implementation.`
+`Technical Plan saved to <path>. Approve this file before I start implementation.`
 
 ## Execution Mode Question
 

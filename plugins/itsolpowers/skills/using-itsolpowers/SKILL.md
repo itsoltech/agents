@@ -16,10 +16,11 @@ Before refining requirements, implementing, debugging, reviewing, planning, or h
 3. Load focused domain skills only for touched areas. Prefer `security-authz-tenant-review` over a broad security sweep when the change is only authorization.
 4. Read the selected skill's guide index before making claims based on ITSOL standards. Within each selected skill, follow its [references/guide.md](references/guide.md) link; if it is a routing index, load only the sector files relevant to the task.
 5. If several skills apply, use the most risk-shaping skill first: security, data integrity, deployment safety, then implementation style.
-6. For functional tasks, feature work, endpoints, UI flows, integrations, or behavior changes, load `itsol-functional-planning` and require approved Business and Technical Plans before implementation.
-7. For feature work, bugfixes, behavior changes, or refactors, load `itsol-tdd-workflow` before writing production code.
-8. If the user chooses subagent-driven execution, load `itsol-subagent-workflow` before starting implementation.
-9. If the work has independent surfaces, route them through subagents before implementation or review.
+6. For functional tasks, feature work, endpoints, UI flows, integrations, or behavior changes, load `itsol-functional-planning` and require approved Business and Technical Plan markdown files before implementation.
+7. For bugs, regressions, failing tests, production symptoms, or broken behavior, load `itsol-bug-debugging`; require evidence and an approved Technical Fix Plan before implementation.
+8. For feature work, bugfixes, behavior changes, or refactors, load `itsol-tdd-workflow` before writing production code.
+9. If the user chooses subagent-driven execution, load `itsol-subagent-workflow` before starting implementation.
+10. If the work has independent surfaces, route them through subagents before implementation or review.
 
 ## Subagent Routing
 
@@ -30,6 +31,18 @@ Use subagents when the task can be split into independent workstreams, such as U
 For subagent-driven implementation, use `itsol-subagent-workflow`: split work into task slices, agree the concurrency limit, delegate implementation, run a separate review subagent after each implementation result, repeat fixes until review is clean, commit reviewed task slices with Angular commit convention when allowed, then validate the integrated result.
 
 Assign each subagent a narrow scope, owned files or system area, constraints, and expected output. Keep the main agent responsible for the immediate blocker, cross-surface decisions, integrating results, avoiding conflicting edits, and final verification.
+
+## Commit Convention
+
+When creating commits for ITSOL work, use Angular commit convention. Keep commits focused and scoped to the completed slice:
+
+- `feat(scope): add customer export filter`
+- `fix(scope): handle missing tenant permission`
+- `test(scope): cover stale query invalidation`
+- `refactor(scope): isolate webhook validation`
+- `docs(scope): update planning workflow`
+
+Do not mix unrelated changes in one commit. If the worktree contains unrelated user changes, stage only the intended files or stop and ask before committing.
 
 ## Skill Families
 
@@ -43,4 +56,4 @@ Assign each subagent a narrow scope, owned files or system area, constraints, an
 
 ## Output Standard
 
-For implementation work, state the selected skills, approved plan status, execution mode, concrete risk areas, and RED/GREEN verification. For review work, lead with findings by severity. For debugging, gather evidence before proposing fixes.
+For implementation work, state the selected skills, approved plan file paths, execution mode, concrete risk areas, and RED/GREEN verification. For review work, lead with findings by severity. For debugging, gather evidence, state the Technical Fix Plan path and approval status, then propose or implement fixes.

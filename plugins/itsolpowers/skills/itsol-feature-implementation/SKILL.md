@@ -9,7 +9,7 @@ Implement the smallest coherent change that satisfies the user-visible behavior 
 
 ## Process
 
-1. Confirm the Business Plan and Technical Plan were both explicitly approved by the user.
+1. Confirm the Business Plan file and Technical Plan file were both explicitly approved by the user.
 2. Confirm the user chose execution mode: subagent-driven or inline.
 3. If execution mode is subagent-driven, load `itsol-subagent-workflow`; otherwise continue inline.
 4. Inspect existing patterns before designing new structure.
