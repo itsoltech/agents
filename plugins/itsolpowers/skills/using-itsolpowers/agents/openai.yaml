@@ -1,0 +1,4 @@
+interface:
+  display_name: "Using Itsolpowers"
+  short_description: "Route ITSOL tasks to the right skills"
+  default_prompt: "Use $using-itsolpowers for this ITSOL task."

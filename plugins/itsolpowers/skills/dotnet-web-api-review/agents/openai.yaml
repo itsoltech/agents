@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dotnet Web API Review"
+  short_description: "Review ASP.NET Core API changes"
+  default_prompt: "Use $dotnet-web-api-review for this ITSOL task."

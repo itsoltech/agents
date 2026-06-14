@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust ML LLM Architecture"
+  short_description: "Design Rust Rig and Candle LLM systems"
+  default_prompt: "Use $rust-ml-llm-architecture for this ITSOL task."

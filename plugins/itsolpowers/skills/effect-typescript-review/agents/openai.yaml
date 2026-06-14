@@ -1,0 +1,4 @@
+interface:
+  display_name: "Effect TypeScript Review"
+  short_description: "Review Effect TypeScript code"
+  default_prompt: "Use $effect-typescript-review for this ITSOL task."

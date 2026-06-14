@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hey API OpenAPI Contract Debugging"
+  short_description: "Debug generated client and API contract drift"
+  default_prompt: "Use $hey-api-openapi-contract-debugging for this ITSOL task."

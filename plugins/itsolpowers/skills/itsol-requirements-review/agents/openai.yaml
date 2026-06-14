@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Requirements Review"
+  short_description: "Review requirements, DoR, refinement, and scope"
+  default_prompt: "Use $itsol-requirements-review to check this requirement or story before development."

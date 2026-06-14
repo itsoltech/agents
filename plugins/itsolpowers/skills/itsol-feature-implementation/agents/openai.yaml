@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Feature Implementation"
+  short_description: "Implement scoped ITSOL features"
+  default_prompt: "Use $itsol-feature-implementation for this ITSOL task."

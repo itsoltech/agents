@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Deployment Design"
+  short_description: "Design deployment model and runtime boundaries"
+  default_prompt: "Use $infra-deployment-design for this ITSOL task."

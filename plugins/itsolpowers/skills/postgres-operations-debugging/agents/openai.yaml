@@ -1,0 +1,4 @@
+interface:
+  display_name: "Postgres Operations Debugging"
+  short_description: "Debug PostgreSQL performance and incidents"
+  default_prompt: "Use $postgres-operations-debugging for this ITSOL task."

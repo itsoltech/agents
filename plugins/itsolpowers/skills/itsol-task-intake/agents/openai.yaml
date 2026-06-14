@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Task Intake"
+  short_description: "Classify feature, bug, review, or ops work"
+  default_prompt: "Use $itsol-task-intake for this ITSOL task."

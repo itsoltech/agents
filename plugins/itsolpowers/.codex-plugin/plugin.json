@@ -1,0 +1,48 @@
+{
+  "name": "itsolpowers",
+  "version": "0.2.0",
+  "description": "ITSOL engineering skills and Claude Code subagents for task intake, implementation, debugging, review, security, infrastructure, and production readiness.",
+  "author": {
+    "name": "ITSOL Tech",
+    "email": "dev@itsol.tech"
+  },
+  "license": "MIT",
+  "keywords": [
+    "itsol",
+    "skills",
+    "security",
+    "infrastructure",
+    "svelte",
+    "dotnet",
+    "rust",
+    "postgresql",
+    "mongodb",
+    "openapi",
+    "code-review",
+    "debugging",
+    "workflow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "ITSOL Powers",
+    "shortDescription": "ITSOL engineering workflows and review skills.",
+    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL best-practice documents.",
+    "developerName": "ITSOL Tech",
+    "category": "Productivity",
+    "capabilities": [
+      "Planning",
+      "Code Review",
+      "Security",
+      "Infrastructure",
+      "Frontend",
+      "Backend",
+      "Database",
+      "Debugging"
+    ],
+    "defaultPrompt": [
+      "Use ITSOL Powers to classify this task and choose the right skills.",
+      "Review this change against ITSOL security and infrastructure practices.",
+      "Debug this issue using ITSOL task and incident workflows."
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Technical Planning"
+  short_description: "Plan tech notes, spikes, rollout, and rollback"
+  default_prompt: "Use $itsol-technical-planning to prepare the technical plan for this change."

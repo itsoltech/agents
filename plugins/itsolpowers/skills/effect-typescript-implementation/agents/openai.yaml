@@ -1,0 +1,4 @@
+interface:
+  display_name: "Effect TypeScript Implementation"
+  short_description: "Implement TypeScript with Effect"
+  default_prompt: "Use $effect-typescript-implementation for this ITSOL task."

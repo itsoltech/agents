@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Routing Proxy TLS"
+  short_description: "Review routing, proxies, TLS, headers"
+  default_prompt: "Use $infra-routing-proxy-tls for this ITSOL task."

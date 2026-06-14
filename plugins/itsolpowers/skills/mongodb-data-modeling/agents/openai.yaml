@@ -1,0 +1,4 @@
+interface:
+  display_name: "MongoDB Data Modeling"
+  short_description: "Design MongoDB collections and access patterns"
+  default_prompt: "Use $mongodb-data-modeling for this ITSOL task."

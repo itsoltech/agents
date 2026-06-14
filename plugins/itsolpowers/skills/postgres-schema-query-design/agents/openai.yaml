@@ -1,0 +1,4 @@
+interface:
+  display_name: "Postgres Schema Query Design"
+  short_description: "Design PostgreSQL schema and queries"
+  default_prompt: "Use $postgres-schema-query-design for this ITSOL task."

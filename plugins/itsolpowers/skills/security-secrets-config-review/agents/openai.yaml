@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Secrets Config Review"
+  short_description: "Review secrets and runtime configuration"
+  default_prompt: "Use $security-secrets-config-review for this ITSOL task."

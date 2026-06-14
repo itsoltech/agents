@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Container Runtime Review"
+  short_description: "Review container runtime behavior"
+  default_prompt: "Use $infra-container-runtime-review for this ITSOL task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dotnet Web API Implementation"
+  short_description: "Implement ASP.NET Core Web APIs"
+  default_prompt: "Use $dotnet-web-api-implementation for this ITSOL task."

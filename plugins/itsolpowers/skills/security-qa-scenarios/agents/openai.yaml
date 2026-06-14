@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security QA Scenarios"
+  short_description: "Design security QA and abuse-case tests"
+  default_prompt: "Use $security-qa-scenarios for this ITSOL task."

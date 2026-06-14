@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Container Build Review"
+  short_description: "Review Docker images and build artifacts"
+  default_prompt: "Use $infra-container-build-review for this ITSOL task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Svelte Debugging"
+  short_description: "Debug Svelte UI and runtime behavior"
+  default_prompt: "Use $svelte-debugging for this ITSOL task."

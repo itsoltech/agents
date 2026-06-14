@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust Review"
+  short_description: "Review Rust changes"
+  default_prompt: "Use $rust-review for this ITSOL task."

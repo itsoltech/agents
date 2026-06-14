@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL QA Handoff"
+  short_description: "Prepare QA plans, handoffs, bug reports, and release checks"
+  default_prompt: "Use $itsol-qa-handoff to prepare or review QA handoff for this change."

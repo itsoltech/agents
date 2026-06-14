@@ -1,0 +1,4 @@
+interface:
+  display_name: "MongoDB Review"
+  short_description: "Review MongoDB application and schema changes"
+  default_prompt: "Use $mongodb-review for this ITSOL task."

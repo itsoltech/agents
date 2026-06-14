@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust ML LLM Review"
+  short_description: "Review Rust ML and LLM application changes"
+  default_prompt: "Use $rust-ml-llm-review for this ITSOL task."

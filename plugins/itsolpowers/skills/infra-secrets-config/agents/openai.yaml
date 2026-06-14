@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Secrets Config"
+  short_description: "Review infrastructure secrets and config"
+  default_prompt: "Use $infra-secrets-config for this ITSOL task."

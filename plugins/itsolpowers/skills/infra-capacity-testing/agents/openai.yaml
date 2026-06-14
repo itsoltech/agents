@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Capacity Testing"
+  short_description: "Review capacity, performance, load tests"
+  default_prompt: "Use $infra-capacity-testing for this ITSOL task."

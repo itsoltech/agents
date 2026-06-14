@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Observability"
+  short_description: "Review logs, metrics, traces, alerts"
+  default_prompt: "Use $infra-observability for this ITSOL task."

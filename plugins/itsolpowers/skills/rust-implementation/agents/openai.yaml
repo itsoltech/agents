@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust Implementation"
+  short_description: "Implement maintainable Rust code"
+  default_prompt: "Use $rust-implementation for this ITSOL task."

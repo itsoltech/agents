@@ -1,0 +1,4 @@
+interface:
+  display_name: "Postgres Review"
+  short_description: "Review PostgreSQL database changes"
+  default_prompt: "Use $postgres-review for this ITSOL task."

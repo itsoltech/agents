@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Backup DR"
+  short_description: "Review backup, restore, and disaster recovery"
+  default_prompt: "Use $infra-backup-dr for this ITSOL task."

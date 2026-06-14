@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hey API OpenAPI Review"
+  short_description: "Review OpenAPI generator and client changes"
+  default_prompt: "Use $hey-api-openapi-review for this ITSOL task."

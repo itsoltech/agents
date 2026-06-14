@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust ML LLM Debugging"
+  short_description: "Debug Rust ML and LLM system behavior"
+  default_prompt: "Use $rust-ml-llm-debugging for this ITSOL task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Auth Session Review"
+  short_description: "Review authentication, sessions, cookies, tokens"
+  default_prompt: "Use $security-auth-session-review for this ITSOL task."

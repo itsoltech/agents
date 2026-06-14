@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security API Input Review"
+  short_description: "Review API validation and unsafe inputs"
+  default_prompt: "Use $security-api-input-review for this ITSOL task."

@@ -26,6 +26,14 @@ Po instalacji dostępne komendy:
 - `/itsol-workflow:create-commit` — commit w konwencji Angular
 - `/itsol-workflow:fix-pr-review` — fix nierozwiązanych komentarzy review na PR i resolve wątków
 
+#### itsolpowers
+
+Skille ITSOL do routingu zadań, implementacji, debugowania, self-review, security review i infrastruktury.
+
+```
+/plugin install itsolpowers@itsoltech-agents
+```
+
 ## Aktualizacje
 
 ```
@@ -34,6 +42,40 @@ Po instalacji dostępne komendy:
 ```
 
 Aktualizacje są wydawane przez bump pola `version` w `plugin.json` (i w `marketplace.json`). Bez bumpa Claude Code nie pobiera nowej wersji.
+
+## OpenCode
+
+`itsolpowers` ma osobny plugin OpenCode w:
+
+```
+plugins/itsolpowers/.opencode/plugins/itsolpowers.js
+```
+
+OpenCode ładuje pluginy na dwa sposoby: lokalne pliki JS/TS z `.opencode/plugins/` lub `~/.config/opencode/plugins/`, albo paczki npm wpisane w `plugin` w `opencode.json`.
+
+Po publikacji paczki można dodać ją do globalnego albo projektowego `opencode.json`:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["itsolpowers"]
+}
+```
+
+Do lokalnego developmentu utwórz wrapper w `.opencode/plugins/itsolpowers.js` albo `~/.config/opencode/plugins/itsolpowers.js`:
+
+```js
+export {
+  ItsolPowersPlugin,
+  ItsolPowersPlugin as default,
+} from "file://<path-to-repo>/plugins/itsolpowers/.opencode/plugins/itsolpowers.js";
+```
+
+Po restarcie OpenCode plugin rejestruje katalog `plugins/itsolpowers/skills` i wstrzykuje router `using-itsolpowers` jako bootstrap kontekstu. Szczegóły instalacji są w:
+
+```
+plugins/itsolpowers/.opencode/INSTALL.md
+```
 
 ## Codex
 
@@ -49,11 +91,24 @@ Zawiera ten sam plugin `itsol-workflow`, z manifestem:
 plugins/itsol-workflow/.codex-plugin/plugin.json
 ```
 
+Zawiera też plugin `itsolpowers`, z manifestem:
+
+```
+plugins/itsolpowers/.codex-plugin/plugin.json
+```
+
 Po instalacji dostępne są skille:
 
 - `ultra-plan` — interview do utworzenia `SPEC.md` na bazie wymagań
 - `create-commit` — commit w konwencji Angular
 - `fix-pr-review` — fix nierozwiązanych komentarzy review na PR i resolve wątków
+- `using-itsolpowers` — routing zadań do właściwych skillów ITSOL
+- `itsol-task-intake`, `itsol-requirements-review`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań do QA
+- `security-*` — rozdrobnione skille security dla threat modelingu, auth, authz, API, frontendu, sekretów, supply chain, QA i obsługi podatności
+- `infra-*` — rozdrobnione skille infrastrukturalne dla deploymentu, kontenerów, Nomada, routingu, edge protection, sekretów, obserwowalności, backupów, capacity i incidentów
+- `svelte-*`, `tanstack-query-svelte-*`, `hey-api-openapi-*` — frontend, server state i klient API generowany z OpenAPI
+- `dotnet-web-api-*`, `effect-typescript-*`, `rust-*`, `rust-ml-llm-*` — backend, typed TypeScript, Rust oraz aplikacje ML/LLM z Rig i Candle
+- `postgres-*`, `mongodb-*` — projektowanie, review i debugowanie operacyjne baz danych
 
 ## Kontrybucje
 

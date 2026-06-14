@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Production Readiness Review"
+  short_description: "Review production readiness gates"
+  default_prompt: "Use $infra-production-readiness-review for this ITSOL task."

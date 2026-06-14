@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dotnet Web API Debugging"
+  short_description: "Debug ASP.NET Core production and API issues"
+  default_prompt: "Use $dotnet-web-api-debugging for this ITSOL task."

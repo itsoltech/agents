@@ -1,0 +1,4 @@
+interface:
+  display_name: "Svelte Review"
+  short_description: "Review Svelte and SvelteKit changes"
+  default_prompt: "Use $svelte-review for this ITSOL task."

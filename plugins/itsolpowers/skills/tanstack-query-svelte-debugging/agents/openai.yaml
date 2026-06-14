@@ -1,0 +1,4 @@
+interface:
+  display_name: "TanStack Query Svelte Debugging"
+  short_description: "Debug TanStack Query cache and state bugs"
+  default_prompt: "Use $tanstack-query-svelte-debugging for this ITSOL task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Edge Protection"
+  short_description: "Review edge limits and abuse protection"
+  default_prompt: "Use $infra-edge-protection for this ITSOL task."

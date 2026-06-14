@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust Debugging"
+  short_description: "Debug Rust correctness and performance bugs"
+  default_prompt: "Use $rust-debugging for this ITSOL task."

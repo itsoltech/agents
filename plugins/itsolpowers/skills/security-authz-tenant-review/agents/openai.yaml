@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Authz Tenant Review"
+  short_description: "Review authorization and tenant boundaries"
+  default_prompt: "Use $security-authz-tenant-review for this ITSOL task."

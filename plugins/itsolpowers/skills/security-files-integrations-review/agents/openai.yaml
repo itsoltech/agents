@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Files Integrations Review"
+  short_description: "Review files, webhooks, external systems"
+  default_prompt: "Use $security-files-integrations-review for this ITSOL task."

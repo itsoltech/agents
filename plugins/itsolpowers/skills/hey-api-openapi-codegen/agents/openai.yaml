@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hey API OpenAPI Codegen"
+  short_description: "Configure @hey-api/openapi-ts codegen"
+  default_prompt: "Use $hey-api-openapi-codegen for this ITSOL task."

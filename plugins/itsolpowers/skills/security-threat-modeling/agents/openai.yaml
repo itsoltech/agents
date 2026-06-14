@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Threat Modeling"
+  short_description: "Model assets, actors, boundaries, and abuse cases"
+  default_prompt: "Use $security-threat-modeling for this ITSOL task."

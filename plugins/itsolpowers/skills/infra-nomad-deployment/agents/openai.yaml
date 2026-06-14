@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Nomad Deployment"
+  short_description: "Review and design Nomad jobs"
+  default_prompt: "Use $infra-nomad-deployment for this ITSOL task."

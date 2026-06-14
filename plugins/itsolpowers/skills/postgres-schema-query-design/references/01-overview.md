@@ -1,0 +1,180 @@
+# postgres-schema-query-design Reference Sector: Overview
+
+## Zawartość
+
+- Overview
+- Cel dokumentu
+- Zasady ogólne
+- Warstwy odpowiedzialności
+- Modelowanie danych
+- Identyfikatory
+- Constraints i integralność danych
+- Multi-tenant
+- Row-level security
+
+
+## Cel dokumentu
+
+Ten dokument opisuje dobre praktyki pracy z PostgreSQL na poziomie aplikacji, bazy danych i infrastruktury. Ma pomagać w projektowaniu schematu, pisaniu zapytań, wdrażaniu migracji, utrzymaniu środowisk, diagnozowaniu problemów i planowaniu pracy bazy w trybie multi-node.
+
+Zakres obejmuje:
+
+- modelowanie danych i persistence aplikacji
+- indeksy, zapytania, transakcje i blokady
+- connection pooling i integrację z backendem
+- migracje schematu i danych
+- autovacuum, bloat, statystyki i tuning
+- backupy, PITR, restore i disaster recovery
+- replikację, HA, failover, read replicas i load balancing
+- bezpieczeństwo, role, RLS, TLS i audyt
+- monitoring, troubleshooting i procedury operacyjne
+- upgrade minor i major version
+- scenariusze QA i edge case'y
+
+Dokument jest oparty na PostgreSQL 18 jako aktualnej stabilnej linii dokumentacji. Przy każdej zmianie wersji trzeba czytać release notes konkretnej wersji, bo zmiany w plannerze, kolacjach, rozszerzeniach, `pg_upgrade`, replikacji i domyślnych ustawieniach mogą wpływać na działanie aplikacji.
+## Zasady ogólne
+
+- projektuj bazę pod realne access patterns aplikacji, nie pod abstrakcyjny model encji
+- reguły spójności danych trzymaj możliwie blisko danych: constraints, foreign keys, unique indexes, check constraints, exclusion constraints
+- aplikacja nie powinna być jedyną warstwą pilnującą integralności
+- unikaj projektowania PostgreSQL jak schemaless storage, jeśli dane mają stabilny kształt
+- nie traktuj `jsonb` jako zamiennika modelu relacyjnego
+- nie pisz zapytań bez znajomości planu wykonania dla większych tabel
+- nie dodawaj indeksów „na zapas"; każdy indeks kosztuje miejsce, RAM, WAL i czas zapisu
+- nie optymalizuj parametrów serwera bez pomiarów
+- nie zatrzymuj autovacuum bez zrozumienia skutków
+- backup bez testu restore nie jest procedurą odtwarzania
+- migracja bez planu rollbacku albo roll-forwardu nie powinna trafić na produkcję
+- baza danych jest częścią architektury aplikacji, a nie tylko zewnętrzną zależnością
+## Warstwy odpowiedzialności
+
+### Aplikacja
+
+Aplikacja odpowiada za:
+
+- walidację danych wejściowych
+- mapowanie DTO na model domenowy
+- idempotencję operacji biznesowych
+- obsługę retry, timeoutów i cancellation
+- kontrolę transakcji biznesowych
+- kontrolę tenant context, user context i uprawnień
+- generowanie zapytań zgodnych z indeksami
+- ograniczanie liczby połączeń i równoległości
+- poprawną obsługę błędów constraintów z bazy
+
+### Baza danych
+
+PostgreSQL odpowiada za:
+
+- trwałość danych
+- constraints i integralność referencyjną
+- izolację transakcji
+- blokady i spójność współbieżnych operacji
+- wykonanie zapytań i optymalizację planów
+- WAL, recovery, replikację i odtwarzanie
+- polityki RLS, jeśli są używane
+- statystyki plannerowe i maintenance
+
+### Infrastruktura
+
+Infrastruktura odpowiada za:
+
+- stabilny storage
+- backupy i archiwizację WAL
+- HA i failover
+- monitoring, alerting i logi
+- TLS i kontrolę dostępu sieciowego
+- connection pooling
+- capacity planning
+- upgrade'y i patching
+- testy disaster recovery
+## Modelowanie danych
+
+- zaczynaj od pytań: jak dane będą wyszukiwane, filtrowane, sortowane, agregowane i usuwane
+- dla danych o stabilnym kształcie używaj normalnych kolumn, typów i relacji
+- dla danych dynamicznych używaj `jsonb`, ale tylko tam, gdzie schema rzeczywiście jest zmienna
+- nie zapisuj liczb, dat i flag jako tekstu
+- nie mieszaj w jednej kolumnie kilku znaczeń, np. `status_or_error`
+- unikaj kolumn `metadata jsonb` jako miejsca na dane wymagane przez logikę biznesową
+- nie opieraj warstwy domenowej na nullable everywhere
+- używaj `NOT NULL`, gdy brak wartości nie jest poprawnym stanem
+- używaj `CHECK`, gdy wartość ma ograniczony zakres
+- używaj enumów PostgreSQL ostrożnie; są wygodne, ale zmiany enumów wymagają osobnych migracji
+- przy statusach często lepszy jest `text` + `CHECK` albo tabela słownikowa, jeśli statusy zmieniają się często
+- nie projektuj tabel wyłącznie pod ORM; projektuj pod spójność danych i zapytania
+- unikaj EAV, jeśli dane mają przewidywalny schemat
+- nie twórz jednej dużej tabeli „events/data/items" dla różnych bytów bez silnego powodu
+- rozdziel dane operacyjne od danych analitycznych, jeśli mają inne access patterns
+- przy dużej liczbie zapisów unikaj szerokich wierszy z często aktualizowanymi i rzadko czytanymi kolumnami
+- duże payloady, pliki i binaria trzymaj poza PostgreSQL, jeśli nie potrzebujesz transakcyjnej spójności z rekordem
+- jeśli pliki są w object storage, w PostgreSQL trzymaj metadata, checksum, status i referencję
+## Identyfikatory
+
+- używaj stabilnych primary key dla każdego bytu biznesowego
+- nie używaj wartości biznesowych jako primary key, jeśli mogą się zmienić
+- `bigint generated by default as identity` jest dobrym wyborem dla prostych, lokalnych identyfikatorów
+- UUID jest dobry, gdy ID musi powstać poza bazą, w wielu usługach albo ma być trudny do zgadnięcia
+- dla bardzo dużych tabel i intensywnych insertów testuj wpływ losowych UUID na indeks B-tree
+- rozważ UUIDv7/ULID/KSUID, jeśli chcesz identyfikator generowany po stronie aplikacji z lepszą lokalnością czasową
+- nie ujawniaj sekwencyjnych ID w publicznym API, jeśli umożliwiają enumerację danych
+- dla multi-tenant aplikacji rozważ composite unique constraints zawierające `tenant_id`
+- nie używaj jednego globalnego `id text` dla wszystkich typów danych, jeśli tracisz typowanie i constraints
+- nie używaj `serial` w nowych schematach, jeśli możesz użyć standardowego `identity`
+## Constraints i integralność danych
+
+- każdy invariant, który da się wyrazić w SQL, powinien być rozważony jako constraint
+- używaj `PRIMARY KEY`, `UNIQUE`, `FOREIGN KEY`, `CHECK`, `NOT NULL`
+- używaj partial unique index, gdy unikalność zależy od warunku, np. tylko aktywne rekordy
+- używaj exclusion constraints dla zakresów czasu, rezerwacji, konfliktów terminów i geometrii
+- constraints powinny mieć jawne, przewidywalne nazwy
+- aplikacja powinna mapować błędy constraintów na błędy domenowe
+- nie opieraj unikalności wyłącznie o wcześniejszy SELECT w aplikacji
+- obsługuj race condition przez constraint i `INSERT ... ON CONFLICT`
+- nie wyłączaj foreign keys dla wygody importu bez procedury walidacji po imporcie
+- przy dużych migracjach używaj `NOT VALID` i późniejszego `VALIDATE CONSTRAINT`, jeśli pozwala to ograniczyć blokady
+- unikaj triggerów dla logiki, którą prościej zapisać jako constraint
+- jeśli używasz triggerów, dokumentuj ich skutki uboczne i testuj je integracyjnie
+- nie ukrywaj złożonej logiki biznesowej w triggerach bez widoczności w kodzie aplikacji
+## Multi-tenant
+
+- każdy rekord należący do klienta powinien mieć jednoznaczny tenant context
+- tenant context powinien być obecny w indeksach używanych przez zapytania tenantowe
+- unique constraints dla danych tenantowych zwykle powinny zawierać `tenant_id`
+- nie polegaj wyłącznie na filtrze w aplikacji, jeśli błąd może ujawnić dane innego tenanta
+- rozważ RLS dla silnej izolacji tenantów, ale testuj wydajność i ergonomię migracji
+- przy RLS każdy request musi ustawiać tenant context w transakcji albo sesji w kontrolowany sposób
+- nie używaj transaction poolingu bez zrozumienia wpływu na ustawienia sesyjne, np. `SET app.tenant_id`
+- dla RLS preferuj `SET LOCAL` w transakcji, jeśli kontekst nie ma wyciekać poza operację
+- testy QA muszą sprawdzać cross-tenant reads, writes, updates, deletes, exports, search i websocket/live events
+- backup/restore pojedynczego tenanta jest trudniejsze w shared schema; zaplanuj procedurę wcześniej
+- przy enterprise tenantach rozważ osobne schema albo osobne bazy, jeśli wymagania izolacji, backupu albo retencji tego wymagają
+## Row-level security
+
+- RLS nie zastępuje poprawnej autoryzacji w aplikacji
+- RLS jest dodatkową warstwą ochrony przy odczytach i zapisach
+- każda tabela z danymi tenantowymi powinna mieć spójną politykę albo jasno opisany powód jej braku
+- włączaj RLS jawnie przez `ALTER TABLE ... ENABLE ROW LEVEL SECURITY`
+- rozważ `FORCE ROW LEVEL SECURITY`, jeśli właściciel tabeli też ma podlegać politykom
+- unikaj roli aplikacyjnej z `BYPASSRLS`
+- testuj osobno `SELECT`, `INSERT`, `UPDATE`, `DELETE`
+- przy `INSERT` i `UPDATE` używaj `WITH CHECK`, żeby nie dało się zapisać danych do cudzego tenanta
+- nie twórz polityk, które wywołują wolne funkcje dla każdego wiersza bez pomiarów
+- policy function powinny być proste, deterministyczne i testowane
+- nie zakładaj, że RLS automatycznie działa na wszystkie przyszłe tabele
+- dodaj test w CI, który sprawdza tabele tenantowe bez włączonego RLS albo bez polityk
+
+Przykład:
+
+```sql
+ALTER TABLE invoice ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY invoice_tenant_select
+ON invoice
+FOR SELECT
+USING (tenant_id = current_setting('app.tenant_id')::uuid);
+
+CREATE POLICY invoice_tenant_write
+ON invoice
+FOR INSERT
+WITH CHECK (tenant_id = current_setting('app.tenant_id')::uuid);
+```

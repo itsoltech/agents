@@ -1,0 +1,4 @@
+interface:
+  display_name: "TanStack Query Svelte Review"
+  short_description: "Review TanStack Query v5 usage"
+  default_prompt: "Use $tanstack-query-svelte-review for this ITSOL task."

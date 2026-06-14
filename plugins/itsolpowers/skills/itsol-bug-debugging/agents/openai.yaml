@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Bug Debugging"
+  short_description: "Debug bugs from evidence, not guesses"
+  default_prompt: "Use $itsol-bug-debugging for this ITSOL task."

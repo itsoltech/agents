@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Supply Chain Review"
+  short_description: "Review dependencies, CI/CD, artifacts"
+  default_prompt: "Use $security-supply-chain-review for this ITSOL task."

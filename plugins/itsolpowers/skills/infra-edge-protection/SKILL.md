@@ -1,0 +1,21 @@
+---
+name: infra-edge-protection
+description: Use when implementing or reviewing WAF, rate limiting, request body limits, upload limits, public endpoint exposure, edge firewall, CDN cache rules, DDoS mitigation, or API gateway protection.
+---
+
+# Infra Edge Protection
+
+Review what is public, what is rate-limited, body/time limits, cache safety, and abuse controls at the edge.
+
+## Process
+
+1. Map the request path or operational path end to end.
+2. Read [references/guide.md](references/guide.md); it contains the ITSOL infrastructure knowledge extracted for this skill.
+3. Check rollout, rollback, observability, security, secrets, resource limits, and failure behavior.
+4. For review, report concrete production risks first, then maintainability issues.
+5. For debugging, collect evidence from config, allocation/container state, logs, metrics, and recent changes before proposing fixes.
+
+## Evidence
+
+Prefer job specs, Dockerfiles, proxy config, deployment manifests, logs, metrics, health checks, and runbook steps over assumptions.
+

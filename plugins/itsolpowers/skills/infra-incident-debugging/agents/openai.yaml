@@ -1,0 +1,4 @@
+interface:
+  display_name: "Infra Incident Debugging"
+  short_description: "Debug infrastructure incidents from evidence"
+  default_prompt: "Use $infra-incident-debugging for this ITSOL task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "TanStack Query Svelte Implementation"
+  short_description: "Implement TanStack Query v5 in Svelte"
+  default_prompt: "Use $tanstack-query-svelte-implementation for this ITSOL task."

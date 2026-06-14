@@ -1,0 +1,4 @@
+interface:
+  display_name: "Effect TypeScript Debugging"
+  short_description: "Debug Effect failures and runtime behavior"
+  default_prompt: "Use $effect-typescript-debugging for this ITSOL task."

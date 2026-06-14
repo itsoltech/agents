@@ -1,0 +1,4 @@
+interface:
+  display_name: "MongoDB Operations Debugging"
+  short_description: "Debug MongoDB performance and incidents"
+  default_prompt: "Use $mongodb-operations-debugging for this ITSOL task."

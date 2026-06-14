@@ -1,0 +1,21 @@
+---
+name: infra-deployment-design
+description: Use when designing ITSOL deployment architecture, choosing single-host versus Nomad, defining layers, service boundaries, runtime topology, rollout model, environment separation, or production deployment assumptions.
+---
+
+# Infra Deployment Design
+
+Design the deployment path from edge to app to data stores before writing runtime configuration.
+
+## Process
+
+1. Map the request path or operational path end to end.
+2. Read [references/guide.md](references/guide.md); it contains the ITSOL infrastructure knowledge extracted for this skill.
+3. Check rollout, rollback, observability, security, secrets, resource limits, and failure behavior.
+4. For review, report concrete production risks first, then maintainability issues.
+5. For debugging, collect evidence from config, allocation/container state, logs, metrics, and recent changes before proposing fixes.
+
+## Evidence
+
+Prefer job specs, Dockerfiles, proxy config, deployment manifests, logs, metrics, health checks, and runbook steps over assumptions.
+

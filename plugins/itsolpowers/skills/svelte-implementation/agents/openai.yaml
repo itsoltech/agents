@@ -1,0 +1,4 @@
+interface:
+  display_name: "Svelte Implementation"
+  short_description: "Implement Svelte and SvelteKit UI safely"
+  default_prompt: "Use $svelte-implementation for this ITSOL task."
