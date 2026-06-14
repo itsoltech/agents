@@ -16,7 +16,7 @@ Do not start functional implementation from a vague request. Clarify enough to p
 5. Self-review the Business Plan file for gaps, TODOs, contradictions, vague acceptance criteria, and unresolved questions; fix issues before asking for approval.
 6. Stop and get explicit user approval for the Business Plan file.
 7. Write the Technical Plan to a repo-local markdown file that references the approved Business Plan.
-8. Self-review the Technical Plan file for missing files, missing skills, weak TDD steps, vague logic, TODOs, verification gaps, and unresolved risks; fix issues before asking for approval.
+8. Self-review the Technical Plan file for missing files, missing skills, missing Current Tech Context, weak TDD steps, vague logic, TODOs, verification gaps, and unresolved risks; fix issues before asking for approval.
 9. Stop and get explicit user approval for the Technical Plan file.
 10. Ask whether execution should run with subagents or inline.
 11. If the user chooses subagent-driven execution, proceed through `itsol-subagent-workflow` with both plan file paths.

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "itsoltech-agents",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "ITSOL organization Claude Code plugins — shared commands, skills and agents",
   "owner": {
     "name": "ITSOL Tech",
@@ -16,7 +16,7 @@
     },
     {
       "name": "itsolpowers",
-      "description": "ITSOL engineering skills and subagents for workflow, application technology migration, file-based functional planning, subagent execution, TDD, security, infrastructure, review, debugging, and OpenCode",
+      "description": "ITSOL engineering skills and subagents for workflow, current technology documentation research, application technology migration, file-based functional planning, subagent execution, TDD, security, infrastructure, review, debugging, and OpenCode",
       "source": "./plugins/itsolpowers",
       "category": "productivity"
     }

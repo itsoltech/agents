@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Current Tech Context"
+  short_description: "Research current framework and package context"
+  default_prompt: "Use $itsol-current-tech-context to verify current framework, SDK, runtime, and package documentation before planning or review."

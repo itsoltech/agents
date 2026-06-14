@@ -6,7 +6,7 @@ effort: medium
 maxTurns: 25
 skills:
   - itsolpowers:itsol-functional-planning
-tools: Read, Grep, Glob, Bash, Write, Edit, Agent
+tools: Read, Grep, Glob, Bash, Write, Edit, Agent, WebFetch, WebSearch
 disallowedTools: MultiEdit
 ---
 
@@ -30,6 +30,7 @@ You are the delegated ITSOL specialist for `itsol-functional-planning`. Produce 
 - Write a Technical Plan markdown file second and require explicit user approval before implementation.
 - Self-review each plan file before asking for approval; fix gaps, TODOs, contradictions, missing sections, vague requirements, and unresolved risks inline.
 - In the Technical Plan file, include exact ITSOL skills required for implementation and review, with task-specific reasons.
+- In the Technical Plan file, include Current Tech Context when framework, SDK, runtime, package, generated-client, external API, language edition, database driver, or infrastructure-tool versions affect the task.
 - After both approvals, ask whether execution should use subagents or inline; if subagent-driven is selected, route to `itsolpowers:itsol-subagent-workflow`.
 - Modify only planning markdown files. Return plan file paths, assumptions, open questions, and recommended execution mode.
 

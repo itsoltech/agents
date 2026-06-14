@@ -11,11 +11,12 @@ Treat a rewrite as a product, technical, and operational migration. Do not start
 
 1. Clarify the migration driver: business problem, current technology, target technology, users, data, integrations, operational constraints, and why refactor or upgrade is insufficient.
 2. Apply a scope gate. If the request says "rewrite the app" or spans unrelated modules, propose a smaller first migration slice and defer the rest into later plans.
-3. Inventory the current system: features, data, integrations, infrastructure, security, support workarounds, hidden jobs, reports, exports/imports, and production behavior.
-4. Map current behavior with characterization tests and contract tests before proposing replacement behavior.
-5. Choose a migration strategy: refactor, upgrade, Strangler Fig, Branch by Abstraction, parallel run, or big bang only when risk is low and rollback is proven.
-6. Write or update a migration plan file in the repo, including feature parity, slice plan, data plan, rollout, rollback, observability, security, risks, success criteria, stop criteria, and decommissioning.
-7. Self-review the migration plan for hidden scope, missing contracts, missing data strategy, weak rollback, missing skills, untested behavior, and unresolved operational risk.
-8. For implementation, route each approved slice through `itsol-functional-planning` or `itsol-bug-debugging` as appropriate, then `itsol-tdd-workflow`, focused domain skills, review skills, and `itsol-subagent-workflow` when the slice is subagent-driven.
+3. Load `itsol-current-tech-context` to verify current and target technology versions, official migration guides, SDK/runtime/package choices, latest stable defaults for new target components, and support windows unless the user explicitly pins versions.
+4. Inventory the current system: features, data, integrations, infrastructure, security, support workarounds, hidden jobs, reports, exports/imports, and production behavior.
+5. Map current behavior with characterization tests and contract tests before proposing replacement behavior.
+6. Choose a migration strategy: refactor, upgrade, Strangler Fig, Branch by Abstraction, parallel run, or big bang only when risk is low and rollback is proven.
+7. Write or update a migration plan file in the repo, including current tech context, feature parity, slice plan, data plan, rollout, rollback, observability, security, risks, success criteria, stop criteria, and decommissioning.
+8. Self-review the migration plan for hidden scope, missing contracts, missing data strategy, weak rollback, missing current tech context, missing skills, untested behavior, and unresolved operational risk.
+9. For implementation, route each approved slice through `itsol-functional-planning` or `itsol-bug-debugging` as appropriate, then `itsol-tdd-workflow`, focused domain skills, review skills, and `itsol-subagent-workflow` when the slice is subagent-driven.
 
 Read [references/guide.md](references/guide.md) before making migration recommendations. If the task is only a small feature or bug in an existing migration, route to the narrower skill after checking migration constraints.

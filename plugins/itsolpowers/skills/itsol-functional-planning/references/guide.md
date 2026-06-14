@@ -51,6 +51,7 @@ For the Technical Plan, check:
 
 - exact files or bounded areas are named wherever reasonably knowable
 - Required ITSOL Skills are complete and mapped to tasks or review phases
+- Current Tech Context is present when the plan depends on frameworks, SDKs, runtimes, package managers, libraries, generated clients, external APIs, language editions, or infrastructure tooling
 - logical branches include important `if`/else behavior, validation, authorization, tenant isolation, error handling, idempotency, retries, and compatibility where relevant
 - TDD plan has a concrete RED test or diagnostic, expected failure, GREEN scope, and refactor checkpoint
 - each task has files, required skills, steps, verification, and an Angular commit message
@@ -110,6 +111,7 @@ Ask about business and product depth:
 Ask about technical depth:
 
 - exact UI surfaces, routes, components, API endpoints, background jobs, integrations, generated clients, schemas, migrations, cache, events, queues, and observability touched
+- framework, SDK, runtime, package manager, dependency, generated-client, API, Rust edition, .NET SDK, Node/Bun/npm, database driver, and infrastructure-tool versions that must be verified against current documentation
 - important tradeoffs, rejected approaches, backwards compatibility, performance, security, tenant isolation, error handling, retries, idempotency, concurrency, and data consistency
 - test strategy, TDD entry point, expected RED failure, verification commands, manual smoke checks, and rollback
 - which ITSOL skills should be used during implementation and review
@@ -207,6 +209,16 @@ The Technical Plan must be implementation-ready and complete enough that an agen
 ## Repository Context
 <Relevant frameworks, existing patterns, files inspected, and constraints.>
 
+## Current Tech Context
+Use `itsol-current-tech-context` before completing this section when the work depends on framework, SDK, runtime, package, generated client, external API, language edition, database driver, or infrastructure-tool behavior.
+
+| Area | Detected Or Selected Version | Source Checked | Decision | Risk |
+| --- | --- | --- | --- | --- |
+| `<framework/runtime/package>` | `<repo version or latest stable>` | `<official docs/registry/release notes>` | `<use/pin/upgrade/defer>` | `<risk or None>` |
+
+**Version Policy:** `<repo-pinned | latest stable | user-pinned | LTS | compatibility target>`
+**Internet Check:** `<performed with date | unavailable; limitation>`
+
 ## Files And Ownership
 | Path | Action | Owner/Agent | Purpose |
 | --- | --- | --- | --- |
@@ -218,6 +230,7 @@ List the exact skills that must be loaded while implementing this plan. Include 
 | Skill | Use During | Reason |
 | --- | --- | --- |
 | `itsol-feature-implementation` | whole implementation | primary feature workflow |
+| `itsol-current-tech-context` | planning and review where technology versions matter | verify repo-pinned or latest stable docs and package context |
 | `itsol-tdd-workflow` | before production code changes | RED-GREEN-REFACTOR gate |
 | `<domain-skill>` | specific task or review | technology, security, data, infra, or review coverage |
 

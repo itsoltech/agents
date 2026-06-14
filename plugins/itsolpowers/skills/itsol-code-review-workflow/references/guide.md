@@ -27,6 +27,7 @@ Każdy code review zaczyna się od mapy obszarów, nawet jeśli finalnie jest ma
 
 - zakres biznesowy, acceptance criteria i zgodność PR z opisem;
 - poprawność działania i regresje;
+- aktualny kontekst technologii: wersje frameworków, SDK, runtime, paczek, generated clients, API i dokumentacja właściwa dla wersji z repo;
 - security, trust boundary, auth, authz, tenancy, dane wrażliwe, uploady, integracje i sekrety;
 - dane, migracje, schematy, zapytania, spójność i kompatybilność;
 - infrastruktura, deployment, routing, TLS, runtime, observability, backup, capacity i rollback;
@@ -43,6 +44,7 @@ Sub-agenci są obowiązkowi, gdy PR jest duży, wieloobszarowy albo ryzykowny. D
 - dotyka więcej niż jednej powierzchni systemu, np. UI + API, API + database, app + infra, generated client + backend;
 - zawiera zmiany security, auth/session, authz/tenant, sekrety, dane osobowe, uploady, integracje zewnętrzne albo supply chain;
 - zawiera migracje danych, schematy, kontrakty API, generated clients, rollback/cutover albo elementy rewrite/migration;
+- zależy od zachowania frameworka, SDK, runtime, biblioteki, paczki, generatora, API zewnętrznego albo narzędzia, którego aktualna dokumentacja może zmienić ocenę review;
 - zmienia deployment, runtime, kontenery, Nomad, proxy, TLS, observability, backup, capacity albo production readiness;
 - jest zbyt duży, aby jeden agent mógł wiarygodnie przeanalizować wszystkie obszary w jednym kontekście;
 - ma wiele typów plików, wiele modułów, dużą liczbę linii zmian albo łączy kod ręczny z wygenerowanym.
@@ -54,6 +56,7 @@ Inline-only review jest dopuszczalny wyłącznie dla małego, jednoobszarowego d
 Dobieraj sub-agentów pragmatycznie według zmienionego kodu i ryzyka:
 
 - workflow, zakres, acceptance criteria, severity i finalny werdykt: `itsol-code-review-workflow`;
+- aktualna dokumentacja, wersje repo, latest stable i ryzyka kompatybilności: `itsol-current-tech-context`;
 - security: najwęższy `security-*`, np. auth/session, authz/tenant, API/input, frontend/browser, files/integrations, secrets/config, supply chain;
 - infrastruktura: najwęższy `infra-*`, np. deployment design, container runtime, Nomad, routing/proxy/TLS, edge protection, observability, backup/DR, capacity, production readiness;
 - frontend Svelte/SvelteKit: `svelte-review`;
@@ -75,6 +78,7 @@ Każdy sub-agent review powinien dostać:
 
 - zakres: obszar systemu, ryzyko, pliki lub moduły do sprawdzenia;
 - kontekst: opis PR, acceptance criteria, istotne decyzje techniczne i test evidence;
+- aktualny kontekst technologii, jeśli finding zależy od frameworka, SDK, runtime, paczki, generatora albo API;
 - oczekiwany rezultat: findings według severity, file references, sprawdzona walidacja, brakujące testy, założenia i ryzyka resztkowe;
 - ograniczenie: nie komentować stylu bez wpływu na ryzyko, nie duplikować findings spoza zakresu, nie modyfikować kodu.
 

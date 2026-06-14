@@ -21,7 +21,8 @@ Technical meetings, tech notes, implementation planning, estimates, spikes, roll
 
 1. Przeczytaj ten indeks, aby wybrać właściwy sektor.
 2. Otwórz tylko te pliki referencyjne, które odpowiadają zadaniu, ryzyku albo etapowi workflow.
-3. Jeśli zadanie obejmuje kilka niezależnych obszarów, załaduj kilka sektorów zamiast całego dawnego guide.
+3. Jeśli plan zależy od frameworków, SDK, runtime, paczek, generated clients, API zewnętrznych, Rust edition, .NET SDK, Node/Bun/npm, database drivers albo narzędzi infrastrukturalnych, załaduj `itsol-current-tech-context` i wpisz wynik jako Current Tech Context w planie.
+4. Jeśli zadanie obejmuje kilka niezależnych obszarów, załaduj kilka sektorów zamiast całego dawnego guide.
 
 ## Pliki referencyjne
 
