@@ -28,7 +28,7 @@ Po instalacji dostępne komendy:
 
 #### itsolpowers
 
-Skille ITSOL do routingu zadań, aktualnego kontekstu technologii i dokumentacji, migracji technologii aplikacji, planowania funkcjonalnego zapisywanego do plików, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
+Skille ITSOL do routingu zadań, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, planowania funkcjonalnego zapisywanego do plików, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
 
 ```
 /plugin install itsolpowers@itsoltech-agents
@@ -106,6 +106,7 @@ Po instalacji dostępne są skille:
 - `itsol-task-intake`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, aktualnej dokumentacji i migracji technologii, przez obowiązkowe pliki Business Plan i Technical Plan albo Technical Fix Plan dla bugów, podział pracy na sub-agentów, red-green-refactor, do QA
 - `security-*` — rozdrobnione skille security dla threat modelingu, auth, authz, API, frontendu, sekretów, supply chain, QA i obsługi podatności
 - `infra-*` — rozdrobnione skille infrastrukturalne dla deploymentu, kontenerów, Nomada, routingu, edge protection, sekretów, obserwowalności, backupów, capacity i incidentów
+- `ui-*` — framework-agnostic UI/UX frontendu: workflow, design system, architektura komponentów, stany i formularze, responsywność, Tailwind/tokeny, accessibility/motion, performance/stability, testy/QA i code review UI
 - `svelte-*`, `tanstack-query-svelte-*`, `hey-api-openapi-*` — frontend, server state i klient API generowany z OpenAPI
 - `dotnet-web-api-*`, `effect-typescript-*`, `rust-*`, `rust-ml-llm-*` — backend, typed TypeScript, Rust oraz aplikacje ML/LLM z Rig i Candle
 - `postgres-*`, `mongodb-*` — projektowanie, review i debugowanie operacyjne baz danych

@@ -28,6 +28,7 @@ Każdy code review zaczyna się od mapy obszarów, nawet jeśli finalnie jest ma
 - zakres biznesowy, acceptance criteria i zgodność PR z opisem;
 - poprawność działania i regresje;
 - aktualny kontekst technologii: wersje frameworków, SDK, runtime, paczek, generated clients, API i dokumentacja właściwa dla wersji z repo;
+- UI/UX: design system, komponenty, stany, formularze, responsywność, accessibility, motion, performance, testy UI i QA;
 - security, trust boundary, auth, authz, tenancy, dane wrażliwe, uploady, integracje i sekrety;
 - dane, migracje, schematy, zapytania, spójność i kompatybilność;
 - infrastruktura, deployment, routing, TLS, runtime, observability, backup, capacity i rollback;
@@ -57,6 +58,7 @@ Dobieraj sub-agentów pragmatycznie według zmienionego kodu i ryzyka:
 
 - workflow, zakres, acceptance criteria, severity i finalny werdykt: `itsol-code-review-workflow`;
 - aktualna dokumentacja, wersje repo, latest stable i ryzyka kompatybilności: `itsol-current-tech-context`;
+- UI/UX frontend: `ui-code-review` oraz wąskie `ui-*` dla dotkniętych obszarów;
 - security: najwęższy `security-*`, np. auth/session, authz/tenant, API/input, frontend/browser, files/integrations, secrets/config, supply chain;
 - infrastruktura: najwęższy `infra-*`, np. deployment design, container runtime, Nomad, routing/proxy/TLS, edge protection, observability, backup/DR, capacity, production readiness;
 - frontend Svelte/SvelteKit: `svelte-review`;

@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI/UX Workflow"
+  short_description: "Route frontend UI/UX work across ITSOL skills"
+  default_prompt: "Use $ui-ux-workflow to plan or review this frontend UI/UX task."

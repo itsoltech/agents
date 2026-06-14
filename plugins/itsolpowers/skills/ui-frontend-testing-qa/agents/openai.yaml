@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Frontend Testing QA"
+  short_description: "Plan UI tests, visual checks, and QA matrices"
+  default_prompt: "Use $ui-frontend-testing-qa to plan or review frontend UI tests, visual regression, and QA coverage."

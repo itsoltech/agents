@@ -7,12 +7,13 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 - Wymagania, story, refinement albo gotowość zadania: użyj `itsol-task-intake`, potem `itsol-requirements-review`.
 - Aktualność technologii, dokumentacji, wersji frameworków, SDK, runtime, paczek, generated clients, API zewnętrznych albo start nowego projektu: użyj `itsol-current-tech-context`. W istniejącym repo najpierw wykryj lokalnie przypięte wersje, a dopiero potem sprawdzaj aktualną dokumentację. W nowym projekcie wybieraj latest stable, chyba że user jawnie przypiął wersje albo wymaga LTS/kompatybilności.
 - Rewrite aplikacji, migracja technologii, modernizacja, Strangler Fig, Branch by Abstraction, parallel run, cutover danych, kontrakty kompatybilności albo decommissioning legacy: użyj `application-technology-migration`, a dopiero dla zatwierdzonych slice'ów dobierz `itsol-functional-planning`, `itsol-tdd-workflow`, review/security/infra/database i skille technologiczne.
+- UI/UX, nowy widok, komponent, design system, responsive, accessibility, Tailwind, performance frontendu, testy UI albo QA frontendu: użyj `ui-ux-workflow`, a potem dobierz najwęższe skille UI dla dotkniętego obszaru.
 - Feature albo behavior change: użyj `itsol-task-intake`, potem `itsol-functional-planning`; dopiero po zapisaniu i zatwierdzeniu plików Business Planu oraz Technical Planu i wyborze subagenci/inline użyj `itsol-subagent-workflow` albo `itsol-feature-implementation` z `itsol-tdd-workflow`.
 - Endpoint, UI flow, integracja albo logika produktowa: traktuj jako zadanie funkcjonalne i przejdź przez `itsol-functional-planning`.
 - Bug, regresja albo failing test: użyj `itsol-bug-debugging`, zbierz dowody i zapisz Technical Fix Plan; dopiero po akceptacji użytkownika użyj `itsol-tdd-workflow` i najwęższego skilla debuggingowego, np. `svelte-debugging`, `postgres-operations-debugging`, `dotnet-web-api-debugging`.
 - Refactor kodu produkcyjnego: użyj `itsol-tdd-workflow` przed zmianą, żeby zabezpieczyć zachowanie testem.
 - Plan techniczny, tech notes, spike, rollout albo rollback: użyj `itsol-technical-planning`, `itsol-current-tech-context` oraz domenowych skillów dla dotkniętych obszarów.
-- Review PR: użyj `itsol-code-review-workflow`, zbuduj mapę obszarów review i dobierz skille review dla dotkniętych technologii. Jeśli finding albo ocena zależy od frameworka, SDK, runtime, paczki, generatora lub API, użyj `itsol-current-tech-context`. Dla dużego, wieloobszarowego albo ryzykownego PR użyj osobnych sub-agentów według obszarów, np. current tech context, security, infra, frontend, backend, database, generated clients/API contracts, migration/rewrite, QA/release, performance i test strategy. Inline-only review dopuszczaj tylko dla małego jednoobszarowego diffu i jawnie uzasadnij, dlaczego sub-agenci nie byli potrzebni.
+- Review PR: użyj `itsol-code-review-workflow`, zbuduj mapę obszarów review i dobierz skille review dla dotkniętych technologii. Jeśli finding albo ocena zależy od frameworka, SDK, runtime, paczki, generatora lub API, użyj `itsol-current-tech-context`. Jeśli PR dotyka UI/UX, użyj `ui-code-review` oraz właściwych skilli UI. Dla dużego, wieloobszarowego albo ryzykownego PR użyj osobnych sub-agentów według obszarów, np. current tech context, UI/UX, security, infra, frontend, backend, database, generated clients/API contracts, migration/rewrite, QA/release, performance i test strategy. Inline-only review dopuszczaj tylko dla małego jednoobszarowego diffu i jawnie uzasadnij, dlaczego sub-agenci nie byli potrzebni.
 - Handoff do QA albo release readiness: użyj `itsol-self-review`, potem `itsol-qa-handoff` i tylko tych domenowych skillów, które odpowiadają faktycznie zmienionym powierzchniom.
 
 ## Routing Sub-agentów
@@ -22,6 +23,7 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 - Użyj sub-agentów, gdy zadanie ma niezależne powierzchnie pracy: UI/API/database/infra, osobne hipotezy debuggingowe, równoległe ścieżki review, security plus implementacja albo zbieranie dowodów z kilku miejsc.
 - Przy code review każdy PR wymaga mapy obszarów review. Duży, wieloobszarowy, security/data/infra-sensitive, migration-related albo generated-contract-related PR musi być sprawdzony przez sub-agentów w niezależnych obszarach. Nie wykonuj inline-only review jednego sektora, jeśli diff dotyka wielu obszarów.
 - Przy planowaniu i review zależnym od wersji technologii uruchom osobny sub-agent `itsolpowers:itsol-current-tech-context`, jeśli narzędzia na to pozwalają. Ma zwrócić wykryte wersje, źródła dokumentacji, politykę wersji i ryzyka kompatybilności.
+- Przy dużym review UI/UX rozdziel sub-agentów według obszarów: design system, architektura komponentów, stany/formularze/listy, responsywność, Tailwind/tokeny, accessibility/motion, performance/stability, testy/QA i security frontend.
 - Każdy sub-agent powinien dostać wąski zakres, właścicielstwo plików lub obszaru systemu, ograniczenia i oczekiwany rezultat.
 - Główny agent nie deleguje bieżącego blokera ani decyzji integracyjnych. Odpowiada za scalenie wyników, spójność zmian, brak konfliktów edycyjnych i końcową weryfikację.
 - Przy edycji kodu rozdziel zapis na rozłączne pliki lub moduły. Jeśli to niemożliwe, sub-agenci powinni tylko analizować i raportować.
@@ -36,6 +38,7 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 
 - UI, browser, forms, accessibility: `svelte-*`.
 - Current official documentation, SDK/runtime/package versions, latest stable defaults, and repo pins: `itsol-current-tech-context`.
+- UI/UX workflow, design system, components, states/forms, responsive, Tailwind, accessibility, performance, tests and UI review: `ui-*`.
 - Server state, cache, invalidation, SSR prefetch: `tanstack-query-svelte-*`.
 - Generated OpenAPI clients and contract drift: `hey-api-openapi-*`.
 - ASP.NET Core APIs: `dotnet-web-api-*`.

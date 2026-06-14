@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI View States And Forms"
+  short_description: "Check UX states, forms, lists, API and cache behavior"
+  default_prompt: "Use $ui-view-states-forms to design or review UI states, forms, tables, lists, and cache UX."

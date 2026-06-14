@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Code Review"
+  short_description: "Review frontend UI/UX PRs with focused coverage"
+  default_prompt: "Use $ui-code-review to review this frontend UI/UX pull request."

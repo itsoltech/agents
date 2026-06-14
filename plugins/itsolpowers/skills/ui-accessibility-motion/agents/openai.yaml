@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Accessibility Motion"
+  short_description: "Check keyboard, ARIA, focus, and reduced motion"
+  default_prompt: "Use $ui-accessibility-motion to review accessibility, keyboard behavior, focus, ARIA, and motion."

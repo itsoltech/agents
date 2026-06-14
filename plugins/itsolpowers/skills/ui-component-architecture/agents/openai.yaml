@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Component Architecture"
+  short_description: "Decompose and review frontend component structure"
+  default_prompt: "Use $ui-component-architecture to review component boundaries and UI refactor risks."

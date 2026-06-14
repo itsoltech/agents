@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Responsive Media"
+  short_description: "Review responsive layout, breakpoints, and media"
+  default_prompt: "Use $ui-responsive-media to check responsive layout, viewport behavior, images, and media."

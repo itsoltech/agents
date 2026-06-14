@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Performance Stability"
+  short_description: "Review frontend performance and layout stability"
+  default_prompt: "Use $ui-performance-stability to check Core Web Vitals, layout shift, large lists, and bundle/performance risks."

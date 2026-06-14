@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Tailwind Tokens"
+  short_description: "Review Tailwind token and variant usage"
+  default_prompt: "Use $ui-tailwind-tokens to review Tailwind classes, tokens, variants, and responsive utilities."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Design System"
+  short_description: "Review tokens, base components, and UI consistency"
+  default_prompt: "Use $ui-design-system to check design-system consistency and component decisions."
