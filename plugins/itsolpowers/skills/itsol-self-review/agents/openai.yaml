@@ -1,4 +1,4 @@
 interface:
   display_name: "ITSOL Self Review"
-  short_description: "Review own change before handoff"
+  short_description: "Review plans and changes before approval or handoff"
   default_prompt: "Use $itsol-self-review for this ITSOL task."

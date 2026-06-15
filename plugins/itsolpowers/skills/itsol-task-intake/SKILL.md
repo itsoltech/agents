@@ -16,8 +16,9 @@ Classify the work before changing code. The first decision is the task mode, bec
 5. For functional features or behavior changes, load `itsol-functional-planning` and `itsol-requirements-review`; vague, one-sentence, or underspecified requests must go through a PM-style Discovery Gate before any Business Plan is written.
 6. In that Discovery Gate, treat the user as the client: require scenario and scope clarification, business problem, users/roles, data, edge cases, acceptance, rollout, and decision ownership when they affect the plan.
 7. After Business Plan approval, require a Technical Decision Gate before the Technical Plan when multiple implementation approaches are possible. Do not choose product behavior, UI/API scope, rollout, data migration, permissions, architecture, or UX only from assumptions or internet research.
-8. Require Business Plan approval, Technical Plan approval, and execution-mode choice before implementation.
-9. Load the focused ITSOL workflow and domain skills for those surfaces.
-10. Ask only for missing information that cannot be inferred safely; if the missing information changes scope, behavior, architecture, rollout, data, permissions, or UX, ask before planning.
+8. Before requesting approval for Business Plan or Technical Plan, require Plan Self-Review and Rubber Duck Plan Review through the `itsol-self-review` subagent; material findings must be resolved first.
+9. Require Business Plan approval, Technical Plan approval, and execution-mode choice before implementation.
+10. Load the focused ITSOL workflow and domain skills for those surfaces.
+11. Ask only for missing information that cannot be inferred safely; if the missing information changes scope, behavior, architecture, rollout, data, permissions, or UX, ask before planning.
 
 Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.

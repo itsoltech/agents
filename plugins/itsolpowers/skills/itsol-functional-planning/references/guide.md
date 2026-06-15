@@ -8,9 +8,13 @@ For functional tasks, do not edit production code, tests, configs, migrations, o
 
 - the Discovery Gate is complete for vague, one-sentence, broad, or underspecified requests
 - the Business Plan markdown file exists in the repo
+- the Business Plan passed Plan Self-Review
+- the Business Plan passed Rubber Duck Plan Review by a subagent and all material findings are resolved
 - the user approved the Business Plan file
 - the Technical Decision Gate is complete before the Technical Plan is written, unless there is only one viable technical path forced by existing repo architecture
 - the Technical Plan markdown file exists in the repo
+- the Technical Plan passed Plan Self-Review
+- the Technical Plan passed Rubber Duck Plan Review by a subagent and all material findings are resolved
 - the user approved the Technical Plan file
 - the user chose execution mode: subagents or inline
 
@@ -35,7 +39,8 @@ Before writing:
 2. Create the destination directory if missing.
 3. Use the current date and a short lowercase slug from the task.
 4. Keep both plan files under version control unless the user says planning artifacts should stay local.
-5. After each file is written, run the Plan Self-Review and fix placeholders, contradictions, missing sections, vague acceptance criteria, TODOs, unresolved questions, and verification gaps before asking for approval.
+5. After each file is written, run the Plan Self-Review and fix placeholders, contradictions, missing sections, vague acceptance criteria, TODOs, unresolved questions, and verification gaps.
+6. After self-review fixes, run the Rubber Duck Plan Review with a separate subagent before asking for approval.
 
 ## Plan Self-Review
 
@@ -67,6 +72,52 @@ For the Technical Plan, check:
 - no task depends on undefined types, functions, external services, or assumptions hidden outside the plan
 
 If self-review finds unresolved items that materially affect scope or implementation, ask targeted follow-up questions before requesting approval. If an item is intentionally deferred, document it in out-of-scope or follow-up scope.
+
+## Rubber Duck Plan Review
+
+After Plan Self-Review and before asking the user to approve either plan, run a mandatory Rubber Duck Plan Review through a separate subagent. Use the `itsolpowers:itsol-self-review` subagent when Claude Code subagents are available. If subagent tooling is unavailable, do not silently skip the gate; state that Rubber Duck Review cannot be completed and ask how to proceed.
+
+The Rubber Duck reviewer is read-only. It must not edit the plan. Its job is to act like a critical teammate who always looks for holes in the plan. Give it the plan file path, the related user request, the approved scope or technical approach, and only the minimal repo context needed to verify claims.
+
+The main agent remains responsible for the plan. It must resolve the subagent report by updating the plan, asking the user targeted questions, or documenting a deliberately deferred item. Do not ask for approval while a material Rubber Duck finding remains unresolved. Repeat the Rubber Duck Review if the fix materially changes scope, acceptance criteria, architecture, data, rollout, or verification.
+
+### Business Plan Rubber Duck Questions
+
+The subagent must challenge the Business Plan with questions like:
+
+- What important user, role, tenant, or decision owner is missing?
+- Which acceptance criterion is too vague for QA to verify?
+- Which edge case, negative path, permission path, or legacy-data case is not covered?
+- Which assumption changes business behavior and should have been confirmed with the user?
+- Is the scope small enough for one coherent first delivery?
+- What is claimed as out of scope but still leaks into acceptance criteria, QA, rollout, or support?
+- Which UX/API behavior, copy, error state, audit need, report, export, notification, or customer communication is underspecified?
+- What could make the client reject this implementation even if the code matches the plan?
+
+### Technical Plan Rubber Duck Questions
+
+The subagent must challenge the Technical Plan with questions like:
+
+- Which selected technical approach is unapproved, weakly justified, or inconsistent with the Business Plan?
+- Which file, module, endpoint, component, schema, migration, generated client, job, cache, event, config, or deployment surface is missing?
+- Which `if`/else branch, validation rule, authorization rule, tenant boundary, idempotency rule, retry path, compatibility rule, or error path is underspecified?
+- Which required ITSOL skill or focused review area is missing?
+- Where is Current Tech Context required but absent?
+- Which RED/GREEN/TDD step is too vague to execute?
+- Which verification command, manual QA scenario, migration check, rollback path, monitoring step, or release order is missing?
+- What could fail in production even if every listed task is implemented?
+
+### Rubber Duck Report Contract
+
+The subagent must return:
+
+1. Plan inspected and related context used.
+2. Critical findings grouped as blockers, important gaps, and non-blocking suggestions.
+3. Questions the main agent must ask the user before approval.
+4. Plan sections that need updates.
+5. A clear verdict: `ready for approval` or `not ready for approval`.
+
+Only a `ready for approval` verdict with no material blockers lets the main agent request user approval. Non-blocking suggestions may be deferred only when the plan explicitly documents why they are out of scope.
 
 ## Scope Gate
 
@@ -314,7 +365,7 @@ The Business Plan must be understandable without reading code and complete enoug
 - <Question or "None">
 ```
 
-End with an explicit approval request:
+After Plan Self-Review and Rubber Duck Plan Review pass, end with an explicit approval request:
 
 `Business Plan saved to <path>. Approve this file before I prepare the Technical Plan.`
 
@@ -417,7 +468,7 @@ For visible frontend work, include `ui-ux-workflow` and focused UI skills in the
 - <Question or "None">
 ```
 
-End with an explicit approval request:
+After Plan Self-Review and Rubber Duck Plan Review pass, end with an explicit approval request:
 
 `Technical Plan saved to <path>. Approve this file before I start implementation.`
 

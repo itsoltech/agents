@@ -1,4 +1,4 @@
 interface:
   display_name: "ITSOL Functional Planning"
-  short_description: "Gate functional work with business and technical plans"
+  short_description: "Gate functional work with interviewed and reviewed plans"
   default_prompt: "Use $itsol-functional-planning before implementing this feature."
