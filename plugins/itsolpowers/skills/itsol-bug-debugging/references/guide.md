@@ -34,15 +34,62 @@ Debugowanie i naprawa błędów: triage, opis błędu, reprodukcja, zawężanie,
 
 Przed zmianą kodu produkcyjnego agent musi najpierw przeanalizować błąd i zapisać jeden Technical Fix Plan. Nie twórz osobnego Business Planu dla bugfixa; problem biznesowy wynika z niepoprawnego zachowania aplikacji.
 
+Technical Fix Plan zawsze zaczyna jako `Draft`. Agent nie może sam oznaczyć planu jako `Approved`, nawet jeśli użytkownik w pierwotnej wiadomości poprosił o naprawę, implementację, kontynuację albo "zrób to".
+
 ### Kolejność
 
 1. Zbierz dowody: reprodukcja, logi, trace'y, failing test, dane, konfiguracja, kontrakty API, podobne ścieżki.
 2. Oddziel fakty od hipotez. Nie przedstawiaj planu jako pewnego, jeśli root cause nie jest jeszcze potwierdzony.
 3. Jeśli brakuje danych, zadaj użytkownikowi konkretne pytania albo zaproponuj diagnostykę przed planem.
-4. Zapisz Technical Fix Plan w repo.
-5. Wykonaj self-review planu i popraw luki przed prośbą o akceptację.
-6. Poproś użytkownika o akceptację albo uwagi.
-7. Dopiero po akceptacji implementuj poprawkę przez TDD.
+4. Zawsze uruchom Fix Decision Gate: pokaż warianty naprawy albo jeden wymuszony wariant z uzasadnieniem, tradeoffy, rekomendację i zapytaj użytkownika, którą ścieżkę wybrać albo czy akceptuje rekomendację.
+5. Zapisz Technical Fix Plan w repo ze statusem `Draft`.
+6. Wykonaj self-review planu i popraw luki.
+7. Uruchom Rubber Duck Plan Review przez subagenta `itsol-self-review` i rozwiąż materialne znaleziska.
+8. Pokaż użytkownikowi ścieżkę planu oraz krótkie podsumowanie i poproś o akceptację albo uwagi.
+9. Dopiero po jawnej akceptacji użytkownika zmień status planu na `Approved` i implementuj poprawkę przez TDD.
+
+### Fix Decision Gate
+
+Agent musi zapytać użytkownika, jaką ścieżką chce naprawić problem, zanim napisze Technical Fix Plan. Jeśli istnieje tylko jeden rozsądny wariant, agent nadal pokazuje ten wariant, wyjaśnia dlaczego jest najlepszy lub wymuszony, i prosi użytkownika o potwierdzenie.
+
+Fix Decision Gate powinien zawierać:
+
+1. Krótkie podsumowanie dowodów i hipotezy/root cause.
+2. Dwa do czterech wariantów naprawy z tradeoffami albo jeden wymuszony wariant z uzasadnieniem.
+3. Rekomendację agenta z uzasadnieniem.
+4. Pytanie do użytkownika o wybór wariantu albo akceptację rekomendacji.
+
+Przykładowe warianty:
+
+- najmniejszy hotfix root cause
+- kompatybilna poprawka z obsługą starych danych
+- szerszy refactor danego modułu
+- feature flag / rollout etapowy
+- naprawa backend-only, frontend-only albo full-stack
+- szybka diagnostyka/spike przed planem, jeśli root cause nie jest potwierdzony
+
+Nie ukrywaj takiej decyzji w Technical Fix Planie jako "implementation detail".
+
+### Approval Gate
+
+Akceptacja planu musi być jawna, osobna i świadoma.
+
+Prawidłowa akceptacja wymaga:
+
+1. Plan został zapisany ze statusem `Draft`.
+2. Agent pokazał użytkownikowi ścieżkę planu i krótkie podsumowanie.
+3. Agent zadał bezpośrednie pytanie o akceptację planu.
+4. Użytkownik odpowiedział po tym pytaniu jednoznacznie, np. `approve`, `approved`, `akceptuję`, `zatwierdzam`, `ok, wdrażaj` albo równoważnie.
+
+Nieprawidłowe źródła akceptacji:
+
+- `Approved by direct user request`
+- pierwotna prośba użytkownika o naprawę
+- `kontynuuj`, jeśli użytkownik nie widział jeszcze planu
+- cisza, brak sprzeciwu albo wcześniejsza zgoda na inny plan
+- zgoda wywnioskowana przez agenta
+
+Jeśli odpowiedź jest niejednoznaczna, plan pozostaje `Draft`, a agent ma zapytać o akceptację albo uwagi. Nie wolno zaczynać implementacji, gdy Technical Fix Plan ma status `Draft`.
 
 ### Plik Planu
 
@@ -57,7 +104,7 @@ Użyj innej lokalizacji tylko wtedy, gdy repo ma jasną konwencję planów albo 
 ```markdown
 # <Bug or Symptom> Technical Fix Plan
 
-**Status:** Draft | Approved
+**Status:** Draft
 **Created:** YYYY-MM-DD
 **Related issue/request:** <short summary or ticket link>
 
@@ -131,6 +178,18 @@ Przed prośbą o akceptację sprawdź i popraw:
 - czy ryzyka i rollback są opisane albo sensownie oznaczone jako nie dotyczy
 
 Jeśli self-review ujawni brakujące dowody lub nierozstrzygnięte pytania, zatrzymaj się i zapytaj użytkownika albo zaproponuj diagnostykę. Nie proś o zatwierdzenie planu z ukrytymi lukami.
+
+### Rubber Duck Plan Review
+
+Po self-review, a przed prośbą o akceptację, użyj subagenta `itsol-self-review` jako krytycznego recenzenta planu. Subagent ma działać read-only i zwrócić:
+
+- blockery
+- ważne luki
+- pytania do użytkownika przed approval
+- sekcje planu do poprawy
+- werdykt `ready for approval` albo `not ready for approval`
+
+Nie proś użytkownika o akceptację, dopóki materialne znaleziska z Rubber Duck Review nie są rozwiązane.
 
 ## Pliki referencyjne
 

@@ -11,10 +11,11 @@ Run a final review before saying work is complete. Also use this skill as the re
 
 1. Re-read the artifact under review: plan file, diff, PR, patch, migration, deployment config, or generated artifact.
 2. For plans, act as a critical teammate looking for holes: challenge scope, assumptions, edge cases, approvals, missing files, missing skills, tests, rollout, rollback, and verification.
-3. For code changes, check requirements, edge cases, permissions, validation, data consistency, errors, logs, and rollout risk.
-4. Confirm RED/GREEN evidence for code changes, or explain why a TDD test was not practical and what replaced it.
-5. Load focused domain review skills for touched areas.
-6. Report blockers, important gaps, non-blocking suggestions, verification commands, and remaining risks.
+3. Treat a plan marked `Approved` without evidence that the user saw and explicitly approved that specific plan as a blocker.
+4. For code changes, check requirements, edge cases, permissions, validation, data consistency, errors, logs, and rollout risk.
+5. Confirm RED/GREEN evidence for code changes, or explain why a TDD test was not practical and what replaced it.
+6. Load focused domain review skills for touched areas.
+7. Report blockers, important gaps, non-blocking suggestions, verification commands, and remaining risks.
 
 ## Rubber Duck Plan Review
 
@@ -22,7 +23,7 @@ When reviewing a Business Plan or Technical Plan, do not edit the file. Return a
 
 1. Plan inspected and related context used.
 2. Blockers that make the plan not ready for approval.
-3. Important gaps, hidden assumptions, weak acceptance criteria, missing technical decisions, or missing verification.
+3. Invalid approval status, important gaps, hidden assumptions, weak acceptance criteria, missing technical decisions, or missing verification.
 4. Questions the main agent must ask the user before approval.
 5. Plan sections that need updates.
 6. Verdict: `ready for approval` or `not ready for approval`.

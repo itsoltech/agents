@@ -11,7 +11,7 @@ For functional tasks, do not edit production code, tests, configs, migrations, o
 - the Business Plan passed Plan Self-Review
 - the Business Plan passed Rubber Duck Plan Review by a subagent and all material findings are resolved
 - the user approved the Business Plan file
-- the Technical Decision Gate is complete before the Technical Plan is written, unless there is only one viable technical path forced by existing repo architecture
+- the Technical Decision Gate is complete before the Technical Plan is written, including user confirmation when there is only one viable technical path
 - the Technical Plan markdown file exists in the repo
 - the Technical Plan passed Plan Self-Review
 - the Technical Plan passed Rubber Duck Plan Review by a subagent and all material findings are resolved
@@ -21,6 +21,27 @@ For functional tasks, do not edit production code, tests, configs, migrations, o
 If the user asks to skip planning, still produce the shortest useful version of both plans and ask for approval.
 
 Do not write a Business Plan directly from a vague request. A short user brief is only a starting signal for discovery, not permission to choose product behavior, scope, architecture, or rollout strategy on the user's behalf.
+
+## Approval Gate
+
+Plan approval must be explicit, separate, and informed. A plan is not approved just because the user asked the agent to fix, implement, continue, prepare a plan, or proceed with the task.
+
+Valid approval requires all of these conditions:
+
+1. The plan file was written with `**Status:** Draft`.
+2. The agent presented the plan path and a concise summary of the plan to the user.
+3. The agent asked for approval using a direct question.
+4. The user replied after that question with an explicit approval such as `approve`, `approved`, `akceptuję`, `zatwierdzam`, `ok, wdrażaj`, or equivalent.
+
+Invalid approval examples:
+
+- `Approved by direct user request`
+- `Approved because user asked to implement`
+- `Approved because user said continue` before seeing the plan
+- approval inferred from the original task request
+- approval inferred from silence, lack of objections, or a previous unrelated approval
+
+Only after valid approval may the agent update the plan status to `Approved`. If approval is missing or ambiguous, keep `**Status:** Draft`, stop, and ask the user to approve or request changes. Do not start implementation while any required plan status is `Draft`.
 
 ## Plan Files
 
@@ -41,6 +62,7 @@ Before writing:
 4. Keep both plan files under version control unless the user says planning artifacts should stay local.
 5. After each file is written, run the Plan Self-Review and fix placeholders, contradictions, missing sections, vague acceptance criteria, TODOs, unresolved questions, and verification gaps.
 6. After self-review fixes, run the Rubber Duck Plan Review with a separate subagent before asking for approval.
+7. New plan files must start with `**Status:** Draft`. Do not write `Approved` in a new plan file.
 
 ## Plan Self-Review
 
@@ -209,14 +231,14 @@ Bad behavior:
 
 ### Technical Decision Gate
 
-Run the Technical Decision Gate after the Business Plan is approved and before writing the Technical Plan when there is more than one viable implementation path.
+Run the Technical Decision Gate after the Business Plan is approved and before writing the Technical Plan. This gate is mandatory even when the agent believes there is only one sensible implementation path.
 
 The Technical Decision Gate output must be a chat response, not a plan file. It must contain:
 
 1. **Approved business target:** the Business Plan path and the product scenario/scope the user approved.
 2. **Repo constraints:** relevant architecture, existing patterns, framework/package versions, data model, deployment constraints, tests, and integration contracts found in the repo.
 3. **Current technology context:** when framework, SDK, runtime, package, generated client, external API, language edition, database driver, or infrastructure tooling behavior matters, use `itsol-current-tech-context` to verify repo-pinned or current official documentation before proposing choices.
-4. **Technical options:** two to four feasible approaches with tradeoffs. Compare implementation size, risk, compatibility, migration, testability, rollback, performance, security, data impact, and operational complexity.
+4. **Technical options:** two to four feasible approaches with tradeoffs, or one forced approach with the reason it is forced. Compare implementation size, risk, compatibility, migration, testability, rollback, performance, security, data impact, and operational complexity.
 5. **Recommendation:** one recommended approach with reasoning tied to the approved Business Plan, repo conventions, risk, and delivery size.
 6. **Decision request:** ask the user to choose an option or approve the recommendation before writing the Technical Plan.
 
@@ -235,7 +257,7 @@ Ask technical-decision questions that materially affect implementation:
 - How strict should tests be: unit, contract, integration, e2e, snapshot/visual, migration test, load test, security test?
 - Should implementation be delegated through subagents by UI/API/database/security/infra or done inline?
 
-If the user asks for a recommendation, provide it, but still ask for approval before writing the Technical Plan when the choice changes architecture, API contracts, data, rollout, security, UX, or operational behavior.
+If the user asks for a recommendation, provide it, but still ask for approval before writing the Technical Plan. If only one approach is viable, state why and ask the user to confirm that approach before planning.
 
 Good Technical Decision Gate shape:
 
@@ -260,7 +282,7 @@ Questions:
 
 Bad behavior:
 
-- writing the Technical Plan immediately after Business Plan approval when multiple technical approaches exist
+- writing the Technical Plan immediately after Business Plan approval without a Technical Decision Gate
 - choosing the newest library, common pattern, or internet-found implementation without asking whether that path fits the user's constraints
 - hiding a major technical choice as an implementation detail
 - asking for Technical Plan approval while the selected architecture, migration path, API contract, or rollout strategy is still undecided
@@ -316,7 +338,7 @@ The Business Plan must be understandable without reading code and complete enoug
 ```markdown
 # <Feature or Change> Business Plan
 
-**Status:** Draft | Approved
+**Status:** Draft
 **Created:** YYYY-MM-DD
 **Related request:** <short summary or ticket link>
 **Technical Plan:** <path when available>
@@ -365,7 +387,7 @@ The Business Plan must be understandable without reading code and complete enoug
 - <Question or "None">
 ```
 
-After Plan Self-Review and Rubber Duck Plan Review pass, end with an explicit approval request:
+After Plan Self-Review and Rubber Duck Plan Review pass, present the plan path and summary, then end with an explicit approval request:
 
 `Business Plan saved to <path>. Approve this file before I prepare the Technical Plan.`
 
@@ -376,7 +398,7 @@ The Technical Plan must be implementation-ready and complete enough that an agen
 ```markdown
 # <Feature or Change> Technical Plan
 
-**Status:** Draft | Approved
+**Status:** Draft
 **Created:** YYYY-MM-DD
 **Business Plan:** <path>
 **Technical Approach:** <confirmed option or "Forced by existing architecture">
@@ -468,7 +490,7 @@ For visible frontend work, include `ui-ux-workflow` and focused UI skills in the
 - <Question or "None">
 ```
 
-After Plan Self-Review and Rubber Duck Plan Review pass, end with an explicit approval request:
+After Plan Self-Review and Rubber Duck Plan Review pass, present the plan path and summary, then end with an explicit approval request:
 
 `Technical Plan saved to <path>. Approve this file before I start implementation.`
 

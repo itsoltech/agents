@@ -9,10 +9,14 @@ Do not start subagent execution until all are true:
 - the Business Plan is approved
 - the Technical Plan is approved
 - both plan file paths are known
+- both plan files contain `**Status:** Approved`
+- approval happened after the user saw each specific plan and explicitly approved it
 - the user chose subagent-driven execution
 - the main agent understands the current git state and existing user changes
 
 If any condition is missing, stop and ask for the missing approval or execution decision.
+
+Invalid approval sources include "direct user request", the original task request, `continue`, silence, or a generic main-agent statement. If approval evidence is ambiguous, stop and ask the user to approve the specific plan before delegation.
 
 ## Task Split
 

@@ -22,14 +22,16 @@ Before refining requirements, implementing, debugging, reviewing, planning, or h
 9. For UI/UX tasks, new views, visible frontend flows, design-system changes, responsive behavior, accessibility, frontend tests, or UI review, load `ui-ux-workflow` plus the smallest focused UI skills for the touched surface.
 10. For functional tasks, feature work, endpoints, UI flows, integrations, or behavior changes, load `itsol-functional-planning` and `itsol-requirements-review`; require approved Business and Technical Plan markdown files before implementation.
 11. For vague, one-sentence, broad, or underspecified functional requests, do not write a Business Plan yet. Run the `itsol-functional-planning` Discovery Gate first as a PM/client interview: present known context, major unknowns, several plausible product scenarios, scope boundaries, edge-case prompts, and ask the user to choose or approve a scenario.
-12. After Business Plan approval, do not write a Technical Plan yet when several implementation paths are viable. Run the Technical Decision Gate: present technical options, tradeoffs, recommendation, current-tech context when relevant, and ask the user to choose or approve the approach.
+12. After Business Plan approval, do not write a Technical Plan yet. Always run the Technical Decision Gate: present technical options or the single forced/recommended approach, tradeoffs, recommendation, current-tech context when relevant, and ask the user to choose or approve the approach.
 13. Before asking approval for either Business Plan or Technical Plan, require Plan Self-Review and Rubber Duck Plan Review through the `itsol-self-review` subagent. Approval is blocked until material findings are resolved.
-14. Do not let internet research silently choose the user's product or technical direction. Use current documentation to frame options and risks, then ask before locking scope, behavior, architecture, rollout, data migration, permissions, API contracts, or UX into a plan.
-15. For bugs, regressions, failing tests, production symptoms, or broken behavior, load `itsol-bug-debugging`; require evidence and an approved Technical Fix Plan before implementation.
-16. For feature work, bugfixes, behavior changes, refactors, UI changes, or migration slices, load `itsol-tdd-workflow` before writing production code.
-17. If the user chooses subagent-driven execution, load `itsol-subagent-workflow` before starting implementation.
-18. For every code review, build a coverage map of relevant review areas. If the PR is large, multi-surface, security/data/infra sensitive, migration-related, generated-contract related, documentation-version-sensitive, frontend/UI-heavy, or hard to review in one context, route review through focused subagents before producing the verdict.
-19. If the work has independent surfaces, route them through subagents before implementation or review.
+14. Approval must be explicit after the user saw the specific plan. Never mark a plan as `Approved` because of "direct user request", the original task request, `continue`, silence, or a generic main-agent statement.
+15. New plan files must start as `Draft`. Only after valid user approval may the agent update status to `Approved`.
+16. Do not let internet research silently choose the user's product or technical direction. Use current documentation to frame options and risks, then ask before locking scope, behavior, architecture, rollout, data migration, permissions, API contracts, or UX into a plan.
+17. For bugs, regressions, failing tests, production symptoms, or broken behavior, load `itsol-bug-debugging`; require evidence, Fix Decision Gate before plan writing, and an approved Technical Fix Plan before implementation.
+18. For feature work, bugfixes, behavior changes, refactors, UI changes, or migration slices, load `itsol-tdd-workflow` before writing production code.
+19. If the user chooses subagent-driven execution, load `itsol-subagent-workflow` before starting implementation.
+20. For every code review, build a coverage map of relevant review areas. If the PR is large, multi-surface, security/data/infra sensitive, migration-related, generated-contract related, documentation-version-sensitive, frontend/UI-heavy, or hard to review in one context, route review through focused subagents before producing the verdict.
+21. If the work has independent surfaces, route them through subagents before implementation or review.
 
 ## Subagent Routing
 
