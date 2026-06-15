@@ -188,7 +188,7 @@ Jeśli self-review ujawni brakujące dowody lub nierozstrzygnięte pytania, zatr
 
 ### Rubber Duck Plan Review
 
-Po self-review, a przed prośbą o akceptację, użyj subagenta `itsol-self-review` jako krytycznego recenzenta planu. Subagent ma działać read-only i zwrócić:
+Po self-review, a przed prośbą o akceptację, użyj subagenta `itsol-self-review` jako krytycznego recenzenta planu. W Codex uruchom subagenta z forked context bez jawnego `agent_type` i przekaż `itsol-self-review` jako wymagany skill/instrukcję; nie łącz `fork_context` z rolą `explorer` ani `worker`. Powiedz reviewerowi, że jest już delegowanym subagentem i nie może uruchamiać kolejnego subagenta, `codex exec`, `claude` ani innego agentowego CLI. Subagent ma działać read-only i zwrócić:
 
 - blockery
 - ważne luki

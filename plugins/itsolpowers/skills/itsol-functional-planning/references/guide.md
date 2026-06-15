@@ -99,7 +99,7 @@ If self-review finds unresolved items that materially affect scope or implementa
 
 ## Rubber Duck Plan Review
 
-After Plan Self-Review and before asking the user to approve either plan, run a mandatory Rubber Duck Plan Review through a separate subagent. Use the `itsolpowers:itsol-self-review` subagent when Claude Code subagents are available. If subagent tooling is unavailable, do not silently skip the gate; state that Rubber Duck Review cannot be completed and ask how to proceed.
+After Plan Self-Review and before asking the user to approve either plan, run a mandatory Rubber Duck Plan Review through a separate subagent. Use the `itsolpowers:itsol-self-review` subagent when Claude Code subagents are available. In Codex, use a forked-context subagent without an explicit `agent_type`, and pass `itsol-self-review` as the required ITSOL skill/instruction. Tell the reviewer that it is already the delegated subagent and must not spawn another subagent, run `codex exec`, run `claude`, or invoke another agent CLI. If subagent tooling is unavailable, do not silently skip the gate; state that Rubber Duck Review cannot be completed and ask how to proceed.
 
 The Rubber Duck reviewer is read-only. It must not edit the plan. Its job is to act like a critical teammate who always looks for holes in the plan. Give it the plan file path, the related user request, the approved scope or technical approach, and only the minimal repo context needed to verify claims.
 

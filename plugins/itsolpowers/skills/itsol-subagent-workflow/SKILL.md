@@ -18,4 +18,8 @@ Use this skill after a Business Plan and Technical Plan are approved by the user
 7. After a task slice is implemented, reviewed, and verified, commit only that slice using Angular commit convention.
 8. Run final validation for the whole change, compare the result against the approved plans, inspect the diff, and summarize work for the user.
 
+Codex guard: do not combine forked context with an explicit subagent role. If you need a forked Codex subagent, omit `agent_type` and name the ITSOL skill in the prompt or skill item. If you need `explorer` or `worker`, omit forked context and provide the minimal context manually.
+
+Delegation depth guard: only the main agent starts subagents. A delegated subagent must not spawn another subagent, invoke `codex exec`, invoke `claude`, or use another agent CLI. If more delegation is needed, it returns a recommended split to the main agent.
+
 Read [references/guide.md](references/guide.md) before delegating work. If the work is not approved for subagent-driven execution, use the normal inline workflow instead.

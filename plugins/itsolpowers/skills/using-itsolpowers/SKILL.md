@@ -38,7 +38,11 @@ Before refining requirements, implementing, debugging, reviewing, planning, or h
 
 In Claude Code, this plugin provides one subagent for every ITSOL skill under the same scoped name, for example `itsolpowers:dotnet-web-api-review` or `itsolpowers:security-api-input-review`. Prefer the matching plugin subagent when delegating work for a selected skill, because the subagent preloads that skill and carries the same ITSOL workflow constraints in an isolated context.
 
+In Codex, do not treat ITSOL skill names as `agent_type` values. Codex subagent roles are platform roles such as `default`, `explorer`, or `worker`. When forking conversation context, do not also set an explicit `agent_type`; spawn the subagent with forked context and provide the ITSOL skill name in the task instructions or structured skill item. If a Codex role such as `explorer` or `worker` is required, do not use forked context; pass only the minimal task context manually.
+
 Use subagents when the task can be split into independent workstreams, such as UI/API/database/infra changes, multi-area code review, several debugging hypotheses, security plus implementation review, or incident evidence gathering.
+
+Only the main agent orchestrates subagents. A delegated subagent must not spawn another subagent, invoke external agent CLIs such as `codex exec` or `claude`, or try to perform second-level delegation. If the delegated work is still too broad, it must return the recommended split to the main agent.
 
 For code review, subagents are mandatory for large or multi-area PRs. Assign separate review subagents by pragmatic risk area, such as security, infrastructure, frontend, backend, database, generated clients/API contracts, migration/rewrite, QA/release, performance, or test strategy. Inline-only review is acceptable only for tiny single-surface diffs, and the reviewer must state why subagents were unnecessary.
 

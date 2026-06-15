@@ -67,6 +67,36 @@ For each implementation subagent:
 
 The main agent must not delegate the current blocker, approval decisions, or final integration responsibility.
 
+## Delegation Depth
+
+Use one delegation layer only.
+
+- The main agent may spawn implementation, review, research, or rubber-duck subagents.
+- A delegated subagent must do its assigned work directly and return a report.
+- A delegated subagent must not spawn another subagent, invoke `codex exec`, invoke `claude`, or use another agent CLI to continue the work.
+- If the delegated task is too broad, the subagent must return a proposed split, recommended agents/skills, and unresolved questions to the main agent.
+
+## Codex Subagent Invocation
+
+Codex subagents use platform roles, not ITSOL skill names, as agent types. Valid Codex roles are environment-dependent but commonly include `default`, `explorer`, and `worker`. ITSOL skill names such as `itsol-self-review`, `security-api-input-review`, or `dotnet-web-api-review` are routing instructions, not Codex `agent_type` values.
+
+When using Codex subagents:
+
+- For a forked-context review or rubber-duck pass, omit `agent_type` and pass the ITSOL skill name in the task instructions or as a structured skill item.
+- For a role-specific Codex agent such as `explorer` or `worker`, omit forked context and provide only the minimal files, plan path, user request, constraints, and expected output.
+- Never retry by mixing `fork_context` with an explicit `agent_type` after the API rejects it; choose one mode and continue.
+- Always tell the delegated Codex subagent that it is already the delegated subagent and must not start another subagent or external agent CLI.
+- Keep the delegated prompt explicit about read-only vs edit rights, owned files, verification, and report contract.
+
+Example Codex rubber-duck prompt shape:
+
+```text
+Use the ITSOL self-review workflow as a read-only rubber-duck reviewer.
+You are already the delegated subagent; do not spawn another agent or run `codex exec`.
+Inspect this plan path and related request. Return blockers, important gaps,
+questions for the user, required plan updates, and verdict.
+```
+
 ## Review Loop
 
 After each implementation subagent reports completion, run review before accepting the task slice.
