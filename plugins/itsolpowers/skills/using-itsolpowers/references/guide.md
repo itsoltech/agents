@@ -5,13 +5,14 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 ## Tryb Pracy
 
 - Wymagania, story, refinement albo gotowość zadania: użyj `itsol-task-intake`, potem `itsol-requirements-review`.
+- Tworzenie, inicjalizacja, odczyt lub aktualizacja repo policy, monorepo map, TDD support, verification commands albo stable workflow notes w `.itsol.md`: użyj `itsol-repo-memory` przed planowaniem, implementacją, review albo QA. W monorepo dobierz najbliższą sekcję `Project: <path>` dla dotykanych plików.
 - Aktualność technologii, dokumentacji, wersji frameworków, SDK, runtime, paczek, generated clients, API zewnętrznych albo start nowego projektu: użyj `itsol-current-tech-context`. W istniejącym repo najpierw wykryj lokalnie przypięte wersje, a dopiero potem sprawdzaj aktualną dokumentację. W nowym projekcie wybieraj latest stable, chyba że user jawnie przypiął wersje albo wymaga LTS/kompatybilności.
 - Rewrite aplikacji, migracja technologii, modernizacja, Strangler Fig, Branch by Abstraction, parallel run, cutover danych, kontrakty kompatybilności albo decommissioning legacy: użyj `application-technology-migration`, a dopiero dla zatwierdzonych slice'ów dobierz `itsol-functional-planning`, `itsol-tdd-workflow`, review/security/infra/database i skille technologiczne.
 - UI/UX, nowy widok, komponent, design system, responsive, accessibility, Tailwind, performance frontendu, testy UI albo QA frontendu: użyj `ui-ux-workflow`, a potem dobierz najwęższe skille UI dla dotkniętego obszaru.
 - Feature albo behavior change: użyj `itsol-task-intake`, potem `itsol-functional-planning`; dopiero po zapisaniu i zatwierdzeniu plików Business Planu oraz Technical Planu i wyborze subagenci/inline użyj `itsol-subagent-workflow` albo `itsol-feature-implementation` z `itsol-tdd-workflow`.
 - Endpoint, UI flow, integracja albo logika produktowa: traktuj jako zadanie funkcjonalne i przejdź przez `itsol-functional-planning`.
 - Bug, regresja albo failing test: użyj `itsol-bug-debugging`, zbierz dowody i zapisz Technical Fix Plan; dopiero po akceptacji użytkownika użyj `itsol-tdd-workflow` i najwęższego skilla debuggingowego, np. `svelte-debugging`, `postgres-operations-debugging`, `dotnet-web-api-debugging`.
-- Refactor kodu produkcyjnego: użyj `itsol-tdd-workflow` przed zmianą, żeby zabezpieczyć zachowanie testem.
+- Refactor kodu produkcyjnego: użyj `itsol-tdd-workflow` przed zmianą, żeby zabezpieczyć zachowanie testem. Jeśli `.itsol.md` mówi, że TDD dla dotkniętego projektu jest `limited` albo `not-supported`, nie scaffoldź nowego test frameworka; zapisz wyjątek TDD i wykonaj replacement verification.
 - Plan techniczny, tech notes, spike, rollout albo rollback: użyj `itsol-technical-planning`, `itsol-current-tech-context` oraz domenowych skillów dla dotkniętych obszarów.
 - Review PR: użyj `itsol-code-review-workflow`, zbuduj mapę obszarów review i dobierz skille review dla dotkniętych technologii. Jeśli finding albo ocena zależy od frameworka, SDK, runtime, paczki, generatora lub API, użyj `itsol-current-tech-context`. Jeśli PR dotyka UI/UX, użyj `ui-code-review` oraz właściwych skilli UI. Dla dużego, wieloobszarowego albo ryzykownego PR użyj osobnych sub-agentów według obszarów, np. current tech context, UI/UX, security, infra, frontend, backend, database, generated clients/API contracts, migration/rewrite, QA/release, performance i test strategy. Inline-only review dopuszczaj tylko dla małego jednoobszarowego diffu i jawnie uzasadnij, dlaczego sub-agenci nie byli potrzebni.
 - Handoff do QA albo release readiness: użyj `itsol-self-review`, potem `itsol-qa-handoff` i tylko tych domenowych skillów, które odpowiadają faktycznie zmienionym powierzchniom.
@@ -37,6 +38,7 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 ## Powierzchnie Ryzyka
 
 - UI, browser, forms, accessibility: `svelte-*`.
+- Creating, initializing, reading, or updating repo policy, monorepo project map, TDD support, verification commands and stable agent notes: `itsol-repo-memory`.
 - Current official documentation, SDK/runtime/package versions, latest stable defaults, and repo pins: `itsol-current-tech-context`.
 - UI/UX workflow, design system, components, states/forms, responsive, Tailwind, accessibility, performance, tests and UI review: `ui-*`.
 - Server state, cache, invalidation, SSR prefetch: `tanstack-query-svelte-*`.

@@ -28,7 +28,7 @@ Po instalacji dostępne komendy:
 
 #### itsolpowers
 
-Skille ITSOL do routingu zadań, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, planowania funkcjonalnego zapisywanego do plików, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
+Skille ITSOL do routingu zadań, repo memory `.itsol.md`, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, planowania funkcjonalnego zapisywanego do plików, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
 
 ```
 /plugin install itsolpowers@itsoltech-agents
@@ -123,7 +123,7 @@ Po instalacji dostępne są skille:
 - `create-commit` — commit w konwencji Angular
 - `fix-pr-review` — fix nierozwiązanych komentarzy review na PR i resolve wątków
 - `using-itsolpowers` — routing zadań do właściwych skillów ITSOL
-- `itsol-task-intake`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, aktualnej dokumentacji i migracji technologii, przez obowiązkowe pliki Business Plan i Technical Plan albo Technical Fix Plan dla bugów, podział pracy na sub-agentów, red-green-refactor, do QA
+- `itsol-task-intake`, `itsol-repo-memory`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, repo policy `.itsol.md`, aktualnej dokumentacji i migracji technologii, przez obowiązkowe pliki Business Plan i Technical Plan albo Technical Fix Plan dla bugów, podział pracy na sub-agentów, red-green-refactor albo repo-policy replacement verification, do QA
 - `security-*` — rozdrobnione skille security dla threat modelingu, auth, authz, API, frontendu, sekretów, supply chain, QA i obsługi podatności
 - `infra-*` — rozdrobnione skille infrastrukturalne dla deploymentu, kontenerów, Nomada, routingu, edge protection, sekretów, obserwowalności, backupów, capacity i incidentów
 - `ui-*` — framework-agnostic UI/UX frontendu: workflow, design system, architektura komponentów, stany i formularze, responsywność, Tailwind/tokeny, accessibility/motion, performance/stability, testy/QA i code review UI

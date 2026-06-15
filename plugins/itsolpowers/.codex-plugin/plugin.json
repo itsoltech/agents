@@ -1,7 +1,7 @@
 {
   "name": "itsolpowers",
-  "version": "0.9.1",
-  "description": "ITSOL engineering skills and Claude Code subagents for task intake, current technology documentation research, application technology migration, file-based functional planning, subagent execution, TDD, UI/UX frontend, implementation, debugging, review, security, infrastructure, and production readiness.",
+  "version": "0.10.0",
+  "description": "ITSOL engineering skills and Claude Code subagents for task intake, repo memory, current technology documentation research, application technology migration, file-based functional planning, subagent execution, TDD, UI/UX frontend, implementation, debugging, review, security, infrastructure, and production readiness.",
   "author": {
     "name": "ITSOL Tech",
     "email": "dev@itsol.tech"
@@ -25,6 +25,8 @@
     "accessibility",
     "responsive",
     "documentation",
+    "repo-memory",
+    "monorepo",
     "versions",
     "latest-stable",
     "migration",
@@ -43,7 +45,7 @@
   "interface": {
     "displayName": "ITSOL Powers",
     "shortDescription": "ITSOL workflows, current docs, UI/UX, migration, planning, TDD, and review.",
-    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across current technology documentation and version research, UI/UX frontend workflows, design systems, accessibility, responsive behavior, frontend testing and QA, application technology migration and rewrites, file-based functional planning, approved business and technical plan markdown artifacts, approved technical fix plans for bugs, subagent-driven execution, TDD, implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL best-practice documents.",
+    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across repo memory and monorepo policy, current technology documentation and version research, UI/UX frontend workflows, design systems, accessibility, responsive behavior, frontend testing and QA, application technology migration and rewrites, file-based functional planning, approved business and technical plan markdown artifacts, approved technical fix plans for bugs, subagent-driven execution, TDD, implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL best-practice documents.",
     "developerName": "ITSOL Tech",
     "category": "Productivity",
     "capabilities": [
@@ -60,6 +62,7 @@
     ],
     "defaultPrompt": [
       "Use ITSOL Powers to classify this task and choose the right skills.",
+      "Initialize or read .itsol.md repo memory before choosing project-specific TDD, verification, or monorepo workflow policy.",
       "When planning or reviewing framework, SDK, runtime, package, generated client, or API-dependent work, verify current official documentation and repo-pinned versions first.",
       "For visible frontend work, use UI/UX skills for design-system consistency, component architecture, view states, responsiveness, accessibility, performance, tests, and UI review.",
       "For application rewrites or technology migrations, inventory behavior, choose a safe migration strategy, and plan incremental slices before implementation.",

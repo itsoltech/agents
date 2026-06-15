@@ -6,14 +6,27 @@ Use this reference for feature work, bugfixes, behavior changes, and refactors t
 
 Do not write production code for a behavior change until there is a focused failing test or diagnostic that proves the desired behavior is currently missing or broken.
 
+Before deciding what test to write, read `.itsol.md` through `itsol-repo-memory` when it exists. In monorepos, apply the most specific project policy for the touched paths.
+
 Allowed exceptions:
 
 - throwaway prototype
 - generated code
 - pure configuration or documentation
 - legacy code where a safe automated test is not practical yet
+- `.itsol.md` marks the touched project as `limited`, `not-supported`, or `not-applicable` for TDD
 
 For any exception, write down the reason and the replacement verification before changing production code.
+
+Do not introduce or scaffold a new test framework in a legacy project only to satisfy the TDD workflow unless the user explicitly approves that setup work or the approved Technical Plan includes it.
+
+## Repo Policy Modes
+
+- `full`: follow RED-GREEN-REFACTOR with automated tests.
+- `limited`: use existing supported tests where they fit; otherwise document a TDD exception and run listed replacement verification.
+- `not-supported`: skip test-framework setup, document the exception, and run listed replacement verification.
+- `not-applicable`: use verification appropriate to generated code, docs, config, infrastructure, or other non-TDD surfaces.
+- `unknown`: inspect local configs and ask or propose a small discovery step before assuming test support.
 
 ## Red-Green-Refactor
 

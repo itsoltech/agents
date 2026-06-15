@@ -10,12 +10,13 @@ Run a final review before saying work is complete. Also use this skill as the re
 ## Process
 
 1. Re-read the artifact under review: plan file, diff, PR, patch, migration, deployment config, or generated artifact.
-2. For plans, act as a critical teammate looking for holes: challenge scope, assumptions, edge cases, approvals, missing files, missing skills, tests, rollout, rollback, and verification.
-3. Treat a plan marked `Approved` without evidence that the user saw and explicitly approved that specific plan as a blocker.
-4. For code changes, check requirements, edge cases, permissions, validation, data consistency, errors, logs, and rollout risk.
-5. Confirm RED/GREEN evidence for code changes, or explain why a TDD test was not practical and what replaced it.
-6. Load focused domain review skills for touched areas.
-7. Report blockers, important gaps, non-blocking suggestions, verification commands, and remaining risks.
+2. If `.itsol.md` exists, load `itsol-repo-memory` and check whether the artifact respects matched project policy.
+3. For plans, act as a critical teammate looking for holes: challenge scope, assumptions, edge cases, approvals, missing files, missing skills, tests, rollout, rollback, and verification.
+4. Treat a plan marked `Approved` without evidence that the user saw and explicitly approved that specific plan as a blocker.
+5. For code changes, check requirements, edge cases, permissions, validation, data consistency, errors, logs, and rollout risk.
+6. Confirm RED/GREEN evidence for code changes, or explain why a TDD test was not practical and what replaced it. If `.itsol.md` says TDD is limited or not supported, verify the required replacement checks were performed.
+7. Load focused domain review skills for touched areas.
+8. Report blockers, important gaps, non-blocking suggestions, verification commands, and remaining risks.
 
 ## Rubber Duck Plan Review
 

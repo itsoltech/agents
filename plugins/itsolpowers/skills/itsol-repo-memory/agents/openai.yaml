@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Repo Memory"
+  short_description: "Initialize and maintain .itsol.md repository policy"
+  default_prompt: "Use $itsol-repo-memory to initialize or read .itsol.md and apply repo-specific TDD, verification, monorepo, and workflow policy."

@@ -11,6 +11,7 @@ For functional tasks, do not edit production code, tests, configs, migrations, o
 - the Business Plan passed Plan Self-Review
 - the Business Plan passed Rubber Duck Plan Review by a subagent and all material findings are resolved
 - the user approved the Business Plan file
+- `.itsol.md` repo or project policy was read when present and relevant
 - the Technical Decision Gate is complete before the Technical Plan is written, including user confirmation when there is only one viable technical path
 - the Technical Plan markdown file exists in the repo
 - the Technical Plan passed Plan Self-Review
@@ -84,9 +85,10 @@ For the Technical Plan, check:
 - exact files or bounded areas are named wherever reasonably knowable
 - the selected technical approach was explicitly chosen by the user, explicitly approved after recommendation, or forced by existing repo architecture
 - Required ITSOL Skills are complete and mapped to tasks or review phases
+- Repo Memory context is present when `.itsol.md` exists or the task touches monorepo projects with different testing/verification policies
 - Current Tech Context is present when the plan depends on frameworks, SDKs, runtimes, package managers, libraries, generated clients, external APIs, language editions, or infrastructure tooling
 - logical branches include important `if`/else behavior, validation, authorization, tenant isolation, error handling, idempotency, retries, and compatibility where relevant
-- TDD plan has a concrete RED test or diagnostic, expected failure, GREEN scope, and refactor checkpoint
+- TDD plan has a concrete RED test or diagnostic, expected failure, GREEN scope, and refactor checkpoint, or a repo-policy TDD exception with replacement verification
 - each task has files, required skills, steps, verification, and an Angular commit message
 - subagent split and concurrency limit are present when subagent-driven execution is plausible
 - verification commands are concrete and scoped
@@ -237,10 +239,11 @@ The Technical Decision Gate output must be a chat response, not a plan file. It 
 
 1. **Approved business target:** the Business Plan path and the product scenario/scope the user approved.
 2. **Repo constraints:** relevant architecture, existing patterns, framework/package versions, data model, deployment constraints, tests, and integration contracts found in the repo.
-3. **Current technology context:** when framework, SDK, runtime, package, generated client, external API, language edition, database driver, or infrastructure tooling behavior matters, use `itsol-current-tech-context` to verify repo-pinned or current official documentation before proposing choices.
-4. **Technical options:** two to four feasible approaches with tradeoffs, or one forced approach with the reason it is forced. Compare implementation size, risk, compatibility, migration, testability, rollback, performance, security, data impact, and operational complexity.
-5. **Recommendation:** one recommended approach with reasoning tied to the approved Business Plan, repo conventions, risk, and delivery size.
-6. **Decision request:** ask the user to choose an option or approve the recommendation before writing the Technical Plan.
+3. **Repo memory context:** if `.itsol.md` exists, summarize matched project policy, TDD mode, supported verification, and constraints.
+4. **Current technology context:** when framework, SDK, runtime, package, generated client, external API, language edition, database driver, or infrastructure tooling behavior matters, use `itsol-current-tech-context` to verify repo-pinned or current official documentation before proposing choices.
+5. **Technical options:** two to four feasible approaches with tradeoffs, or one forced approach with the reason it is forced. Compare implementation size, risk, compatibility, migration, testability, rollback, performance, security, data impact, and operational complexity.
+6. **Recommendation:** one recommended approach with reasoning tied to the approved Business Plan, repo conventions, risk, and delivery size.
+7. **Decision request:** ask the user to choose an option or approve the recommendation before writing the Technical Plan.
 
 Ask technical-decision questions that materially affect implementation:
 
@@ -410,6 +413,13 @@ The Technical Plan must be implementation-ready and complete enough that an agen
 ## Repository Context
 <Relevant frameworks, existing patterns, files inspected, and constraints.>
 
+## Repo Memory Context
+Use `itsol-repo-memory` before completing this section when `.itsol.md` exists or when repository testing/verification policy is unclear.
+
+| Path/Project | Policy Source | TDD Mode | Required Verification | Constraints |
+| --- | --- | --- | --- | --- |
+| `<path>` | `.itsol.md` or `not present` | `full/limited/not-supported/not-applicable/unknown` | `<commands/manual checks>` | `<constraint or None>` |
+
 ## Selected Technical Approach
 <Option chosen or approved after the Technical Decision Gate. Include rejected alternatives and why they were not selected.>
 
@@ -434,6 +444,7 @@ List the exact skills that must be loaded while implementing this plan. Include 
 | Skill | Use During | Reason |
 | --- | --- | --- |
 | `itsol-feature-implementation` | whole implementation | primary feature workflow |
+| `itsol-repo-memory` | planning, implementation, review | apply `.itsol.md` repo/monorepo policy, TDD mode, and verification commands |
 | `itsol-current-tech-context` | planning and review where technology versions matter | verify repo-pinned or latest stable docs and package context |
 | `itsol-tdd-workflow` | before production code changes | RED-GREEN-REFACTOR gate |
 | `<domain-skill>` | specific task or review | technology, security, data, infra, or review coverage |
@@ -450,9 +461,14 @@ For visible frontend work, include `ui-ux-workflow` and focused UI skills in the
 - validation, authorization, tenant isolation, feature flags, error paths, retries, idempotency, concurrency, and compatibility rules
 
 ## TDD Plan
+**TDD Mode:** `<full | limited | not-supported | not-applicable | unknown>`
+**Policy Source:** `<.itsol.md project section | repo default | none>`
+
 ### RED
 - Test or diagnostic to add first
 - Expected failing output
+
+If TDD mode is `limited`, `not-supported`, or `not-applicable`, do not scaffold a new test framework only to satisfy TDD. Instead document why RED/GREEN TDD is skipped, supported verification commands, manual or diagnostic replacement verification, and residual risk from missing automated coverage.
 
 ### GREEN
 - Minimal implementation to pass

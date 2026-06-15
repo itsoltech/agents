@@ -5,15 +5,17 @@ description: "TDD workflow: RED-GREEN-REFACTOR for features, bugfixes, refactors
 
 # ITSOL TDD Workflow
 
-Use test-driven development as the default coding loop for behavior changes. Prove the test can fail before trusting the implementation.
+Use test-driven development as the default coding loop for behavior changes. Prove the test can fail before trusting the implementation. Respect `.itsol.md` repo policy when a legacy project cannot support TDD.
 
 ## Process
 
 1. State the behavior or regression that must be proven.
-2. Write the smallest automated test or diagnostic that captures that behavior.
-3. Run the focused test and confirm RED: it fails for the expected reason.
-4. Write the smallest production change that can make the test pass.
-5. Run the focused test and confirm GREEN, then run the relevant wider verification.
-6. Refactor only after GREEN, keeping tests green after each cleanup.
+2. If `.itsol.md` exists, load `itsol-repo-memory` and apply the matched project TDD mode and verification policy.
+3. If TDD mode is `full` or supported, write the smallest automated test or diagnostic that captures that behavior.
+4. Run the focused test and confirm RED: it fails for the expected reason.
+5. Write the smallest production change that can make the test pass.
+6. Run the focused test and confirm GREEN, then run the relevant wider verification.
+7. Refactor only after GREEN, keeping tests green after each cleanup.
+8. If TDD mode is `limited`, `not-supported`, or automation is not practical, do not scaffold a new test framework only to satisfy TDD. Record the exception and replacement verification before changing production code.
 
 Read [references/guide.md](references/guide.md) before writing production code. If TDD is not practical, record the explicit exception and the alternative verification before implementing.

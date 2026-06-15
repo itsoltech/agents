@@ -39,14 +39,15 @@ Technical Fix Plan zawsze zaczyna jako `Draft`. Agent nie może sam oznaczyć pl
 ### Kolejność
 
 1. Zbierz dowody: reprodukcja, logi, trace'y, failing test, dane, konfiguracja, kontrakty API, podobne ścieżki.
-2. Oddziel fakty od hipotez. Nie przedstawiaj planu jako pewnego, jeśli root cause nie jest jeszcze potwierdzony.
-3. Jeśli brakuje danych, zadaj użytkownikowi konkretne pytania albo zaproponuj diagnostykę przed planem.
-4. Zawsze uruchom Fix Decision Gate: pokaż warianty naprawy albo jeden wymuszony wariant z uzasadnieniem, tradeoffy, rekomendację i zapytaj użytkownika, którą ścieżkę wybrać albo czy akceptuje rekomendację.
-5. Zapisz Technical Fix Plan w repo ze statusem `Draft`.
-6. Wykonaj self-review planu i popraw luki.
-7. Uruchom Rubber Duck Plan Review przez subagenta `itsol-self-review` i rozwiąż materialne znaleziska.
-8. Pokaż użytkownikowi ścieżkę planu oraz krótkie podsumowanie i poproś o akceptację albo uwagi.
-9. Dopiero po jawnej akceptacji użytkownika zmień status planu na `Approved` i implementuj poprawkę przez TDD.
+2. Jeśli `.itsol.md` istnieje, użyj `itsol-repo-memory` i dopasuj politykę projektu dla dotkniętych ścieżek.
+3. Oddziel fakty od hipotez. Nie przedstawiaj planu jako pewnego, jeśli root cause nie jest jeszcze potwierdzony.
+4. Jeśli brakuje danych, zadaj użytkownikowi konkretne pytania albo zaproponuj diagnostykę przed planem.
+5. Zawsze uruchom Fix Decision Gate: pokaż warianty naprawy albo jeden wymuszony wariant z uzasadnieniem, tradeoffy, rekomendację i zapytaj użytkownika, którą ścieżkę wybrać albo czy akceptuje rekomendację.
+6. Zapisz Technical Fix Plan w repo ze statusem `Draft`.
+7. Wykonaj self-review planu i popraw luki.
+8. Uruchom Rubber Duck Plan Review przez subagenta `itsol-self-review` i rozwiąż materialne znaleziska.
+9. Pokaż użytkownikowi ścieżkę planu oraz krótkie podsumowanie i poproś o akceptację albo uwagi.
+10. Dopiero po jawnej akceptacji użytkownika zmień status planu na `Approved` i implementuj poprawkę przez TDD albo repo-policy replacement verification.
 
 ### Fix Decision Gate
 
@@ -128,6 +129,7 @@ Użyj innej lokalizacji tylko wtedy, gdy repo ma jasną konwencję planów albo 
 | Skill | Use During | Reason |
 | --- | --- | --- |
 | `itsol-bug-debugging` | whole fix | evidence-first bug workflow |
+| `itsol-repo-memory` | planning and implementation | apply `.itsol.md` TDD mode and verification policy |
 | `itsol-tdd-workflow` | before production code changes | RED regression gate |
 | `<domain-debugging-or-review-skill>` | specific area | frontend, backend, database, infra, security, generated client, or review coverage |
 
@@ -141,9 +143,14 @@ Użyj innej lokalizacji tylko wtedy, gdy repo ma jasną konwencję planów albo 
 - <Important `if`/else behavior, validation, tenant/auth checks, error handling, retry/idempotency/concurrency behavior>
 
 ## TDD Regression Plan
+**TDD Mode:** `<full | limited | not-supported | not-applicable | unknown>`
+**Policy Source:** `<.itsol.md project section | repo default | none>`
+
 ### RED
 - Test or diagnostic to add first
 - Expected failing output
+
+If TDD mode is `limited`, `not-supported`, or `not-applicable`, do not scaffold a new test framework only to satisfy TDD. Document why RED/GREEN is skipped and list replacement verification.
 
 ### GREEN
 - Minimal fix expected to pass

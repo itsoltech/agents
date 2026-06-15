@@ -1,7 +1,7 @@
 {
   "name": "itsolpowers",
-  "description": "ITSOL engineering skills and subagents for workflow, current technology documentation research, UI/UX frontend, application technology migration, file-based functional planning, subagent execution, TDD, security, infrastructure, review, and debugging",
-  "version": "0.9.1",
+  "description": "ITSOL engineering skills and subagents for workflow, repo memory, current technology documentation research, UI/UX frontend, application technology migration, file-based functional planning, subagent execution, TDD, security, infrastructure, review, and debugging",
+  "version": "0.10.0",
   "author": {
     "name": "ITSOL Tech",
     "email": "dev@itsol.tech"
