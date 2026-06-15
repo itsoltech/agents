@@ -39,9 +39,29 @@ Skille ITSOL do routingu zadań, aktualnego kontekstu technologii i dokumentacji
 ```
 /plugin marketplace update itsoltech-agents
 /plugin update itsol-workflow@itsoltech-agents
+/plugin update itsolpowers@itsoltech-agents
 ```
 
 Aktualizacje są wydawane przez bump pola `version` w `plugin.json` (i w `marketplace.json`). Bez bumpa Claude Code nie pobiera nowej wersji.
+
+### Diagnostyka Claude Code
+
+Jeśli Claude Code nie korzysta z routingu `itsolpowers`, sprawdź:
+
+```
+/plugin list
+/plugin details itsolpowers@itsoltech-agents
+/reload-plugins
+```
+
+W terminalu można też uruchomić:
+
+```
+claude --debug
+claude plugin validate ./plugins/itsolpowers
+```
+
+W `details` plugin powinien pokazywać skille, agentów i hook `SessionStart`. Po aktualizacji pluginu rozpocznij nową sesję albo użyj `/reload-plugins`, bo zmiany w hookach i agentach nie muszą wejść do już działającej sesji.
 
 ## OpenCode
 
