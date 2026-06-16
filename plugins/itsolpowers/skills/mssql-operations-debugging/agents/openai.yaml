@@ -1,0 +1,3 @@
+display_name: "MSSQL Operations Debugging"
+short_description: "Debug SQL Server performance, blocking, deadlocks, backups, and HA."
+default_prompt: "Use $mssql-operations-debugging to diagnose SQL Server slow queries, Query Store regressions, execution plans, wait stats, blocking, deadlocks, timeouts, transaction log growth, backup/restore, and HA issues."

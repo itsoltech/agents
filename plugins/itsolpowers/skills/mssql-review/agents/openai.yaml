@@ -1,0 +1,3 @@
+display_name: "MSSQL Review"
+short_description: "Review SQL Server, EF Core, Dapper, procedures, and migrations."
+default_prompt: "Use $mssql-review to review SQL Server, EF Core, Dapper, stored procedure, migration, query, transaction, security, and operational database changes."

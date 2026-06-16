@@ -5,7 +5,7 @@ For every ITSOL engineering request, route the work before answering, planning, 
 
 Mandatory routing:
 
-1. Classify the task first: repo memory/init, intake, requirements, functional planning, bug debugging, implementation, TDD, technical planning, code review, self-review, QA, current technology research, migration/rewrite, security, infrastructure, database, UI/UX, frontend, or backend.
+1. Classify the task first: repo memory/init, intake, requirements, functional planning, bug debugging, implementation, TDD, technical planning, code review, self-review, QA, current technology research, migration/rewrite, security, infrastructure, database, MSSQL/SQL Server/.NET data access, UI/UX, frontend, or backend.
 2. If the user asks to create, initialize, inspect, or update `.itsol.md`, use `itsolpowers:itsol-repo-memory`. If root `.itsol.md` exists, use `itsolpowers:itsol-repo-memory` before planning or implementation. Apply the most specific monorepo project policy for touched paths, especially TDD mode and verification commands.
 3. Functional work must use `itsolpowers:itsol-functional-planning` and `itsolpowers:itsol-requirements-review`. Do not write code until the Business Plan and Technical Plan are saved as files and explicitly approved by the user after presentation.
 4. A vague or one-sentence functional request is only a discovery signal. Interview the user like a client before writing the Business Plan: ask about scenario, scope, users, data, edge cases, rollout, acceptance criteria, and decision ownership.

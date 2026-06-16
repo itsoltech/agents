@@ -1,0 +1,3 @@
+display_name: "MSSQL .NET Data Access"
+short_description: "Design SQL Server, EF Core, Dapper, procedures, and migrations."
+default_prompt: "Use $mssql-dotnet-data-access-design to design or implement SQL Server data access in .NET with EF Core, Dapper, stored procedures, migrations, transactions, and indexes."

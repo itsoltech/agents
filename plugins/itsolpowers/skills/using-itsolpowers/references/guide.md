@@ -52,6 +52,7 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 - Rust LLM, Rig, Candle, RAG, model runtime: `rust-ml-llm-*`.
 - PostgreSQL schema, queries, PgBouncer, HA, operations: `postgres-*`.
 - MongoDB data modeling, indexes, replica/sharding, operations: `mongodb-*`.
+- SQL Server, EF Core, Dapper, stored procedures, Query Store, HA, operations: `mssql-*`.
 - App security: use the narrowest `security-*` skill.
 - Infrastructure: use the narrowest `infra-*` skill.
 

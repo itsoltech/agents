@@ -75,7 +75,7 @@ Do not mix unrelated changes in one commit. If the worktree contains unrelated u
 - Frontend: `svelte-*`, `tanstack-query-svelte-*`, `hey-api-openapi-*`.
 - Backend and typed TypeScript: `dotnet-web-api-*`, `effect-typescript-*`.
 - Rust: `rust-*`, plus `rust-ml-llm-*` for Rig, Candle, RAG, local inference, and LLM systems.
-- Databases: `postgres-*` and `mongodb-*` for schema/data modeling, review, and operations debugging.
+- Databases: `postgres-*`, `mongodb-*`, and `mssql-*` for schema/data modeling, .NET data access, review, and operations debugging.
 
 ## Output Standard
 

@@ -28,7 +28,7 @@ Po instalacji dostępne komendy:
 
 #### itsolpowers
 
-Skille ITSOL do routingu zadań, repo memory `.itsol.md`, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, planowania funkcjonalnego zapisywanego do plików, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
+Skille ITSOL do routingu zadań, repo memory `.itsol.md`, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, SQL Server/.NET data access, planowania funkcjonalnego zapisywanego do plików, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
 
 ```
 /plugin install itsolpowers@itsoltech-agents
@@ -129,7 +129,7 @@ Po instalacji dostępne są skille:
 - `ui-*` — framework-agnostic UI/UX frontendu: workflow, design system, architektura komponentów, stany i formularze, responsywność, Tailwind/tokeny, accessibility/motion, performance/stability, testy/QA i code review UI
 - `svelte-*`, `tanstack-query-svelte-*`, `hey-api-openapi-*` — frontend, server state i klient API generowany z OpenAPI
 - `dotnet-web-api-*`, `effect-typescript-*`, `rust-*`, `rust-ml-llm-*` — backend, typed TypeScript, Rust oraz aplikacje ML/LLM z Rig i Candle
-- `postgres-*`, `mongodb-*` — projektowanie, review i debugowanie operacyjne baz danych
+- `postgres-*`, `mongodb-*`, `mssql-*` — projektowanie, review i debugowanie operacyjne baz danych
 
 ## Kontrybucje
 
