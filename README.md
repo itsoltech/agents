@@ -4,15 +4,51 @@ Marketplace agentów dla organizacji ITSOL. Repo zawiera konfigurację marketpla
 
 ## Claude Code
 
-W sesji Claude Code:
+W sesji Claude Code można zainstalować marketplace przez slash command:
 
 ```
 /plugin marketplace add itsoltech/agents
 ```
 
+Następnie zainstaluj rekomendowany plugin:
+
+```
+/plugin install itsolpowers@itsoltech-agents
+```
+
+Alternatywnie można użyć CLI:
+
+```
+claude plugin marketplace add itsoltech/agents
+claude plugin install itsolpowers@itsoltech-agents
+claude plugin list
+```
+
+Po instalacji rozpocznij nową sesję Claude Code albo użyj `/reload-plugins`, żeby załadować skille, hook `SessionStart` i sub-agentów.
+
+### Ważne: `superpowers` i `itsolpowers`
+
+`superpowers` i `itsolpowers` wpływają na ten sam obszar pracy agenta: routing zadań, planowanie, użycie skilli, pracę sub-agentami, implementację i review. Mogą więc dawać agentowi konkurujące instrukcje.
+
+Rekomendacja: przy korzystaniu z `itsolpowers` wyłącz `superpowers`, żeby nie mieszać agentowi workflow i nie pogarszać jakości routingu.
+
 ### Pluginy
 
-#### itsol-workflow
+#### itsolpowers
+
+Rekomendowany plugin ITSOL. Zawiera skille ITSOL do routingu zadań, repo memory `.itsol.md`, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, SQL Server/.NET data access, planowania funkcjonalnego zapisywanego do plików, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
+
+```
+/plugin install itsolpowers@itsoltech-agents
+```
+
+#### itsol-workflow deprecated
+
+`itsol-workflow` jest starym pluginem i jest deprecated. Jego główne workflow zostały przeniesione i rozbudowane w `itsolpowers`.
+
+Nie instaluj `itsol-workflow` w nowych setupach. Używaj `itsolpowers`, który zawiera nowsze workflow planowania, code review, commitów, sub-agentów i repo memory.
+
+Stare komendy `itsol-workflow` pozostają w repo tylko dla kompatybilności z istniejącymi instalacjami:
 
 Komendy do pracy z PR-ami, commitami i specyfikacjami.
 
@@ -26,23 +62,16 @@ Po instalacji dostępne komendy:
 - `/itsol-workflow:create-commit` — commit w konwencji Angular
 - `/itsol-workflow:fix-pr-review` — fix nierozwiązanych komentarzy review na PR i resolve wątków
 
-#### itsolpowers
-
-Skille ITSOL do routingu zadań, repo memory `.itsol.md`, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, SQL Server/.NET data access, planowania funkcjonalnego zapisywanego do plików, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
-
-```
-/plugin install itsolpowers@itsoltech-agents
-```
-
 ## Aktualizacje
 
 ```
 /plugin marketplace update itsoltech-agents
-/plugin update itsol-workflow@itsoltech-agents
 /plugin update itsolpowers@itsoltech-agents
 ```
 
 Aktualizacje są wydawane przez bump pola `version` w `plugin.json` (i w `marketplace.json`). Bez bumpa Claude Code nie pobiera nowej wersji.
+
+`itsol-workflow` jest deprecated, więc aktualizuj go tylko wtedy, gdy utrzymujesz starą instalację, która jeszcze go wymaga.
 
 ### Diagnostyka Claude Code
 
@@ -99,29 +128,38 @@ plugins/itsolpowers/.opencode/INSTALL.md
 
 ## Codex
 
+Instalacja w Codex:
+
+```
+/plugins
+```
+
+1. Wybierz `Add Marketplace`.
+2. Dodaj marketplace:
+
+```
+itsoltech/agents
+```
+
+3. Wybierz plugin `itsolpowers`.
+4. Włącz plugin i rozpocznij nową sesję, żeby załadować skille i hooki.
+
+Jeśli masz włączony `superpowers`, wyłącz go przed użyciem `itsolpowers`.
+
 Marketplace Codex znajduje się w:
 
 ```
 .agents/plugins/marketplace.json
 ```
 
-Zawiera ten sam plugin `itsol-workflow`, z manifestem:
-
-```
-plugins/itsol-workflow/.codex-plugin/plugin.json
-```
-
-Zawiera też plugin `itsolpowers`, z manifestem:
+Plugin `itsolpowers` ma manifest:
 
 ```
 plugins/itsolpowers/.codex-plugin/plugin.json
 ```
 
-Po instalacji dostępne są skille:
+Po instalacji `itsolpowers` dostępne są skille:
 
-- `ultra-plan` — interview do utworzenia `SPEC.md` na bazie wymagań
-- `create-commit` — commit w konwencji Angular
-- `fix-pr-review` — fix nierozwiązanych komentarzy review na PR i resolve wątków
 - `using-itsolpowers` — routing zadań do właściwych skillów ITSOL
 - `itsol-task-intake`, `itsol-repo-memory`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, repo policy `.itsol.md`, aktualnej dokumentacji i migracji technologii, przez obowiązkowe pliki Business Plan i Technical Plan albo Technical Fix Plan dla bugów, podział pracy na sub-agentów, red-green-refactor albo repo-policy replacement verification, do QA
 - `security-*` — rozdrobnione skille security dla threat modelingu, auth, authz, API, frontendu, sekretów, supply chain, QA i obsługi podatności
@@ -130,6 +168,12 @@ Po instalacji dostępne są skille:
 - `svelte-*`, `tanstack-query-svelte-*`, `hey-api-openapi-*` — frontend, server state i klient API generowany z OpenAPI
 - `dotnet-web-api-*`, `effect-typescript-*`, `rust-*`, `rust-ml-llm-*` — backend, typed TypeScript, Rust oraz aplikacje ML/LLM z Rig i Candle
 - `postgres-*`, `mongodb-*`, `mssql-*` — projektowanie, review i debugowanie operacyjne baz danych
+
+`itsol-workflow` jest dostępny w marketplace tylko jako deprecated compatibility plugin:
+
+```
+plugins/itsol-workflow/.codex-plugin/plugin.json
+```
 
 ## Kontrybucje
 
