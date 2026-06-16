@@ -3,7 +3,6 @@ name: itsol-qa-handoff
 description: "Delegated ITSOL workflow subagent for `itsol-qa-handoff`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when preparing or reviewing ITSOL QA handoffs, QA plans, manual test scenarios, regression scope, bug reports, severity, issue status, release readiness, or development-to-QA and QA-to-development communication."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-qa-handoff
 tools: Read, Grep, Glob, Bash, Agent

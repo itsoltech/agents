@@ -3,7 +3,6 @@ name: infra-routing-proxy-tls
 description: "Delegated ITSOL infrastructure subagent for `infra-routing-proxy-tls`. Use when the main agent needs isolated analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when implementing or reviewing reverse proxy, Traefik, NGINX, routing rules, TLS termination, certificates, load balancing, proxy headers, real client IP, WebSocket/SSE routing, CDN, DNS, or ingress behavior."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:infra-routing-proxy-tls
 tools: Read, Grep, Glob, Bash, Agent

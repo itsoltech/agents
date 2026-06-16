@@ -3,7 +3,6 @@ name: itsol-repo-memory
 description: "Delegated ITSOL workflow subagent for `itsol-repo-memory`. Use when the main agent needs isolated inspection or initialization support for .itsol.md repo policy, monorepo project mapping, TDD support, verification commands, or proposed stable repo-memory updates."
 model: inherit
 effort: medium
-maxTurns: 20
 skills:
   - itsolpowers:itsol-repo-memory
 tools: Read, Grep, Glob, Bash

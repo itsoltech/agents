@@ -3,7 +3,6 @@ name: itsol-feature-implementation
 description: "Delegated ITSOL workflow subagent for `itsol-feature-implementation`. Use when the main agent needs isolated implementation work, parallel investigation, or a focused specialist report. Skill scope: Use when implementing a new ITSOL feature, behavior change, endpoint, UI flow, integration, or data workflow and the agent needs to translate requirements into a small, testable, reviewable change."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-feature-implementation
 tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit, Agent

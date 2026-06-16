@@ -3,7 +3,6 @@ name: ui-tailwind-tokens
 description: "Delegated ITSOL UI/UX subagent for `ui-tailwind-tokens`. Use for focused review of Tailwind usage, design tokens, semantic variants, arbitrary values, class composition, @apply, and responsive utilities."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-tailwind-tokens
 tools: Read, Grep, Glob, Bash, Agent

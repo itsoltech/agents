@@ -3,7 +3,6 @@ name: itsol-self-review
 description: "Delegated ITSOL workflow subagent for `itsol-self-review`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use before handing off an ITSOL Business Plan, Technical Plan, code change, PR, patch, migration, deployment config, security-sensitive change, or generated artifact to check completeness, correctness, tests, risk, and review readiness."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-self-review
 tools: Read, Grep, Glob, Bash, Agent

@@ -3,7 +3,6 @@ name: svelte-review
 description: "Delegated ITSOL frontend-contract subagent for `svelte-review`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when reviewing Svelte or SvelteKit components, routes, stores, forms, API calls, browser security, accessibility, performance, deployment behavior, tests, or frontend dependency changes."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:svelte-review
 tools: Read, Grep, Glob, Bash, Agent

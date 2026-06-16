@@ -3,7 +3,6 @@ name: ui-ux-workflow
 description: "Delegated ITSOL UI/UX subagent for `ui-ux-workflow`. Use when the main agent needs frontend UI/UX task routing, planning coverage, self-review, or a focused specialist report before implementation or review."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-ux-workflow
 tools: Read, Grep, Glob, Bash, Agent

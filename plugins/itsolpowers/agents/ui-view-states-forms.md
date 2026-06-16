@@ -3,7 +3,6 @@ name: ui-view-states-forms
 description: "Delegated ITSOL UI/UX subagent for `ui-view-states-forms`. Use for focused review of view states, forms, validation, tables, lists, API/cache UX, optimistic UI, disabled/readonly states, and action feedback."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-view-states-forms
 tools: Read, Grep, Glob, Bash, Agent

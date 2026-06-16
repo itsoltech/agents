@@ -3,7 +3,6 @@ name: infra-backup-dr
 description: "Delegated ITSOL infrastructure subagent for `infra-backup-dr`. Use when the main agent needs isolated analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when implementing or reviewing backups, PITR, restore tests, RPO/RTO, disaster recovery, stateful workloads, database recovery, object storage retention, or production data recovery procedures."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:infra-backup-dr
 tools: Read, Grep, Glob, Bash, Agent

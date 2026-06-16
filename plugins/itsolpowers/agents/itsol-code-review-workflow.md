@@ -3,7 +3,6 @@ name: itsol-code-review-workflow
 description: "Delegated ITSOL workflow subagent for `itsol-code-review-workflow`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when reviewing ITSOL pull requests at workflow level, checking PR scope, acceptance criteria, risk, reviewer priorities, comment severity, review handoff, large PR decomposition, or final review verdict."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-code-review-workflow
 tools: Read, Grep, Glob, Bash, Agent, WebFetch, WebSearch

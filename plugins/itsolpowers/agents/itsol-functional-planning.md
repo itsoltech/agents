@@ -3,7 +3,6 @@ name: itsol-functional-planning
 description: "Delegated ITSOL workflow subagent for `itsol-functional-planning`. Use when the main agent needs isolated functional planning, requirement clarification, Business Plan file drafting, Technical Plan file drafting, or execution-mode routing before implementation."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-functional-planning
 tools: Read, Grep, Glob, Bash, Write, Edit, Agent, WebFetch, WebSearch

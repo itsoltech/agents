@@ -3,7 +3,6 @@ name: itsol-current-tech-context
 description: "Delegated ITSOL workflow subagent for `itsol-current-tech-context`. Use when the main agent needs isolated research on current framework, SDK, runtime, package, language edition, registry, release-note, or documentation context before planning, implementation, migration, or code review."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-current-tech-context
 tools: Read, Grep, Glob, Bash, WebFetch, WebSearch

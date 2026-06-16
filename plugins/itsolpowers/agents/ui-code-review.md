@@ -3,7 +3,6 @@ name: ui-code-review
 description: "Delegated ITSOL UI/UX subagent for `ui-code-review`. Use for focused review of frontend UI/UX pull requests, including design system, UX states, accessibility, responsiveness, Tailwind, performance, tests, QA evidence, and large PR decomposition."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-code-review
 tools: Read, Grep, Glob, Bash, Agent

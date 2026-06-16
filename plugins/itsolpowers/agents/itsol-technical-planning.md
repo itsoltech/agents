@@ -3,7 +3,6 @@ name: itsol-technical-planning
 description: "Delegated ITSOL workflow subagent for `itsol-technical-planning`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when preparing or reviewing ITSOL technical plans, implementation meetings, tech notes, architecture choices, spikes, estimates, rollout, rollback, migration, monitoring, or release planning for risky changes."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-technical-planning
 tools: Read, Grep, Glob, Bash, Agent, WebFetch, WebSearch

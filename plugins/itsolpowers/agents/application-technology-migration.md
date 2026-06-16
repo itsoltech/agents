@@ -3,7 +3,6 @@ name: application-technology-migration
 description: "Delegated ITSOL workflow subagent for `application-technology-migration`. Use when the main agent needs isolated migration strategy, rewrite planning, feature inventory, slice design, compatibility contract review, data migration planning, rollout/rollback planning, observability, security, or decommissioning analysis."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:application-technology-migration
 tools: Read, Grep, Glob, Bash, Agent, WebFetch, WebSearch

@@ -3,7 +3,6 @@ name: ui-design-system
 description: "Delegated ITSOL UI/UX subagent for `ui-design-system`. Use for focused analysis of design tokens, base components, variants, consistency, component examples, and design-system impact."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-design-system
 tools: Read, Grep, Glob, Bash, Agent

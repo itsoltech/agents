@@ -3,7 +3,6 @@ name: itsol-bug-debugging
 description: "Delegated ITSOL workflow subagent for `itsol-bug-debugging`. Use when the main agent needs isolated debugging work, parallel investigation, or a focused specialist report. Skill scope: Use when diagnosing or fixing an ITSOL bug, regression, failing test, incorrect calculation, broken API behavior, stale UI state, bad data, deployment issue, or production symptom before proposing a fix."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-bug-debugging
 tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit, Agent

@@ -3,7 +3,6 @@ name: ui-component-architecture
 description: "Delegated ITSOL UI/UX subagent for `ui-component-architecture`. Use for focused review of frontend component decomposition, container/presentational boundaries, UI refactor safety, ownership, and testability."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-component-architecture
 tools: Read, Grep, Glob, Bash, Agent

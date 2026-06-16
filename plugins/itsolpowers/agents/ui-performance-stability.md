@@ -3,7 +3,6 @@ name: ui-performance-stability
 description: "Delegated ITSOL UI/UX subagent for `ui-performance-stability`. Use for focused review of Core Web Vitals, CLS, image/media dimensions, skeletons, heavy imports, large lists, expensive render work, and frontend performance."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-performance-stability
 tools: Read, Grep, Glob, Bash, Agent

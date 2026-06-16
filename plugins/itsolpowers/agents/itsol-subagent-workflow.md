@@ -3,7 +3,6 @@ name: itsol-subagent-workflow
 description: "Delegated ITSOL workflow subagent for `itsol-subagent-workflow`. Use when the main agent needs isolated coordination planning for subagent-driven execution, task splitting, concurrency, review loops, per-task commits, validation, and final handoff."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-subagent-workflow
 tools: Read, Grep, Glob, Bash, Agent

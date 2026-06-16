@@ -3,7 +3,6 @@ name: postgres-review
 description: "Delegated ITSOL database subagent for `postgres-review`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when reviewing PostgreSQL schema, migrations, queries, indexes, constraints, transactions, locks, RLS, tenant boundaries, connection pooling, PgBouncer, backups, replication, permissions, monitoring, or database-related application code."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:postgres-review
 tools: Read, Grep, Glob, Bash, Agent

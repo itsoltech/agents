@@ -3,7 +3,6 @@ name: using-itsolpowers
 description: "Delegated ITSOL router subagent for `using-itsolpowers`. Use when the main agent needs isolated coordination work, parallel investigation, or a focused specialist report. Skill scope: Use when starting ITSOL work, choosing which ITSOL skill applies, or routing tasks across current technology documentation research, application technology migration, functional planning, subagent workflow, requirements review, TDD, feature implementation, bug debugging, technical planning, code review, QA handoff, security, infrastructure, database, UI/UX, frontend, and backend workflows."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:using-itsolpowers
 tools: Read, Grep, Glob, Bash, Agent

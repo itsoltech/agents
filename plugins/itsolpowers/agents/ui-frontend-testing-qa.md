@@ -3,7 +3,6 @@ name: ui-frontend-testing-qa
 description: "Delegated ITSOL UI/UX subagent for `ui-frontend-testing-qa`. Use for focused review of frontend component tests, integration/E2E tests, accessibility tests, visual regression, manual QA matrix, responsive QA, and UI edge cases."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-frontend-testing-qa
 tools: Read, Grep, Glob, Bash, Agent

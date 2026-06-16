@@ -3,7 +3,6 @@ name: itsol-requirements-review
 description: "Delegated ITSOL workflow subagent for `itsol-requirements-review`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when reviewing or preparing ITSOL requirements, user stories, acceptance criteria, Definition of Ready, refinement outcomes, scope boundaries, stakeholder questions, or task readiness before development starts."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-requirements-review
 tools: Read, Grep, Glob, Bash, Agent

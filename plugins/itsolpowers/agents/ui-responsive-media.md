@@ -3,7 +3,6 @@ name: ui-responsive-media
 description: "Delegated ITSOL UI/UX subagent for `ui-responsive-media`. Use for focused review of responsive layouts, mobile/tablet/desktop behavior, breakpoints, touch targets, images, videos, iframes, safe areas, and media stability."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-responsive-media
 tools: Read, Grep, Glob, Bash, Agent

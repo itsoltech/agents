@@ -3,7 +3,6 @@ name: ui-accessibility-motion
 description: "Delegated ITSOL UI/UX subagent for `ui-accessibility-motion`. Use for focused review of semantic HTML, keyboard navigation, focus, ARIA, labels, live regions, contrast, reduced motion, and motion design."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:ui-accessibility-motion
 tools: Read, Grep, Glob, Bash, Agent

@@ -3,7 +3,6 @@ name: tanstack-query-svelte-implementation
 description: "Delegated ITSOL frontend-contract subagent for `tanstack-query-svelte-implementation`. Use when the main agent needs isolated implementation work, parallel investigation, or a focused specialist report. Skill scope: Use when implementing TanStack Query v5 for Svelte or SvelteKit, including query keys, createQuery, createMutation, SSR prefetch, invalidation, optimistic updates, pagination, polling, cache behavior, or API client integration."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:tanstack-query-svelte-implementation
 tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit, Agent

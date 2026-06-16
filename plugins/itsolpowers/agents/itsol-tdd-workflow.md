@@ -3,7 +3,6 @@ name: itsol-tdd-workflow
 description: "Delegated ITSOL workflow subagent for `itsol-tdd-workflow`. Use when the main agent needs isolated red-green-refactor work, TDD planning, failing-test design, or focused implementation with proof of RED and GREEN."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-tdd-workflow
 tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit, Agent

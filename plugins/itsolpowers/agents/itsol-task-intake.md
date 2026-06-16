@@ -3,7 +3,6 @@ name: itsol-task-intake
 description: "Delegated ITSOL workflow subagent for `itsol-task-intake`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when beginning an ITSOL engineering task and the agent must classify whether it is requirements/refinement work, a feature, bugfix, technical plan, review, deployment, incident, security-sensitive change, database change, QA handoff, or mixed workflow before choosing implementation steps."
 model: inherit
 effort: medium
-maxTurns: 25
 skills:
   - itsolpowers:itsol-task-intake
 tools: Read, Grep, Glob, Bash, Agent
