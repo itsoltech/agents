@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Next.js API Cache Forms"
+  short_description: "Handle API, cache, TanStack Query, and forms"
+  default_prompt: "Use $react-nextjs-api-cache-forms for this React/Next API, cache, mutation, hydration, or form task."

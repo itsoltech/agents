@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Next.js Debugging"
+  short_description: "Debug React 19 and Next.js issues"
+  default_prompt: "Use $react-nextjs-debugging to debug this React 19 or Next.js problem."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "TanStack Query React Next.js Review"
+  short_description: "Review TanStack Query v5 in React and Next.js"
+  default_prompt: "Use $tanstack-query-react-nextjs-review to review this React/Next TanStack Query change."

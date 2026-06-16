@@ -1,0 +1,4 @@
+interface:
+  display_name: "TanStack Query React Next.js Debugging"
+  short_description: "Debug TanStack Query v5 in React and Next.js"
+  default_prompt: "Use $tanstack-query-react-nextjs-debugging to debug this React/Next TanStack Query issue."

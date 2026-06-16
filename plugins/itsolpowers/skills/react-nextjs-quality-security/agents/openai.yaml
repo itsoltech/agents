@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Next.js Quality Security"
+  short_description: "Check React/Next security, tests, perf, and CI"
+  default_prompt: "Use $react-nextjs-quality-security for this React/Next security, quality, performance, testing, or production-readiness task."

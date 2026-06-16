@@ -1,0 +1,4 @@
+interface:
+  display_name: "TanStack Query React Next.js Implementation"
+  short_description: "Implement TanStack Query v5 in React and Next.js"
+  default_prompt: "Use $tanstack-query-react-nextjs-implementation for this React/Next TanStack Query task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Next.js Review"
+  short_description: "Review React 19 and Next.js PRs"
+  default_prompt: "Use $react-nextjs-review to review this React 19 or Next.js change."

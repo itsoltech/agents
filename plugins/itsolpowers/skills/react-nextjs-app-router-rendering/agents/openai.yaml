@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Next.js App Router"
+  short_description: "Handle Next.js App Router rendering boundaries"
+  default_prompt: "Use $react-nextjs-app-router-rendering for this App Router, Server Component, Client Component, or hydration task."
