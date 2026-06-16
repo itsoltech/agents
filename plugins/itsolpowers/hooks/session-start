@@ -3,10 +3,13 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_PATH="$0"
+SCRIPT_DIR="$(cd "${SCRIPT_PATH%/*}" && pwd)"
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-bootstrap_content=$(cat "${PLUGIN_ROOT}/hooks/bootstrap-context.md" 2>&1 || echo "Error reading ITSOL Powers bootstrap context")
+if ! bootstrap_content="$(<"${PLUGIN_ROOT}/hooks/bootstrap-context.md")"; then
+  bootstrap_content="Error reading ITSOL Powers bootstrap context"
+fi
 
 escape_for_json() {
   local s="$1"
