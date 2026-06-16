@@ -2,25 +2,29 @@
 
 Ten plik jest indeksem routingu dla referencji skilla. Nie ładuj wszystkich plików sektorowych naraz, chyba że zadanie wymaga pełnego audytu. Wybierz tylko pliki pasujące do aktualnej sytuacji.
 
-Ten plik jest wewnętrzną referencją skilla, wyciętą z `tanstack-query-svelte-v5-code-review-checklist.md` i ograniczoną do zakresu użycia tego skilla. Nie odsyłaj agenta do dokumentu źródłowego podczas normalnej pracy; używaj wskazanych sektorów referencyjnych bezpośrednio.
+Ten plik jest wewnętrzną referencją skilla, zaktualizowaną do review `@tanstack/svelte-query` v5 i v6. Nie odsyłaj agenta do dokumentu źródłowego podczas normalnej pracy; używaj wskazanych sektorów referencyjnych bezpośrednio.
 
 ## Zakres
 
-TanStack Query Svelte review
+TanStack Query Svelte review dla v5 i v6. Najpierw ustal wersje `@tanstack/svelte-query` i `svelte`, potem oceniaj kod według właściwych reguł.
 
 ## Przeniesione sekcje
 
 - Kiedy używać TanStack Query
+- Version gate
+- Review v5
+- Review v6
+- Review migracji z v5 do v6
 - Minimalna konfiguracja klienta
 - Konfiguracja dla SvelteKit SSR
 - Prefetch w SvelteKit przez `initialData`
 - Prefetch w SvelteKit przez `prefetchQuery`
-- Domyślne zachowania v5
+- Domyślne zachowania v5/v6
 - Query keys
 - Query options factory
 - `createQuery`
 - Reaktywność w Svelte
-- Statusy query w v5
+- Statusy query w v5/v6
 - `enabled` i queries zależne
 - API client i `fetch`
 - Cancellation
@@ -56,10 +60,11 @@ TanStack Query Svelte review
 
 ## Pliki referencyjne
 
+- `11-version-policy-and-v6-review.md` (82 linii) - Version gate; review v5; review v6; review migracji z v5 do v6
 - `01-overview.md` (167 linii) - Overview; Kiedy używać TanStack Query; Minimalna konfiguracja klienta; Konfiguracja dla SvelteKit SSR; +1 więcej
 - `02-prefetch-w-sveltekit-przez-prefetchquery.md` (135 linii) - Prefetch w SvelteKit przez `prefetchQuery`; Domyślne zachowania v5
 - `03-query-keys.md` (158 linii) - Query keys; Query options factory; `createQuery`
-- `04-reaktywnosc-w-svelte.md` (113 linii) - Reaktywność w Svelte; Statusy query w v5; `enabled` i queries zależne
+- `04-reaktywnosc-w-svelte.md` (115 linii) - Reaktywność w Svelte; Statusy query w v5/v6; `enabled` i queries zależne
 - `05-api-client-i-fetch.md` (169 linii) - API client i `fetch`; Cancellation; Transformacja danych przez `select`
 - `06-mutacje.md` (189 linii) - Mutacje; Statusy mutacji w v5; Invalidacje po mutacjach; Aktualizacja cache przez `setQueryData`; +1 więcej
 - `07-paginacja.md` (165 linii) - Paginacja; Infinite queries; Polling, refetch i realtime; Cache a auth, logout i tenant; +1 więcej

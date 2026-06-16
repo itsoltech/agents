@@ -12,9 +12,9 @@
 
 ## Cel dokumentu
 
-Ten dokument opisuje dobre praktyki korzystania z TanStack Query v5 w aplikacjach Svelte i SvelteKit. Obejmuje konfigurację klienta, query keys, `createQuery`, `createMutation`, Svelte reactivity, SSR, komunikację z API, bezpieczeństwo, cache, invalidacje, paginację, optimistic updates, testy i code review.
+Ten dokument opisuje dobre praktyki korzystania z TanStack Query w aplikacjach Svelte i SvelteKit, z uwzględnieniem repo na `@tanstack/svelte-query` v5 oraz v6. Obejmuje konfigurację klienta, query keys, `createQuery`, `createMutation`, Svelte reactivity, SSR, komunikację z API, bezpieczeństwo, cache, invalidacje, paginację, optimistic updates, testy i code review.
 
-Zakres dotyczy aktualnej dokumentacji TanStack Query v5 dla `@tanstack/svelte-query`. Dokument nie opisuje starego podejścia z v4 opartego o store'y i odczyt przez `$query`. Przykłady używają składni `createQuery(() => ({ ... }))`, ponieważ w adapterze Svelte argumenty funkcji `create*` muszą być przekazane jako funkcja, aby zachować reaktywność.
+Przed użyciem przykładów ustal wersję z `package.json` i lockfile. Dla v5 trzymaj się wzorca repo. Dla v6 używaj runes-style API, odczytu bez `$query` oraz składni `createQuery(() => ({ ... }))`. Szczegóły wyboru wersji i migracji są w `10-version-policy-and-v6-migration.md`.
 ## Kiedy używać TanStack Query
 
 TanStack Query powinien obsługiwać dane serwerowe: dane pobierane z API, cache, refetch, retry, invalidację, synchronizację po mutacjach i obsługę stanu requestów.
@@ -41,6 +41,8 @@ TanStack Query nie powinien obsługiwać:
 ```bash
 pnpm add @tanstack/svelte-query
 ```
+
+Dla nowego projektu bez ograniczeń używaj aktualnej wersji `@tanstack/svelte-query` v6. Dla istniejącego repo nie podbijaj automatycznie v5 do v6 bez planu migracji i akceptacji użytkownika.
 
 Devtools instaluj osobno:
 

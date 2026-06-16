@@ -6,7 +6,7 @@
 - Query keys
 - `createQuery`
 
-## Domyślne zachowania v5
+## Domyślne zachowania v5/v6
 
 TanStack Query domyślnie traktuje dane jako stale. To oznacza, że query może refetchować przy montowaniu komponentu, odzyskaniu focusu okna albo ponownym połączeniu z siecią.
 
@@ -19,6 +19,7 @@ Najważniejsze domyślne zachowania:
 - structural sharing jest domyślnie włączony dla danych kompatybilnych z JSON
 - w v5 `cacheTime` zostało zastąpione przez `gcTime`
 - w v5 status `loading` został zastąpiony przez `pending`
+- w v6 adapter Svelte używa runes/signals i nie wymaga odczytu query przez `$query`
 - w mutacjach używaj `isPending`, nie `isLoading`
 
 Standardy projektu powinny jawnie określać:
@@ -156,6 +157,7 @@ Zasady:
 - nie wykonuj side effectów w `queryFn` poza pobraniem danych
 - nie rób mutacji danych w `queryFn`
 - nie używaj `createQuery` do operacji zapisujących dane na serwerze
+- w v6 nie debuguj wyniku query jako Svelte store; sprawdzaj bezpośrednio `query.data`, `query.isPending`, `query.error`
 - nie kopiuj `query.data` do lokalnego stanu bez powodu
 - nie nadpisuj ręcznie stanu loading/error zamiast korzystać ze stanu query
 - nie ignoruj `signal` przekazanego do `queryFn`, jeśli używasz `fetch`

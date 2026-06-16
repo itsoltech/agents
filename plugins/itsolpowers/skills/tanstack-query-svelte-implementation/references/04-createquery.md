@@ -50,7 +50,9 @@ Zasady:
 - nie ignoruj `signal` przekazanego do `queryFn`, jeśli używasz `fetch`
 ## Reaktywność w Svelte
 
-W adapterze Svelte v5 opcje `createQuery`, `createMutation`, `createInfiniteQuery` i podobnych funkcji powinny być opakowane w funkcję. Dzięki temu adapter może śledzić wartości odczytane wewnątrz konfiguracji.
+W adapterze Svelte v5 i v6 opcje `createQuery`, `createMutation`, `createInfiniteQuery` i podobnych funkcji powinny być opakowane w funkcję. Dzięki temu adapter może śledzić wartości odczytane wewnątrz konfiguracji.
+
+W v6 wynik query nie jest storem do odczytu przez `$query`; w template czytaj `query.data`, `query.isPending`, `query.isError`. W repo na v5 respektuj istniejący wzorzec projektu, ale nie mieszaj store-style i runes-style w jednym komponencie.
 
 Dobrze:
 
@@ -89,7 +91,7 @@ Zasady:
 - unikaj destrukturyzacji wyniku query w sposób, który utrudnia reaktywność albo tracking
 - w template czytaj `userQuery.data`, `userQuery.isPending`, `userQuery.isError`
 - jeśli tworzysz `$derived`, opieraj go na polach query, a nie na jednorazowo skopiowanych wartościach
-## Statusy query w v5
+## Statusy query w v5/v6
 
 Najczęściej używane pola:
 

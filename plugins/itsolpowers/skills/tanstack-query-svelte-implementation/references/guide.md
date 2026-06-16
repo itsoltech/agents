@@ -2,27 +2,32 @@
 
 Ten plik jest indeksem routingu dla referencji skilla. Nie ładuj wszystkich plików sektorowych naraz, chyba że zadanie wymaga pełnego audytu. Wybierz tylko pliki pasujące do aktualnej sytuacji.
 
-Ten plik jest wewnętrzną referencją skilla, wyciętą z `tanstack-query-svelte-v5-code-review-checklist.md` i ograniczoną do zakresu użycia tego skilla. Nie odsyłaj agenta do dokumentu źródłowego podczas normalnej pracy; używaj wskazanych sektorów referencyjnych bezpośrednio.
+Ten plik jest wewnętrzną referencją skilla, zaktualizowaną do obsługi `@tanstack/svelte-query` v5 i v6. Nie odsyłaj agenta do dokumentu źródłowego podczas normalnej pracy; używaj wskazanych sektorów referencyjnych bezpośrednio.
 
 ## Zakres
 
-TanStack Query Svelte implementation
+TanStack Query Svelte implementation dla v5 i v6. Najpierw ustal wersje `@tanstack/svelte-query` i `svelte`, potem wybierz właściwy sektor.
 
 ## Przeniesione sekcje
 
 - Cel dokumentu
+- Version gate
+- Kiedy używać v5, a kiedy v6
+- Wymagania v6
+- Najważniejsze zmiany v6
+- Migracja z v5 do v6
 - Kiedy używać TanStack Query
 - Instalacja
 - Minimalna konfiguracja klienta
 - Konfiguracja dla SvelteKit SSR
 - Prefetch w SvelteKit przez `initialData`
 - Prefetch w SvelteKit przez `prefetchQuery`
-- Domyślne zachowania v5
+- Domyślne zachowania v5/v6
 - Query keys
 - Query options factory
 - `createQuery`
 - Reaktywność w Svelte
-- Statusy query w v5
+- Statusy query w v5/v6
 - `enabled` i queries zależne
 - API client i `fetch`
 - Cancellation
@@ -59,10 +64,11 @@ TanStack Query Svelte implementation
 
 ## Pliki referencyjne
 
-- `01-overview.md` (146 linii) - Overview; Cel dokumentu; Kiedy używać TanStack Query; Instalacja; +2 więcej
+- `10-version-policy-and-v6-migration.md` (113 linii) - Version gate; wybór v5/v6; wymagania v6; migracja z v5 do v6
+- `01-overview.md` (148 linii) - Overview; Cel dokumentu; Kiedy używać TanStack Query; Instalacja; +2 więcej
 - `02-prefetch-w-sveltekit-przez-initialdata.md` (145 linii) - Prefetch w SvelteKit przez `initialData`; Prefetch w SvelteKit przez `prefetchQuery`
-- `03-domyslne-zachowania-v5.md` (167 linii) - Domyślne zachowania v5; Query keys; Query options factory
-- `04-createquery.md` (155 linii) - `createQuery`; Reaktywność w Svelte; Statusy query w v5; `enabled` i queries zależne
+- `03-domyslne-zachowania-v5.md` (167 linii) - Domyślne zachowania v5/v6; Query keys; Query options factory
+- `04-createquery.md` (157 linii) - `createQuery`; Reaktywność w Svelte; Statusy query w v5/v6; `enabled` i queries zależne
 - `05-api-client-i-fetch.md` (169 linii) - API client i `fetch`; Cancellation; Transformacja danych przez `select`
 - `06-mutacje.md` (189 linii) - Mutacje; Statusy mutacji w v5; Invalidacje po mutacjach; Aktualizacja cache przez `setQueryData`; +1 więcej
 - `07-usemutationstate.md` (183 linii) - `useMutationState`; Paginacja; Infinite queries; Polling, refetch i realtime; +2 więcej

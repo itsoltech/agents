@@ -8,7 +8,9 @@
 
 ## Reaktywność w Svelte
 
-W adapterze Svelte v5 opcje `createQuery`, `createMutation`, `createInfiniteQuery` i podobnych funkcji powinny być opakowane w funkcję. Dzięki temu adapter może śledzić wartości odczytane wewnątrz konfiguracji.
+W adapterze Svelte v5 i v6 opcje `createQuery`, `createMutation`, `createInfiniteQuery` i podobnych funkcji powinny być opakowane w funkcję. Dzięki temu adapter może śledzić wartości odczytane wewnątrz konfiguracji.
+
+Jeśli repo jest na v6, sprawdzaj runes mode i brak `$query` w template. Jeśli repo jest na v5, nie zmieniaj składni na v6 jako część zwykłego bugfixa, chyba że root cause dotyczy migracji.
 
 Dobrze:
 
@@ -47,7 +49,7 @@ Zasady:
 - unikaj destrukturyzacji wyniku query w sposób, który utrudnia reaktywność albo tracking
 - w template czytaj `userQuery.data`, `userQuery.isPending`, `userQuery.isError`
 - jeśli tworzysz `$derived`, opieraj go na polach query, a nie na jednorazowo skopiowanych wartościach
-## Statusy query w v5
+## Statusy query w v5/v6
 
 Najczęściej używane pola:
 

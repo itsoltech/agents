@@ -1,19 +1,20 @@
 ---
 name: tanstack-query-svelte-review
-description: "TanStack Query Svelte review: keys, cache, SSR, invalidation, mutations, errors."
+description: "TanStack Query Svelte review for v5 and v6: version detection, runes migration, keys, cache, SSR, invalidation, mutations, errors."
 ---
 
 # TanStack Query Svelte Review
 
-Review server-state behavior for stable keys, correct query functions, Svelte reactivity, safe mutation side effects, SSR correctness, and security-sensitive cache handling.
+Review server-state behavior for stable keys, correct query functions, version-aware Svelte reactivity, safe mutation side effects, SSR correctness, and security-sensitive cache handling.
 
 ## Process
 
 1. Inspect the diff and surrounding code before applying checklist items.
 2. Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files, then read only relevant sector files.
-3. Check correctness, boundaries, security, data flow, observability, tests, and deployment impact for the changed behavior.
-4. Report concrete findings first, ordered by severity, with file references and affected behavior.
-5. Call out missing tests or residual risk only when it is tied to the reviewed change.
+3. Detect whether the project uses `@tanstack/svelte-query` v5 or v6 before judging Svelte stores/runes patterns.
+4. Check correctness, boundaries, security, data flow, observability, tests, and deployment impact for the changed behavior.
+5. Report concrete findings first, ordered by severity, with file references and affected behavior.
+6. Call out missing tests or residual risk only when it is tied to the reviewed change.
 
 ## Large PR Subagent Review
 
@@ -24,4 +25,3 @@ Split the review by independent surfaces such as UI, API, database, infrastructu
 ## Coordination
 
 Use this skill together with `itsol-task-intake` for ambiguous work, `itsol-self-review` before handoff, and focused `security-*` or `infra-*` skills when the change touches trust boundaries or deployment behavior.
-
