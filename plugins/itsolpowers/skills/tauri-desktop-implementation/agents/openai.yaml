@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tauri Desktop Implementation"
+  short_description: "Build production Tauri desktop apps"
+  default_prompt: "Use $tauri-desktop-implementation for this ITSOL Tauri desktop implementation task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tauri Release Distribution"
+  short_description: "Plan Tauri signing, updater, and releases"
+  default_prompt: "Use $tauri-release-distribution to plan or review this Tauri release pipeline."

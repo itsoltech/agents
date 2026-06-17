@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tauri Desktop Review"
+  short_description: "Review Tauri architecture and QA risk"
+  default_prompt: "Use $tauri-desktop-review to review this Tauri desktop application change."

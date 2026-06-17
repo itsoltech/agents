@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tauri Desktop Debugging"
+  short_description: "Debug Tauri desktop app failures"
+  default_prompt: "Use $tauri-desktop-debugging for this ITSOL Tauri desktop debugging task."

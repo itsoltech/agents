@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tauri Security Capabilities"
+  short_description: "Harden Tauri permissions and command scope"
+  default_prompt: "Use $tauri-security-capabilities to harden this Tauri capability and permission model."

@@ -1,7 +1,7 @@
 {
   "name": "itsolpowers",
   "version": "0.13.0",
-  "description": "ITSOL engineering skills and Claude Code subagents for task intake, repo memory, current technology documentation research, application technology migration, React 19/Next.js frontend, TanStack Query React/Next cache workflows, Electron desktop apps, SQL Server/.NET data access, file-based functional planning, subagent execution, TDD, UI/UX frontend, implementation, debugging, review, security, infrastructure, and production readiness.",
+  "description": "ITSOL engineering skills and Claude Code subagents for task intake, repo memory, current technology documentation research, application technology migration, React 19/Next.js frontend, TanStack Query React/Next cache workflows, Electron and Tauri desktop apps, SQL Server/.NET data access, file-based functional planning, subagent execution, TDD, UI/UX frontend, implementation, debugging, review, security, infrastructure, and production readiness.",
   "author": {
     "name": "ITSOL Tech",
     "email": "dev@itsol.tech"
@@ -30,6 +30,12 @@
     "auto-update",
     "code-signing",
     "notarization",
+    "tauri",
+    "webview",
+    "capabilities",
+    "permissions",
+    "sidecar",
+    "updater",
     "dotnet",
     "rust",
     "postgresql",
@@ -66,7 +72,7 @@
   "interface": {
     "displayName": "ITSOL Powers",
     "shortDescription": "ITSOL workflows, current docs, UI/UX, migration, planning, TDD, and review.",
-    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across repo memory and monorepo policy, current technology documentation and version research, UI/UX frontend workflows, React 19 and Next.js App Router work, Server/Client Components, TanStack Query v5 React/Next query keys, SSR hydration, mutations, invalidation, optimistic updates, auth cache and tenant isolation, Electron desktop app architecture, main/preload/renderer boundaries, IPC contracts, BrowserWindow hardening, auto-update, packaging, code signing, release distribution, API/cache/forms, generated OpenAPI clients, design systems, accessibility, responsive behavior, frontend testing and QA, application technology migration and rewrites, SQL Server/.NET data access with EF Core, Dapper, stored procedures, migrations, Query Store and operations debugging, file-based functional planning, approved business and technical plan markdown artifacts, approved technical fix plans for bugs, subagent-driven execution, TDD, implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL engineering workflows.",
+    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across repo memory and monorepo policy, current technology documentation and version research, UI/UX frontend workflows, React 19 and Next.js App Router work, Server/Client Components, TanStack Query v5 React/Next query keys, SSR hydration, mutations, invalidation, optimistic updates, auth cache and tenant isolation, Electron desktop app architecture, main/preload/renderer boundaries, IPC contracts, BrowserWindow hardening, auto-update, packaging, code signing, Tauri Rust desktop app architecture, commands, capabilities, permissions, WebView behavior, sidecars, updater signatures, release distribution, API/cache/forms, generated OpenAPI clients, design systems, accessibility, responsive behavior, frontend testing and QA, application technology migration and rewrites, SQL Server/.NET data access with EF Core, Dapper, stored procedures, migrations, Query Store and operations debugging, file-based functional planning, approved business and technical plan markdown artifacts, approved technical fix plans for bugs, subagent-driven execution, TDD, implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL engineering workflows.",
     "developerName": "ITSOL Tech",
     "category": "Productivity",
     "capabilities": [
@@ -88,6 +94,7 @@
       "For React 19 and Next.js work, route through React/Next implementation, review, debugging, App Router/rendering, API/cache/forms, or quality/security skills as appropriate.",
       "For TanStack Query v5 in React/Next.js, use focused implementation, review, or debugging skills for query keys, SSR hydration, mutations, invalidation, optimistic updates, auth cache, tenant isolation, and tests.",
       "For Electron desktop app work, route through Electron implementation, review, debugging, security hardening, or release/distribution skills for main/preload/renderer boundaries, IPC, BrowserWindow, storage, auto-update, packaging, signing, and packaged-app diagnostics.",
+      "For Tauri desktop app work, route through Tauri implementation, review, debugging, security/capabilities, or release/distribution skills for Rust/frontend boundaries, commands, invoke/events, capabilities, permissions, WebView differences, sidecars, updater, bundling, signing, and platform diagnostics.",
       "For visible frontend work, use UI/UX skills for design-system consistency, component architecture, view states, responsiveness, accessibility, performance, tests, and UI review.",
       "For application rewrites or technology migrations, inventory behavior, choose a safe migration strategy, and plan incremental slices before implementation.",
       "For functional work, write and require approved Business Plan and Technical Plan markdown files before implementation.",
