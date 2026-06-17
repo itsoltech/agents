@@ -1,0 +1,4 @@
+interface:
+  display_name: "Electron Desktop Review"
+  short_description: "Review Electron app architecture and release risk"
+  default_prompt: "Use $electron-desktop-review to review this Electron desktop application change."

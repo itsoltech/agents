@@ -1,0 +1,4 @@
+interface:
+  display_name: "Electron Desktop Debugging"
+  short_description: "Debug Electron desktop app failures"
+  default_prompt: "Use $electron-desktop-debugging for this ITSOL Electron desktop debugging task."

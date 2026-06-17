@@ -1,0 +1,4 @@
+interface:
+  display_name: "Electron Release Distribution"
+  short_description: "Plan Electron packaging, signing, and updates"
+  default_prompt: "Use $electron-release-distribution to plan or review this Electron release pipeline."

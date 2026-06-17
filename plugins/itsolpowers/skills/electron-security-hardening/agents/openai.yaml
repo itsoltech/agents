@@ -1,0 +1,4 @@
+interface:
+  display_name: "Electron Security Hardening"
+  short_description: "Harden Electron windows, IPC, and updates"
+  default_prompt: "Use $electron-security-hardening to harden this Electron desktop application."

@@ -9,6 +9,7 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 - Aktualność technologii, dokumentacji, wersji frameworków, SDK, runtime, paczek, generated clients, API zewnętrznych albo start nowego projektu: użyj `itsol-current-tech-context`. W istniejącym repo najpierw wykryj lokalnie przypięte wersje, a dopiero potem sprawdzaj aktualną dokumentację. W nowym projekcie wybieraj latest stable, chyba że user jawnie przypiął wersje albo wymaga LTS/kompatybilności.
 - Rewrite aplikacji, migracja technologii, modernizacja, Strangler Fig, Branch by Abstraction, parallel run, cutover danych, kontrakty kompatybilności albo decommissioning legacy: użyj `application-technology-migration`, a dopiero dla zatwierdzonych slice'ów dobierz `itsol-functional-planning`, `itsol-tdd-workflow`, review/security/infra/database i skille technologiczne.
 - UI/UX, nowy widok, komponent, design system, responsive, accessibility, Tailwind, performance frontendu, testy UI albo QA frontendu: użyj `ui-ux-workflow`, a potem dobierz najwęższe skille UI dla dotkniętego obszaru.
+- Electron desktop app, main process, preload, renderer, IPC, BrowserWindow, session permissions, desktop storage, OS integrations, auto-update, packaging, code signing, notarization, packaged app debugging albo Electron security hardening: użyj najwęższego `electron-*` skilla. Dla widocznego renderer UI dodaj właściwe `ui-*`, React/Next albo Svelte skille.
 - Feature albo behavior change: użyj `itsol-task-intake`, potem `itsol-functional-planning`; dopiero po zapisaniu i zatwierdzeniu plików Business Planu oraz Technical Planu i wyborze subagenci/inline użyj `itsol-subagent-workflow` albo `itsol-feature-implementation` z `itsol-tdd-workflow`.
 - Endpoint, UI flow, integracja albo logika produktowa: traktuj jako zadanie funkcjonalne i przejdź przez `itsol-functional-planning`.
 - Bug, regresja albo failing test: użyj `itsol-bug-debugging`, zbierz dowody i zapisz Technical Fix Plan; dopiero po akceptacji użytkownika użyj `itsol-tdd-workflow` i najwęższego skilla debuggingowego, np. `svelte-debugging`, `postgres-operations-debugging`, `dotnet-web-api-debugging`.
@@ -40,6 +41,7 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 ## Powierzchnie Ryzyka
 
 - UI, browser, forms, accessibility: `svelte-*`.
+- Electron desktop apps: `electron-desktop-implementation`, `electron-desktop-review`, `electron-desktop-debugging`, `electron-security-hardening`, `electron-release-distribution`.
 - Creating, initializing, reading, or updating repo policy, monorepo project map, TDD support, verification commands and stable agent notes: `itsol-repo-memory`.
 - Current official documentation, SDK/runtime/package versions, latest stable defaults, and repo pins: `itsol-current-tech-context`.
 - UI/UX workflow, design system, components, states/forms, responsive, Tailwind, accessibility, performance, tests and UI review: `ui-*`.

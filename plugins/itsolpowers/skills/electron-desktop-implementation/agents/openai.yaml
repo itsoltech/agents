@@ -1,0 +1,4 @@
+interface:
+  display_name: "Electron Desktop Implementation"
+  short_description: "Implement Electron desktop apps safely"
+  default_prompt: "Use $electron-desktop-implementation for this ITSOL Electron desktop implementation task."
