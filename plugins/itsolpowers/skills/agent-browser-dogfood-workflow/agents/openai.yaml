@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Browser Dogfood Workflow"
+  short_description: "Run frontend dogfood with agent-browser"
+  default_prompt: "Use $agent-browser-dogfood-workflow to dogfood this frontend flow with agent-browser."

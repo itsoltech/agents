@@ -1,6 +1,6 @@
 {
   "name": "itsolpowers",
-  "description": "ITSOL engineering skills and subagents for workflow, repo memory, current technology documentation research, ML/AI engineering, UI/UX frontend, React 19/Next.js, TanStack Query React/Next, Expo React Native mobile apps, EAS Submit/Update rollout, Electron and Tauri desktop apps, application technology migration, SQL Server/.NET data access, file-based functional planning, subagent execution, TDD, security, infrastructure, review, and debugging",
+  "description": "ITSOL engineering skills and subagents for workflow, repo memory, current technology documentation research, ML/AI engineering, UI/UX frontend, React 19/Next.js, TanStack Query React/Next, agent-browser frontend dogfood, browser evidence, auth-state safety, redacted QA handoff, production-safe smoke checks, Expo React Native mobile apps, EAS Submit/Update rollout, Electron and Tauri desktop apps, application technology migration, SQL Server/.NET data access, file-based functional planning, subagent execution, TDD, security, infrastructure, review, and debugging",
   "version": "0.13.0",
   "author": {
     "name": "ITSOL Tech",

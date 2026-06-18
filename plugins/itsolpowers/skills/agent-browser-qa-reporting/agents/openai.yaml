@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Browser QA Reporting"
+  short_description: "Create QA reports from browser dogfood evidence"
+  default_prompt: "Use $agent-browser-qa-reporting to turn this agent-browser dogfood evidence into a QA handoff report."

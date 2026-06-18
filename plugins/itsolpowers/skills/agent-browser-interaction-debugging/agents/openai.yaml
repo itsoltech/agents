@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Browser Interaction Debugging"
+  short_description: "Debug agent-browser interactions"
+  default_prompt: "Use $agent-browser-interaction-debugging to debug this agent-browser interaction issue."

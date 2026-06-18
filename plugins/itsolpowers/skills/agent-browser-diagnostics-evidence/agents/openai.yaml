@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Browser Diagnostics Evidence"
+  short_description: "Collect browser diagnostics evidence"
+  default_prompt: "Use $agent-browser-diagnostics-evidence to collect focused browser diagnostics and redacted evidence."

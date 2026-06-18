@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Browser Security Production Safety"
+  short_description: "Keep browser dogfood safe in production"
+  default_prompt: "Use $agent-browser-security-production-safety to plan safe production browser dogfood with redacted evidence."
