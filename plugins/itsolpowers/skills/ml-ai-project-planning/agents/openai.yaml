@@ -1,0 +1,4 @@
+interface:
+  display_name: "ML AI Project Planning"
+  short_description: "Plan ML and AI project scope"
+  default_prompt: "Use $ml-ai-project-planning to plan this ML or AI project."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "ML LLM RAG Engineering"
+  short_description: "Design and verify LLM/RAG systems"
+  default_prompt: "Use $ml-llm-rag-engineering for this ITSOL LLM or RAG engineering task."

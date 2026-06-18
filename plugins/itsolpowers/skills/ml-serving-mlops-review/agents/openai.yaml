@@ -1,0 +1,4 @@
+interface:
+  display_name: "ML Serving MLOps Review"
+  short_description: "Review ML serving and MLOps risk"
+  default_prompt: "Use $ml-serving-mlops-review to review this ML serving, MLOps, deployment, or production model change."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "ML Data Evaluation"
+  short_description: "Design ML datasets and evals"
+  default_prompt: "Use $ml-data-evaluation to design this ML dataset, split, metric, or evaluation workflow."

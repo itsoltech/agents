@@ -1,0 +1,4 @@
+interface:
+  display_name: "ML Training Experiments"
+  short_description: "Plan and verify ML training runs"
+  default_prompt: "Use $ml-training-experiments for this ITSOL ML training or experiment task."
