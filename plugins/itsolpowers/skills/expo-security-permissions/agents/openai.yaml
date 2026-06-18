@@ -1,0 +1,4 @@
+interface:
+  display_name: "Expo Security Permissions"
+  short_description: "Harden Expo app security and permissions"
+  default_prompt: "Use $expo-security-permissions to review or harden this Expo mobile security and permissions surface."

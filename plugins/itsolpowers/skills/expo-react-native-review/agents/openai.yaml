@@ -1,0 +1,4 @@
+interface:
+  display_name: "Expo React Native Review"
+  short_description: "Review Expo mobile app changes"
+  default_prompt: "Use $expo-react-native-review to review this Expo or React Native mobile app change."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Expo React Native Implementation"
+  short_description: "Build Expo mobile app features"
+  default_prompt: "Use $expo-react-native-implementation for this ITSOL Expo React Native implementation task."

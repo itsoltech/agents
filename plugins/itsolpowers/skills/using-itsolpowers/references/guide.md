@@ -11,6 +11,7 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 - UI/UX, nowy widok, komponent, design system, responsive, accessibility, Tailwind, performance frontendu, testy UI albo QA frontendu: użyj `ui-ux-workflow`, a potem dobierz najwęższe skille UI dla dotkniętego obszaru.
 - Electron desktop app, main process, preload, renderer, IPC, BrowserWindow, session permissions, desktop storage, OS integrations, auto-update, packaging, code signing, notarization, packaged app debugging albo Electron security hardening: użyj najwęższego `electron-*` skilla. Dla widocznego renderer UI dodaj właściwe `ui-*`, React/Next albo Svelte skille.
 - Tauri desktop app, `src-tauri`, Rust commands, `invoke`, events/channels, capabilities, permissions, WebView, sidecars, updater, code signing, bundling, platform debugging albo Tauri security hardening: użyj najwęższego `tauri-*` skilla. Dla Rust core dodaj właściwe `rust-*`, a dla widocznego frontend UI dodaj właściwe `ui-*`, React/Next albo Svelte skille.
+- Expo / React Native mobile app, Expo SDK, Expo Router, development builds, Expo Go limitations, CNG/prebuild, app config, config plugins, native modules, mobile permissions, SecureStore/storage, offline/API sync, push/background/lifecycle, EAS Build, EAS Submit, EAS Update/OTA, store release albo mobile debugging/review: użyj najwęższego `expo-*` skilla. Dla widocznego UI dodaj właściwe `ui-*`, dla generated clients `hey-api-openapi-*`, a dla TanStack Query/cache właściwy skill query.
 - Feature albo behavior change: użyj `itsol-task-intake`, potem `itsol-functional-planning`; dopiero po zapisaniu i zatwierdzeniu plików Business Planu oraz Technical Planu i wyborze subagenci/inline użyj `itsol-subagent-workflow` albo `itsol-feature-implementation` z `itsol-tdd-workflow`.
 - Endpoint, UI flow, integracja albo logika produktowa: traktuj jako zadanie funkcjonalne i przejdź przez `itsol-functional-planning`.
 - Bug, regresja albo failing test: użyj `itsol-bug-debugging`, zbierz dowody i zapisz Technical Fix Plan; dopiero po akceptacji użytkownika użyj `itsol-tdd-workflow` i najwęższego skilla debuggingowego, np. `svelte-debugging`, `postgres-operations-debugging`, `dotnet-web-api-debugging`.
@@ -41,9 +42,10 @@ Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych
 
 ## Powierzchnie Ryzyka
 
-- UI, browser, forms, accessibility: `svelte-*`.
+- UI, browser, forms, accessibility: `ui-*` plus the relevant framework or mobile family (`svelte-*`, `react-nextjs-*`, or `expo-react-native-*`) when framework-specific behavior matters.
 - Electron desktop apps: `electron-desktop-implementation`, `electron-desktop-review`, `electron-desktop-debugging`, `electron-security-hardening`, `electron-release-distribution`.
 - Tauri desktop apps: `tauri-desktop-implementation`, `tauri-desktop-review`, `tauri-desktop-debugging`, `tauri-security-capabilities`, `tauri-release-distribution`.
+- Expo / React Native mobile apps: `expo-react-native-implementation`, `expo-react-native-review`, `expo-react-native-debugging`, `expo-security-permissions`, `expo-eas-release-ota`.
 - Creating, initializing, reading, or updating repo policy, monorepo project map, TDD support, verification commands and stable agent notes: `itsol-repo-memory`.
 - Current official documentation, SDK/runtime/package versions, latest stable defaults, and repo pins: `itsol-current-tech-context`.
 - UI/UX workflow, design system, components, states/forms, responsive, Tailwind, accessibility, performance, tests and UI review: `ui-*`.

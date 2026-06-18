@@ -1,0 +1,4 @@
+interface:
+  display_name: "Expo EAS Release OTA"
+  short_description: "Plan Expo builds, submit, and OTA"
+  default_prompt: "Use $expo-eas-release-ota to plan or review this Expo EAS build, release, or OTA update."

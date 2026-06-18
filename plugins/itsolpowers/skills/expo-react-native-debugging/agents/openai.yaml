@@ -1,0 +1,4 @@
+interface:
+  display_name: "Expo React Native Debugging"
+  short_description: "Debug Expo mobile app failures"
+  default_prompt: "Use $expo-react-native-debugging for this ITSOL Expo React Native debugging task."
