@@ -93,7 +93,22 @@ If TDD mode is `limited`, `not-supported`, or `not-applicable`, do not scaffold 
 **Commit:** `<angular commit message>`
 
 ## Subagent Plan
-<If subagent-driven is likely: task split, reviewer split, concurrency limit, and handoff expectations. Otherwise explain why inline is better.>
+If `Execution Mode` is `Subagent-driven` or subagents are likely, complete this section using `itsol-subagent-workflow` as the canonical contract for task graph, task packet, statuses, write scope, stop conditions, response contract, review loop, and final validation. Reinforce the contract here; do not redefine a conflicting parallel version.
+
+**Concurrency Limit:** `<1 | 2 | 3 | user-approved higher>` because `<write ownership/risk rationale>`.
+
+**Task Graph:**
+| Task ID | Name | Type | Dependencies | Write Scope | Reviewer/Review Area | Verification Or Evidence | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `T1` | `<short name>` | `implementation/review/research/verification/integration` | `<none or task ids>` | `<exact files/areas or read-only>` | `<skill or area>` | `<command/evidence>` | `planned` |
+
+**Task Packet Requirements:** each delegated task must receive approved plan paths, goal and acceptance criteria, source of truth, read scope, write scope or `read-only`, forbidden scope, required ITSOL skills, RED/GREEN or documented TDD exception, verification or replacement evidence, expected artifacts, allowed statuses, budget when useful, stop conditions, and escalation triggers.
+
+**Response And Review Handling:** the main agent must validate every subagent response before accepting it. Require status `completed`, `partial`, `blocked`, or `failed`; changed files or inspected scope; evidence; assumptions; unverified items; coverage gap notes; risks; blockers; and next review target when files changed. Resolve `partial` and `blocked` results through revised packets, serialization, user/main-agent decisions, or stopped execution. For `failed`, inspect whether any artifacts are salvageable, then rerun with a narrower packet, switch to inline work, escalate, or stop.
+
+**Conflict Handling:** state which files or shared semantic contracts require one writer at a time, how write scope conflicts will be serialized, and how semantic conflicts between subagent results will be checked during integration.
+
+If inline execution is better, explain why subagents would add coordination overhead or risk for this plan.
 
 ## Verification Plan
 - focused tests

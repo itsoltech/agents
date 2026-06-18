@@ -14,5 +14,5 @@ Subagent execution workflow: task split, parallelism, delegation, review loop, c
 
 ## Pliki referencyjne
 
-- `01-planning-and-delegation.md` (98 linii) - Planning And Delegation
-- `02-review-commit-validation.md` (70 linii) - Review Commit And Validation
+- `01-planning-and-delegation.md` (211 linii) - Planning And Delegation
+- `02-review-commit-validation.md` (121 linii) - Review Commit And Validation

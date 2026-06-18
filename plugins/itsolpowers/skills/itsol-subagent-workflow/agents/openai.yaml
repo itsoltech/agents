@@ -1,4 +1,4 @@
 interface:
   display_name: "ITSOL Subagent Workflow"
-  short_description: "Coordinate subagent execution loops"
-  default_prompt: "Use $itsol-subagent-workflow to execute this approved plan with subagents."
+  short_description: "Coordinate scoped subagent execution loops"
+  default_prompt: "Use $itsol-subagent-workflow to plan scoped subagent execution with write scope, no nested subagents, and the response contract."

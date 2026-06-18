@@ -1,4 +1,4 @@
 interface:
   display_name: "ITSOL Self Review"
   short_description: "Review plans and changes before approval or handoff"
-  default_prompt: "Use $itsol-self-review for this ITSOL task."
+  default_prompt: "Use $itsol-self-review for an evidence-first ITSOL review with assumptions, unverified items, and partial/blocked status when needed."

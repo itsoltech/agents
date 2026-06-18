@@ -34,7 +34,7 @@ Before refining requirements, implementing, debugging, reviewing, planning, or h
 21. For feature work, bugfixes, behavior changes, refactors, UI changes, or migration slices, load `itsol-tdd-workflow` before writing production code. If `.itsol.md` marks the touched project as `limited` or `not-supported`, do not scaffold a new test framework just to satisfy TDD; record the TDD exception and run required replacement verification.
 22. If the user chooses subagent-driven execution, load `itsol-subagent-workflow` before starting implementation.
 23. For every code review, build a coverage map of relevant review areas. If the PR is large, multi-surface, security/data/infra sensitive, migration-related, generated-contract related, documentation-version-sensitive, frontend/UI-heavy, browser-testing-heavy, ML/AI-related, or hard to review in one context, route review through focused subagents before producing the verdict.
-24. If the work has independent surfaces, route them through subagents before implementation or review.
+24. If the work has independent surfaces, consider subagents for planning, read-only investigation, review, or approved subagent-driven implementation. Do not start implementation subagents until the required plan/fix-plan approvals exist and the user has chosen subagent-driven execution.
 
 ## Subagent Routing
 
@@ -43,6 +43,8 @@ In Claude Code, this plugin provides one subagent for every ITSOL skill under th
 In Codex, do not treat ITSOL skill names as `agent_type` values. Codex subagent roles are platform roles such as `default`, `explorer`, or `worker`. When forking conversation context, do not also set an explicit `agent_type`; spawn the subagent with forked context and provide the ITSOL skill name in the task instructions or structured skill item. If a Codex role such as `explorer` or `worker` is required, do not use forked context; pass only the minimal task context manually.
 
 Use subagents when the task can be split into independent workstreams, such as UI/API/database/infra changes, multi-area code review, several debugging hypotheses, security plus implementation review, or incident evidence gathering.
+
+When subagent-driven execution is selected, treat `itsol-subagent-workflow` as the canonical contract for the task graph, task packet, statuses, write scope, stop conditions, response contract, review loop, and final validation. Router guidance may reinforce that contract but must not redefine a parallel version of it.
 
 Only the main agent orchestrates subagents. A delegated subagent must not spawn another subagent, invoke external agent CLIs such as `codex exec` or `claude`, or try to perform second-level delegation. If the delegated work is still too broad, it must return the recommended split to the main agent.
 
@@ -56,7 +58,9 @@ For browser dogfood, pre-QA validation, or browser-based bug reproduction, split
 
 For subagent-driven implementation, use `itsol-subagent-workflow`: split work into task slices, agree the concurrency limit, delegate implementation, run a separate review subagent after each implementation result, repeat fixes until review is clean, commit reviewed task slices with Angular commit convention when allowed, then validate the integrated result.
 
-Assign each subagent a narrow scope, owned files or system area, constraints, and expected output. Keep the main agent responsible for the immediate blocker, cross-surface decisions, integrating results, avoiding conflicting edits, and final verification.
+Assign each subagent through a task packet with a narrow goal, source of truth, read scope, write scope or `read-only`, forbidden scope, required skills, verification or replacement evidence, allowed statuses, and stop conditions. Keep the main agent responsible for the immediate blocker, cross-surface decisions, integrating results, avoiding conflicting edits, and final verification.
+
+Validate every subagent response against its task packet and the canonical response contract before treating it as accepted. A `completed` result still needs evidence. A `partial`, `blocked`, or `failed` result needs explicit main-agent handling: record what is verified, what is unverified, any coverage gap, the next decision or revised split, and whether work must stop.
 
 ## Commit Convention
 
@@ -85,4 +89,4 @@ Do not mix unrelated changes in one commit. If the worktree contains unrelated u
 
 ## Output Standard
 
-For implementation work, state the selected skills, matched `.itsol.md` project policy when present, approved plan file paths, execution mode, concrete risk areas, Current Tech Context when relevant, and RED/GREEN verification or a documented TDD exception with replacement verification. For review work, lead with findings by severity and include repo policy plus version/documentation context for findings that depend on framework, SDK, runtime, package, or API behavior. For debugging, gather evidence, state the Technical Fix Plan path and approval status, then propose or implement fixes.
+For implementation work, state the selected skills, matched `.itsol.md` project policy when present, approved plan file paths, execution mode, concrete risk areas, Current Tech Context when relevant, and RED/GREEN verification or a documented TDD exception with replacement verification. For subagent-driven work, also report task statuses, reviewed slices, unresolved `partial`, `blocked`, or `failed` items, unverified items, coverage gaps, and final integration checks. For review work, lead with findings by severity and include repo policy plus version/documentation context for findings that depend on framework, SDK, runtime, package, or API behavior. For debugging, gather evidence, state the Technical Fix Plan path and approval status, then propose or implement fixes.

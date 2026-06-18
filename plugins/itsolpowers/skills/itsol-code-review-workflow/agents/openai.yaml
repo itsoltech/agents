@@ -1,4 +1,4 @@
 interface:
   display_name: "ITSOL Code Review Workflow"
-  short_description: "Review PR risk with coverage maps and subagents"
-  default_prompt: "Use $itsol-code-review-workflow to review this pull request with a coverage map and focused subagents when required."
+  short_description: "Review PR risk with evidence-first coverage maps"
+  default_prompt: "Use $itsol-code-review-workflow to review this pull request with evidence, unverified items, and partial/blocked escalation when split review is needed."
