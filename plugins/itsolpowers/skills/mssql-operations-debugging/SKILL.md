@@ -5,6 +5,8 @@ description: "SQL Server operations debugging: MSSQL slow queries, Query Store, 
 
 # MSSQL Operations Debugging
 
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+
 Use this skill when diagnosing SQL Server production or pre-production issues in .NET systems: slow endpoints, timeouts, high CPU, blocking, deadlocks, log growth, failed migrations, backup/restore risk, failover issues, or connection pool pressure.
 
 ## Process
@@ -17,4 +19,4 @@ Use this skill when diagnosing SQL Server production or pre-production issues in
 
 ## Coordination
 
-Use with `itsol-bug-debugging` for approved Technical Fix Plans, `mssql-review` for risk review, `dotnet-web-api-debugging` for API symptoms, and `infra-*` skills when the issue touches deployment, storage, backup, HA, monitoring, or capacity.
+Use with `itsol-bug-debugging` for mode-valid Technical Fix Plan state under `itsol-workflow-mode`, `mssql-review` for risk review, `dotnet-web-api-debugging` for API symptoms, and `infra-*` skills when the issue touches deployment, storage, backup, HA, monitoring, or capacity.

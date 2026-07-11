@@ -1,5 +1,7 @@
 # Usage Priority And Updates
 
+Workflow defaults and restrictions use the canonical `itsol-workflow-mode` precedence. A task-level choice overrides only a repository default; root/project `allowed_modes` and all matching path/operation restrictions are cumulative intersections and cannot be overridden by task preference.
+
 `.itsol.md` is a committed repository policy file for agents and humans. It captures stable operational facts about how to work safely in this repo.
 
 ## When To Read
@@ -20,11 +22,11 @@ If the file does not exist, continue with normal discovery. Do not create it unl
 
 Use this order when instructions conflict:
 
-1. Direct user instruction in the current conversation
-2. Approved task plan
-3. Most specific `.itsol.md` project policy for touched paths
-4. Root `.itsol.md` default policy
-5. ITSOL skill defaults
+1. Platform safety and authority
+2. Root plus most-specific project allowed-mode policy and matching restrictions
+3. Explicit current-task mode choice
+4. Matched repository default mode
+5. Governed fallback and other ITSOL defaults
 6. General model knowledge
 
 If a conflict affects scope, tests, deployment, data, security, or delivery risk, stop and ask.

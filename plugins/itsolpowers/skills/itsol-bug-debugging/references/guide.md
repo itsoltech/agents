@@ -1,5 +1,7 @@
 # itsol-bug-debugging Reference Index
 
+Apply plan and approval prerequisites only after resolving `itsol-workflow-mode`; evidence and root-cause analysis remain mandatory in every mode.
+
 Ten plik jest indeksem routingu dla referencji skilla. Nie ładuj wszystkich plików sektorowych naraz, chyba że zadanie wymaga pełnego audytu. Wybierz tylko pliki pasujące do aktualnej sytuacji.
 
 Ten plik jest wewnętrzną referencją skilla, wyciętą z `developer-task-workflow-feature-bugfix-best-practices.md` i ograniczoną do zakresu użycia tego skilla. Nie odsyłaj agenta do dokumentu źródłowego podczas normalnej pracy; używaj wskazanych sektorów referencyjnych bezpośrednio.

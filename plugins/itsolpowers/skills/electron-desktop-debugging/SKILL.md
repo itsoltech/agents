@@ -5,6 +5,8 @@ description: "Electron desktop app debugging: main/preload/renderer evidence, IP
 
 # Electron Desktop Debugging
 
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+
 Debug Electron failures by first locating the failing boundary: main process, preload bridge, renderer UI, IPC contract, session/window setup, storage/API layer, packaged artifact, updater, OS integration, or performance/memory behavior.
 
 ## Process
@@ -15,7 +17,7 @@ Debug Electron failures by first locating the failing boundary: main process, pr
 4. Read [references/guide.md](references/guide.md), then load the focused debugging reference for the suspected boundary.
 5. Reproduce in the mode that fails. If production fails, do not trust dev server behavior alone; package or run a packaged-like build with isolated `userData`.
 6. Fix one boundary at a time and add a regression test when repo policy supports it. For missing test infrastructure, document replacement verification and run the narrowest reliable smoke test.
-7. Use `itsol-bug-debugging` for user-facing defects and follow its Technical Fix Plan gate when required by repo policy.
+7. Use `itsol-bug-debugging` for user-facing defects and follow its Technical Fix Plan gate when required by the resolved workflow mode.
 
 ## Coordination
 

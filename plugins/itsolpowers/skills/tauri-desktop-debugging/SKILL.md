@@ -5,6 +5,8 @@ description: "Tauri debugging: WebView, Rust commands, IPC, capabilities, filesy
 
 # Tauri Desktop Debugging
 
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+
 Debug Tauri by locating the failing boundary first: WebView UI, frontend adapter, IPC contract, Rust command/service, capability/permission, storage/filesystem, sidecar/process, updater, bundle, or platform integration.
 
 ## Process
@@ -15,7 +17,7 @@ Debug Tauri by locating the failing boundary first: WebView UI, frontend adapter
 4. Read [references/guide.md](references/guide.md), then load the focused debugging reference for the suspected boundary.
 5. Reproduce in the mode that fails. If a packaged app fails, do not rely on `tauri dev`; build or run a packaged-like artifact with isolated app data.
 6. Fix one boundary at a time. Add a regression test when the repo supports it; otherwise document the narrowest reliable manual verification.
-7. Use `itsol-bug-debugging` for user-facing defects and follow its Technical Fix Plan gate when repo policy requires it.
+7. Use `itsol-bug-debugging` for user-facing defects and follow its Technical Fix Plan gate when required by the resolved workflow mode.
 
 ## Coordination
 

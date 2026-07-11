@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Workflow Mode"
+  short_description: "Choose governed, autonomous-planned, or direct"
+  default_prompt: "Use $itsol-workflow-mode to select and preserve governed, autonomous-planned, or direct execution for this task."

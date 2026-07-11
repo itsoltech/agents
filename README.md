@@ -36,11 +36,59 @@ Rekomendacja: przy korzystaniu z `itsolpowers` wyłącz `superpowers`, żeby nie
 
 #### itsolpowers
 
-Rekomendowany plugin ITSOL. Zawiera skille ITSOL do routingu zadań, repo memory `.itsol.md`, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, SQL Server/.NET data access, planowania funkcjonalnego zapisywanego do plików, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
+Rekomendowany plugin ITSOL. Zawiera skille ITSOL do routingu zadań, konfigurowalnych workflow modes, repo memory `.itsol.md`, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, SQL Server/.NET data access, planowania funkcjonalnego, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
 
 ```
 /plugin install itsolpowers@itsoltech-agents
 ```
+
+### Tryby pracy `itsol-workflow-mode`
+
+Centralny skill `itsol-workflow-mode` rozstrzyga poziom ceremonii przed planowaniem lub implementacją:
+
+| Tryb | Zachowanie | Stan artefaktu |
+| --- | --- | --- |
+| `governed` | Pełne Discovery i Decision Gates, review planów oraz jawna akceptacja każdego konkretnego planu. | `Draft`, potem `Approved` po akceptacji użytkownika |
+| `autonomous-planned` | Agent tworzy i reviewuje plany, wybiera udokumentowaną rekomendację i kontynuuje bez pauz na akceptację. | `Draft`, potem `Ready for execution` po review |
+| `direct` | Bez trwałych Business, Technical i Technical Fix Planów oraz ich bramek; nadal obowiązują evidence, TDD lub replacement verification i self-review. | `not-required` |
+
+Tryb jest domyślnie ograniczony do bieżącego zadania. Kolejność rozstrzygania to: reguły platformy, `allowed_modes` i pasujące restrykcje repozytorium, jawny wybór użytkownika dla zadania, dozwolony default `.itsol.md`, a na końcu `governed`. Jawny wybór zadania może nadpisać default repo, ale nie zakaz dla ścieżki lub operacji.
+
+Zmiana trybu dotyczy tylko pozostałej pracy i nie usuwa istniejących planów. Przejście do `governed` zatrzymuje dalszą implementację na brakujących bramkach; przejście z `governed` do trybu autonomicznego zachowuje przejrzane artefakty i usuwa tylko przyszłe pauzy akceptacyjne. `Ready for execution` nie oznacza akceptacji użytkownika — `Approved` jest zarezerwowane dla konkretnego planu, który użytkownik zobaczył i zaakceptował.
+
+Przykładowe polecenia:
+
+```text
+Use the full governed workflow and ask me to approve each plan.
+
+Prepare and Rubber Duck-review the plans, make the recommended decisions yourself, and continue without approval pauses until the goal is reached.
+
+Work directly without Business, Technical, or Fix Plans; still test, verify, and review the change.
+```
+
+Samo `continue`, `do it`, milczenie albo `accept everything` bez jawnego odniesienia do bramek bieżącego zadania nie wybiera trybu autonomicznego i nie deleguje decyzji.
+
+Opcjonalny default i ograniczenia można utrwalić w root `.itsol.md` lub najbardziej szczegółowej sekcji projektu:
+
+```yaml
+workflow:
+  default_mode: governed
+  allowed_modes:
+    - governed
+    - autonomous-planned
+    - direct
+  restrictions:
+    - match:
+        path: infra/production
+      allowed_modes:
+        - governed
+    - match:
+        operation: production-deploy
+      allowed_modes:
+        - governed
+```
+
+Autonomia workflow nie rozszerza zakresu zadania. Destrukcyjne operacje na danych, niezlecony deploy lub publish na produkcję, sekrety poza zakresem, zewnętrzne wiadomości lub zakupy oraz osłabienie security pozostają osobnymi pytaniami o authority. Zwykłe edycje, testy, buildy i odwracalne działania w zakresie nie tworzą nowej approval pause.
 
 #### itsol-workflow deprecated
 
@@ -69,7 +117,7 @@ Po instalacji dostępne komendy:
 /plugin update itsolpowers@itsoltech-agents
 ```
 
-Aktualizacje są wydawane przez bump pola `version` w `plugin.json` (i w `marketplace.json`). Bez bumpa Claude Code nie pobiera nowej wersji.
+Aktualizacje `itsolpowers` wymagają zgodnego pola `version` w `plugins/itsolpowers/package.json`, `plugins/itsolpowers/.claude-plugin/plugin.json` i `plugins/itsolpowers/.codex-plugin/plugin.json`. Przy wydaniu przez marketplace zaktualizuj również jego wersję w `.claude-plugin/marketplace.json`. Bez wymaganych bumpów klient może nie pobrać nowej wersji.
 
 `itsol-workflow` jest deprecated, więc aktualizuj go tylko wtedy, gdy utrzymujesz starą instalację, która jeszcze go wymaga.
 
@@ -161,7 +209,8 @@ plugins/itsolpowers/.codex-plugin/plugin.json
 Po instalacji `itsolpowers` dostępne są skille:
 
 - `using-itsolpowers` — routing zadań do właściwych skillów ITSOL
-- `itsol-task-intake`, `itsol-repo-memory`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, repo policy `.itsol.md`, aktualnej dokumentacji i migracji technologii, przez obowiązkowe pliki Business Plan i Technical Plan albo Technical Fix Plan dla bugów, podział pracy na sub-agentów, red-green-refactor albo repo-policy replacement verification, do QA
+- `itsol-workflow-mode` — centralny kontrakt trybów `governed`, `autonomous-planned` i `direct`, precedence, stanów artefaktów, delegowania decyzji i ograniczeń repo
+- `itsol-task-intake`, `itsol-repo-memory`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, repo policy `.itsol.md`, aktualnej dokumentacji i migracji technologii, przez zależne od trybu plany lub bezpośrednią realizację, podział pracy na sub-agentów, red-green-refactor albo repo-policy replacement verification, do QA
 - `security-*` — rozdrobnione skille security dla threat modelingu, auth, authz, API, frontendu, sekretów, supply chain, QA i obsługi podatności
 - `infra-*` — rozdrobnione skille infrastrukturalne dla deploymentu, kontenerów, Nomada, routingu, edge protection, sekretów, obserwowalności, backupów, capacity i incidentów
 - `ui-*` — framework-agnostic UI/UX frontendu: workflow, design system, architektura komponentów, stany i formularze, responsywność, Tailwind/tokeny, accessibility/motion, performance/stability, testy/QA i code review UI
@@ -179,8 +228,9 @@ plugins/itsol-workflow/.codex-plugin/plugin.json
 
 1. Zrób fork / branch
 2. Zmień pliki w `plugins/<plugin-name>/`
-3. Bump `version` w `plugins/<plugin-name>/.claude-plugin/plugin.json` oraz `plugins/<plugin-name>/.codex-plugin/plugin.json` (SemVer: patch dla fixów, minor dla nowych komend/skilli, major dla breaking changes)
-4. Otwórz PR
+3. Dla `itsolpowers` zachowaj identyczne `version` w `plugins/itsolpowers/package.json`, `plugins/itsolpowers/.claude-plugin/plugin.json` i `plugins/itsolpowers/.codex-plugin/plugin.json` (SemVer: patch dla fixów, minor dla nowych komend/skilli, major dla breaking changes)
+4. Jeśli zmiana jest wydawana przez marketplace, zaktualizuj także `version` w `.claude-plugin/marketplace.json`
+5. Otwórz PR
 
 ### Dodawanie nowego pluginu
 

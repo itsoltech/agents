@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "itsoltech-agents",
-  "version": "1.12.0",
-  "description": "ITSOL organization Claude Code plugins — shared commands, skills and agents",
+  "version": "1.13.0",
+  "description": "ITSOL organization Claude Code plugins — shared commands, skills, agents, and configurable workflow modes",
   "owner": {
     "name": "ITSOL Tech",
     "email": "dev@itsol.tech"
@@ -16,7 +16,7 @@
     },
     {
       "name": "itsolpowers",
-      "description": "ITSOL engineering skills and subagents for workflow, repo memory, current technology documentation research, UI/UX frontend, React 19/Next.js, TanStack Query React/Next, application technology migration, SQL Server/.NET data access, file-based functional planning, subagent execution, TDD, security, infrastructure, review, debugging, and OpenCode",
+      "description": "ITSOL engineering skills and subagents with itsol-workflow-mode for governed, autonomous-planned, or direct execution, plus repo memory, current technology research, UI/UX, application migration, data access, TDD, security, infrastructure, review, debugging, and OpenCode",
       "source": "./plugins/itsolpowers",
       "category": "productivity"
     }

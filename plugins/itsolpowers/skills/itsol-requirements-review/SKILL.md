@@ -1,20 +1,23 @@
 ---
 name: itsol-requirements-review
-description: "Requirements review: stories, DoR, scope, roles, edge cases, MVP readiness."
+description: "Requirements review: stories, DoR, scope, roles, edge cases, MVP readiness by workflow mode."
 ---
 
 # ITSOL Requirements Review
 
-Check whether the work is clear, testable, scoped, and ready for implementation before code is written. During functional planning, use this skill as the project-manager interview engine: the agent is the PM, the user is the client, and the output is clarified Business Plan material plus blockers.
+Resolve and preserve the complete task state through `itsol-workflow-mode` before deciding how much discovery is required. Check whether work is clear, testable, scoped, and ready without recreating skipped planning gates.
 
 ## Process
 
-1. Identify the business problem, user, decision owner, expected outcome, and explicit out-of-scope items.
-2. Classify the process formalism level by risk, size, number of people, data impact, security, and production impact.
-3. Review story or technical-task structure, acceptance criteria, roles, permissions, data, UI/API/integration impact, and edge cases.
-4. Check Definition of Ready; if it fails, recommend a spike, client question, refinement, prototype, data analysis, or tech notes instead of full implementation.
-5. For vague or one-sentence functional requests, generate PM-style client questions and scenario options before any Business Plan is written. Cover business problem, current process, users/roles, data, states, integrations, UX/API behavior, nonfunctional needs, rollout, acceptance, QA, and decision ownership.
-6. For functional work, feed the result into `itsol-functional-planning` as Business Plan material and require explicit user approval before technical planning.
-7. Distinguish clarification from scope change and make blockers, assumptions, and owners explicit.
+1. Confirm all seven workflow-state fields are known and propagate them in the report or handoff.
+2. Identify the business problem, user, decision owner, expected outcome, explicit out-of-scope items, and material ambiguity.
+3. Classify process formalism by risk, size, team, data, security, production impact, and the resolved workflow mode.
+4. Review story or technical-task structure, acceptance criteria, roles, permissions, data, UI/API/integration impact, and edge cases.
+5. Branch discovery through `itsol-workflow-mode`:
+   - `governed`: for vague functional requests, run the full PM/client Discovery Gate and Definition-of-Ready interview before a Business Plan is written.
+   - `autonomous-planned`: gather enough evidence to write sound plans, use safe repo-backed assumptions, and ask one targeted question only when equally plausible choices materially alter behavior, permissions, data, rollout, or architecture.
+   - `direct`: do not require Business Plan material or approval; ask only for a material ambiguity that cannot be safely resolved, then return implementation-ready scope and risks.
+6. In `governed`, feed clarified material to `itsol-functional-planning` and require explicit user approval before technical planning. In `autonomous-planned`, feed it forward without an approval pause. In `direct`, route directly to implementation with `artifact_state: not-required`.
+7. Distinguish clarification from scope change and make blockers, assumptions, owners, protected constraints, and unresolved risks explicit.
 
-Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.
+Read [references/guide.md](references/guide.md) first; then read only the sector files relevant to the situation.

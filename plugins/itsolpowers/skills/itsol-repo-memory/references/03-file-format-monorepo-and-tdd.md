@@ -1,5 +1,7 @@
 # File Format Monorepo And TDD
 
+Use `itsol-workflow-mode` for the exact schema and resolution semantics below.
+
 ## Root File Template
 
 ```markdown
@@ -8,6 +10,21 @@
 Last reviewed: YYYY-MM-DD
 Maintainers: <team/person or "unknown">
 Repository type: single-project | monorepo | legacy | migration | library | service | frontend | full-stack
+
+## Workflow
+
+```yaml
+workflow:
+  default_mode: governed
+  allowed_modes: [governed, autonomous-planned, direct]
+  restrictions:
+    - match:
+        path: infra/production
+      allowed_modes: [governed]
+    - match:
+        operation: production-deploy
+      allowed_modes: [governed]
+```
 
 ## Monorepo Map
 
@@ -77,9 +94,10 @@ If a touched path is not listed:
 For monorepos, use prefix matching:
 
 1. Root `.itsol.md` is always read.
-2. The most specific `Project: <path>` section wins for files under that path.
+2. The most specific `Project: <path>` section supplies project defaults, but workflow `allowed_modes` are intersected with root policy rather than replacing it.
 3. If a task touches multiple projects, the plan must list each project policy separately.
 4. If a touched path is absent from `Monorepo Map`, inspect local configs and use `unknown` rather than guessing.
+5. Intersect every workflow restriction matching a touched path or operation. A task-level mode overrides a default but not base or matching restrictions; if excluded, report the matched rules and ask from remaining modes without silently downgrading.
 
 Start with one root `.itsol.md`. Add local override files such as `apps/web/.itsol.md` only if the root file becomes too large or the team explicitly wants distributed ownership. If local overrides exist, read root first, then the nearest override for each touched path.
 

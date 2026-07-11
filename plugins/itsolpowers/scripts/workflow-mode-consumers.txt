@@ -1,0 +1,90 @@
+# TSV: <class><TAB><repo-relative path>. Sort by class, then path.
+# Scan roots: README.md plugins/itsolpowers .claude-plugin/marketplace.json
+# Scan exclusions: **/scripts/workflow-mode-consumers.txt and **/scripts/validate-workflow-modes.sh
+# Gate vocabulary: Business/Technical/Fix Plan, Decision Gate, approval gate/pause,
+# explicit approval, direct user request, approved plan, Draft/Approved status,
+# before implementation/delegation, and fix-plan.
+# Classes: canonical-contract, mode-aware-consumer, governed-only-template,
+# historical-documentation, unrelated-domain-approval.
+canonical-contract	plugins/itsolpowers/agents/itsol-workflow-mode.md
+canonical-contract	plugins/itsolpowers/skills/itsol-workflow-mode/SKILL.md
+canonical-contract	plugins/itsolpowers/skills/itsol-workflow-mode/agents/openai.yaml
+canonical-contract	plugins/itsolpowers/skills/itsol-workflow-mode/references/guide.md
+governed-only-template	plugins/itsolpowers/skills/itsol-current-tech-context/references/02-new-projects-and-sources.md
+governed-only-template	plugins/itsolpowers/skills/itsol-current-tech-context/references/03-planning-and-review-rules.md
+historical-documentation	plugins/itsolpowers/skills/application-technology-migration/references/05-planning-templates-and-review.md
+mode-aware-consumer	.claude-plugin/marketplace.json
+mode-aware-consumer	README.md
+mode-aware-consumer	plugins/itsolpowers/.claude-plugin/plugin.json
+mode-aware-consumer	plugins/itsolpowers/.codex-plugin/plugin.json
+mode-aware-consumer	plugins/itsolpowers/agents/electron-desktop-debugging.md
+mode-aware-consumer	plugins/itsolpowers/agents/expo-react-native-debugging.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-bug-debugging.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-feature-implementation.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-functional-planning.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-repo-memory.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-requirements-review.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-self-review.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-subagent-workflow.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-task-intake.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-technical-planning.md
+mode-aware-consumer	plugins/itsolpowers/agents/mssql-operations-debugging.md
+mode-aware-consumer	plugins/itsolpowers/agents/react-nextjs-debugging.md
+mode-aware-consumer	plugins/itsolpowers/agents/tanstack-query-react-nextjs-debugging.md
+mode-aware-consumer	plugins/itsolpowers/agents/tauri-desktop-debugging.md
+mode-aware-consumer	plugins/itsolpowers/agents/using-itsolpowers.md
+mode-aware-consumer	plugins/itsolpowers/hooks/bootstrap-context.md
+mode-aware-consumer	plugins/itsolpowers/package.json
+mode-aware-consumer	plugins/itsolpowers/skills/electron-desktop-debugging/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/expo-react-native-debugging/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-bug-debugging/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-bug-debugging/references/07-technical-fix-plan-gate.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-bug-debugging/references/guide.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-feature-implementation/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-functional-planning/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-functional-planning/references/01-planning-gates.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-functional-planning/references/02-plan-review.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-functional-planning/references/03-deep-planning-interview.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-functional-planning/references/04-business-plan.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-functional-planning/references/05-technical-plan.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-functional-planning/references/guide.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-repo-memory/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-repo-memory/references/01-usage-priority-and-updates.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-repo-memory/references/03-file-format-monorepo-and-tdd.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-requirements-review/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-self-review/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-subagent-workflow/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-subagent-workflow/references/01-planning-and-delegation.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-subagent-workflow/references/02-review-commit-validation.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-task-intake/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-technical-planning/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-technical-planning/agents/openai.yaml
+mode-aware-consumer	plugins/itsolpowers/skills/mssql-operations-debugging/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/react-nextjs-debugging/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/tanstack-query-react-nextjs-debugging/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/tauri-desktop-debugging/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/using-itsolpowers/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/using-itsolpowers/agents/openai.yaml
+mode-aware-consumer	plugins/itsolpowers/skills/using-itsolpowers/references/guide.md
+unrelated-domain-approval	plugins/itsolpowers/agents/application-technology-migration.md
+unrelated-domain-approval	plugins/itsolpowers/agents/itsol-tdd-workflow.md
+unrelated-domain-approval	plugins/itsolpowers/agents/security-threat-modeling.md
+unrelated-domain-approval	plugins/itsolpowers/agents/ui-ux-workflow.md
+unrelated-domain-approval	plugins/itsolpowers/skills/application-technology-migration/SKILL.md
+unrelated-domain-approval	plugins/itsolpowers/skills/application-technology-migration/references/01-decision-and-inventory.md
+unrelated-domain-approval	plugins/itsolpowers/skills/application-technology-migration/references/guide.md
+unrelated-domain-approval	plugins/itsolpowers/skills/effect-typescript-debugging/references/02-schema-i-walidacja-runtime.md
+unrelated-domain-approval	plugins/itsolpowers/skills/effect-typescript-implementation/references/03-schema-i-walidacja-runtime.md
+unrelated-domain-approval	plugins/itsolpowers/skills/effect-typescript-review/references/02-api-client-i-fetch.md
+unrelated-domain-approval	plugins/itsolpowers/skills/expo-react-native-debugging/references/01-evidence-and-triage.md
+unrelated-domain-approval	plugins/itsolpowers/skills/itsol-tdd-workflow/SKILL.md
+unrelated-domain-approval	plugins/itsolpowers/skills/itsol-tdd-workflow/references/guide.md
+unrelated-domain-approval	plugins/itsolpowers/skills/mongodb-data-modeling/references/02-schema-validation.md
+unrelated-domain-approval	plugins/itsolpowers/skills/mongodb-data-modeling/references/05-audyt-i-historia-zmian.md
+unrelated-domain-approval	plugins/itsolpowers/skills/mongodb-review/references/02-projektowanie-modelu-danych.md
+unrelated-domain-approval	plugins/itsolpowers/skills/mongodb-review/references/06-sekrety-i-connection-stringi.md
+unrelated-domain-approval	plugins/itsolpowers/skills/security-threat-modeling/SKILL.md
+unrelated-domain-approval	plugins/itsolpowers/skills/tanstack-query-svelte-implementation/references/10-version-policy-and-v6-migration.md
+unrelated-domain-approval	plugins/itsolpowers/skills/ui-design-system/references/guide.md
+unrelated-domain-approval	plugins/itsolpowers/skills/ui-ux-workflow/SKILL.md
+unrelated-domain-approval	plugins/itsolpowers/skills/ui-ux-workflow/references/guide.md

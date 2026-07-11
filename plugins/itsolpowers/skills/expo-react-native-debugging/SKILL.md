@@ -5,6 +5,8 @@ description: "Expo React Native debugging: Metro, dev builds, native builds, EAS
 
 # Expo React Native Debugging
 
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+
 Debug Expo / React Native by locating the failing boundary first: JavaScript, Metro, Expo Router, native Android/iOS, CNG/prebuild/config plugin, development build, EAS Build, OTA/runtime/channel, API/network, storage/migration, device lifecycle, or observability.
 
 ## Process
@@ -16,7 +18,7 @@ Debug Expo / React Native by locating the failing boundary first: JavaScript, Me
 5. Read [references/guide.md](references/guide.md), then load the focused reference for the suspected boundary.
 6. Reproduce in the mode that fails. If a release build, EAS build, or OTA update fails, do not rely only on Expo Go or the Metro development server.
 7. Fix one boundary at a time. Add a regression test when the repo supports it; otherwise document the narrowest reliable manual verification on Android and iOS when platform behavior is relevant.
-8. Use `itsol-bug-debugging` for user-facing defects and follow its Technical Fix Plan gate when repo policy requires it.
+8. Use `itsol-bug-debugging` for user-facing defects and follow its Technical Fix Plan gate when required by the resolved workflow mode.
 
 ## Coordination
 

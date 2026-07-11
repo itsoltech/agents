@@ -1,6 +1,9 @@
 {
   "name": "itsolpowers",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "type": "module",
-  "main": ".opencode/plugins/itsolpowers.js"
+  "main": ".opencode/plugins/itsolpowers.js",
+  "scripts": {
+    "validate:workflow-modes": "bash ./scripts/validate-workflow-modes.sh"
+  }
 }

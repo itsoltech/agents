@@ -1,5 +1,7 @@
 # Review Commit And Validation
 
+Validate task authorization and all seven fields through `itsol-workflow-mode`; direct execution does not require plan files, and autonomous `Ready for execution` is not user approval.
+
 Use this reference after a delegated task returns, during the independent review loop, before per-task commits, and during final integration validation.
 
 ## Response Validation
@@ -97,8 +99,8 @@ If the working tree contains unrelated changes that make a focused commit unsafe
 After all task slices are done:
 
 1. Run the full planned verification or the closest feasible subset.
-2. Compare implemented behavior against the approved Business Plan.
-3. Compare touched files, branches, tests, and verification against the approved Technical Plan.
+2. Compare implemented behavior against the mode-valid source of truth: `Approved`, `Ready for execution`, or the direct user request when artifacts are `not-required`.
+3. Compare touched files, branches, tests, and verification against the same mode-valid source of truth.
 4. Confirm every task is `completed`, or that every `partial`, `blocked`, `failed`, or `deferred` item is documented with owner, reason, risk, and next step.
 5. Validate that one writer owned each changed file or shared semantic contract at the time of edit.
 6. Run a quick diff review for accidental scope, unrelated edits, debug logs, missing tests, generated-file drift, stale comments, and source-document path leakage.

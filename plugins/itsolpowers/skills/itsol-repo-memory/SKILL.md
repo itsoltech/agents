@@ -5,6 +5,8 @@ description: "Repository memory: initialize, read, and maintain .itsol.md repo p
 
 # ITSOL Repo Memory
 
+Use `itsol-workflow-mode` as the canonical contract for workflow defaults, allowed modes, restrictions, state, and precedence.
+
 Use `.itsol.md` as repo-level operational memory for stable facts that should guide every agent working in the repository. Also use this skill when initializing `.itsol.md` for an existing repo or monorepo.
 
 ## Process
@@ -16,7 +18,7 @@ Use `.itsol.md` as repo-level operational memory for stable facts that should gu
 5. If no matching project policy exists, inspect local configs before assuming root commands, test support, or deployment behavior.
 6. Treat `.itsol.md` as stable team memory, not task scratchpad. Do not add temporary notes.
 7. Propose updates when you discover stable repo-level facts, especially testing/TDD support, verification commands, generated-code rules, deployment constraints, and legacy limits.
-8. Do not let `.itsol.md` silently override a direct user instruction or an approved plan. Surface conflicts and ask.
+8. Resolve modes exactly through `itsol-workflow-mode`: intersect root and most-specific project `allowed_modes`, then every matching path/operation restriction. A task-level selection overrides a repo default but never an explicit restriction. Report conflicts and ask from the remaining allowed modes; never silently downgrade.
 
 ## Init Mode
 

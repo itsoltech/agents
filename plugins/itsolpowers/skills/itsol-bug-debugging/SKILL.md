@@ -1,25 +1,17 @@
 ---
 name: itsol-bug-debugging
-description: "ITSOL bugfix workflow: evidence, root cause, Technical Fix Plan approval, tests."
+description: "Evidence-first bugfix workflow by workflow mode."
 ---
-
 # ITSOL Bug Debugging
 
-Do not guess fixes. Reproduce or gather evidence, isolate the failing layer, always ask the user to choose or approve the fix approach, write one Draft Technical Fix Plan, get explicit approval after presenting it, then patch the root cause.
+Resolve all seven task-state fields through `itsol-workflow-mode`. In every mode gather evidence, isolate the failing boundary, establish root cause, use `itsol-tdd-workflow` or documented replacement verification, implement the smallest fix, and self-review.
 
-## Process
+## Mode Branches
 
-1. State expected behavior, actual behavior, and impact.
-2. If `.itsol.md` exists, load `itsol-repo-memory` and apply matched project policy for touched paths, especially TDD mode and replacement verification.
-3. Reproduce locally or collect logs, traces, data samples, failing tests, or deployment evidence.
-4. Locate the boundary: UI, API, domain logic, database, cache, queue, integration, infrastructure, or configuration.
-5. Compare with a working path or similar code.
-6. Always run a Fix Decision Gate before writing the Technical Fix Plan: present repair options or the single forced approach, tradeoffs, recommendation, and ask the user which approach to use or whether to approve the recommendation.
-7. Write one Technical Fix Plan markdown file with `**Status:** Draft` that explains evidence, likely root cause, touched files, required ITSOL skills, TDD regression plan or documented TDD exception, selected fix approach, verification, and risks.
-8. Self-review the Technical Fix Plan for gaps, TODOs, unproven assumptions, weak reproduction, missing tests, missing skills, and unclear verification; fix issues before asking for approval.
-9. Run Rubber Duck Plan Review with `itsol-self-review`; resolve material findings before asking for approval.
-10. Stop and get explicit user approval after presenting the Technical Fix Plan file path and summary, or revise it from user feedback.
-11. After approval, load `itsol-tdd-workflow` and add a RED regression test or minimal diagnostic before changing production code where feasible. If repo policy says TDD is limited or not supported, use replacement verification instead of scaffolding a new test framework.
-12. Implement one root-cause GREEN fix and verify related paths.
+- `governed`: run the Fix Decision Gate, wait for the user's choice, create a `Draft` Technical Fix Plan, self-review and Rubber Duck-review it, resolve material findings, present the file, obtain explicit approval, mark it `Approved`, then implement.
+- `autonomous-planned`: record options and choose the documented recommendation, create the plan as `Draft`, self-review and Rubber Duck-review it, resolve material findings, mark it `Ready for execution` with delegated authorization, and continue without approval pauses.
+- `direct`: do not create or require a Fix Plan, Fix Decision Gate, plan review, approval, or plan path. Record `artifact_state: not-required` and proceed from evidence/root cause to TDD or replacement verification and implementation.
 
-Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.
+Never call an autonomous plan user-approved. Ask only for unresolved material ambiguity or independent protected-action authority. Apply `.itsol.md` through `itsol-repo-memory` when present and propagate all seven fields to artifacts and handoffs.
+
+Read [references/guide.md](references/guide.md), then only relevant evidence references.

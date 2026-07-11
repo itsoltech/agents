@@ -1,7 +1,7 @@
 {
   "name": "itsolpowers",
-  "version": "0.13.0",
-  "description": "ITSOL engineering skills and Claude Code subagents for task intake, repo memory, current technology documentation research, ML/AI engineering, application technology migration, React 19/Next.js frontend, TanStack Query React/Next cache workflows, agent-browser frontend dogfood, Expo React Native mobile apps, Electron and Tauri desktop apps, SQL Server/.NET data access, file-based functional planning, subagent execution, TDD, UI/UX frontend, implementation, debugging, review, security, infrastructure, and production readiness.",
+  "version": "0.14.0",
+  "description": "ITSOL engineering skills and Claude Code subagents with configurable workflow modes for governed approvals, autonomous reviewed planning, or direct execution, plus task intake, repo memory, current technology research, ML/AI, migration, frontend, mobile, desktop, data, TDD, review, security, infrastructure, and production readiness.",
   "author": {
     "name": "ITSOL Tech",
     "email": "dev@itsol.tech"
@@ -88,6 +88,9 @@
     "functional-planning",
     "subagents",
     "approval-gate",
+    "workflow-mode",
+    "autonomous-planning",
+    "direct-execution",
     "tdd",
     "testing",
     "workflow"
@@ -95,8 +98,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "ITSOL Powers",
-    "shortDescription": "ITSOL workflows, current docs, UI/UX, migration, planning, TDD, and review.",
-    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks across repo memory and monorepo policy, current technology documentation and version research, ML/AI engineering workflows for project planning, data evaluation, training experiments, LLM/RAG, model serving, MLOps, drift, retraining, model review and Rust ML/LLM precedence, UI/UX frontend workflows, React 19 and Next.js App Router work, Server/Client Components, TanStack Query v5 React/Next query keys, SSR hydration, mutations, invalidation, optimistic updates, auth cache and tenant isolation, agent-browser local dogfood, browser-based reproduction, pre-QA validation, interaction debugging, console/network/HAR/trace/Web Vitals evidence, redacted screenshots and videos, QA handoff reports, production-safe browser smoke checks, Expo React Native mobile app architecture, Expo SDK versioning, Expo Router, development builds, CNG/prebuild, app config, permissions, storage/offline, native modules, EAS Build, EAS Update/OTA, credentials, store release, mobile debugging and mobile review, Electron desktop app architecture, main/preload/renderer boundaries, IPC contracts, BrowserWindow hardening, auto-update, packaging, code signing, Tauri Rust desktop app architecture, commands, capabilities, permissions, WebView behavior, sidecars, updater signatures, release distribution, API/cache/forms, generated OpenAPI clients, design systems, accessibility, responsive behavior, frontend testing and QA, application technology migration and rewrites, SQL Server/.NET data access with EF Core, Dapper, stored procedures, migrations, Query Store and operations debugging, file-based functional planning, approved business and technical plan markdown artifacts, approved technical fix plans for bugs, subagent-driven execution, TDD, implementation, debugging, self-review, security review, infrastructure design, deployment readiness, and incident analysis using ITSOL engineering workflows.",
+    "shortDescription": "ITSOL workflow modes, planning, TDD, current docs, implementation, and review.",
+    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks through the central itsol-workflow-mode contract: governed approvals, autonomous-planned reviewed artifacts without approval pauses, or direct execution without persistent planning artifacts. It preserves task-scoped authority, honest Draft, Approved, Ready for execution, and not-required states, repository defaults and restrictions, TDD or replacement verification, and separate authorization for protected actions. The plugin also covers repo memory and monorepo policy, current technology research, ML/AI, UI/UX, React 19 and Next.js, TanStack Query, agent-browser QA, Expo, Electron, Tauri, generated OpenAPI clients, migrations, SQL Server/.NET data access, databases, subagent execution, debugging, self-review, security, infrastructure, deployment readiness, and incident analysis.",
     "developerName": "ITSOL Tech",
     "category": "Productivity",
     "capabilities": [
@@ -117,7 +120,9 @@
     ],
     "defaultPrompt": [
       "Use ITSOL Powers to classify this task and choose the right skills.",
-      "Initialize or read .itsol.md repo memory before choosing project-specific TDD, verification, or monorepo workflow policy.",
+      "Use itsol-workflow-mode before planning or implementation to resolve governed, autonomous-planned, or direct mode from platform rules, repository restrictions, an explicit task-level choice, repository default, then governed fallback.",
+      "Preserve the selected workflow mode for the current task and use honest artifact states: Draft then Approved in governed, Draft then Ready for execution in autonomous-planned, and not-required in direct.",
+      "If .itsol.md exists, read its repo memory before choosing project-specific TDD, verification, workflow-mode, or monorepo policy; create, initialize, or update it only when explicitly requested or otherwise authorized by the selected workflow scope.",
       "When planning or reviewing framework, SDK, runtime, package, generated client, or API-dependent work, verify current official documentation and repo-pinned versions first.",
       "For machine learning and AI engineering work, route through ML project planning, data/evaluation, training/experiments, LLM/RAG, or serving/MLOps/review skills; prefer rust-ml-llm skills first for Rust/Rig/Candle-specific code.",
       "For React 19 and Next.js work, route through React/Next implementation, review, debugging, App Router/rendering, API/cache/forms, or quality/security skills as appropriate.",
@@ -128,9 +133,9 @@
       "For Tauri desktop app work, route through Tauri implementation, review, debugging, security/capabilities, or release/distribution skills for Rust/frontend boundaries, commands, invoke/events, capabilities, permissions, WebView differences, sidecars, updater, bundling, signing, and platform diagnostics.",
       "For visible frontend work, use UI/UX skills for design-system consistency, component architecture, view states, responsiveness, accessibility, performance, tests, and UI review.",
       "For application rewrites or technology migrations, inventory behavior, choose a safe migration strategy, and plan incremental slices before implementation.",
-      "For functional work, write and require approved Business Plan and Technical Plan markdown files before implementation.",
-      "For subagent-driven work, split tasks, set concurrency, review each implementation with a separate subagent, and commit reviewed slices.",
-      "For bugfixes, gather evidence and require an approved Technical Fix Plan before implementation.",
+      "In governed mode, require reviewed Business and Technical Plans plus explicit approval of each specific artifact; in autonomous-planned mode, review plans and continue with Ready for execution; in direct mode, do not require persistent planning artifacts.",
+      "For subagent-driven work, split tasks, set concurrency, and review each implementation with a separate subagent; commit reviewed slices only when separately authorized.",
+      "For bugfixes, always gather evidence; apply the mode-specific Technical Fix Plan state from itsol-workflow-mode instead of an unconditional approval gate.",
       "Use ITSOL TDD workflow before changing production code.",
       "Review this change against ITSOL security and infrastructure practices.",
       "Debug this issue using ITSOL task and incident workflows."

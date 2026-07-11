@@ -1,21 +1,13 @@
-# ITSOL Functional Planning Reference Reference Index
+# itsol-functional-planning Reference Index
 
-Ten plik jest indeksem routingu dla referencji skilla. Nie laduj wszystkich plikow sektorowych naraz, chyba ze zadanie wymaga pelnego audytu. Wybierz tylko pliki pasujace do aktualnej sytuacji.
+This directory supplements the canonical `itsol-workflow-mode` contract; it does not redefine mode selection, authority, or transitions.
 
-## Zakres
+## Routing
 
-Functional task planning: gates, approval, plan files, discovery interview, plan review, business plan, technical plan and execution mode.
+- `01-planning-gates.md` — mode-specific discovery, decision, artifact, approval, and execution routing.
+- `02-plan-review.md` — self-review and Rubber Duck Review for planned modes.
+- `03-deep-planning-interview.md` — governed discovery depth and autonomous material-ambiguity handling.
+- `04-business-plan.md` — Business Plan template with honest workflow and authorization metadata.
+- `05-technical-plan.md` — Technical Plan template, TDD, delegation, and honest artifact state.
 
-## Jak uzywac
-
-1. Przeczytaj ten indeks, aby wybrac wlasciwy sektor.
-2. Otworz tylko te pliki referencyjne, ktore odpowiadaja zadaniu, ryzyku albo etapowi workflow.
-3. Jesli zadanie obejmuje kilka niezaleznych obszarow, zaladuj kilka sektorow zamiast calego guide.
-
-## Pliki referencyjne
-
-- `01-planning-gates.md` (100 linii) - Planning Gates
-- `02-plan-review.md` (79 linii) - Plan Review
-- `03-deep-planning-interview.md` (170 linii) - Deep Planning Interview
-- `04-business-plan.md` (61 linii) - Business Plan
-- `05-technical-plan.md` (117 linii) - Technical Plan
+Read only the references needed for the resolved mode. `direct` normally needs no planning reference beyond `01-planning-gates.md`; do not turn implementation notes into substitute plan gates.

@@ -5,6 +5,8 @@ description: "TanStack Query v5 React/Next.js debugging: stale data, duplicate r
 
 # TanStack Query React Next.js Debugging
 
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+
 Trace React 19 and Next.js TanStack Query failures from query key to query function, API error mapping, cache state, invalidation, SSR hydration, auth scope, and rendered UI before changing behavior.
 
 ## Process
@@ -14,7 +16,7 @@ Trace React 19 and Next.js TanStack Query failures from query key to query funct
 3. Use `itsol-current-tech-context` when symptoms depend on TanStack Query, React, Next.js, Hey API, or package versions.
 4. Read [references/guide.md](references/guide.md), then classify the failure: key, query function, enabled/dependency, invalidation, mutation, optimistic update, hydration, auth/tenant cache, realtime, persistence, or performance.
 5. Fix one root cause and verify with a regression test or documented replacement verification.
-6. Use `itsol-bug-debugging` for user-facing bugs and require an approved Technical Fix Plan before implementation.
+6. Use `itsol-bug-debugging`; in `governed`, require an approved Technical Fix Plan before implementation, while autonomous/direct prerequisites come from `itsol-workflow-mode`.
 
 ## Coordination
 
