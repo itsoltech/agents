@@ -2,6 +2,8 @@
 
 Validate task authorization and all seven fields through `itsol-workflow-mode`; direct execution does not require plan files, and autonomous `Ready for execution` is not user approval.
 
+Validate the sibling state through `itsol-execution-policy`, including remaining review-cycle capacity and the `implementation-reviewed` or earlier stop. One review cycle contains one full report and at most one targeted same-reviewer verification of its fixes; it is not an unlimited review loop.
+
 Use this reference after a delegated task returns, during the independent review loop, before per-task commits, and during final integration validation.
 
 ## Response Validation
@@ -27,6 +29,8 @@ Status handling:
 - `partial`: record what is verified, what is unverified, and whether to create another task, revise the packet, ask the user, or stop.
 - `blocked`: identify the missing context, decision, dependency, permission, or conflict; the main agent must resolve or stop rather than letting the subagent widen scope.
 - `failed`: inspect whether any artifacts are salvageable, then rerun with a narrower packet, switch to inline work, or escalate.
+
+Do not accept a status solely because an agent stopped or a hook allowed termination. Check `done_when`, verification, and unverified gaps. Never introduce `maxTurns` to bound the review loop.
 
 Unsupported claims must be checked against source files, command output, tests, or other deterministic evidence. If they cannot be checked, label them unverified and do not use them as the basis for final confidence.
 

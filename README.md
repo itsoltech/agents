@@ -90,6 +90,38 @@ workflow:
 
 Autonomia workflow nie rozszerza zakresu zadania. Destrukcyjne operacje na danych, niezlecony deploy lub publish na produkcję, sekrety poza zakresem, zewnętrzne wiadomości lub zakupy oraz osłabienie security pozostają osobnymi pytaniami o authority. Zwykłe edycje, testy, buildy i odwracalne działania w zakresie nie tworzą nowej approval pause.
 
+### Polityka kosztu `itsol-execution-policy`
+
+`itsol-execution-policy` działa obok `itsol-workflow-mode`. Workflow określa, kto podejmuje decyzje i jakie bramki obowiązują; execution policy ogranicza model/reasoning, delegację, równoległość, review i etap zatrzymania. Preset nigdy nie zmienia trybu workflow.
+
+| Preset | Profil | Reasoning | Agenci / równolegle | Review | Domyślny stop |
+| --- | --- | --- | --- | --- | --- |
+| `economy` | economy | low | 0 / 0 | 0 | wynik żądany przez użytkownika |
+| `standard` | balanced | medium | 2 / 2 | 1 cykl | `implementation-reviewed` |
+| `deep` | frontier | high | 1 / 1 | 2 cykle | `integration-validated` |
+
+Limity są sufitami, nie celem do wykorzystania. Jawne ograniczenie użytkownika lub repo może być tylko zaostrzone automatycznie. Zwiększenie kosztu, fan-outu, review albo przesunięcie stop pointu wymaga nowej instrukcji.
+
+ITSOL Powers celowo nie ustawia `maxTurns`. Zakończenie pętli agenta nie oznacza wykonania zadania. Każdy worker zwraca status `completed`, `partial`, `blocked` albo `failed`, weryfikację i braki; orchestrator akceptuje `completed` dopiero po sprawdzeniu `done_when` i dowodów. Claude plugin używa jednego deterministycznego retry dla brakującego envelope, bez nieskończonej pętli.
+
+Modele i reasoning są provider-neutral intent. Claude workers mają overrideable balanced default `sonnet`/`medium`; Codex i OpenCode raportują profil jako advisory, jeśli ich aktualna powierzchnia nie pozwala go wymusić. Żaden delegowany agent nie ma prawa uruchamiać kolejnych agentów.
+
+Przykłady:
+
+```text
+Use ITSOL standard execution policy and stop after implementation-reviewed.
+
+Use economy, agents off, and stop after analysis.
+
+Use deep reasoning, at most one worker, and stop after integration validation.
+
+Use standard with at most two agents. Delegate only independent read-only investigation and one independent implementation review.
+
+Prepare and review the plans, then stop after technical-plan. Do not implement.
+
+Create the PR, handle only the first review batch, then stop. Do not continue further review rounds.
+```
+
 #### itsol-workflow deprecated
 
 `itsol-workflow` jest starym pluginem i jest deprecated. Jego główne workflow zostały przeniesione i rozbudowane w `itsolpowers`.
@@ -210,6 +242,7 @@ Po instalacji `itsolpowers` dostępne są skille:
 
 - `using-itsolpowers` — routing zadań do właściwych skillów ITSOL
 - `itsol-workflow-mode` — centralny kontrakt trybów `governed`, `autonomous-planned` i `direct`, precedence, stanów artefaktów, delegowania decyzji i ograniczeń repo
+- `itsol-execution-policy` — niezależny kontrakt kosztu, modeli/reasoningu, delegacji, review, `done_when`, stop pointów i completion evidence bez `maxTurns`
 - `itsol-task-intake`, `itsol-repo-memory`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, repo policy `.itsol.md`, aktualnej dokumentacji i migracji technologii, przez zależne od trybu plany lub bezpośrednią realizację, podział pracy na sub-agentów, red-green-refactor albo repo-policy replacement verification, do QA
 - `security-*` — rozdrobnione skille security dla threat modelingu, auth, authz, API, frontendu, sekretów, supply chain, QA i obsługi podatności
 - `infra-*` — rozdrobnione skille infrastrukturalne dla deploymentu, kontenerów, Nomada, routingu, edge protection, sekretów, obserwowalności, backupów, capacity i incidentów

@@ -1,12 +1,12 @@
 ---
 name: postgres-review
 description: "Delegated ITSOL database subagent for `postgres-review`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when reviewing PostgreSQL schema, migrations, queries, indexes, constraints, transactions, locks, RLS, tenant boundaries, connection pooling, PgBouncer, backups, replication, permissions, monitoring, or database-related application code."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:postgres-review
-tools: Read, Grep, Glob, Bash, Agent
-disallowedTools: Write, Edit, MultiEdit
+tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # Postgres Review Subagent
@@ -37,3 +37,11 @@ Return a compact report for the main agent with:
 3. File references and affected behavior
 4. Verification performed
 5. Residual risks, missing tests, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

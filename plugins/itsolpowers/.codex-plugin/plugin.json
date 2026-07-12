@@ -1,7 +1,7 @@
 {
   "name": "itsolpowers",
-  "version": "0.14.0",
-  "description": "ITSOL engineering skills and Claude Code subagents with configurable workflow modes for governed approvals, autonomous reviewed planning, or direct execution, plus task intake, repo memory, current technology research, ML/AI, migration, frontend, mobile, desktop, data, TDD, review, security, infrastructure, and production readiness.",
+  "version": "0.15.0",
+  "description": "ITSOL engineering skills and Claude Code subagents with configurable workflow modes and a cost-aware execution policy for bounded models, reasoning, delegation, review, evidence-based completion without maxTurns, and ranked stop stages, plus engineering domain workflows.",
   "author": {
     "name": "ITSOL Tech",
     "email": "dev@itsol.tech"
@@ -121,6 +121,7 @@
     "defaultPrompt": [
       "Use ITSOL Powers to classify this task and choose the right skills.",
       "Use itsol-workflow-mode before planning or implementation to resolve governed, autonomous-planned, or direct mode from platform rules, repository restrictions, an explicit task-level choice, repository default, then governed fallback.",
+      "Use itsol-execution-policy after workflow mode to resolve separate model/reasoning intent, distinct-agent and parallel ceilings, review cycles, done_when, ranked stop_after, and escalation behavior; never use maxTurns or infer completion from agent termination.",
       "Preserve the selected workflow mode for the current task and use honest artifact states: Draft then Approved in governed, Draft then Ready for execution in autonomous-planned, and not-required in direct.",
       "If .itsol.md exists, read its repo memory before choosing project-specific TDD, verification, workflow-mode, or monorepo policy; create, initialize, or update it only when explicitly requested or otherwise authorized by the selected workflow scope.",
       "When planning or reviewing framework, SDK, runtime, package, generated client, or API-dependent work, verify current official documentation and repo-pinned versions first.",
@@ -134,7 +135,7 @@
       "For visible frontend work, use UI/UX skills for design-system consistency, component architecture, view states, responsiveness, accessibility, performance, tests, and UI review.",
       "For application rewrites or technology migrations, inventory behavior, choose a safe migration strategy, and plan incremental slices before implementation.",
       "In governed mode, require reviewed Business and Technical Plans plus explicit approval of each specific artifact; in autonomous-planned mode, review plans and continue with Ready for execution; in direct mode, do not require persistent planning artifacts.",
-      "For subagent-driven work, split tasks, set concurrency, and review each implementation with a separate subagent; commit reviewed slices only when separately authorized.",
+      "When execution policy permits subagents, split only independent work, stay within distinct-agent/concurrency/review ceilings, and validate each response; if required review does not fit, return partial or blocked instead of weakening it.",
       "For bugfixes, always gather evidence; apply the mode-specific Technical Fix Plan state from itsol-workflow-mode instead of an unconditional approval gate.",
       "Use ITSOL TDD workflow before changing production code.",
       "Review this change against ITSOL security and infrastructure practices.",

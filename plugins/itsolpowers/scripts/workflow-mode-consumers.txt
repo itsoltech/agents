@@ -20,6 +20,7 @@ mode-aware-consumer	plugins/itsolpowers/.codex-plugin/plugin.json
 mode-aware-consumer	plugins/itsolpowers/agents/electron-desktop-debugging.md
 mode-aware-consumer	plugins/itsolpowers/agents/expo-react-native-debugging.md
 mode-aware-consumer	plugins/itsolpowers/agents/itsol-bug-debugging.md
+mode-aware-consumer	plugins/itsolpowers/agents/itsol-execution-policy.md
 mode-aware-consumer	plugins/itsolpowers/agents/itsol-feature-implementation.md
 mode-aware-consumer	plugins/itsolpowers/agents/itsol-functional-planning.md
 mode-aware-consumer	plugins/itsolpowers/agents/itsol-repo-memory.md
@@ -40,6 +41,8 @@ mode-aware-consumer	plugins/itsolpowers/skills/expo-react-native-debugging/SKILL
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-bug-debugging/SKILL.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-bug-debugging/references/07-technical-fix-plan-gate.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-bug-debugging/references/guide.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-execution-policy/SKILL.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-execution-policy/references/stops-and-delegation.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-feature-implementation/SKILL.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-functional-planning/SKILL.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-functional-planning/references/01-planning-gates.md

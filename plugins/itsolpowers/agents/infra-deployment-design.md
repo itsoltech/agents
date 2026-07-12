@@ -1,11 +1,12 @@
 ---
 name: infra-deployment-design
 description: "Delegated ITSOL infrastructure subagent for `infra-deployment-design`. Use when the main agent needs isolated implementation work, parallel investigation, or a focused specialist report. Skill scope: Use when designing ITSOL deployment architecture, choosing single-host versus Nomad, defining layers, service boundaries, runtime topology, rollout model, environment separation, or production deployment assumptions."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:infra-deployment-design
-tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit, Agent
+tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit
+disallowedTools: Agent
 ---
 
 # Infra Deployment Design Subagent
@@ -36,3 +37,11 @@ Return a compact report for the main agent with:
 3. File references and affected behavior
 4. Verification performed
 5. Residual risks, missing tests, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

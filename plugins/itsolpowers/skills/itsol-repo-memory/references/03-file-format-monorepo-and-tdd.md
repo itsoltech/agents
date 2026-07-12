@@ -26,6 +26,19 @@ workflow:
       allowed_modes: [governed]
 ```
 
+## Execution
+
+```yaml
+execution:
+  default_preset: standard
+  restrictions:
+    - match:
+        path: infra/production
+      max_subagents: 1
+      max_parallel: 1
+      stop_after: technical-plan
+```
+
 ## Monorepo Map
 
 | Path | Type | Stack | TDD mode | Verification |
@@ -98,6 +111,7 @@ For monorepos, use prefix matching:
 3. If a task touches multiple projects, the plan must list each project policy separately.
 4. If a touched path is absent from `Monorepo Map`, inspect local configs and use `unknown` rather than guessing.
 5. Intersect every workflow restriction matching a touched path or operation. A task-level mode overrides a default but not base or matching restrictions; if excluded, report the matched rules and ask from remaining modes without silently downgrading.
+6. Resolve execution defaults through `itsol-execution-policy`. Intersect every matching resource restriction, preserve base plus constraint sources, and never expand a repository ceiling automatically.
 
 Start with one root `.itsol.md`. Add local override files such as `apps/web/.itsol.md` only if the root file becomes too large or the team explicitly wants distributed ownership. If local overrides exist, read root first, then the nearest override for each touched path.
 

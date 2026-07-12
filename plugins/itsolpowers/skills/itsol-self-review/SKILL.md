@@ -34,6 +34,11 @@ When reviewing a Business Plan or Technical Plan, do not edit the file. Return a
 6. Plan sections that need updates.
 7. Verdict by `itsol-workflow-mode`: governed `ready for approval`/`not ready for approval`; autonomous-planned `ready for execution`/`not ready for execution`; direct has no plan-review verdict.
 
+
+## Execution Policy
+
+After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+
 Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.
 
 ## Large PR Subagent Review

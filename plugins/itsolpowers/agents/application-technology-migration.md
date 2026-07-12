@@ -1,12 +1,12 @@
 ---
 name: application-technology-migration
 description: "Delegated ITSOL workflow subagent for `application-technology-migration`. Use when the main agent needs isolated migration strategy, rewrite planning, feature inventory, slice design, compatibility contract review, data migration planning, rollout/rollback planning, observability, security, or decommissioning analysis."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:application-technology-migration
-tools: Read, Grep, Glob, Bash, Agent, WebFetch, WebSearch
-disallowedTools: Write, Edit, MultiEdit
+tools: Read, Grep, Glob, Bash, WebFetch, WebSearch
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # Application Technology Migration Subagent
@@ -38,3 +38,11 @@ Return one of:
 3. First-slice proposal with deferred scopes
 4. Migration plan review findings
 5. Current tech context, required skills, rollout, rollback, and risk summary
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

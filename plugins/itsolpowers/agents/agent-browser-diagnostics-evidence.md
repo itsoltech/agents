@@ -1,11 +1,12 @@
 ---
 name: agent-browser-diagnostics-evidence
 description: "Delegated ITSOL agent-browser diagnostics subagent for console, network, HAR, trace, profiler, vitals, screenshots, videos, and redacted evidence."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:agent-browser-diagnostics-evidence
 tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit
+disallowedTools: Agent
 ---
 
 # Agent Browser Diagnostics Evidence Subagent
@@ -40,3 +41,11 @@ Return a compact report for the main agent with:
 4. Redaction status and sensitive-data caveats
 5. Verification performed
 6. Residual risks, missing evidence, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

@@ -1,12 +1,12 @@
 ---
 name: react-nextjs-review
 description: "Delegated ITSOL React/Next subagent for `react-nextjs-review`. Use for read-only review of React 19 or Next.js changes across App Router, RSC, Client Components, API/cache/forms, security, accessibility, performance, tests, and deployment risk."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:react-nextjs-review
-tools: Read, Grep, Glob, Bash, Agent
-disallowedTools: Write, Edit, MultiEdit
+tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # React Next.js Review Subagent
@@ -30,3 +30,11 @@ Produce a read-only specialist review report for React 19 or Next.js changes.
 ## Output Contract
 
 Return coverage map, findings by severity, file references, missing tests/evidence, residual risk, and final specialist verdict for the delegated scope.
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

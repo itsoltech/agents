@@ -20,4 +20,9 @@ Resolve and preserve the complete task state through `itsol-workflow-mode` befor
 6. In `governed`, feed clarified material to `itsol-functional-planning` and require explicit user approval before technical planning. In `autonomous-planned`, feed it forward without an approval pause. In `direct`, route directly to implementation with `artifact_state: not-required`.
 7. Distinguish clarification from scope change and make blockers, assumptions, owners, protected constraints, and unresolved risks explicit.
 
+
+## Execution Policy
+
+After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+
 Read [references/guide.md](references/guide.md) first; then read only the sector files relevant to the situation.

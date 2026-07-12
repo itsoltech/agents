@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Execution Policy"
+  short_description: "Bound agent cost, delegation, and stop stages"
+  default_prompt: "Use $itsol-execution-policy to choose bounded model, reasoning, delegation, review, and stop settings for this task."

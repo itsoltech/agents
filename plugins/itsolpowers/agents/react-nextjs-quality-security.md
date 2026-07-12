@@ -1,12 +1,12 @@
 ---
 name: react-nextjs-quality-security
 description: "Delegated ITSOL React/Next subagent for `react-nextjs-quality-security`. Use for read-only security, quality, performance, accessibility, tests, CI, runtime config, bundle, and production-readiness review for React 19 or Next.js."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:react-nextjs-quality-security
-tools: Read, Grep, Glob, Bash, Agent
-disallowedTools: Write, Edit, MultiEdit
+tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # React Next.js Quality Security Subagent
@@ -29,3 +29,11 @@ Produce a read-only specialist report for React/Next quality, security, performa
 ## Output Contract
 
 Return coverage map, findings by severity, file references, missing verification, and final specialist risk.
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

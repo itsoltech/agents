@@ -1,7 +1,7 @@
 ---
 name: itsol-workflow-mode
 description: "Delegated ITSOL workflow-mode specialist. Use when the main agent needs a read-only decision or review for governed, autonomous-planned, or direct execution, repository workflow restrictions, artifact readiness, mode transitions, or authorization propagation."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:itsol-workflow-mode
@@ -32,3 +32,11 @@ Return:
 - ambiguous wording or material blocker
 - propagation gaps and false approval claims
 - verdict: `ready`, `changes requested`, or `blocked`
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

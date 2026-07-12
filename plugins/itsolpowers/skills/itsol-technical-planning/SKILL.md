@@ -23,4 +23,9 @@ Resolve and preserve the complete task state through `itsol-workflow-mode` befor
 9. In `governed`, present the specific Technical Plan, obtain explicit user approval, change it to `Approved`, and ask for execution mode. Do not infer approval from the original request, `continue`, silence, or a generic agent statement.
 10. In `autonomous-planned`, change a reviewed plan to `Ready for execution`, record delegated authorization honestly, choose execution mode, and continue without an approval pause. Never call it user-approved.
 
+
+## Execution Policy
+
+After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+
 Read [references/guide.md](references/guide.md) first; then read only the sector files relevant to the situation.

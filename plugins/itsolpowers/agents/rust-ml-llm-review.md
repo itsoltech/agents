@@ -1,12 +1,12 @@
 ---
 name: rust-ml-llm-review
 description: "Delegated ITSOL implementation-domain subagent for `rust-ml-llm-review`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when reviewing Rust ML or LLM code using Rig, Candle, agents, tools, structured output, RAG, vector stores, embeddings, provider clients, local inference, streaming, prompt handling, evals, observability, model artifacts, or LLM security controls."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:rust-ml-llm-review
-tools: Read, Grep, Glob, Bash, Agent
-disallowedTools: Write, Edit, MultiEdit
+tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # Rust ML LLM Review Subagent
@@ -37,3 +37,11 @@ Return a compact report for the main agent with:
 3. File references and affected behavior
 4. Verification performed
 5. Residual risks, missing tests, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

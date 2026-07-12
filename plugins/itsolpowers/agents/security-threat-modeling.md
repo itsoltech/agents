@@ -1,12 +1,12 @@
 ---
 name: security-threat-modeling
 description: "Delegated ITSOL security subagent for `security-threat-modeling`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when planning or reviewing a security-sensitive ITSOL feature, new endpoint, data exposure, file flow, integration, automation, LLM workflow, tenant boundary, or privileged operation that needs assets, actors, trust boundaries, threats, controls, and tests."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:security-threat-modeling
-tools: Read, Grep, Glob, Bash, Agent
-disallowedTools: Write, Edit, MultiEdit
+tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # Security Threat Modeling Subagent
@@ -37,3 +37,11 @@ Return a compact report for the main agent with:
 3. File references and affected behavior
 4. Verification performed
 5. Residual risks, missing tests, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

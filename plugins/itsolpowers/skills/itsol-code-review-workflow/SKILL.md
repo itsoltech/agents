@@ -21,4 +21,9 @@ Review the PR as a risk-control step: verify behavior, safety, tests, and mainta
 10. Label comments by intent: `Blocker`, `Should`, `Question`, `Suggestion`, `Nit`, or `Note`.
 11. Stop review and request a technical discussion when scope, architecture, requirements, migration, rollout, PR size, unresolved `partial`, `blocked`, or `failed` status, or unreviewable coverage gap prevents reliable review.
 
+
+## Execution Policy
+
+After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+
 Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.

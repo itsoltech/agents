@@ -14,6 +14,8 @@ For planned modes under `itsol-workflow-mode`, the Technical Plan must be implem
 **Scope:** current-task
 **Artifact State:** draft | approved | ready-for-execution
 **Protected Constraints:** [] | <matched restrictions or action boundaries>
+**Execution Policy:** <preset, sources, model/reasoning control, agent/parallel/review ceilings, resolved stop, escalation>
+**Done When:** <observable completion criteria>
 **Authorization:** Pending explicit user approval | Delegated by user for the current task
 **Created:** YYYY-MM-DD
 **Business Plan:** <path and Approved | Ready for execution state>
@@ -110,6 +112,8 @@ If `Execution Mode` is `Subagent-driven` or subagents are likely, complete this 
 | `T1` | `<short name>` | `implementation/review/research/verification/integration` | `<none or task ids>` | `<exact files/areas or read-only>` | `<skill or area>` | `<command/evidence>` | `planned` |
 
 **Task Packet Requirements:** each delegated task must receive mode-valid plan paths and artifact state (`Approved`, `Ready for execution`, or `not-required`), all seven workflow-state fields, goal and acceptance criteria, source of truth, read scope, write scope or `read-only`, forbidden scope, required ITSOL skills, RED/GREEN or documented TDD exception, verification or replacement evidence, expected artifacts, allowed statuses, budget when useful, stop conditions, and escalation triggers.
+
+Also include the complete `itsol-execution-policy` state, observable `done_when`, remaining distinct-child and review-cycle capacity, and a ranked child stop no later than the parent. Never use `maxTurns`.
 
 **Response And Review Handling:** the main agent must validate every subagent response before accepting it. Require status `completed`, `partial`, `blocked`, or `failed`; changed files or inspected scope; evidence; assumptions; unverified items; coverage gap notes; risks; blockers; and next review target when files changed. Resolve `partial` and `blocked` results through revised packets, serialization, user/main-agent decisions, or stopped execution. For `failed`, inspect whether any artifacts are salvageable, then rerun with a narrower packet, switch to inline work, escalate, or stop.
 

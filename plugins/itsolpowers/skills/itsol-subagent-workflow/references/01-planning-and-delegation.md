@@ -2,6 +2,8 @@
 
 Use `itsol-workflow-mode` as authorization source. Require `workflow_mode`, `mode_source`, `decision_authority`, `scope`, `artifact_state`, `execution_mode`, and `protected_constraints`; return `blocked` for missing, incomplete, inconsistent, or restriction-conflicting state.
 
+Use `itsol-execution-policy` as the resource and stop source. Require its full state plus `done_when`; return `blocked` for missing fields, a child stop later than the parent, exhausted distinct-agent/review capacity, or an attempted ceiling expansion.
+
 ## Preconditions
 
 - In `governed`, specific Business/Technical Plans are genuinely `Approved` after presentation and the user selected subagent execution.
@@ -50,6 +52,8 @@ Every packet includes:
 - budget where useful;
 - stop conditions and escalation triggers.
 
+Never use `maxTurns`. A fixed agent-loop limit is not a completion criterion.
+
 Documentation/config packets state the TDD exception before editing. Code packets name expected tests, focused RED/GREEN command, and wider handoff command.
 
 ## Write Ownership
@@ -78,6 +82,8 @@ Every response includes:
 - next independent review target when files changed.
 
 Text alone is not completion. The main agent validates evidence and packet fulfillment.
+
+For Claude plugin agents, require exactly one final envelope with column-one `Status:`, `Verification:`, and `Unverified:` lines as defined by `itsol-execution-policy`. Other platforms preserve the same semantics even when the transport cannot enforce the grammar.
 
 ## Parallelism
 

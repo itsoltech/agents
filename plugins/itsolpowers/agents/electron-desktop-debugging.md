@@ -1,7 +1,7 @@
 ---
 name: electron-desktop-debugging
 description: "Delegated ITSOL desktop subagent for `electron-desktop-debugging`. Use when the main agent needs isolated debugging work, parallel investigation, or a focused specialist report. Skill scope: Use when diagnosing Electron main, preload, renderer, IPC, packaged app, auto-update, logging, crash reporting, memory, performance, storage, or platform-specific desktop failures."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:electron-desktop-debugging
@@ -40,3 +40,11 @@ Return a compact report for the main agent with:
 3. File references and affected behavior
 4. Verification performed
 5. Residual risks, missing tests, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

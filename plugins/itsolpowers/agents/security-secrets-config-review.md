@@ -1,12 +1,12 @@
 ---
 name: security-secrets-config-review
 description: "Delegated ITSOL security subagent for `security-secrets-config-review`. Use when the main agent needs isolated review-analysis work, parallel investigation, or a focused specialist report. Skill scope: Use when implementing or reviewing secrets, environment variables, app configuration, credentials, API keys, TLS material, CI secrets, deployment variables, config files, logging of sensitive values, or secret rotation."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:security-secrets-config-review
-tools: Read, Grep, Glob, Bash, Agent
-disallowedTools: Write, Edit, MultiEdit
+tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # Security Secrets Config Review Subagent
@@ -37,3 +37,11 @@ Return a compact report for the main agent with:
 3. File references and affected behavior
 4. Verification performed
 5. Residual risks, missing tests, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

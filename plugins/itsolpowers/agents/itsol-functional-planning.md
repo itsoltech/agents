@@ -1,9 +1,10 @@
 ---
 name: itsol-functional-planning
 description: "Delegated workflow-mode-aware functional planning specialist for governed, autonomous-planned, and direct execution."
-model: inherit
+model: sonnet
 effort: medium
 skills:
+  - itsolpowers:itsol-execution-policy
   - itsolpowers:itsol-functional-planning
   - itsolpowers:itsol-requirements-review
   - itsolpowers:itsol-workflow-mode
@@ -12,6 +13,8 @@ disallowedTools: MultiEdit, Agent
 ---
 
 # ITSOL Functional Planning Subagent
+
+Validate the complete sibling execution policy after workflow mode. Preserve hard ceilings, `done_when`, ranked `stop_after`, and incomplete statuses; do not use `maxTurns` or infer completion from termination.
 
 Follow `itsol-functional-planning` and the canonical `itsol-workflow-mode`. Modify planning artifacts only; never edit production code.
 
@@ -32,3 +35,11 @@ Require all seven workflow-state fields. Return `blocked` rather than inferring 
 ## Output Contract
 
 Return status; task; changed plan files; seven-field workflow state; summary; review evidence; assumptions; unverified gaps; risks; blockers; and next route/review target.
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

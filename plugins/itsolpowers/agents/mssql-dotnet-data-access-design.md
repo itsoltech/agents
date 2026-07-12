@@ -1,11 +1,12 @@
 ---
 name: mssql-dotnet-data-access-design
 description: "Delegated ITSOL database subagent for `mssql-dotnet-data-access-design`. Use when the main agent needs isolated implementation work, parallel investigation, or a focused specialist report. Skill scope: Use when designing or implementing SQL Server schema, queries, indexes, EF Core, Dapper, stored procedures, transactions, migrations, connection pooling, or .NET data access."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:mssql-dotnet-data-access-design
-tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit, Agent
+tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit
+disallowedTools: Agent
 ---
 
 # MSSQL Dotnet Data Access Design Subagent
@@ -36,3 +37,11 @@ Return a compact report for the main agent with:
 3. File references and affected behavior
 4. Verification performed
 5. Residual risks, missing tests, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

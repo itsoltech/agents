@@ -1,11 +1,12 @@
 ---
 name: tanstack-query-svelte-implementation
 description: "Delegated ITSOL frontend-contract subagent for `tanstack-query-svelte-implementation`. Use when the main agent needs isolated implementation work, parallel investigation, or a focused specialist report. Skill scope: Use when implementing TanStack Query v5 or v6 for Svelte or SvelteKit, including query keys, createQuery, createMutation, SSR prefetch, invalidation, optimistic updates, pagination, polling, cache behavior, or API client integration."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:tanstack-query-svelte-implementation
-tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit, Agent
+tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit
+disallowedTools: Agent
 ---
 
 # TanStack Query Svelte Implementation Subagent
@@ -36,3 +37,11 @@ Return a compact report for the main agent with:
 3. File references and affected behavior
 4. Verification performed
 5. Residual risks, missing tests, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

@@ -46,7 +46,7 @@ export {
 
 Replace `<path-to-repo>` with the path where this repository is checked out. The wrapper imports the plugin from its package layout, so the bundled `skills/` directory still resolves correctly.
 
-Restart OpenCode after changing plugin configuration or plugin files. The plugin registers all ITSOL skills and injects the `using-itsolpowers` router into each session.
+Restart OpenCode after changing plugin configuration or plugin files. The plugin registers all ITSOL skills and injects a compact shared bootstrap that tells the agent to load `using-itsolpowers`, `itsol-workflow-mode`, and `itsol-execution-policy` lazily instead of injecting the full router body.
 
 Verify by asking:
 
@@ -87,3 +87,5 @@ When ITSOL skills mention Claude Code or Codex concepts:
 - `Skill` tool -> use OpenCode's native `skill` tool
 - `Read`, `Write`, `Edit`, `Bash` -> use native OpenCode tools
 - Claude Code plugin subagents -> delegate to OpenCode subagents with the matching ITSOL skill loaded
+- Disable nested model-driven delegation with OpenCode `permission.task: deny` on delegated agents.
+- Treat model/reasoning profiles as advisory unless native OpenCode agent configuration enforces them; do not use `steps` as completion.

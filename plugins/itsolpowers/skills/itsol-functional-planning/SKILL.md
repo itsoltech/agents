@@ -26,4 +26,9 @@ In `autonomous-planned`, create the same Business and Technical Plan artifacts. 
 
 In `direct`, do not create or require persistent Business or Technical Plans, plan reviews, approvals, planning Decision Gates, plan paths, or execution-mode approval. Record `artifact_state: not-required`, establish the smallest safe implementation scope from the request and repo evidence, ask only about material ambiguity, then route to `itsol-feature-implementation` and `itsol-tdd-workflow` inline or through `itsol-subagent-workflow` as appropriate.
 
+
+## Execution Policy
+
+After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+
 Read [references/guide.md](references/guide.md) before presenting or reviewing planned-mode artifacts. If the task is not functional implementation, route to the narrower workflow.

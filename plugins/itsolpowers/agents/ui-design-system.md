@@ -1,12 +1,12 @@
 ---
 name: ui-design-system
 description: "Delegated ITSOL UI/UX subagent for `ui-design-system`. Use for focused analysis of design tokens, base components, variants, consistency, component examples, and design-system impact."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:ui-design-system
-tools: Read, Grep, Glob, Bash, Agent
-disallowedTools: Write, Edit, MultiEdit
+tools: Read, Grep, Glob, Bash
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # UI Design System Subagent
@@ -27,3 +27,11 @@ Produce a read-only design-system report.
 ## Output Contract
 
 Return scope inspected, findings with file references, affected UI behavior, missing examples/tests and residual design-system risks.
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

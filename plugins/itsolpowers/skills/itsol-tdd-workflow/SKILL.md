@@ -18,4 +18,9 @@ Use test-driven development as the default coding loop for behavior changes. Pro
 7. Refactor only after GREEN, keeping tests green after each cleanup.
 8. If TDD mode is `limited`, `not-supported`, or automation is not practical, do not scaffold a new test framework only to satisfy TDD. Record the exception and replacement verification before changing production code.
 
+
+## Execution Policy
+
+After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+
 Read [references/guide.md](references/guide.md) before writing production code. If TDD is not practical, record the explicit exception and the alternative verification before implementing.

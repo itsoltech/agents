@@ -15,6 +15,8 @@ For planned modes under `itsol-workflow-mode`, the Business Plan must be underst
 **Artifact State:** draft | approved | ready-for-execution
 **Execution Mode:** pending | inline | subagents | auto
 **Protected Constraints:** [] | <matched restrictions or action boundaries>
+**Execution Policy:** <preset, sources, model/reasoning control, agent/parallel/review ceilings, resolved stop, escalation>
+**Done When:** <observable completion criteria>
 **Authorization:** Pending explicit user approval | Delegated by user for the current task
 **Created:** YYYY-MM-DD
 **Related request:** <short summary or ticket link>

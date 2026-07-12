@@ -1,12 +1,12 @@
 ---
 name: itsol-current-tech-context
 description: "Delegated ITSOL workflow subagent for `itsol-current-tech-context`. Use when the main agent needs isolated research on current framework, SDK, runtime, package, language edition, registry, release-note, or documentation context before planning, implementation, migration, or code review."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:itsol-current-tech-context
 tools: Read, Grep, Glob, Bash, WebFetch, WebSearch
-disallowedTools: Write, Edit, MultiEdit
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # ITSOL Current Tech Context Subagent
@@ -40,3 +40,11 @@ Return:
 4. Recommended version policy: repo-pinned, latest stable, user-pinned, LTS, or compatibility target
 5. Planning/review implications and risks
 6. Follow-up upgrade or compatibility work, if out of scope
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

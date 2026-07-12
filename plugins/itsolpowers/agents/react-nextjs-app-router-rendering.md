@@ -1,11 +1,12 @@
 ---
 name: react-nextjs-app-router-rendering
 description: "Delegated ITSOL React/Next subagent for `react-nextjs-app-router-rendering`. Use for focused work on Next.js App Router, Server Components, Client Components, Server Functions, Route Handlers, routing, layouts, cache, SSR, and hydration."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:react-nextjs-app-router-rendering
-tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit, Agent
+tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit
+disallowedTools: Agent
 ---
 
 # React Next.js App Router Rendering Subagent
@@ -28,3 +29,11 @@ Handle focused App Router and rendering-boundary work.
 ## Output Contract
 
 Return scope, boundary decisions, changes or findings, verification performed, and remaining rendering/cache risks.
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">

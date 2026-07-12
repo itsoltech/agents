@@ -1,12 +1,12 @@
 ---
 name: expo-eas-release-ota
 description: "Delegated ITSOL mobile-release subagent for `expo-eas-release-ota`. Use when the main agent needs isolated EAS release, build, submit, OTA, rollout, rollback, or CI/CD analysis. Skill scope: Use when implementing or reviewing Expo EAS Build, EAS Submit, credentials, app versions, build numbers, runtime versions, channels, EAS Update, OTA code signing, rollout, rollback, store release, monitoring, or release gates."
-model: inherit
+model: sonnet
 effort: medium
 skills:
   - itsolpowers:expo-eas-release-ota
 tools: Read, Grep, Glob, Bash
-disallowedTools: Write, Edit, MultiEdit
+disallowedTools: Write, Edit, MultiEdit, Agent
 ---
 
 # Expo EAS Release OTA Subagent
@@ -37,3 +37,11 @@ Return a compact report for the main agent with:
 3. File references and affected behavior
 4. Verification performed
 5. Residual risks, missing tests, or follow-up agents needed
+
+## Required Response Envelope
+
+End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+
+Status: completed|partial|blocked|failed
+Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Unverified: <non-empty gap summary or "none">
