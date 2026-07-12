@@ -41,6 +41,7 @@ mode-aware-consumer	plugins/itsolpowers/skills/expo-react-native-debugging/SKILL
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-bug-debugging/SKILL.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-bug-debugging/references/07-technical-fix-plan-gate.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-bug-debugging/references/guide.md
+mode-aware-consumer	plugins/itsolpowers/skills/itsol-codex-setup/SKILL.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-execution-policy/SKILL.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-execution-policy/references/stops-and-delegation.md
 mode-aware-consumer	plugins/itsolpowers/skills/itsol-feature-implementation/SKILL.md

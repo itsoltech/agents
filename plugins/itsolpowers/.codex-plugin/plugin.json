@@ -1,6 +1,6 @@
 {
   "name": "itsolpowers",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "ITSOL engineering skills and Claude Code subagents with configurable workflow modes and a cost-aware execution policy for bounded models, reasoning, delegation, review, evidence-based completion without maxTurns, and ranked stop stages, plus engineering domain workflows.",
   "author": {
     "name": "ITSOL Tech",
@@ -99,7 +99,7 @@
   "interface": {
     "displayName": "ITSOL Powers",
     "shortDescription": "ITSOL workflow modes, planning, TDD, current docs, implementation, and review.",
-    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks through the central itsol-workflow-mode contract: governed approvals, autonomous-planned reviewed artifacts without approval pauses, or direct execution without persistent planning artifacts. It preserves task-scoped authority, honest Draft, Approved, Ready for execution, and not-required states, repository defaults and restrictions, TDD or replacement verification, and separate authorization for protected actions. The plugin also covers repo memory and monorepo policy, current technology research, ML/AI, UI/UX, React 19 and Next.js, TanStack Query, agent-browser QA, Expo, Electron, Tauri, generated OpenAPI clients, migrations, SQL Server/.NET data access, databases, subagent execution, debugging, self-review, security, infrastructure, deployment readiness, and incident analysis.",
+    "longDescription": "ITSOL Powers provides Codex skills for routing engineering tasks through the central itsol-workflow-mode contract: governed approvals, autonomous-planned reviewed artifacts without approval pauses, or direct execution without persistent planning artifacts. It preserves task-scoped authority, honest Draft, Approved, Ready for execution, and not-required states, repository defaults and restrictions, TDD or replacement verification, separate authorization for protected actions, and explicit setup/diagnostics for cost-aware Codex subagent roles. The plugin also covers repo memory and monorepo policy, current technology research, ML/AI, UI/UX, React 19 and Next.js, TanStack Query, agent-browser QA, Expo, Electron, Tauri, generated OpenAPI clients, migrations, SQL Server/.NET data access, databases, subagent execution, debugging, self-review, security, infrastructure, deployment readiness, and incident analysis.",
     "developerName": "ITSOL Tech",
     "category": "Productivity",
     "capabilities": [
@@ -122,6 +122,7 @@
       "Use ITSOL Powers to classify this task and choose the right skills.",
       "Use itsol-workflow-mode before planning or implementation to resolve governed, autonomous-planned, or direct mode from platform rules, repository restrictions, an explicit task-level choice, repository default, then governed fallback.",
       "Use itsol-execution-policy after workflow mode to resolve separate model/reasoning intent, distinct-agent and parallel ceilings, review cycles, done_when, ranked stop_after, and escalation behavior; never use maxTurns or infer completion from agent termination.",
+      "Use $itsol-codex-setup to preview and install managed economy, balanced, or quality Codex roles, and $itsol-codex-doctor to diagnose them without changing files.",
       "Preserve the selected workflow mode for the current task and use honest artifact states: Draft then Approved in governed, Draft then Ready for execution in autonomous-planned, and not-required in direct.",
       "If .itsol.md exists, read its repo memory before choosing project-specific TDD, verification, workflow-mode, or monorepo policy; create, initialize, or update it only when explicitly requested or otherwise authorized by the selected workflow scope.",
       "When planning or reviewing framework, SDK, runtime, package, generated client, or API-dependent work, verify current official documentation and repo-pinned versions first.",

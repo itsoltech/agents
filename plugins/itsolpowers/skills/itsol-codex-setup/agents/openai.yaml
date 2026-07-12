@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Codex Setup"
+  short_description: "Configure cost-aware Codex agent roles"
+  default_prompt: "Use $itsol-codex-setup to preview and configure safe cost-aware Codex subagent roles."

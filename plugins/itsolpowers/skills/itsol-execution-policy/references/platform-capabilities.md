@@ -14,6 +14,7 @@ Verify current official documentation before changing these mappings.
 - The plugin packages skills and hooks, not the Claude Markdown agents or a named TOML agent catalog.
 - Validate child responses in the parent. Do not register the Claude ITSOL-agent hook as a catch-all Codex hook.
 - Optional custom TOML agents may set `model`, `model_reasoning_effort`, `sandbox_mode`, and `[agents] max_depth = 1`; omission inherits parent values. Treat this as user/project configuration, not installed plugin behavior.
+- Use `itsol-codex-setup` for an explicit, managed user/project installation of cost-aware roles and `itsol-codex-doctor` for read-only diagnosis. Static sandbox values are configured intent, and account-specific model entitlement remains unverified without normal runtime evidence.
 
 ## OpenCode
 

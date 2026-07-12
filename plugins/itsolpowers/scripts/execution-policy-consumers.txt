@@ -15,6 +15,7 @@ plugins/itsolpowers/agents/using-itsolpowers.md
 plugins/itsolpowers/hooks/bootstrap-context.md
 plugins/itsolpowers/skills/itsol-bug-debugging/SKILL.md
 plugins/itsolpowers/skills/itsol-code-review-workflow/SKILL.md
+plugins/itsolpowers/skills/itsol-codex-setup/SKILL.md
 plugins/itsolpowers/skills/itsol-execution-policy/SKILL.md
 plugins/itsolpowers/skills/itsol-feature-implementation/SKILL.md
 plugins/itsolpowers/skills/itsol-functional-planning/SKILL.md

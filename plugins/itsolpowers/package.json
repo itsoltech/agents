@@ -1,6 +1,6 @@
 {
   "name": "itsolpowers",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "type": "module",
   "main": ".opencode/plugins/itsolpowers.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "validate:execution-policy": "bash ./scripts/validate-execution-policy.sh",
     "test:subagent-stop": "node ./scripts/test-subagent-stop.mjs",
     "test:opencode-adapter": "node ./scripts/test-opencode-adapter.mjs",
-    "test:execution-policy": "node ./scripts/test-execution-policy.mjs"
+    "test:execution-policy": "node ./scripts/test-execution-policy.mjs",
+    "test:codex-agent-setup": "node ./scripts/test-codex-agent-setup.mjs"
   }
 }

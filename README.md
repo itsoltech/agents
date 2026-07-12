@@ -104,7 +104,7 @@ Limity są sufitami, nie celem do wykorzystania. Jawne ograniczenie użytkownika
 
 ITSOL Powers celowo nie ustawia `maxTurns`. Zakończenie pętli agenta nie oznacza wykonania zadania. Każdy worker zwraca status `completed`, `partial`, `blocked` albo `failed`, weryfikację i braki; orchestrator akceptuje `completed` dopiero po sprawdzeniu `done_when` i dowodów. Claude plugin używa jednego deterministycznego retry dla brakującego envelope, bez nieskończonej pętli.
 
-Modele i reasoning są provider-neutral intent. Claude workers mają overrideable balanced default `sonnet`/`medium`; Codex i OpenCode raportują profil jako advisory, jeśli ich aktualna powierzchnia nie pozwala go wymusić. Żaden delegowany agent nie ma prawa uruchamiać kolejnych agentów.
+Modele i reasoning są provider-neutral intent. Claude workers mają overrideable balanced default `sonnet`/`medium`; Codex bez skonfigurowanych ról i OpenCode raportują profil jako advisory. Codex może dostać zarządzane role przez `$itsol-codex-setup`, a ich strukturę sprawdza `$itsol-codex-doctor`. Żaden delegowany agent nie ma prawa uruchamiać kolejnych agentów.
 
 Przykłady:
 
@@ -238,11 +238,22 @@ Plugin `itsolpowers` ma manifest:
 plugins/itsolpowers/.codex-plugin/plugin.json
 ```
 
+Domyślna konfiguracja ról Codex:
+
+```text
+$itsol-codex-setup skonfiguruj profil balanced globalnie
+$itsol-codex-doctor sprawdź konfigurację globalną
+```
+
+Setup najpierw pokazuje dry-run, zarządza wyłącznie rolami `itsol_*`, ustawia `max_depth = 1`, nie używa `maxTurns` i nie wykonuje płatnych wywołań do sprawdzania entitlementu modelu. Project scope jest dostępny na jawne żądanie użytkownika.
+
 Po instalacji `itsolpowers` dostępne są skille:
 
 - `using-itsolpowers` — routing zadań do właściwych skillów ITSOL
 - `itsol-workflow-mode` — centralny kontrakt trybów `governed`, `autonomous-planned` i `direct`, precedence, stanów artefaktów, delegowania decyzji i ograniczeń repo
 - `itsol-execution-policy` — niezależny kontrakt kosztu, modeli/reasoningu, delegacji, review, `done_when`, stop pointów i completion evidence bez `maxTurns`
+- `itsol-codex-setup` — jawny dry-run i instalacja czterech zarządzanych ról Codex w profilu `economy`, `balanced` albo `quality`, globalnie lub projektowo
+- `itsol-codex-doctor` — read-only diagnostyka wersji Codex, ról, managed state, limitów i driftu bez płatnego sprawdzania dostępności modeli
 - `itsol-task-intake`, `itsol-repo-memory`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, repo policy `.itsol.md`, aktualnej dokumentacji i migracji technologii, przez zależne od trybu plany lub bezpośrednią realizację, podział pracy na sub-agentów, red-green-refactor albo repo-policy replacement verification, do QA
 - `security-*` — rozdrobnione skille security dla threat modelingu, auth, authz, API, frontendu, sekretów, supply chain, QA i obsługi podatności
 - `infra-*` — rozdrobnione skille infrastrukturalne dla deploymentu, kontenerów, Nomada, routingu, edge protection, sekretów, obserwowalności, backupów, capacity i incidentów

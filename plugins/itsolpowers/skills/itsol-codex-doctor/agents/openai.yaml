@@ -1,0 +1,4 @@
+interface:
+  display_name: "ITSOL Codex Doctor"
+  short_description: "Diagnose Codex agent role configuration"
+  default_prompt: "Use $itsol-codex-doctor to diagnose my ITSOLPowers Codex subagent setup without changing files."

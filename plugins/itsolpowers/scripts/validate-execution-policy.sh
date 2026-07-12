@@ -44,6 +44,10 @@ for path in \
   "plugins/itsolpowers/scripts/test-subagent-stop.mjs" \
   "plugins/itsolpowers/scripts/test-opencode-adapter.mjs" \
   "plugins/itsolpowers/scripts/test-execution-policy.mjs" \
+  "plugins/itsolpowers/scripts/test-codex-agent-setup.mjs" \
+  "plugins/itsolpowers/skills/itsol-codex-setup/SKILL.md" \
+  "plugins/itsolpowers/skills/itsol-codex-setup/scripts/configure-codex.mjs" \
+  "plugins/itsolpowers/skills/itsol-codex-doctor/SKILL.md" \
   "${consumer_manifest#${repo_root}/}"; do
   require_file "${path}"
 done
@@ -113,7 +117,7 @@ if rg -q -F 'SubagentStop' plugins/itsolpowers/hooks/hooks-codex.json; then
   fail "Codex hooks must not register the Claude ITSOL-agent stop validator"
 fi
 
-for script in validate:execution-policy test:subagent-stop test:opencode-adapter test:execution-policy; do
+for script in validate:execution-policy test:subagent-stop test:opencode-adapter test:execution-policy test:codex-agent-setup; do
   require_token "plugins/itsolpowers/package.json" "\"${script}\""
 done
 
@@ -122,9 +126,13 @@ if ! node plugins/itsolpowers/scripts/test-execution-policy.mjs; then
 fi
 
 for path in plugins/itsolpowers/package.json plugins/itsolpowers/.claude-plugin/plugin.json plugins/itsolpowers/.codex-plugin/plugin.json; do
-  require_token "${path}" '"version": "0.15.0"'
+  require_token "${path}" '"version": "0.16.0"'
 done
-require_token ".claude-plugin/marketplace.json" '"version": "1.14.0"'
+require_token ".claude-plugin/marketplace.json" '"version": "1.15.0"'
+
+if ! node plugins/itsolpowers/scripts/test-codex-agent-setup.mjs; then
+  fail "Codex agent setup fixtures failed"
+fi
 
 set +e
 node -e 'for (const p of process.argv.slice(1)) JSON.parse(require("fs").readFileSync(p, "utf8"))' \
