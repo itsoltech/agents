@@ -5,13 +5,24 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const pluginRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const repoRoot = path.resolve(pluginRoot, '../..');
 const packageJson = JSON.parse(fs.readFileSync(path.join(pluginRoot, 'package.json'), 'utf8'));
+const rootPackageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf8'));
 
 assert.ok(packageJson.keywords.includes('pi-package'));
 assert.deepEqual(packageJson.pi.extensions, ['./extensions/pi/index.ts']);
 assert.deepEqual(packageJson.pi.skills, ['./skills']);
 for (const resource of [...packageJson.pi.extensions, ...packageJson.pi.skills]) {
   assert.ok(fs.existsSync(path.resolve(pluginRoot, resource)), `missing Pi resource: ${resource}`);
+}
+
+assert.equal(rootPackageJson.private, true);
+assert.equal(rootPackageJson.version, packageJson.version);
+assert.ok(rootPackageJson.keywords.includes('pi-package'));
+assert.deepEqual(rootPackageJson.pi.extensions, ['./plugins/itsolpowers/extensions/pi/index.ts']);
+assert.deepEqual(rootPackageJson.pi.skills, ['./plugins/itsolpowers/skills']);
+for (const resource of [...rootPackageJson.pi.extensions, ...rootPackageJson.pi.skills]) {
+  assert.ok(fs.existsSync(path.resolve(repoRoot, resource)), `missing root Pi adapter resource: ${resource}`);
 }
 
 const skillNames = new Set(
@@ -48,11 +59,13 @@ assert.match(bootstrap, /`itsol_delegate`/);
 assert.ok(bootstrap.trim().split(/\s+/).length <= 600, 'Pi bootstrap exceeds 600 words');
 
 if (process.env.ITSOLPOWERS_PI_SMOKE === '1') {
-  const result = spawnSync('pi', ['--offline', '-e', pluginRoot, '--list-models'], {
-    encoding: 'utf8',
-    timeout: 30_000,
-  });
-  assert.equal(result.status, 0, `Pi extension smoke failed:\n${result.stderr || result.stdout}`);
+  for (const packageRoot of [pluginRoot, repoRoot]) {
+    const result = spawnSync('pi', ['--offline', '-e', packageRoot, '--list-models'], {
+      encoding: 'utf8',
+      timeout: 30_000,
+    });
+    assert.equal(result.status, 0, `Pi extension smoke failed for ${packageRoot}:\n${result.stderr || result.stdout}`);
+  }
 }
 
 process.stdout.write('pi adapter fixtures: PASS\n');

@@ -33,6 +33,7 @@ platform_reference="plugins/itsolpowers/skills/itsol-execution-policy/references
 stop_reference="plugins/itsolpowers/skills/itsol-execution-policy/references/stops-and-delegation.md"
 
 for path in \
+  "package.json" \
   "${policy_skill}" \
   "${policy_reference}" \
   "${platform_reference}" \
@@ -130,7 +131,7 @@ if ! node plugins/itsolpowers/scripts/test-execution-policy.mjs; then
   fail "execution-policy schema fixtures failed"
 fi
 
-for path in plugins/itsolpowers/package.json plugins/itsolpowers/.claude-plugin/plugin.json plugins/itsolpowers/.codex-plugin/plugin.json; do
+for path in package.json plugins/itsolpowers/package.json plugins/itsolpowers/.claude-plugin/plugin.json plugins/itsolpowers/.codex-plugin/plugin.json; do
   require_token "${path}" '"version": "0.17.0"'
 done
 require_token ".claude-plugin/marketplace.json" '"version": "1.16.0"'
@@ -141,6 +142,7 @@ fi
 
 set +e
 node -e 'for (const p of process.argv.slice(1)) JSON.parse(require("fs").readFileSync(p, "utf8"))' \
+  package.json \
   plugins/itsolpowers/package.json \
   plugins/itsolpowers/.claude-plugin/plugin.json \
   plugins/itsolpowers/.codex-plugin/plugin.json \

@@ -149,7 +149,7 @@ Po instalacji dostępne komendy:
 /plugin update itsolpowers@itsoltech-agents
 ```
 
-Aktualizacje `itsolpowers` wymagają zgodnego pola `version` w `plugins/itsolpowers/package.json`, `plugins/itsolpowers/.claude-plugin/plugin.json` i `plugins/itsolpowers/.codex-plugin/plugin.json`. Przy wydaniu przez marketplace zaktualizuj również jego wersję w `.claude-plugin/marketplace.json`. Bez wymaganych bumpów klient może nie pobrać nowej wersji.
+Aktualizacje `itsolpowers` wymagają zgodnego pola `version` w rootowym adapterze Pi `package.json`, `plugins/itsolpowers/package.json`, `plugins/itsolpowers/.claude-plugin/plugin.json` i `plugins/itsolpowers/.codex-plugin/plugin.json`. Przy wydaniu przez marketplace zaktualizuj również jego wersję w `.claude-plugin/marketplace.json`. Bez wymaganych bumpów klient może nie pobrać nowej wersji.
 
 `itsol-workflow` jest deprecated, więc aktualizuj go tylko wtedy, gdy utrzymujesz starą instalację, która jeszcze go wymaga.
 
@@ -222,11 +222,25 @@ Instalacja tylko dla bieżącego projektu:
 pi install -l ./plugins/itsolpowers
 ```
 
-Po publikacji pakietu npm:
+Instalacja bez npm, bezpośrednio z repozytorium Git przez HTTPS:
 
 ```bash
-pi install npm:itsolpowers@0.17.0
+pi install https://github.com/itsoltech/agents
 ```
+
+Rekomendowana instalacja przypiętego release:
+
+```bash
+pi install https://github.com/itsoltech/agents@v0.17.0
+```
+
+Dla prywatnego repozytorium można użyć SSH:
+
+```bash
+pi install git:git@github.com:itsoltech/agents@v0.17.0
+```
+
+Rootowy `package.json` jest adapterem Pi wskazującym extension i skille z `plugins/itsolpowers/`. URL musi wskazywać repozytorium Git; adres GitHub `tree/.../plugins/itsolpowers` nie jest obsługiwanym źródłem pakietu.
 
 Do jednorazowego testu bez zapisywania ustawień:
 
@@ -316,7 +330,7 @@ plugins/itsol-workflow/.codex-plugin/plugin.json
 
 1. Zrób fork / branch
 2. Zmień pliki w `plugins/<plugin-name>/`
-3. Dla `itsolpowers` zachowaj identyczne `version` w `plugins/itsolpowers/package.json`, `plugins/itsolpowers/.claude-plugin/plugin.json` i `plugins/itsolpowers/.codex-plugin/plugin.json` (SemVer: patch dla fixów, minor dla nowych komend/skilli, major dla breaking changes)
+3. Dla `itsolpowers` zachowaj identyczne `version` w rootowym `package.json`, `plugins/itsolpowers/package.json`, `plugins/itsolpowers/.claude-plugin/plugin.json` i `plugins/itsolpowers/.codex-plugin/plugin.json` (SemVer: patch dla fixów, minor dla nowych komend/skilli, major dla breaking changes)
 4. Jeśli zmiana jest wydawana przez marketplace, zaktualizuj także `version` w `.claude-plugin/marketplace.json`
 5. Otwórz PR
 

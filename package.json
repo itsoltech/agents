@@ -1,0 +1,28 @@
+{
+  "name": "itsoltech-agents-pi",
+  "version": "0.17.0",
+  "private": true,
+  "description": "Git package adapter for installing ITSOL Powers in the Pi coding harness",
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "itsol",
+    "skills",
+    "subagents",
+    "workflow"
+  ],
+  "pi": {
+    "extensions": [
+      "./plugins/itsolpowers/extensions/pi/index.ts"
+    ],
+    "skills": [
+      "./plugins/itsolpowers/skills"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*",
+    "typebox": "*"
+  }
+}
