@@ -1,6 +1,6 @@
 # itsol-agents
 
-Marketplace agentów dla organizacji ITSOL. Repo zawiera konfigurację marketplace dla Claude Code i Codex oraz współdzielone pluginy z komendami, skillami i agentami, które każdy w zespole może zainstalować i aktualizować.
+Marketplace agentów dla organizacji ITSOL. Repo zawiera konfigurację marketplace dla Claude Code i Codex oraz współdzielone pluginy dla Claude Code, Codex, OpenCode i Pi z komendami, skillami i agentami, które każdy w zespole może zainstalować i aktualizować.
 
 ## Claude Code
 
@@ -205,6 +205,50 @@ Po restarcie OpenCode plugin rejestruje katalog `plugins/itsolpowers/skills` i w
 ```
 plugins/itsolpowers/.opencode/INSTALL.md
 ```
+
+## Pi
+
+`itsolpowers` jest pakietem Pi zawierającym wszystkie skille oraz extension z bootstrapem, diagnostyką i izolowaną delegacją do agentów ITSOL.
+
+Instalacja z lokalnego checkoutu:
+
+```bash
+pi install ./plugins/itsolpowers
+```
+
+Instalacja tylko dla bieżącego projektu:
+
+```bash
+pi install -l ./plugins/itsolpowers
+```
+
+Po publikacji pakietu npm:
+
+```bash
+pi install npm:itsolpowers@0.17.0
+```
+
+Do jednorazowego testu bez zapisywania ustawień:
+
+```bash
+pi -e ./plugins/itsolpowers
+```
+
+Pi ładuje skille bez namespace pluginu. Główny router jest dostępny jako:
+
+```text
+/skill:using-itsolpowers
+```
+
+Extension automatycznie dodaje krótki bootstrap dla zadań engineeringowych, mapuje współdzielone pojęcia narzędzi na Pi i rejestruje `itsol_delegate`. Delegowane agenty działają jako osobne procesy Pi z `--no-extensions`, jawną listą narzędzi, limitami z `itsol-execution-policy`, kontrolą stanu workflow i walidacją końcowego envelope. W trakcie pracy TUI pokazuje krótkie angielskie opisy bieżących akcji, np. `reading README.md`, `searching “workflow” in skills` lub `running: npm test`, aktywny model i poziom thinking oraz czas w formacie `5s`, `2min 6s` albo `1h 2min`. Domyślnie dziecko dziedziczy model głównej sesji, ale główny agent może przekazać w task packet dokładne `task.model: provider/model`, np. tańszy model do prostego exploration; wybór nadal musi respektować `execution_policy.model_profile`. Procesy nie są sandboxem systemu operacyjnego; write scopes są walidowane w task packetach, ale komendy shell nadal działają z uprawnieniami użytkownika.
+
+Diagnostyka:
+
+```text
+/itsolpowers-doctor
+```
+
+Komenda pokazuje liczbę załadowanych skilli i agentów, brakujące skille bazowe, kolizje nazw oraz możliwy konflikt z `superpowers`. Po zmianie extension lub skilli użyj `/reload`.
 
 ## Codex
 

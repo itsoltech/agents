@@ -43,6 +43,11 @@ for path in \
   "plugins/itsolpowers/hooks/validate-subagent-stop.mjs" \
   "plugins/itsolpowers/scripts/test-subagent-stop.mjs" \
   "plugins/itsolpowers/scripts/test-opencode-adapter.mjs" \
+  "plugins/itsolpowers/scripts/test-pi-adapter.mjs" \
+  "plugins/itsolpowers/scripts/test-pi-runtime.ts" \
+  "plugins/itsolpowers/extensions/pi/delegate-tool.ts" \
+  "plugins/itsolpowers/extensions/pi/policy.ts" \
+  "plugins/itsolpowers/hooks/bootstrap-context-pi.md" \
   "plugins/itsolpowers/scripts/test-execution-policy.mjs" \
   "plugins/itsolpowers/scripts/test-codex-agent-setup.mjs" \
   "plugins/itsolpowers/skills/itsol-codex-setup/SKILL.md" \
@@ -117,7 +122,7 @@ if rg -q -F 'SubagentStop' plugins/itsolpowers/hooks/hooks-codex.json; then
   fail "Codex hooks must not register the Claude ITSOL-agent stop validator"
 fi
 
-for script in validate:execution-policy test:subagent-stop test:opencode-adapter test:execution-policy test:codex-agent-setup; do
+for script in validate:execution-policy test:subagent-stop test:opencode-adapter test:pi-adapter test:pi-runtime test:execution-policy test:codex-agent-setup; do
   require_token "plugins/itsolpowers/package.json" "\"${script}\""
 done
 
@@ -126,9 +131,9 @@ if ! node plugins/itsolpowers/scripts/test-execution-policy.mjs; then
 fi
 
 for path in plugins/itsolpowers/package.json plugins/itsolpowers/.claude-plugin/plugin.json plugins/itsolpowers/.codex-plugin/plugin.json; do
-  require_token "${path}" '"version": "0.16.0"'
+  require_token "${path}" '"version": "0.17.0"'
 done
-require_token ".claude-plugin/marketplace.json" '"version": "1.15.0"'
+require_token ".claude-plugin/marketplace.json" '"version": "1.16.0"'
 
 if ! node plugins/itsolpowers/scripts/test-codex-agent-setup.mjs; then
   fail "Codex agent setup fixtures failed"

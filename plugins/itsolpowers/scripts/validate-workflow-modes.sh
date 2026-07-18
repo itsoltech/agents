@@ -67,7 +67,7 @@ if [[ "${scan_rc}" -gt 1 ]]; then
 fi
 LC_ALL=C sort "${tmp_dir}/scanned-paths-raw" > "${tmp_dir}/scanned-paths"
 
-comm -23 "${tmp_dir}/scanned-paths" "${tmp_dir}/manifest-paths" > "${tmp_dir}/unclassified-paths"
+LC_ALL=C comm -23 "${tmp_dir}/scanned-paths" "${tmp_dir}/manifest-paths" > "${tmp_dir}/unclassified-paths"
 if [[ -s "${tmp_dir}/unclassified-paths" ]]; then
   while IFS= read -r path; do fail "unclassified gate-bearing file: ${path}"; done < "${tmp_dir}/unclassified-paths"
 fi

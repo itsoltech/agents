@@ -34,6 +34,9 @@ mode-aware-consumer	plugins/itsolpowers/agents/react-nextjs-debugging.md
 mode-aware-consumer	plugins/itsolpowers/agents/tanstack-query-react-nextjs-debugging.md
 mode-aware-consumer	plugins/itsolpowers/agents/tauri-desktop-debugging.md
 mode-aware-consumer	plugins/itsolpowers/agents/using-itsolpowers.md
+mode-aware-consumer	plugins/itsolpowers/extensions/pi/delegate-tool.ts
+mode-aware-consumer	plugins/itsolpowers/extensions/pi/policy.ts
+mode-aware-consumer	plugins/itsolpowers/hooks/bootstrap-context-pi.md
 mode-aware-consumer	plugins/itsolpowers/hooks/bootstrap-context.md
 mode-aware-consumer	plugins/itsolpowers/package.json
 mode-aware-consumer	plugins/itsolpowers/skills/electron-desktop-debugging/SKILL.md

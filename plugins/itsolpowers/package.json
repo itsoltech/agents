@@ -1,13 +1,49 @@
 {
   "name": "itsolpowers",
-  "version": "0.16.0",
+  "version": "0.17.0",
+  "description": "ITSOL engineering skills and bounded agents for Claude Code, Codex, OpenCode, and Pi",
+  "license": "MIT",
+  "author": "ITSOL Tech <dev@itsol.tech>",
   "type": "module",
   "main": ".opencode/plugins/itsolpowers.js",
+  "keywords": [
+    "pi-package",
+    "itsol",
+    "skills",
+    "subagents",
+    "workflow"
+  ],
+  "files": [
+    ".claude-plugin",
+    ".codex-plugin",
+    ".opencode",
+    "agents",
+    "extensions",
+    "hooks",
+    "scripts",
+    "skills"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions/pi/index.ts"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*",
+    "typebox": "*"
+  },
   "scripts": {
     "validate:workflow-modes": "bash ./scripts/validate-workflow-modes.sh",
     "validate:execution-policy": "bash ./scripts/validate-execution-policy.sh",
     "test:subagent-stop": "node ./scripts/test-subagent-stop.mjs",
     "test:opencode-adapter": "node ./scripts/test-opencode-adapter.mjs",
+    "test:pi-adapter": "node ./scripts/test-pi-adapter.mjs",
+    "test:pi-runtime": "pi --offline -e ./scripts/test-pi-runtime.ts --list-models",
     "test:execution-policy": "node ./scripts/test-execution-policy.mjs",
     "test:codex-agent-setup": "node ./scripts/test-codex-agent-setup.mjs"
   }
