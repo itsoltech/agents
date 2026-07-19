@@ -99,7 +99,13 @@ export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
             thinkingLevelMap: { xhigh: "xhigh", max: "max" },
           },
         ],
-        find: (provider: string, id: string) => provider === "test-provider" && ["cheap", "strong"].includes(id) ? {} : undefined,
+        find: (provider: string, id: string) => provider === "test-provider" && ["cheap", "strong"].includes(id) ? {
+          provider,
+          id,
+          name: id,
+          reasoning: true,
+          thinkingLevelMap: id === "strong" ? { xhigh: "xhigh", max: "max" } : { xhigh: null, max: null },
+        } : undefined,
       },
       ui: {
         select: async (title: string, options: string[]) => {
@@ -143,6 +149,24 @@ export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
     assert.equal(routed.model, "test-provider/cheap");
     assert.equal(routed.thinking, "low");
     assert.equal(routed.thinkingSource, "profile");
+    saved.modelProfiles.balanced.review.thinking = "xhigh";
+    await fs.promises.writeFile(projectConfigPath, `${JSON.stringify(saved, null, 2)}\n`);
+    router.reload(configContext);
+    const advisoryReasoning = router.resolve({
+      agent: "security-api-input-review",
+      role: "review",
+      task: "Review with configured reasoning",
+      read_scope: ["."],
+      write_scope: [],
+      forbidden_scope: [],
+      required_evidence: ["findings"],
+    }, byName.get("security-api-input-review")!, {
+      model_profile: "balanced",
+      reasoning_profile: "low",
+      reasoning_control: "advisory",
+    } as any, undefined, configContext);
+    assert.equal(advisoryReasoning.thinking, "xhigh");
+    assert.equal(advisoryReasoning.thinkingSource, "profile");
     const clamped = router.resolve({
       agent: "security-api-input-review",
       role: "review",
@@ -154,6 +178,7 @@ export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
     }, byName.get("security-api-input-review")!, {
       model_profile: "balanced",
       reasoning_profile: "low",
+      reasoning_control: "enforced",
     } as any, undefined, configContext);
     assert.equal(clamped.thinking, "low");
     assert.equal(clamped.thinkingSource, "policy-clamp");
@@ -178,7 +203,7 @@ export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
       model_profile: "balanced",
       model_control: "advisory",
       reasoning_profile: "medium",
-      reasoning_control: "enforced",
+      reasoning_control: "advisory",
       max_subagents: 2,
       max_parallel: 2,
       max_review_rounds: 1,
@@ -216,6 +241,10 @@ execution:
       max_subagents: 1
       max_parallel: 1
       stop_after: technical-plan
+    - match:
+        path: cost-sensitive
+      reasoning_profile: medium
+      reasoning_control: enforced
 \`\`\`
 
 ## Review
@@ -293,6 +322,15 @@ review:
     assert.equal(productionReview.auto_rereview, "until-approved");
     assert.equal(productionReview.plan_max_rounds, 6);
     assert.throws(() => repoPolicy.resolveReviewPolicy({ paths: ["infra/production/app.hcl"] }, "poc"), /blocks review profile=poc/);
+    assert.throws(() => repoPolicy.validateDefinition({
+      ...base,
+      policy_context: { paths: ["cost-sensitive/module.ts"], operations: [] },
+    }), /requires reasoning_control=enforced/);
+    repoPolicy.validateDefinition({
+      ...base,
+      execution_policy: { ...base.execution_policy, reasoning_profile: "medium", reasoning_control: "enforced" },
+      policy_context: { paths: ["cost-sensitive/module.ts"], operations: [] },
+    });
     assert.throws(() => repoPolicy.validateDefinition({
       ...base,
       workflow_state: { ...base.workflow_state, workflow_mode: "direct" },
@@ -805,6 +843,11 @@ review:
   assert.equal(store.getActive()?.active_agents.length, 0);
   assert.equal(store.getActive()?.agent_results[`${writer.agent}:auth-api`]?.status, "completed");
   assert.equal(store.getActive()?.agent_results[`${writer.agent}:billing-api`]?.status, "completed");
+  store.setReasoningControl("enforced", "high");
+  assert.equal(store.getActive()?.execution_policy.reasoning_control, "enforced");
+  assert.equal(store.getActive()?.execution_policy.reasoning_profile, "high");
+  store.setReasoningControl("advisory");
+  assert.equal(store.getActive()?.execution_policy.reasoning_control, "advisory");
   store.setPreset("standard");
   assert.equal(store.getActive()?.execution_policy.max_subagents, "unlimited");
   assert.equal(store.getActive()?.execution_policy.max_parallel, 3);
@@ -816,6 +859,7 @@ review:
   const standard = applyPreset(base.execution_policy, "standard");
   assert.equal(standard.max_subagents, "unlimited");
   assert.equal(standard.max_parallel, 3);
+  assert.equal(standard.reasoning_control, "advisory");
   const deep = applyPreset(base.execution_policy, "deep");
   assert.equal(deep.model_profile, "frontier");
   assert.equal(deep.max_subagents, "unlimited");

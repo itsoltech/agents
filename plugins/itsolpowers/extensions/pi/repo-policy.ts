@@ -10,6 +10,8 @@ const REVIEW_TRIGGERS = ["manual", "final", "checkpoint"] as const;
 const REVIEW_DELEGATIONS = ["never", "risk-based", "always"] as const;
 const REVIEW_REREVIEW = ["never", "after-fixes", "until-approved"] as const;
 const QA_PROFILES = ["off", "evidence", "automatic", "strict"] as const;
+const REASONING_PROFILES = ["low", "medium", "high"] as const;
+const REASONING_CONTROLS = ["advisory", "enforced"] as const;
 const QA_APPLICATION_TYPES = ["web-ui", "api", "backend", "cli", "electron", "mobile", "data", "infrastructure"] as const;
 type WorkflowMode = typeof WORKFLOW_MODES[number];
 export type ReviewProfile = typeof REVIEW_PROFILES[number];
@@ -37,6 +39,8 @@ interface WorkflowPolicy {
 
 interface ExecutionRestriction {
   match: MatchRule;
+  reasoning_profile?: typeof REASONING_PROFILES[number];
+  reasoning_control?: typeof REASONING_CONTROLS[number];
   max_subagents?: number;
   max_parallel?: number;
   max_review_rounds?: number;
@@ -421,8 +425,13 @@ function parsePolicyFile(filePath: string): ParsedRepoPolicy {
       const stop = typeof restriction.stop_after === "string" && restriction.stop_after in STOP_RANK
         ? restriction.stop_after as keyof typeof STOP_RANK
         : undefined;
+      const label = `execution.restrictions[${executionRestrictions.length}]`;
+      reportInvalidEnum(errors, restriction, "reasoning_profile", REASONING_PROFILES, `${label}.reasoning_profile`);
+      reportInvalidEnum(errors, restriction, "reasoning_control", REASONING_CONTROLS, `${label}.reasoning_control`);
       executionRestrictions.push({
         match: matchRule(restriction.match),
+        reasoning_profile: reviewValue(restriction.reasoning_profile, REASONING_PROFILES),
+        reasoning_control: reviewValue(restriction.reasoning_control, REASONING_CONTROLS),
         max_subagents: finiteInteger(restriction.max_subagents),
         max_parallel: finiteInteger(restriction.max_parallel),
         max_review_rounds: finiteInteger(restriction.max_review_rounds),
@@ -806,7 +815,19 @@ export class RepoPolicyManager {
     }
 
     const policy = definition.execution_policy;
+    const reasoningRank = { low: 0, medium: 1, high: 2 } as const;
     for (const restriction of matchedExecution) {
+      if (restriction.reasoning_profile !== undefined) {
+        if (policy.reasoning_control !== "enforced") {
+          throw new Error(`.itsol.md reasoning_profile=${restriction.reasoning_profile} requires reasoning_control=enforced`);
+        }
+        if (reasoningRank[policy.reasoning_profile] > reasoningRank[restriction.reasoning_profile]) {
+          throw new Error(`.itsol.md limits reasoning_profile to ${restriction.reasoning_profile}`);
+        }
+      }
+      if (restriction.reasoning_control === "enforced" && policy.reasoning_control !== "enforced") {
+        throw new Error(".itsol.md requires reasoning_control=enforced");
+      }
       if (restriction.max_subagents !== undefined
         && (policy.max_subagents === "unlimited" || policy.max_subagents > restriction.max_subagents)) {
         throw new Error(`.itsol.md limits max_subagents to ${restriction.max_subagents}`);

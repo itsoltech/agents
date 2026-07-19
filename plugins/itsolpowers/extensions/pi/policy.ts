@@ -23,8 +23,12 @@ export const ExecutionPolicySchema = Type.Object({
   }),
   model_profile: StringEnum(["economy", "balanced", "frontier"] as const),
   model_control: StringEnum(["enforced", "advisory"] as const),
-  reasoning_profile: StringEnum(["low", "medium", "high"] as const),
-  reasoning_control: StringEnum(["enforced", "advisory"] as const),
+  reasoning_profile: StringEnum(["low", "medium", "high"] as const, {
+    description: "Provider-neutral fallback reasoning level; it becomes a hard ceiling only when reasoning_control=enforced.",
+  }),
+  reasoning_control: StringEnum(["enforced", "advisory"] as const, {
+    description: "Use advisory for normal presets so configured profile+role reasoning wins. Use enforced only for an explicit user or repository hard ceiling.",
+  }),
   max_subagents: Type.Union([
     Type.Integer({ minimum: 0, maximum: 64 }),
     Type.Literal("unlimited"),

@@ -8,7 +8,7 @@
 | `standard` | `balanced` | `medium` | unlimited | 3 | 2 | `implementation-reviewed` | `ask` |
 | `deep` | `frontier` | `high` | unlimited | 3 | 2 | `integration-validated` | `ask` |
 
-`custom` requires every field. Preset values are ceilings, not quotas. `unlimited` removes the whole-task distinct-agent-type ceiling. `max_subagents` counts types, while `max_parallel` independently counts running work-item instances: the same type may process several independent packets. Larger sets run in automatic batches rather than all at once. `max_review_rounds` bounds implementation/code-review loops. Planned Initiative Roadmap, Business, Technical, and Technical Fix artifacts use the separate `review.plan_max_rounds` repository setting (default 10 per artifact), so increasing plan quality does not force ten code-review rounds. Under `itsol-workflow-mode`, planned modes also require at least one available read-only reviewer identity and one parallel slot; `economy` is therefore intended for `direct` work unless explicitly expanded.
+`custom` requires every field. Agent/parallel/review/stop values are ceilings, not quotas. Preset model and reasoning profiles are advisory routing defaults unless their control field is explicitly `enforced`. `unlimited` removes the whole-task distinct-agent-type ceiling. `max_subagents` counts types, while `max_parallel` independently counts running work-item instances: the same type may process several independent packets. Larger sets run in automatic batches rather than all at once. `max_review_rounds` bounds implementation/code-review loops. Planned Initiative Roadmap, Business, Technical, and Technical Fix artifacts use the separate `review.plan_max_rounds` repository setting (default 10 per artifact), so increasing plan quality does not force ten code-review rounds. Under `itsol-workflow-mode`, planned modes also require at least one available read-only reviewer identity and one parallel slot; `economy` is therefore intended for `direct` work unless explicitly expanded.
 
 ## Resolution
 
@@ -20,11 +20,11 @@ Choose the base in this order:
 
 Then apply platform safety/capability and every matching repository or task restriction. Record the base and every tightening rule in `policy_sources`. Report field-level sources when effective values differ from the base.
 
-Order model profiles `economy < balanced < frontier` and reasoning profiles `low < medium < high`; lower is the tighter cost ceiling. `enforced` means runtime evidence confirms the effective ceiling. Use `advisory` for instructions, overrideable defaults, or unsupported controls.
+Order model profiles `economy < balanced < frontier` and reasoning profiles `low < medium < high`. `enforced` means the selected level is a hard runtime ceiling. `advisory` means it is a fallback intent that a harness-specific profile+role mapping may override. Presets default to advisory; only explicit user or repository authority creates an enforced model/reasoning ceiling. Native model capability always clamps unsupported levels.
 
 If a hard user/repository model or reasoning ceiling cannot be enforced, disable child delegation. Inline work may continue only in the user-selected current session and must be reported as not cost-enforced.
 
-Automatically tighten models, reasoning, parallelism, review cycles, or stop stage when useful. Do not create a numeric distinct-child ceiling from heuristics: only an explicit user instruction, restrictive preset, or repository restriction may tighten `max_subagents: unlimited`.
+Automatically tighten advisory routing, parallelism, review cycles, or stop stage when useful, but do not silently convert advisory model/reasoning intent into an enforced ceiling. Do not create a numeric distinct-child ceiling from heuristics: only an explicit user instruction, restrictive preset, or repository restriction may tighten `max_subagents: unlimited`.
 
 Choose inline execution for trivial tasks, strongly sequential work, overlapping write or semantic-contract ownership, or any platform/policy combination that cannot safely support delegation. Use children only for genuinely independent work or required independent review within every ceiling.
 

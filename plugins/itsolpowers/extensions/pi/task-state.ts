@@ -119,7 +119,7 @@ export function applyPreset(current: ExecutionPolicy, preset: "economy" | "stand
   const common = {
     policy_sources: { base: "explicit-user-task-instruction", constraints: [...current.policy_sources.constraints] },
     model_control: "advisory" as const,
-    reasoning_control: "enforced" as const,
+    reasoning_control: "advisory" as const,
     budget_escalation: "ask" as const,
   };
   if (preset === "economy") {
@@ -497,6 +497,38 @@ export class TaskStateStore {
     return state;
   }
 
+  setReasoningControl(control: "advisory" | "enforced", profile?: "low" | "medium" | "high"): TaskRuntimeState {
+    const state = this.requireActive();
+    if (control === "enforced" && !profile) throw new Error("Enforced reasoning requires low, medium, or high");
+    const executionPolicy: ExecutionPolicy = {
+      ...state.execution_policy,
+      reasoning_control: control,
+      ...(profile ? { reasoning_profile: profile } : {}),
+      policy_sources: {
+        base: "explicit-user-task-instruction",
+        constraints: [...new Set([
+          ...state.execution_policy.policy_sources.constraints.filter((item) => !item.startsWith("reasoning_control=")),
+          `reasoning_control=${control}${profile ? `:${profile}` : ""}`,
+        ])],
+      },
+    };
+    this.definitionValidator?.({
+      task_id: state.task_id,
+      workflow_state: state.workflow_state,
+      execution_policy: executionPolicy,
+      done_when: state.done_when,
+      policy_context: state.policy_context,
+    });
+    state.execution_policy = executionPolicy;
+    state.completion = undefined;
+    state.completion_attempts = 0;
+    state.last_completion_problems = [];
+    state.updated_at = Date.now();
+    this.persist();
+    this.updateHud();
+    return state;
+  }
+
   setPreset(preset: "economy" | "standard" | "deep"): TaskRuntimeState {
     const state = this.requireActive();
     const executionPolicy = applyPreset(state.execution_policy, preset);
@@ -538,7 +570,7 @@ export class TaskStateStore {
     return [
       `Task: ${state.task_id}`,
       `Workflow: ${state.workflow_state.workflow_mode} (${state.workflow_state.artifact_state}, ${state.workflow_state.execution_mode})`,
-      `Policy: ${state.execution_policy.preset} · ${state.execution_policy.model_profile}/${state.execution_policy.reasoning_profile}`,
+      `Policy: ${state.execution_policy.preset} · ${state.execution_policy.model_profile}/${state.execution_policy.reasoning_profile} · reasoning ${state.execution_policy.reasoning_control}`,
       `Agent types: ${state.used_agents.length}/${state.execution_policy.max_subagents === "unlimited" ? "∞" : state.execution_policy.max_subagents} used · executions: ${state.active_agents.length} active`,
       `Delegations: ${state.delegation_count} · results: ${statuses}`,
       `Review runs: ${state.review_runs} · verdict: ${state.review_verdict?.verdict ?? "none"} · completion attempts: ${state.completion_attempts}`,
@@ -631,7 +663,7 @@ export function registerTaskState(pi: ExtensionAPI, store: TaskStateStore, initi
   });
 
   pi.registerCommand("itsol", {
-    description: "Show or update ITSOL task state: status, activate, mode, preset, agents, parallel, reset",
+    description: "Show or update ITSOL task state: status, activate, mode, preset, reasoning, agents, parallel, reset",
     handler: async (args, ctx) => {
       const [action, ...values] = args.trim() ? args.trim().split(/\s+/) : ["status"];
       const value = values[0];
@@ -645,6 +677,10 @@ export function registerTaskState(pi: ExtensionAPI, store: TaskStateStore, initi
           store.setMode(value as WorkflowState["workflow_mode"]);
         } else if (action === "preset" && ["economy", "standard", "deep"].includes(value)) {
           store.setPreset(value as "economy" | "standard" | "deep");
+        } else if (action === "reasoning" && value === "advisory") {
+          store.setReasoningControl("advisory");
+        } else if (action === "reasoning" && value === "enforced" && ["low", "medium", "high"].includes(values[1])) {
+          store.setReasoningControl("enforced", values[1] as "low" | "medium" | "high");
         } else if (action === "agents" && value === "unlimited") {
           store.setAgentLimit("unlimited");
         } else if (action === "agents" && /^\d+$/.test(value ?? "")) {
@@ -652,7 +688,7 @@ export function registerTaskState(pi: ExtensionAPI, store: TaskStateStore, initi
         } else if (action === "parallel" && /^\d+$/.test(value ?? "")) {
           store.setParallelLimit(Number(value));
         } else if (action !== "status") {
-          throw new Error("Usage: /itsol status | initiative <status|activate|resume|pause> | activate <task-id> | mode <mode> | preset <preset> | agents <unlimited|0..64> | parallel <0..10> | reset [task-id]");
+          throw new Error("Usage: /itsol status | initiative <status|activate|resume|pause> | activate <task-id> | mode <mode> | preset <preset> | reasoning <advisory|enforced low|medium|high> | agents <unlimited|0..64> | parallel <0..10> | reset [task-id]");
         }
         if (ctx.hasUI) ctx.ui.notify(store.formatDetails(), "info");
       } catch (error) {

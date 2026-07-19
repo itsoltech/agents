@@ -342,7 +342,22 @@ Cost-aware model router używa kolejno jawnego `task.model`, mapowania `model_pr
 
 Role to `explore`, `plan`, `implement` i `review`. Można przekazać ją jawnie jako `task.role`; w przeciwnym razie extension klasyfikuje rolę z definicji agenta. Agenci posiadający narzędzia zapisu są zawsze klasyfikowani jako `implement`. Jawny `task.model` ma pierwszeństwo. Przy `model_control: enforced` każdy model musi odpowiadać skonfigurowanemu mapowaniu profilu i roli. Stary skrócony format `"explore": "provider/model"` pozostaje obsługiwany.
 
-`/itsol-models configure` uruchamia interaktywny wizard wyboru scope i profilu. W ramach jednej sesji konfiguratora można ustawić wiele ról; dla każdej wybiera się model lub dziedziczenie oraz poziom reasoning. Po każdej roli można przejść do następnej, zapisać wszystkie zmiany w jednym kroku albo anulować bez zapisu. Lista poziomów reasoning w wizardzie jest pobierana dynamicznie z wybranego modelu przez natywne metadane Pi (`getSupportedThinkingLevels`), więc może obejmować np. `off`, `minimal`, `low`, `medium`, `high`, `xhigh` lub `max` zależnie od modelu. Przy uruchomieniu extension dodatkowo dopasowuje poziom do faktycznych możliwości modelu (`model-clamp`) oraz resolved execution policy (`policy-clamp`); konfiguracja nigdy nie rozszerza twardszego limitu zadania.
+`/itsol-models configure` uruchamia interaktywny wizard wyboru scope i profilu. W ramach jednej sesji konfiguratora można ustawić wiele ról; dla każdej wybiera się model lub dziedziczenie oraz poziom reasoning. Po każdej roli można przejść do następnej, zapisać wszystkie zmiany w jednym kroku albo anulować bez zapisu. Lista poziomów reasoning w wizardzie jest pobierana dynamicznie z wybranego modelu przez natywne metadane Pi (`getSupportedThinkingLevels`), więc może obejmować np. `off`, `minimal`, `low`, `medium`, `high`, `xhigh` lub `max` zależnie od modelu. Extension zawsze dopasowuje poziom do faktycznych możliwości modelu (`model-clamp`). Mapping profile+role — również `xhigh` lub `max` — wygrywa z advisory reasoning presetu. `policy-clamp` pojawia się wyłącznie wtedy, gdy użytkownik albo `.itsol.md` jawnie ustawi `reasoning_control: enforced`; domyślne presety używają advisory fallback i nie obcinają skonfigurowanych ról. Przykładowy twardy limit repo:
+
+```yaml
+execution:
+  restrictions:
+    - match:
+        path: cost-sensitive
+      reasoning_profile: medium
+      reasoning_control: enforced
+```
+
+Dla istniejącego task state utworzonego przez starszą wersję można zdjąć dawny domyślny clamp bez zmiany modelu/presetu:
+
+```text
+/itsol reasoning advisory
+```
 
 Komendy stanu, inicjatyw i modeli:
 
@@ -364,6 +379,8 @@ Komendy stanu, inicjatyw i modeli:
 /itsol activate <task-id>
 /itsol mode governed|autonomous-planned|direct
 /itsol preset economy|standard|deep
+/itsol reasoning advisory
+/itsol reasoning enforced <low|medium|high>
 /itsol agents unlimited|0..64
 /itsol parallel 0..10
 /itsol reset [task-id]

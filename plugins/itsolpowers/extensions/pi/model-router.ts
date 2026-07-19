@@ -181,7 +181,8 @@ export class ModelRouter {
       if (modelClamped !== thinking) thinkingSource = "model-clamp";
       thinking = modelClamped;
     }
-    if (THINKING_RANK[thinking] > THINKING_RANK[policyThinking]) {
+    if (policy.reasoning_control === "enforced"
+      && THINKING_RANK[thinking] > THINKING_RANK[policyThinking]) {
       if (selectedModel) {
         const allowed = supportedThinkingLevels(selectedModel)
           .filter((level) => THINKING_RANK[level] <= THINKING_RANK[policyThinking]);
@@ -311,7 +312,7 @@ export class ModelRouter {
     return [
       "## ITSOL Pi model routing",
       "Model precedence for delegated tasks: explicit task.model, configured profile+role mapping, inherited main model, Pi default.",
-      "Reasoning precedence: configured profile+role thinking, then execution policy reasoning. Configured reasoning may tighten but never exceed the resolved execution-policy reasoning ceiling; higher mappings are clamped.",
+      "Reasoning precedence: configured profile+role thinking, then execution-policy fallback. Native model support is always enforced. The execution-policy reasoning level is a hard ceiling only when reasoning_control=enforced; advisory presets do not clamp explicit role mappings.",
       "Configured mappings:",
       this.formatSummary(),
     ].join("\n");

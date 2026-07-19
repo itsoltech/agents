@@ -36,6 +36,8 @@ execution:
         path: infra/production
       max_subagents: 1
       max_parallel: 1
+      reasoning_profile: medium
+      reasoning_control: enforced
       stop_after: technical-plan
 ```
 
