@@ -11,6 +11,13 @@ if ! bootstrap_content="$(<"${PLUGIN_ROOT}/hooks/bootstrap-context.md")"; then
   bootstrap_content="Error reading ITSOL Powers bootstrap context"
 fi
 
+harness="${1:-}"
+adapter_path="${PLUGIN_ROOT}/hooks/bootstrap-context-${harness}.md"
+if [ -n "${harness}" ] && [ -f "${adapter_path}" ]; then
+  bootstrap_content+=$'\n\n'
+  bootstrap_content+="$(<"${adapter_path}")"
+fi
+
 escape_for_json() {
   local s="$1"
   s="${s//\\/\\\\}"

@@ -9,7 +9,7 @@ Resolve and preserve the task state through `itsol-workflow-mode` before applyin
 
 ## Automatic Rubber Duck gate
 
-In `governed` and `autonomous-planned`, call `itsol_plan_review` for each completed Business, Technical, or Technical Fix Plan after self-review. The tool runs the isolated read-only `itsol-self-review` agent automatically. Do not ask the user to authorize this reviewer and do not hand off a plan before a current passing verdict. Resolve material findings in the artifact and rerun within the execution-policy round ceiling. Only a genuine reviewer failure or exhausted ceiling may return as an explicit blocker.
+In `governed` and `autonomous-planned`, invoke the harness-native automatic plan-review capability for each completed Business, Technical, or Technical Fix Plan after self-review. It runs an isolated read-only context with the `itsol-self-review` skill automatically. Do not ask the user to authorize this reviewer and do not hand off a plan before a current passing verdict. Resolve material findings in the artifact and rerun within the execution-policy round ceiling. Only a genuine reviewer failure or exhausted ceiling may return as an explicit blocker.
 
 ## Shared Process
 

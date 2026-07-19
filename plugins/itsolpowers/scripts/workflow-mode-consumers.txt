@@ -41,6 +41,8 @@ mode-aware-consumer	plugins/itsolpowers/extensions/pi/policy.ts
 mode-aware-consumer	plugins/itsolpowers/extensions/pi/repo-policy.ts
 mode-aware-consumer	plugins/itsolpowers/extensions/pi/review-orchestrator.ts
 mode-aware-consumer	plugins/itsolpowers/extensions/pi/task-state.ts
+mode-aware-consumer	plugins/itsolpowers/hooks/bootstrap-context-claude.md
+mode-aware-consumer	plugins/itsolpowers/hooks/bootstrap-context-codex.md
 mode-aware-consumer	plugins/itsolpowers/hooks/bootstrap-context-pi.md
 mode-aware-consumer	plugins/itsolpowers/hooks/bootstrap-context.md
 mode-aware-consumer	plugins/itsolpowers/package.json

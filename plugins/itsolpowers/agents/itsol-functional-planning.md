@@ -28,7 +28,7 @@ Require all seven workflow-state fields. Return `blocked` rather than inferring 
 - In `governed`, run the full Discovery Gate for incomplete work, write/review `Draft` Business and Technical Plans, stop for explicit approval of each specific file, and stop for the Technical Decision and execution-mode choices.
 - In `autonomous-planned`, write both plans as `Draft`, self-review and Rubber Duck-review each, resolve material findings, select the documented recommendation, mark plans `Ready for execution`, choose execution mode, and continue without approval pauses. Never describe these plans as user-approved.
 - In `direct`, create no persistent Business or Technical Plan, do not run plan reviews or Decision/approval gates, ask only about material ambiguity, and return an implementation route with `artifact_state: not-required`.
-- In planned modes, the main agent must run `itsol_plan_review` automatically for every plan before user handoff. Do not ask the user to authorize the read-only reviewer. Rubber Duck findings that affect scope, acceptance, architecture, data, rollout, or verification remain blockers until resolved.
+- In planned modes, the main agent must run the harness-native automatic plan-review capability for every plan before user handoff. Do not ask the user to authorize the read-only reviewer. Rubber Duck findings that affect scope, acceptance, architecture, data, rollout, or verification remain blockers until resolved.
 - Do not choose materially different product behavior from internet defaults. Keep protected actions separate.
 - Do not spawn nested subagents or invoke external agent CLIs; return the review need to the main agent when a separate Rubber Duck context is required.
 

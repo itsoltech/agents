@@ -52,6 +52,23 @@ for (const file of agentFiles) {
   }
 }
 
+const markdownFiles = (directory) => fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+  const target = path.join(directory, entry.name);
+  return entry.isDirectory() ? markdownFiles(target) : entry.name.endsWith('.md') ? [target] : [];
+});
+const piOnlyToolPattern = /\bitsol_(?:task_state|delegate|review_plan|review_verdict|plan_review|complete)\b/;
+for (const file of [...markdownFiles(path.join(pluginRoot, 'skills')), ...markdownFiles(path.join(pluginRoot, 'agents'))]) {
+  assert.doesNotMatch(fs.readFileSync(file, 'utf8'), piOnlyToolPattern,
+    `shared skill/agent must use harness-neutral capabilities instead of Pi-only tools: ${path.relative(pluginRoot, file)}`);
+}
+
+const claudeAdapter = fs.readFileSync(path.join(pluginRoot, 'hooks', 'bootstrap-context-claude.md'), 'utf8');
+const codexAdapter = fs.readFileSync(path.join(pluginRoot, 'hooks', 'bootstrap-context-codex.md'), 'utf8');
+assert.match(claudeAdapter, /native Agent\/Task/);
+assert.match(codexAdapter, /native subagent/);
+assert.match(claudeAdapter, /do not call Pi `itsol_/);
+assert.match(codexAdapter, /do not call Pi `itsol_/);
+
 const bootstrap = fs.readFileSync(path.join(pluginRoot, 'hooks', 'bootstrap-context-pi.md'), 'utf8');
 assert.match(bootstrap, /itsolpowers-pi-bootstrap/);
 assert.match(bootstrap, /`using-itsolpowers`/);
@@ -73,6 +90,25 @@ assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'repo-policy.t
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'task-state.ts')));
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'model-router.ts')));
 assert.ok(bootstrap.trim().split(/\s+/).length <= 600, 'Pi bootstrap exceeds 600 words');
+
+const sessionStart = path.join(pluginRoot, 'hooks', 'session-start');
+const claudeBootstrapResult = spawnSync('bash', [sessionStart, 'claude'], {
+  encoding: 'utf8',
+  env: { ...process.env, CLAUDE_PLUGIN_ROOT: pluginRoot },
+});
+assert.equal(claudeBootstrapResult.status, 0, claudeBootstrapResult.stderr);
+const claudeBootstrap = JSON.parse(claudeBootstrapResult.stdout).hookSpecificOutput.additionalContext;
+assert.match(claudeBootstrap, /Claude Code harness adapter/);
+assert.doesNotMatch(claudeBootstrap, /Codex harness adapter/);
+const { CLAUDE_PLUGIN_ROOT: _claudeRoot, ...codexEnvironment } = process.env;
+const codexBootstrapResult = spawnSync('bash', [sessionStart, 'codex'], {
+  encoding: 'utf8',
+  env: { ...codexEnvironment, PLUGIN_ROOT: pluginRoot },
+});
+assert.equal(codexBootstrapResult.status, 0, codexBootstrapResult.stderr);
+const codexBootstrap = JSON.parse(codexBootstrapResult.stdout).additionalContext;
+assert.match(codexBootstrap, /Codex harness adapter/);
+assert.doesNotMatch(codexBootstrap, /Claude Code harness adapter/);
 
 if (process.env.ITSOLPOWERS_PI_SMOKE === '1') {
   for (const extensionTarget of [path.join(pluginRoot, 'extensions', 'pi', 'index.ts'), repoRoot]) {

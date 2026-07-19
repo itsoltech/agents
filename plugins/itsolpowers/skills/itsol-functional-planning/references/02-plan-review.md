@@ -34,7 +34,7 @@ Fix gaps inline. Ask one targeted question for unresolved material ambiguity; do
 
 ## Rubber Duck Review
 
-Use `itsol_plan_review`, which automatically runs a separate read-only context with `itsol-self-review`. This reviewer is pre-authorized by a planned workflow within execution ceilings; do not ask the user to authorize it. Provide plan path, request, complete workflow state, confirmed scope or selected/recommended approach, and minimal repo evidence. The reviewer must not edit or nest delegation. Repeat review after material changes. The extension allows up to `review.plan_max_rounds` iterative attempts per artifact (default 10) and stops earlier on the first material-blocker-free verdict.
+Use the harness-native automatic plan-review capability, which runs a separate read-only context with `itsol-self-review`. The harness adapter selects the concrete delegation tool; shared skills must not assume a Pi, Claude Code, Codex, or OpenCode tool name. This reviewer is pre-authorized by a planned workflow within execution ceilings; do not ask the user to authorize it. Provide plan path, request, complete workflow state, confirmed scope or selected/recommended approach, and minimal repo evidence. The reviewer must not edit or nest delegation. Repeat review after material changes. The extension allows up to `review.plan_max_rounds` iterative attempts per artifact (default 10) and stops earlier on the first material-blocker-free verdict.
 
 ### Business Plan Questions
 

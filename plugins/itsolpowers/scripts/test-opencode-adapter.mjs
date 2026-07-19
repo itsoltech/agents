@@ -23,6 +23,8 @@ assert.equal(injected, getBootstrapContent());
 assert.match(injected, /You have ITSOL Powers\./);
 assert.match(injected, /itsolpowers\/\<skill-name\>/);
 assert.match(injected, /permission\.task: deny/);
+assert.match(injected, /fresh read-only Task\/@agent context/);
+assert.match(injected, /never call Pi `itsol_\*` tools/);
 assert.doesNotMatch(injected, /# Using Itsolpowers/);
 assert.ok(injected.trim().split(/\s+/).length <= 600);
 

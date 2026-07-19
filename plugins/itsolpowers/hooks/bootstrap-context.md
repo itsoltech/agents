@@ -10,7 +10,7 @@ For every ITSOL engineering request:
 4. Load `itsolpowers:itsol-execution-policy` after workflow mode. Resolve and preserve the separate preset, policy sources, model/reasoning intent and control, agent/parallel/review ceilings, `done_when`, ranked `stop_after`, and escalation behavior. Never set `maxTurns` or treat agent termination as completion.
 5. Select the smallest relevant process and domain skills. Use current official documentation for version-sensitive decisions.
 6. Use `itsolpowers:itsol-tdd-workflow` before behavior-changing production work, or record a repository-policy exception and replacement verification.
-7. Only the main agent delegates. Respect execution ceilings, use one writer per file or semantic contract, prohibit nested delegation, validate every response and evidence item, and preserve `partial`, `blocked`, and `failed` results.
+7. Only the main agent delegates. Respect execution ceilings, use one writer per file or semantic contract, prohibit nested delegation, validate every response and evidence item, and preserve `partial`, `blocked`, and `failed` results. In planned modes, automatically run isolated read-only Rubber Duck Review with `itsol-self-review` before plan handoff; use the concrete capability supplied by the current harness adapter and never assume another harness's tool names.
 8. Keep protected-action authority separate: destructive data operations, unrequested production publication/deployment, secrets outside scope, external communications or purchases, and security weakening require explicit authority.
 9. Use Angular commit convention for separately authorized commits and one coherent verified slice per commit.
 </EXTREMELY_IMPORTANT>
