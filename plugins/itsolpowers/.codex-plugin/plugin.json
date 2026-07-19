@@ -1,6 +1,6 @@
 {
   "name": "itsolpowers",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "ITSOL engineering skills and bounded subagents with configurable workflow modes and a cost-aware execution policy for bounded models, reasoning, delegation, review, evidence-based completion without maxTurns, and ranked stop stages, plus engineering domain workflows.",
   "author": {
     "name": "ITSOL Tech",

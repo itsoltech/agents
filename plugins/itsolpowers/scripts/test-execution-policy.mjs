@@ -183,8 +183,8 @@ assert.ok(
 
 const policyDoc = fs.readFileSync(path.join(root, 'skills/itsol-execution-policy/references/policy.md'), 'utf8');
 for (const row of [
-  '| `economy` | `economy` | `low` | 0 | 0 | 0 | `requested-result` | `ask` |',
-  '| `standard` | `balanced` | `medium` | 2 | 2 | 1 | `implementation-reviewed` | `ask` |',
+  '| `economy` | `economy` | `low` | 0 | 0 | 1 | `requested-result` | `ask` |',
+  '| `standard` | `balanced` | `medium` | 2 | 2 | 2 | `implementation-reviewed` | `ask` |',
   '| `deep` | `frontier` | `high` | 1 | 1 | 2 | `integration-validated` | `ask` |'
 ]) assert.ok(policyDoc.includes(row), `missing exact preset row: ${row}`);
 

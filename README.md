@@ -52,6 +52,8 @@ Centralny skill `itsol-workflow-mode` rozstrzyga poziom ceremonii przed planowan
 | `autonomous-planned` | Agent tworzy i reviewuje plany, wybiera udokumentowaną rekomendację i kontynuuje bez pauz na akceptację. | `Draft`, potem `Ready for execution` po review |
 | `direct` | Bez trwałych Business, Technical i Technical Fix Planów oraz ich bramek; nadal obowiązują evidence, TDD lub replacement verification i self-review. | `not-required` |
 
+W trybach planowanych każde Business, Technical i Technical Fix Plan po self-review przechodzi automatyczny, izolowany i read-only Rubber Duck Review przez `itsol_plan_review` oraz agenta `itsol-self-review`. Ta delegacja jest preautoryzowana przez wybór trybu planowanego w granicach execution policy — agent nie pyta użytkownika o zgodę na reviewera. Materialne findings są poprawiane i plan jest reviewowany ponownie przed handoffem. W `governed` użytkownik dostaje dopiero plan z werdyktem `ready for approval`; w `autonomous-planned` agent przechodzi dalej po `ready for execution`. Domyślny limit Rubber Duck wynosi 10 iteracyjnych rund na każdy artefakt; pętla kończy się wcześniej po pierwszym material-blocker-free verdict. Powrót przed werdyktem jest dozwolony tylko po rzeczywistej awarii reviewera lub wyczerpaniu skonfigurowanego limitu rund. Limit można obniżyć per repo lub ścieżka przez `review.plan_max_rounds` w `.itsol.md`.
+
 Tryb jest domyślnie ograniczony do bieżącego zadania. Kolejność rozstrzygania to: reguły platformy, `allowed_modes` i pasujące restrykcje repozytorium, jawny wybór użytkownika dla zadania, dozwolony default `.itsol.md`, a na końcu `governed`. Jawny wybór zadania może nadpisać default repo, ale nie zakaz dla ścieżki lub operacji.
 
 Zmiana trybu dotyczy tylko pozostałej pracy i nie usuwa istniejących planów. Przejście do `governed` zatrzymuje dalszą implementację na brakujących bramkach; przejście z `governed` do trybu autonomicznego zachowuje przejrzane artefakty i usuwa tylko przyszłe pauzy akceptacyjne. `Ready for execution` nie oznacza akceptacji użytkownika — `Approved` jest zarezerwowane dla konkretnego planu, który użytkownik zobaczył i zaakceptował.
@@ -231,13 +233,13 @@ pi install https://github.com/itsoltech/agents
 Rekomendowana instalacja przypiętego release:
 
 ```bash
-pi install https://github.com/itsoltech/agents@v0.19.0
+pi install https://github.com/itsoltech/agents@v0.20.0
 ```
 
 Dla prywatnego repozytorium można użyć SSH:
 
 ```bash
-pi install git:git@github.com:itsoltech/agents@v0.19.0
+pi install git:git@github.com:itsoltech/agents@v0.20.0
 ```
 
 Rootowy `package.json` jest adapterem Pi wskazującym extension i skille z `plugins/itsolpowers/`. URL musi wskazywać repozytorium Git; adres GitHub `tree/.../plugins/itsolpowers` nie jest obsługiwanym źródłem pakietu.
@@ -314,13 +316,44 @@ Komendy stanu i modeli:
 /itsol-models configure
 /itsol-policy status
 /itsol-policy reload
+/itsol-review status
+/itsol-review profile off|poc|balanced|strict|default
+/itsol-review off
+/itsol-review rerun
 ```
 
 ### Automatyczna polityka `.itsol.md`
 
-Extension samodzielnie znajduje root repozytorium, czyta root `.itsol.md` oraz najbardziej szczegółowe lokalne override'y, parsuje bloki YAML i normalizuje workflow, execution restrictions, Monorepo Map, TDD mode, verification commands, agent workflow notes i known constraints. Znormalizowana polityka jest wstrzykiwana do system promptu; agent nie powinien ponownie czytać ani parsować `.itsol.md`, chyba że użytkownik prosi o utworzenie, edycję, inspekcję lub audyt tego pliku.
+Extension samodzielnie znajduje root repozytorium, czyta root `.itsol.md` oraz najbardziej szczegółowe lokalne override'y, parsuje bloki YAML i normalizuje workflow, execution i review restrictions, Monorepo Map, TDD mode, verification commands, agent workflow notes i known constraints. Znormalizowana polityka jest wstrzykiwana do system promptu; agent nie powinien ponownie czytać ani parsować `.itsol.md`, chyba że użytkownik prosi o utworzenie, edycję, inspekcję lub audyt tego pliku.
 
 `itsol_task_state` i `itsol_delegate` są walidowane względem dopasowanych `allowed_modes`, ograniczeń ścieżek i operacji, `max_subagents`, `max_parallel`, `max_review_rounds` oraz `stop_after`. Task state może przekazać `policy_context.paths` i `policy_context.operations`, a delegowane taski mogą wskazać `operations`. Błędny YAML jest raportowany i blokuje użycie polityki zamiast cichego fallbacku.
+
+### Review orchestrator
+
+Review jest sterowane niezależną polityką projektu. Profile `off`, `poc`, `balanced` i `strict` określają trigger, delegowanie, automatyczny re-review oraz limit rund. `manual` uruchamia review wyłącznie na żądanie, a domyślny `final` tylko raz przed completion — nigdy po każdej edycji. Execution policy pozostaje twardym sufitem zasobów.
+
+```yaml
+workflow:
+  default_mode: direct
+execution:
+  default_preset: economy
+review:
+  default_profile: poc
+  trigger: final
+  delegation: never
+  auto_rereview: never
+  max_rounds: 1
+  plan_max_rounds: 10
+  allowed_profiles: [off, poc, balanced, strict]
+```
+
+Dla profilu `off` completion nie wymaga planu ani verdictu. Review wymagane przez profil lub jawnie zlecone rozpoczyna się przez `itsol_review_plan`. Extension analizuje ścieżki oraz treść wybranego git diff (`working-tree`, `staged` albo `range`), liczy pliki i linie zmian, klasyfikuje powierzchnie oraz ryzyka, buduje coverage mapę i rozstrzyga, czy diff może być sprawdzony inline, czy wymagani są niezależni reviewerzy.
+
+Dla ryzyk security, danych, infrastruktury, kontraktów API, migracji, frontendu, backendu, dependency/current-tech i testów dobierani są najwężsi dostępni agenci ITSOL. Plan respektuje `max_subagents`, wykorzystane tożsamości i `max_parallel`, zwraca gotowe task packety do `itsol_delegate`, kolejność batchy oraz jawne coverage gaps. Jeśli obowiązkowe review nie mieści się w execution policy, plan ma status `blocked` zamiast cicho osłabiać pokrycie.
+
+Po inline lub multi-agent review `itsol_review_verdict` deduplikuje findings po pliku, linii i tytule, zachowuje wyższą severity, porządkuje wyniki oraz sprawdza wymagane powierzchnie i statusy reviewerów. Wynik `approve`, `changes-requested` albo `blocked` jest utrwalany w task state i egzekwowany przez `itsol_complete`.
+
+Każdy plan zapisuje fingerprint diffu. Zmiana kodu po verdictcie unieważnia wcześniejsze `approve`. Automatyczny re-review jest sygnalizowany tylko po `changes-requested`, gdy fingerprint faktycznie się zmienił i pozostała dostępna runda. `after-fixes` uruchamia pojedynczą kolejną rundę, `until-approved` działa do zatwierdzenia lub twardego limitu, a `never` wyłącza automatyzację.
 
 ### Completion gate
 

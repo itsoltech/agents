@@ -24,7 +24,7 @@ import type { RepoPolicyManager } from "./repo-policy.ts";
 import type { TaskStateStore } from "./task-state.ts";
 import { validateEnvelope } from "../../hooks/validate-subagent-stop.mjs";
 
-interface ChildUsage {
+export interface ChildUsage {
   input: number;
   output: number;
   cacheRead: number;
@@ -38,7 +38,7 @@ interface AgentActivity {
   elapsedMs: number;
 }
 
-interface DelegationResult {
+export interface DelegationResult {
   agent: string;
   task: string;
   status: "completed" | "partial" | "blocked" | "failed" | "invalid-envelope";
@@ -216,7 +216,7 @@ function buildChildPrompt(
   ].join("\n\n");
 }
 
-async function runAgent(
+export async function runAgent(
   pluginRoot: string,
   skillsDir: string,
   agent: ItsolAgentConfig,

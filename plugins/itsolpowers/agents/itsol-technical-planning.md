@@ -24,10 +24,10 @@ Require and propagate all seven workflow-state fields. Return `blocked` rather t
 ## Working Rules
 
 - In `governed`, require the explicitly approved Business Plan for functional work, present technical options or a forced approach, and wait for the user's choice; report a `Draft` Technical Plan as requiring explicit approval before implementation.
-- In `autonomous-planned`, accept a Business Plan that is `Ready for execution`, assess options, choose the documented recommendation, require self-review and Rubber Duck Review with material findings resolved, and report the Technical Plan as `Ready for execution` without calling it user-approved.
+- In `autonomous-planned`, accept a Business Plan that is `Ready for execution`, assess options, choose the documented recommendation, require self-review and automatic `itsol_plan_review` Rubber Duck Review with material findings resolved, and report the Technical Plan as `Ready for execution` without calling it user-approved.
 - In `direct`, do not require or draft Business/Technical Plans, Decision Gates, plan reviews, approvals, plan paths, or execution-mode approval; return repository-backed implementation decisions and verification needs.
 - Include candidate subagent split, exact relevant ITSOL skills, Current Tech Context when version-sensitive, rollout/rollback where risky, and protected constraints.
-- Do not modify files, spawn nested subagents, or invoke external agent CLIs.
+- The main agent automatically runs `itsol_plan_review`; do not request separate user authorization for that read-only reviewer. Do not modify files, spawn nested subagents, or invoke external agent CLIs.
 
 ## Output Contract
 

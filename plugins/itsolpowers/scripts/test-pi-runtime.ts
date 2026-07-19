@@ -1,3 +1,4 @@
+// Runtime fixtures for extension consumers of itsol-workflow-mode and itsol-execution-policy.
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
@@ -10,11 +11,16 @@ import { formatDuration, summarizeToolActivity } from "../extensions/pi/delegate
 import { classifyAgentRole, ModelRouter, supportedThinkingLevels } from "../extensions/pi/model-router.ts";
 import { validateDelegation, type ItsolDelegateParams } from "../extensions/pi/policy.ts";
 import { RepoPolicyManager } from "../extensions/pi/repo-policy.ts";
+import { parsePlanReviewVerdict, PlanReviewOrchestrator } from "../extensions/pi/plan-review.ts";
+import { ReviewOrchestrator } from "../extensions/pi/review-orchestrator.ts";
 import { applyPreset, TaskStateStore } from "../extensions/pi/task-state.ts";
 
 const pluginRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
+  assert.equal(parsePlanReviewVerdict("Rubber Duck Verdict: Ready", "ready for approval"), "ready for approval");
+  assert.equal(parsePlanReviewVerdict("**Verdict:** changes required", "ready for execution"), "not ready for execution");
+  assert.equal(parsePlanReviewVerdict("Plan Review Verdict: ready for execution", "ready for execution"), "ready for execution");
   assert.equal(formatDuration(5_900), "5s");
   assert.equal(formatDuration(126_000), "2min 6s");
   assert.equal(formatDuration(3_720_000), "1h 2min");
@@ -194,6 +200,28 @@ execution:
       stop_after: technical-plan
 \`\`\`
 
+## Review
+
+\`\`\`yaml
+review:
+  default_profile: poc
+  trigger: final
+  delegation: never
+  auto_rereview: never
+  max_rounds: 1
+  plan_max_rounds: 10
+  allowed_profiles: [off, poc, balanced, strict]
+  restrictions:
+    - match:
+        path: infra/production
+      profile: strict
+      allowed_profiles: [balanced, strict]
+      delegation: risk-based
+      auto_rereview: until-approved
+      max_rounds: 2
+      plan_max_rounds: 6
+\`\`\`
+
 ## Monorepo Map
 
 | Path | Type | Stack | TDD mode | Verification |
@@ -204,10 +232,28 @@ execution:
 
 - Test: npm test
 `);
+    await fs.promises.mkdir(path.join(policyCwd, "apps", "web"), { recursive: true });
+    await fs.promises.writeFile(path.join(policyCwd, "apps", "web", ".itsol.md"), `# Web policy
+
+\`\`\`yaml
+review:
+  default_profile: strict
+  delegation: risk-based
+\`\`\`
+`);
     const repoPolicy = new RepoPolicyManager();
     repoPolicy.startSession({ cwd: policyCwd } as any);
     assert.match(repoPolicy.formatStatus(), /Workflow default: direct/);
     assert.match(repoPolicy.formatPromptContext(), /apps\/web/);
+    assert.equal(repoPolicy.resolveReviewPolicy().profile, "poc");
+    assert.equal(repoPolicy.resolveReviewPolicy().delegation, "never");
+    assert.equal(repoPolicy.resolveReviewPolicy().plan_max_rounds, 10);
+    assert.equal(repoPolicy.resolveReviewPolicy({ paths: ["apps/web/src/page.ts"] }).profile, "strict");
+    const productionReview = repoPolicy.resolveReviewPolicy({ paths: ["infra/production/app.hcl"] });
+    assert.equal(productionReview.profile, "strict");
+    assert.equal(productionReview.auto_rereview, "until-approved");
+    assert.equal(productionReview.plan_max_rounds, 6);
+    assert.throws(() => repoPolicy.resolveReviewPolicy({ paths: ["infra/production/app.hcl"] }, "poc"), /blocks review profile=poc/);
     assert.throws(() => repoPolicy.validateDefinition({
       ...base,
       workflow_state: { ...base.workflow_state, workflow_mode: "direct" },
@@ -229,6 +275,9 @@ execution:
       },
       policy_context: { paths: ["infra/production/app.hcl"], operations: [] },
     });
+    await fs.promises.writeFile(path.join(policyCwd, ".itsol.md"), "```yaml\nreview:\n  default_profile: turbo\n```\n");
+    repoPolicy.reload();
+    assert.throws(() => repoPolicy.resolveReviewPolicy(), /default_profile must be one of/);
   } finally {
     await fs.promises.rm(policyCwd, { recursive: true, force: true });
   }
@@ -269,11 +318,11 @@ execution:
     hasUI: false,
     sessionManager: { getBranch: () => [] },
   } as any;
-  const store = new TaskStateStore(fakePi, agents.length, "0.19.0");
+  const store = new TaskStateStore(fakePi, agents.length, "0.20.0");
   store.startSession(fakeContext);
-  assert.match(store.formatStatus(), /ITSOL Powers v0\.19\.0/);
+  assert.match(store.formatStatus(), /ITSOL Powers v0\.20\.0/);
   store.setDefinition(base);
-  assert.match(store.formatStatus(), /ITSOL v0\.19\.0/);
+  assert.match(store.formatStatus(), /ITSOL v0\.20\.0/);
   const reused = store.resolveDelegation({ task_id: base.task_id, task: writer });
   assert.equal(reused.execution_policy.preset, "standard");
   store.beginDelegation(base.task_id, [writer.agent]);
@@ -297,6 +346,31 @@ execution:
     evaluateCompletion(store.getActive()!, { ...completionRequest, review_evidence: [] }).problems.join("\n"),
     /implementation review/,
   );
+  assert.equal(evaluateCompletion(store.getActive()!, { ...completionRequest, review_evidence: [] }, {
+    managed: true,
+    required: false,
+    problems: [],
+    profile: "off",
+  }).accepted, true);
+  assert.match(evaluateCompletion(store.getActive()!, completionRequest, {
+    managed: true,
+    required: true,
+    problems: ["review profile requires itsol_review_verdict"],
+    profile: "balanced",
+  }).problems.join("\n"), /requires itsol_review_verdict/);
+  assert.match(evaluateCompletion(store.getActive()!, {
+    ...completionRequest,
+    status: "partial",
+    evidence: [],
+    review_evidence: [],
+    unverified: ["plan review pending"],
+  }, {
+    managed: true,
+    required: false,
+    problems: ["business plan requires automatic isolated Rubber Duck Review"],
+    profile: "off",
+    forceContinuation: true,
+  }).problems.join("\n"), /continue the review loop/);
   assert.equal(evaluateCompletion(store.getActive()!, {
     ...completionRequest,
     status: "partial",
@@ -325,7 +399,7 @@ execution:
   assert.match(store.formatStatus(), /completed/);
   assert.ok(persistedEntries.length >= 3);
   const persisted = persistedEntries.at(-1)!;
-  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.19.0");
+  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.20.0");
   restoredStore.startSession({
     hasUI: false,
     sessionManager: {
@@ -336,9 +410,180 @@ execution:
   assert.deepEqual(restoredStore.getActive()?.active_agents, []);
   assert.equal(restoredStore.getActive()?.child_cost, 0.01);
 
+  const reviewCwd = await fs.promises.mkdtemp(path.join(os.tmpdir(), "itsol-pi-review-"));
+  try {
+    await _pi.exec("git", ["init"], { cwd: reviewCwd });
+    await fs.promises.mkdir(path.join(reviewCwd, "src", "auth"), { recursive: true });
+    const reviewFile = path.join(reviewCwd, "src", "auth", "session.ts");
+    await fs.promises.writeFile(reviewFile, "export const session = 'v1';\n");
+    await _pi.exec("git", ["add", "."], { cwd: reviewCwd });
+    await _pi.exec("git", ["-c", "user.name=ITSOL Test", "-c", "user.email=test@itsol.local", "commit", "-m", "fixture"], { cwd: reviewCwd });
+    await fs.promises.writeFile(reviewFile, "export const session = getUntrustedSession();\n");
+
+    const reviewStore = new TaskStateStore(fakePi, agents.length, "0.20.0");
+    reviewStore.startSession(fakeContext);
+    reviewStore.setDefinition({
+      ...base,
+      task_id: "review-fixture",
+      execution_policy: { ...base.execution_policy, max_review_rounds: 2 },
+    });
+    const reviewPi = {
+      appendEntry: () => {},
+      exec: _pi.exec.bind(_pi),
+    } as unknown as ExtensionAPI;
+    const reviewRepoPolicy = new RepoPolicyManager();
+    reviewRepoPolicy.startSession({ cwd: reviewCwd } as any);
+    const orchestrator = new ReviewOrchestrator(reviewPi, reviewStore, agents, reviewRepoPolicy);
+    const plan = await orchestrator.createPlan({
+      task_id: "review-fixture",
+      target: "working-tree",
+      acceptance_criteria: ["Session input remains trusted"],
+      test_evidence: [],
+    }, { cwd: reviewCwd } as any) as any;
+    assert.equal(plan.mandatorySubagents, true);
+    assert.equal(plan.status, "ready");
+    assert.ok(plan.selectedReviewers.some((item: any) => item.agent === "security-auth-session-review"));
+    reviewStore.beginDelegation("review-fixture", plan.selectedReviewers.map((item: any) => item.agent));
+    reviewStore.finishDelegation("review-fixture", plan.selectedReviewers.map((item: any) => item.agent),
+      plan.selectedReviewers.map((item: any) => ({
+        agent: item.agent,
+        role: "review",
+        status: "completed",
+        usage: { input: 10, output: 5, cost: 0.001 },
+      })));
+    const verdict = await orchestrator.consolidate({
+      task_id: "review-fixture",
+      plan_id: plan.id,
+      covered_surfaces: plan.requiredCoverage,
+      findings: [
+        {
+          intent: "Should",
+          severity: "medium",
+          title: "Validate untrusted session",
+          file: "src/auth/session.ts",
+          line: 1,
+          evidence: "Direct use of untrusted session data",
+          source: "reviewer-a",
+        },
+        {
+          intent: "Blocker",
+          severity: "high",
+          title: "Validate untrusted session",
+          file: "src/auth/session.ts",
+          line: 1,
+          evidence: "Trust boundary is bypassed",
+          source: "reviewer-b",
+        },
+      ],
+      unverified: [],
+    });
+    assert.equal(verdict.verdict, "changes-requested");
+    assert.equal(verdict.findings.length, 1);
+    assert.equal(reviewStore.getActive()?.review_verdict?.verdict, "changes-requested");
+    assert.equal(reviewStore.getActive()?.review_runs, 1);
+
+    await fs.promises.writeFile(reviewFile, "export const session = validateSession(getUntrustedSession());\n");
+    await assert.rejects(() => orchestrator.consolidate({
+      task_id: "review-fixture",
+      plan_id: plan.id,
+      covered_surfaces: plan.requiredCoverage,
+      findings: [],
+      unverified: [],
+    }, { cwd: reviewCwd } as any), /diff is stale/);
+    assert.match(await orchestrator.autoRereviewNotice("edit", { cwd: reviewCwd } as any) ?? "", /round 2\/2/);
+    assert.equal(await orchestrator.autoRereviewNotice("edit", { cwd: reviewCwd } as any), undefined);
+    const secondPlan = await orchestrator.createPlan({
+      task_id: "review-fixture",
+      target: "working-tree",
+      acceptance_criteria: ["Session input remains trusted"],
+      test_evidence: ["fixture test passes"],
+    }, { cwd: reviewCwd } as any) as any;
+    assert.equal(secondPlan.round, 2);
+    reviewStore.beginDelegation("review-fixture", secondPlan.selectedReviewers.map((item: any) => item.agent));
+    reviewStore.finishDelegation("review-fixture", secondPlan.selectedReviewers.map((item: any) => item.agent),
+      secondPlan.selectedReviewers.map((item: any) => ({
+        agent: item.agent,
+        role: "review",
+        status: "completed",
+        usage: { input: 8, output: 4, cost: 0.001 },
+      })));
+    const approved = await orchestrator.consolidate({
+      task_id: "review-fixture",
+      plan_id: secondPlan.id,
+      covered_surfaces: secondPlan.requiredCoverage,
+      findings: [],
+      unverified: [],
+    });
+    assert.equal(approved.verdict, "approve");
+    assert.equal(reviewStore.getActive()?.review_runs, 2);
+    assert.deepEqual((await orchestrator.completionDecision("review-fixture", { cwd: reviewCwd } as any)).problems, []);
+    await fs.promises.writeFile(reviewFile, "export const session = changedAfterApproval();\n");
+    assert.match((await orchestrator.completionDecision("review-fixture", { cwd: reviewCwd } as any)).problems.join("\n"), /stale/);
+    await assert.rejects(() => orchestrator.createPlan({
+      task_id: "review-fixture",
+      target: "working-tree",
+      acceptance_criteria: [],
+      test_evidence: [],
+    }, { cwd: reviewCwd } as any), /round limit/);
+    assert.equal(orchestrator.setProfile("review-fixture", "off").profile, "off");
+    assert.equal((await orchestrator.completionDecision("review-fixture", { cwd: reviewCwd } as any)).required, false);
+    assert.equal(reviewStore.getActive()?.review_runs, 0);
+    assert.equal(orchestrator.setProfile("review-fixture", "poc").delegation, "never");
+    const pocPlan = await orchestrator.createPlan({
+      task_id: "review-fixture",
+      target: "working-tree",
+      acceptance_criteria: ["POC remains fast"],
+      test_evidence: [],
+    }, { cwd: reviewCwd } as any) as any;
+    assert.equal(pocPlan.status, "inline");
+    assert.equal(pocPlan.mandatorySubagents, false);
+    assert.equal(pocPlan.selectedReviewers.length, 0);
+
+    const businessPlanPath = path.join(reviewCwd, ".itsol", "plans", "business.md");
+    await fs.promises.mkdir(path.dirname(businessPlanPath), { recursive: true });
+    await fs.promises.writeFile(businessPlanPath, "# Business Plan\n\n**Status:** Draft\n\n## Scope\nFixture scope.\n");
+    reviewStore.setDefinition({
+      ...base,
+      task_id: "plan-review-fixture",
+      workflow_state: {
+        ...base.workflow_state,
+        workflow_mode: "governed",
+        decision_authority: "user",
+        artifact_state: "draft",
+        execution_mode: "pending",
+      },
+      execution_policy: {
+        ...base.execution_policy,
+        max_subagents: 1,
+        max_parallel: 1,
+        max_review_rounds: 2,
+        stop_after: "business-plan",
+      },
+    });
+    const planReview = new PlanReviewOrchestrator(
+      reviewPi,
+      pluginRoot,
+      agents,
+      reviewStore,
+      new ModelRouter(),
+      reviewRepoPolicy,
+    );
+    planReview.startSession({
+      cwd: reviewCwd,
+      hasUI: false,
+      sessionManager: { getBranch: () => [] },
+    } as any);
+    const missingPlanReview = planReview.completionDecision("plan-review-fixture", "business-plan", reviewCwd);
+    assert.equal(missingPlanReview.forceContinuation, true);
+    assert.match(missingPlanReview.problems.join("\n"), /automatic isolated Rubber Duck Review/);
+  } finally {
+    await fs.promises.rm(reviewCwd, { recursive: true, force: true });
+  }
+
   const economy = applyPreset(base.execution_policy, "economy");
   assert.equal(economy.model_profile, "economy");
   assert.equal(economy.max_subagents, 0);
+  assert.equal(economy.max_review_rounds, 1);
   const deep = applyPreset(base.execution_policy, "deep");
   assert.equal(deep.model_profile, "frontier");
   assert.equal(deep.max_review_rounds, 2);
@@ -361,6 +606,32 @@ execution:
       artifact_state: "draft",
     },
   }, [reviewer], byName, new Set());
+
+  const rubberDuckReviewer = {
+    agent: "itsol-self-review",
+    role: "review",
+    task: "Rubber Duck review the Business Plan",
+    operations: ["rubber-duck-plan-review"],
+    read_scope: [".itsol/plans/business.md"],
+    write_scope: [],
+    forbidden_scope: [],
+    required_evidence: ["Plan Review Verdict"],
+    stop_after: "analysis",
+  } as const;
+  validateDelegation({
+    ...base,
+    workflow_state: {
+      ...base.workflow_state,
+      workflow_mode: "governed",
+      decision_authority: "user",
+      artifact_state: "draft",
+      execution_mode: "pending",
+    },
+  }, [rubberDuckReviewer], byName, new Set());
+  assert.throws(() => validateDelegation({
+    ...base,
+    workflow_state: { ...base.workflow_state, execution_mode: "pending" },
+  }, [reviewer], byName, new Set()), /does not authorize delegation/);
 
   assert.throws(
     () => validateDelegation(base, [writer, { ...writer, agent: "itsol-bug-debugging" }], byName, new Set()),

@@ -58,19 +58,32 @@ assert.match(bootstrap, /`using-itsolpowers`/);
 assert.match(bootstrap, /`itsol_task_state`/);
 assert.match(bootstrap, /`itsol_delegate`/);
 assert.match(bootstrap, /`itsol_complete`/);
+assert.match(bootstrap, /`itsol_review_plan`/);
+assert.match(bootstrap, /`itsol_review_verdict`/);
+assert.match(bootstrap, /`itsol_plan_review`/);
+assert.match(bootstrap, /effective profile is `off`/);
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'completion-gate.ts')));
+assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'review-orchestrator.ts')));
+assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'plan-review.ts')));
+const reviewOrchestrator = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'review-orchestrator.ts'), 'utf8');
+assert.match(reviewOrchestrator, /itsol-review/);
+assert.match(reviewOrchestrator, /autoRereviewNotice/);
+assert.match(reviewOrchestrator, /fingerprint/);
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'repo-policy.ts')));
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'task-state.ts')));
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'model-router.ts')));
 assert.ok(bootstrap.trim().split(/\s+/).length <= 600, 'Pi bootstrap exceeds 600 words');
 
 if (process.env.ITSOLPOWERS_PI_SMOKE === '1') {
-  for (const packageRoot of [pluginRoot, repoRoot]) {
-    const result = spawnSync('pi', ['--offline', '--no-extensions', '-e', packageRoot, '--list-models'], {
+  for (const extensionTarget of [path.join(pluginRoot, 'extensions', 'pi', 'index.ts'), repoRoot]) {
+    const result = spawnSync('pi', ['--offline', '--no-extensions', '-e', extensionTarget, '--list-models'], {
       encoding: 'utf8',
       timeout: 30_000,
     });
-    assert.equal(result.status, 0, `Pi extension smoke failed for ${packageRoot}:\n${result.stderr || result.stdout}`);
+    const output = `${result.stdout ?? ''}\n${result.stderr ?? ''}`;
+    assert.equal(result.status, 0, `Pi extension smoke failed for ${extensionTarget}:\n${output}`);
+    assert.doesNotMatch(output, /Failed to load extension|ParseError|SyntaxError|Unexpected token/i,
+      `Pi reported an extension load error for ${extensionTarget}:\n${output}`);
   }
 }
 

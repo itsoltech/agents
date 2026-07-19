@@ -151,7 +151,12 @@ export function validateDelegation(
     );
   }
 
-  if (params.workflow_state.execution_mode === "pending" || params.workflow_state.execution_mode === "inline") {
+  const automaticPlanReviews = tasks.every((task) =>
+    task.role === "review"
+    && task.write_scope.length === 0
+    && (task.operations ?? []).includes("rubber-duck-plan-review"));
+  if ((params.workflow_state.execution_mode === "pending" || params.workflow_state.execution_mode === "inline")
+    && !automaticPlanReviews) {
     throw new Error(`workflow_state.execution_mode=${params.workflow_state.execution_mode} does not authorize delegation`);
   }
 

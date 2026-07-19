@@ -6,7 +6,9 @@ import { discoverItsolAgents } from "./agents.ts";
 import { registerCompletionGate } from "./completion-gate.ts";
 import { registerItsolDelegate } from "./delegate-tool.ts";
 import { ModelRouter, registerModelRouter } from "./model-router.ts";
+import { registerPlanReview } from "./plan-review.ts";
 import { registerRepoPolicy, RepoPolicyManager } from "./repo-policy.ts";
+import { registerReviewOrchestrator } from "./review-orchestrator.ts";
 import { registerTaskState, TaskStateStore } from "./task-state.ts";
 
 const extensionDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -36,9 +38,21 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     : "ITSOL Powers Pi bootstrap is missing.";
 
   registerTaskState(pi, taskState);
-  registerCompletionGate(pi, taskState);
   registerModelRouter(pi, modelRouter);
   registerRepoPolicy(pi, repoPolicy);
+  const reviewOrchestrator = registerReviewOrchestrator(pi, taskState, agents, repoPolicy);
+  const planReview = registerPlanReview(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy);
+  registerCompletionGate(pi, taskState, {
+    async completionDecision(taskId, ctx, request) {
+      const codeReview = await reviewOrchestrator.completionDecision(taskId, ctx);
+      const artifactReview = planReview.completionDecision(taskId, request.achieved_stage, ctx.cwd);
+      return {
+        ...codeReview,
+        problems: [...artifactReview.problems, ...codeReview.problems],
+        forceContinuation: artifactReview.forceContinuation,
+      };
+    },
+  });
   registerItsolDelegate(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy, resetHandlers);
 
   pi.on("session_start", (_event, ctx) => {
@@ -46,10 +60,16 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     repoPolicy.startSession(ctx);
     modelRouter.startSession(ctx);
     taskState.startSession(ctx);
+    reviewOrchestrator.startSession(ctx);
+    planReview.startSession(ctx);
   });
 
   pi.on("session_shutdown", (_event, ctx) => {
-    if (ctx.hasUI) ctx.ui.setStatus("itsolpowers", undefined);
+    if (ctx.hasUI) {
+      ctx.ui.setStatus("itsolpowers", undefined);
+      ctx.ui.setStatus("itsol-review", undefined);
+      ctx.ui.setStatus("itsol-plan-review", undefined);
+    }
   });
 
   pi.on("message_end", (event) => {
@@ -76,6 +96,10 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     const stateContext = taskState.formatPromptContext();
     if (stateContext) parts.push(stateContext);
     parts.push(repoPolicy.formatPromptContext(taskState.getActive()?.policy_context));
+    const planReviewContext = planReview.formatPromptContext();
+    if (planReviewContext) parts.push(planReviewContext);
+    const reviewContext = reviewOrchestrator.formatPromptContext();
+    if (reviewContext) parts.push(reviewContext);
     parts.push(modelRouter.formatPromptContext());
     if (!parts.length) return;
     return { systemPrompt: `${event.systemPrompt}\n\n${parts.join("\n\n")}` };

@@ -25,6 +25,16 @@ export interface CompletionEvidenceRecord {
   evidence: string;
 }
 
+export interface ReviewVerdictRecord {
+  plan_id: string;
+  fingerprint: string;
+  round: number;
+  verdict: "approve" | "changes-requested" | "blocked";
+  findings: number;
+  coverage_gaps: string[];
+  recorded_at: number;
+}
+
 export interface CompletionRecord {
   status: "completed" | "partial" | "blocked" | "failed";
   achieved_stage: ExecutionPolicy["stop_after"];
@@ -41,6 +51,7 @@ export interface TaskRuntimeState extends TaskStateDefinition {
   status_counts: Record<string, number>;
   agent_results: Record<string, { status: string; role?: string; updated_at: number }>;
   review_runs: number;
+  review_verdict?: ReviewVerdictRecord;
   completion_attempts: number;
   last_completion_problems: string[];
   completion?: CompletionRecord;
@@ -72,6 +83,7 @@ function createRuntimeState(definition: TaskStateDefinition, previous?: TaskRunt
     status_counts: previous?.status_counts ?? {},
     agent_results: previous?.agent_results ?? {},
     review_runs: previous?.review_runs ?? 0,
+    review_verdict: previous?.review_verdict,
     completion_attempts: previous?.completion_attempts ?? 0,
     last_completion_problems: previous?.last_completion_problems ?? [],
     completion: previous?.completion,
@@ -99,7 +111,7 @@ export function applyPreset(current: ExecutionPolicy, preset: "economy" | "stand
       reasoning_profile: "low",
       max_subagents: 0,
       max_parallel: 0,
-      max_review_rounds: 0,
+      max_review_rounds: 1,
       stop_after: current.stop_after,
     };
   }
@@ -122,7 +134,7 @@ export function applyPreset(current: ExecutionPolicy, preset: "economy" | "stand
     reasoning_profile: "medium",
     max_subagents: 2,
     max_parallel: 2,
-    max_review_rounds: 1,
+    max_review_rounds: 2,
     stop_after: "implementation-reviewed",
   };
 }
@@ -221,6 +233,8 @@ export class TaskStateStore {
     const state = createRuntimeState(definition, previous);
     if (canonicalChanged) {
       state.completion = undefined;
+      state.review_verdict = undefined;
+      state.review_runs = 0;
       state.completion_attempts = 0;
       state.last_completion_problems = [];
     }
@@ -252,6 +266,16 @@ export class TaskStateStore {
     return { ...definition, task: input.task, tasks: input.tasks };
   }
 
+  prepareReviewers(taskId: string, agents: string[]): void {
+    if (!agents.length) return;
+    const state = this.require(taskId);
+    for (const agent of agents) delete state.agent_results[agent];
+    state.completion = undefined;
+    state.updated_at = Date.now();
+    this.persist();
+    this.updateHud();
+  }
+
   beginDelegation(taskId: string, agents: string[]): void {
     const state = this.require(taskId);
     state.used_agents = [...new Set([...state.used_agents, ...agents])];
@@ -278,8 +302,17 @@ export class TaskStateStore {
         role: result.role,
         updated_at: Date.now(),
       };
-      if (result.role === "review" && ["completed", "partial"].includes(result.status)) state.review_runs++;
     }
+    state.updated_at = Date.now();
+    this.persist();
+    this.updateHud();
+  }
+
+  recordReviewVerdict(taskId: string, verdict: ReviewVerdictRecord): void {
+    const state = this.require(taskId);
+    state.review_verdict = clone(verdict);
+    state.review_runs++;
+    state.completion = undefined;
     state.updated_at = Date.now();
     this.persist();
     this.updateHud();
@@ -329,6 +362,21 @@ export class TaskStateStore {
     return state;
   }
 
+  resetReview(taskId: string): void {
+    const state = this.require(taskId);
+    state.review_verdict = undefined;
+    state.review_runs = 0;
+    for (const [agent, result] of Object.entries(state.agent_results)) {
+      if (result.role === "review") delete state.agent_results[agent];
+    }
+    state.completion = undefined;
+    state.completion_attempts = 0;
+    state.last_completion_problems = [];
+    state.updated_at = Date.now();
+    this.persist();
+    this.updateHud();
+  }
+
   reset(taskId?: string): void {
     const target = taskId ?? this.activeTaskId;
     if (!target) return;
@@ -350,6 +398,8 @@ export class TaskStateStore {
     });
     state.workflow_state = workflowState;
     state.completion = undefined;
+    state.review_verdict = undefined;
+    state.review_runs = 0;
     state.completion_attempts = 0;
     state.last_completion_problems = [];
     state.updated_at = Date.now();
@@ -370,6 +420,8 @@ export class TaskStateStore {
     });
     state.execution_policy = executionPolicy;
     state.completion = undefined;
+    state.review_verdict = undefined;
+    state.review_runs = 0;
     state.completion_attempts = 0;
     state.last_completion_problems = [];
     state.updated_at = Date.now();
@@ -399,7 +451,7 @@ export class TaskStateStore {
       `Policy: ${state.execution_policy.preset} · ${state.execution_policy.model_profile}/${state.execution_policy.reasoning_profile}`,
       `Agents: ${state.used_agents.length}/${state.execution_policy.max_subagents} used, ${state.active_agents.length} active`,
       `Delegations: ${state.delegation_count} · results: ${statuses}`,
-      `Review runs: ${state.review_runs} · completion attempts: ${state.completion_attempts}`,
+      `Review runs: ${state.review_runs} · verdict: ${state.review_verdict?.verdict ?? "none"} · completion attempts: ${state.completion_attempts}`,
       `Completion: ${state.completion ? `${state.completion.status} at ${state.completion.achieved_stage}` : "not accepted"}`,
       `Cost: $${totalCost.toFixed(4)} (main $${state.parent_cost.toFixed(4)}, children $${state.child_cost.toFixed(4)})`,
       `Child tokens: ${state.child_input_tokens} input, ${state.child_output_tokens} output`,
@@ -428,6 +480,7 @@ export class TaskStateStore {
           status_counts: state.status_counts,
           agent_results: state.agent_results,
           review_runs: state.review_runs,
+          review_verdict: state.review_verdict,
           completion_attempts: state.completion_attempts,
           last_completion_problems: state.last_completion_problems,
           completion: state.completion,

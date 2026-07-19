@@ -34,7 +34,7 @@ Fix gaps inline. Ask one targeted question for unresolved material ambiguity; do
 
 ## Rubber Duck Review
 
-Use a separate read-only context with `itsol-self-review`. Provide plan path, request, complete workflow state, confirmed scope or selected/recommended approach, and minimal repo evidence. The reviewer must not edit or nest delegation. Repeat review after material changes.
+Use `itsol_plan_review`, which automatically runs a separate read-only context with `itsol-self-review`. This reviewer is pre-authorized by a planned workflow within execution ceilings; do not ask the user to authorize it. Provide plan path, request, complete workflow state, confirmed scope or selected/recommended approach, and minimal repo evidence. The reviewer must not edit or nest delegation. Repeat review after material changes. The extension allows up to `review.plan_max_rounds` iterative attempts per artifact (default 10) and stops earlier on the first material-blocker-free verdict.
 
 ### Business Plan Questions
 
@@ -65,4 +65,4 @@ Return plan/context inspected; blockers, important gaps, and non-blocking sugges
 - In both planned modes, material findings block progression.
 - In `direct`, no plan-review verdict exists.
 
-If isolated review is unavailable, report the gap rather than inventing a verdict. Non-blocking suggestions may be deferred only with an explicit scope reason.
+If isolated review fails or the configured reviewer/round ceiling is exhausted, report the genuine blocker rather than inventing a verdict. Do not return to the user while another automatic review attempt remains actionable. Non-blocking suggestions may be deferred only with an explicit scope reason.

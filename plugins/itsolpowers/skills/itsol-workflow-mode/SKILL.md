@@ -47,11 +47,11 @@ If a subagent receives missing, incomplete, inconsistent, or restriction-conflic
 
 ### Governed
 
-Run the normal Discovery, Decision, plan-writing, self-review, Rubber Duck Review, explicit user-approval, and execution-mode gates. Record `artifact_state: draft` while required artifacts are absent or awaiting approval. Record `execution_mode: pending` until the user chooses inline or subagents. New plan files start as `Draft` and become `Approved` only after the user sees and explicitly approves the specific file; only then record `artifact_state: approved`.
+Run the normal Discovery, Decision, plan-writing, self-review, automatic isolated Rubber Duck Review through `itsol_plan_review`, explicit user-approval, and execution-mode gates. Record `artifact_state: draft` while required artifacts are absent or awaiting approval. Record `execution_mode: pending` until the user chooses inline or subagents. New plan files start as `Draft` and become `Approved` only after the user sees and explicitly approves the specific file; only then record `artifact_state: approved`.
 
 ### Autonomous Planned
 
-Create the normal Business, Technical, or Technical Fix Plan artifacts with `artifact_state: draft`. Run self-review and Rubber Duck Review, resolve material findings, choose the documented recommended approach, then change the artifact state to `ready-for-execution` and continue without asking the user to approve each plan.
+Create the normal Business, Technical, or Technical Fix Plan artifacts with `artifact_state: draft`. Run self-review and automatic isolated Rubber Duck Review through `itsol_plan_review`, resolve material findings, choose the documented recommended approach, then change the artifact state to `ready-for-execution` and continue without asking the user to approve each plan.
 
 Never describe `Ready for execution` as explicit user approval. Ask one targeted question only when equally plausible choices materially change user-visible behavior, permissions, data handling, rollout, or architecture.
 

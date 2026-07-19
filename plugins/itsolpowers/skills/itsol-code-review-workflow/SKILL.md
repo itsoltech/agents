@@ -7,13 +7,24 @@ description: "ITSOL PR review workflow: coverage map, subagents, severity, risk,
 
 Review the PR as a risk-control step: verify behavior, safety, tests, and maintainability before style preferences.
 
+## Extension-managed review policy
+
+When the Pi extension exposes an effective review profile, treat it as the controlling contract:
+
+- `off`: do not add review ceremony unless the user explicitly requests a review.
+- `poc`: perform at most one lightweight final inline review; do not delegate or automatically re-review.
+- `balanced`: perform final risk-based review and at most one re-review after actual fixes, within the execution ceiling.
+- `strict`: require risk-based independent coverage and re-review after actual fixes until approved or the configured cap is reached.
+
+`trigger=manual` means review runs only on explicit request; `trigger=final` means once before completion, not after each edit. `delegation=never` authorizes inline review even for surfaces that would normally require specialists. Automatic re-review requires a prior `changes-requested` verdict, a changed diff fingerprint, and an available round. Never silently exceed `max_rounds` or `execution.max_review_rounds`.
+
 ## Process
 
 1. Read the story, acceptance criteria, tech notes, PR description, changed files, RED/GREEN evidence, tests, risks, migrations, config, and QA notes.
 2. Build a review coverage map before reading deeply: functional scope, changed system surfaces, current technology documentation/version context, security/trust boundaries, data/storage, infrastructure/deployment, tests/TDD evidence, performance, observability, maintainability, and release/QA risk.
 3. Check review priorities in order: scope and acceptance criteria, correctness, security, architecture, data, errors, TDD/test evidence, performance, observability, maintainability, then style.
-4. Every code review must cover the relevant areas from the coverage map. For tiny single-surface diffs, an inline review is allowed only when the final response states why subagents were unnecessary and which areas were checked.
-5. For large, cross-cutting, multi-surface, security-sensitive, data-sensitive, infrastructure/deployment, migration/rewrite, generated-client/API-contract, or hard-to-fit-in-one-context PRs, subagents are mandatory. Do not perform an inline-only review of one sector.
+4. Every review that is required or explicitly requested must cover the relevant areas from the coverage map. For tiny single-surface diffs, or when the effective policy sets `delegation=never`, inline review is allowed when the verdict states why subagents were unnecessary and which areas were checked.
+5. Under `delegation=risk-based` or `always`, large, cross-cutting, multi-surface, security-sensitive, data-sensitive, infrastructure/deployment, migration/rewrite, generated-client/API-contract, or hard-to-fit-in-one-context PRs require subagents. Do not perform an inline-only review of one sector unless the effective project/task policy explicitly sets `delegation=never`.
 6. Delegate focused review subagents by changed surface and risk dimension, for example current technology context, UI/UX, security, infrastructure, frontend, backend, database, generated API clients, migration/rewrite, QA/release, performance, or test strategy. Use the narrowest ITSOL skill/subagent that matches each area.
 7. For subagent-driven implementation reviews, use `itsol-subagent-workflow` as the canonical contract for task packets, write scope, statuses, response validation, unverified items, coverage gap handling, review-loop closure, and final integration checks.
 8. Require each review subagent to return structured findings with severity, file references, affected behavior, evidence checked, missing verification, unverified items, assumptions, residual risk, and any coverage gap. Treat unsupported claims as unverified until checked against source, tests, logs, or command output.

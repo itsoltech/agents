@@ -1,5 +1,9 @@
+## Polityka nadrzędna
+
+Poniższy gate obowiązuje, gdy extension-managed review policy wymaga review oraz ustawia `delegation=risk-based` lub `always`. `profile=off`, `trigger=manual` bez jawnego żądania i `delegation=never` wyłączają automatyczny gate sub-agentów. Nie rozszerzaj polityki projektu własną decyzją agenta.
+
 ## Obowiązkowa mapa review
-Każdy code review zaczyna się od mapy obszarów, nawet jeśli finalnie jest mały:
+Każdy wymagany lub jawnie zlecony code review zaczyna się od mapy obszarów, nawet jeśli finalnie jest mały:
 
 - zakres biznesowy, acceptance criteria i zgodność PR z opisem;
 - poprawność działania i regresje;
@@ -16,7 +20,7 @@ Nie wolno zakończyć review po sprawdzeniu tylko jednego sektora, jeśli PR dot
 
 ## Gate na sub-agentów
 
-Sub-agenci są obowiązkowi, gdy PR jest duży, wieloobszarowy albo ryzykowny. Dotyczy to w szczególności PR, który:
+Przy `delegation=risk-based` lub `always` sub-agenci są obowiązkowi, gdy PR jest duży, wieloobszarowy albo ryzykowny. Dotyczy to w szczególności PR, który:
 
 - dotyka więcej niż jednej powierzchni systemu, np. UI + API, API + database, app + infra, generated client + backend;
 - zawiera zmiany security, auth/session, authz/tenant, sekrety, dane osobowe, uploady, integracje zewnętrzne albo supply chain;
@@ -26,7 +30,7 @@ Sub-agenci są obowiązkowi, gdy PR jest duży, wieloobszarowy albo ryzykowny. D
 - jest zbyt duży, aby jeden agent mógł wiarygodnie przeanalizować wszystkie obszary w jednym kontekście;
 - ma wiele typów plików, wiele modułów, dużą liczbę linii zmian albo łączy kod ręczny z wygenerowanym.
 
-Inline-only review jest dopuszczalny wyłącznie dla małego, jednoobszarowego diffu. W takim przypadku reviewer musi jawnie napisać, dlaczego sub-agenci nie byli potrzebni oraz które obszary z mapy review sprawdził.
+Przy `delegation=risk-based` inline-only review jest dopuszczalny wyłącznie dla małego, jednoobszarowego diffu. Przy `delegation=never` jawna polityka pozwala na review inline niezależnie od automatycznego progu. W takim przypadku reviewer musi jawnie napisać, dlaczego sub-agenci nie byli potrzebni oraz które obszary z mapy review sprawdził.
 
 ## Dobór sub-agentów
 

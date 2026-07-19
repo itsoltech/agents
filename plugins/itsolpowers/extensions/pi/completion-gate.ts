@@ -1,6 +1,6 @@
 // Evidence-based completion gate for persisted itsol-workflow-mode and itsol-execution-policy state.
 import { StringEnum } from "@earendil-works/pi-ai";
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Text } from "@earendil-works/pi-tui";
 import { Type, type Static } from "typebox";
 import { ExecutionPolicySchema, STOP_RANK } from "./policy.ts";
@@ -27,11 +27,27 @@ export interface CompletionEvaluation {
   problems: string[];
 }
 
+export interface ManagedReviewDecision {
+  managed: true;
+  required: boolean;
+  problems: string[];
+  profile: string;
+  forceContinuation?: boolean;
+}
+
+export interface CompletionReviewGuard {
+  completionDecision(taskId: string, ctx: ExtensionContext, request: ItsolCompleteParams): Promise<ManagedReviewDecision>;
+}
+
 function normalized(value: string): string {
   return value.trim();
 }
 
-export function evaluateCompletion(state: TaskRuntimeState, request: ItsolCompleteParams): CompletionEvaluation {
+export function evaluateCompletion(
+  state: TaskRuntimeState,
+  request: ItsolCompleteParams,
+  managedReview?: ManagedReviewDecision,
+): CompletionEvaluation {
   const problems: string[] = [];
   const reviewEvidence = request.review_evidence ?? [];
 
@@ -42,6 +58,10 @@ export function evaluateCompletion(state: TaskRuntimeState, request: ItsolComple
     problems.push(
       `achieved_stage=${request.achieved_stage} is earlier than stop_after=${state.execution_policy.stop_after}`,
     );
+  }
+  if (managedReview?.forceContinuation && request.status !== "completed") {
+    problems.push(...managedReview.problems);
+    problems.push("actionable automatic plan review remains; continue the review loop before user handoff");
   }
 
   if (request.status === "completed") {
@@ -65,14 +85,33 @@ export function evaluateCompletion(state: TaskRuntimeState, request: ItsolComple
     }
 
     const unresolvedAgents = Object.entries(state.agent_results)
-      .filter(([, result]) => result.status !== "completed")
+      .filter(([, result]) => result.status !== "completed"
+        && !(managedReview && !managedReview.required && result.role === "review"))
       .map(([agent, result]) => `${agent}=${result.status}`);
     if (unresolvedAgents.length) problems.push(`unresolved delegated results: ${unresolvedAgents.join(", ")}`);
 
-    const reviewRequired = state.execution_policy.max_review_rounds > 0
-      && STOP_RANK[state.execution_policy.stop_after] >= STOP_RANK["implementation-reviewed"];
-    if (reviewRequired && state.review_runs === 0 && reviewEvidence.length === 0) {
-      problems.push("required implementation review has no delegated run or inline review evidence");
+    if (managedReview) {
+      problems.push(...managedReview.problems);
+      if (managedReview.required) {
+        if (state.review_verdict && state.review_verdict.verdict !== "approve") {
+          problems.push(`review verdict is ${state.review_verdict.verdict}`);
+        }
+        if (state.review_verdict?.coverage_gaps.length) {
+          problems.push(`review coverage gaps remain: ${state.review_verdict.coverage_gaps.join(", ")}`);
+        }
+      }
+    } else {
+      const reviewRequired = state.execution_policy.max_review_rounds > 0
+        && STOP_RANK[state.execution_policy.stop_after] >= STOP_RANK["implementation-reviewed"];
+      if (reviewRequired && state.review_runs === 0 && reviewEvidence.length === 0) {
+        problems.push("required implementation review has no delegated run, orchestrated verdict, or inline review evidence");
+      }
+      if (state.review_verdict && state.review_verdict.verdict !== "approve") {
+        problems.push(`review verdict is ${state.review_verdict.verdict}`);
+      }
+      if (state.review_verdict?.coverage_gaps.length) {
+        problems.push(`review coverage gaps remain: ${state.review_verdict.coverage_gaps.join(", ")}`);
+      }
     }
 
     if (STOP_RANK[request.achieved_stage] >= STOP_RANK.implementation) {
@@ -95,7 +134,11 @@ export function evaluateCompletion(state: TaskRuntimeState, request: ItsolComple
   return { accepted: problems.length === 0, problems };
 }
 
-export function registerCompletionGate(pi: ExtensionAPI, store: TaskStateStore): void {
+export function registerCompletionGate(
+  pi: ExtensionAPI,
+  store: TaskStateStore,
+  reviewGuard?: CompletionReviewGuard,
+): void {
   let toolsToRestore: string[] | undefined;
   const forceFinalSummaryTurn = () => {
     if (!toolsToRestore) toolsToRestore = pi.getActiveTools();
@@ -111,7 +154,7 @@ export function registerCompletionGate(pi: ExtensionAPI, store: TaskStateStore):
   pi.registerTool({
     name: "itsol_complete",
     label: "ITSOL Complete",
-    description: "Finish an ITSOL task with structured completion evidence. Validates exact done_when coverage, active and unresolved agents, review evidence, artifact authorization, and ranked stop_after. A rejected first attempt allows one corrective agent turn. Accepted or finally rejected gates force one tool-free final summary turn, then restore the previous tool set.",
+    description: "Finish an ITSOL task with structured completion evidence. Validates exact done_when coverage, active and unresolved agents, the effective review profile and current diff-bound verdict, artifact authorization, and ranked stop_after. A rejected first attempt allows one corrective agent turn. Accepted or finally rejected gates force one tool-free final summary turn, then restore the previous tool set.",
     promptSnippet: "Submit final ITSOL task status and evidence through the completion gate",
     promptGuidelines: [
       "Use itsol_complete as the final tool for every extension-managed ITSOL task; after the gate result, write exactly one concise user-facing summary in the forced tool-free turn.",
@@ -120,10 +163,11 @@ export function registerCompletionGate(pi: ExtensionAPI, store: TaskStateStore):
     ],
     parameters: ItsolCompleteParamsSchema,
 
-    async execute(_toolCallId, params) {
+    async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
       const state = store.get(params.task_id);
       if (!state) throw new Error(`Unknown ITSOL task state: ${params.task_id}`);
-      const evaluation = evaluateCompletion(state, params);
+      const managedReview = reviewGuard ? await reviewGuard.completionDecision(params.task_id, ctx, params) : undefined;
+      const evaluation = evaluateCompletion(state, params, managedReview);
       const attempt = store.recordCompletionAttempt(params.task_id, evaluation.problems);
 
       if (!evaluation.accepted) {

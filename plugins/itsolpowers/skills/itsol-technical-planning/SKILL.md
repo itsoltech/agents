@@ -5,6 +5,8 @@ description: "Technical planning by workflow mode: architecture, decisions, roll
 
 # ITSOL Technical Planning
 
+For every Technical or Technical Fix Plan in a planned mode, run `itsol_plan_review` after self-review and before user handoff or `Ready for execution`. Its isolated read-only reviewer is automatically authorized within execution ceilings. Resolve material findings and rerun; do not ask the user for reviewer authorization.
+
 Resolve and preserve the complete task state through `itsol-workflow-mode` before applying any plan prerequisite or Decision Gate.
 
 ## Process

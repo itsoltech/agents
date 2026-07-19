@@ -5,7 +5,15 @@ import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-a
 import { STOP_RANK, type DelegatedTask, type TaskStateDefinition } from "./policy.ts";
 
 const WORKFLOW_MODES = ["governed", "autonomous-planned", "direct"] as const;
+const REVIEW_PROFILES = ["off", "poc", "balanced", "strict"] as const;
+const REVIEW_TRIGGERS = ["manual", "final", "checkpoint"] as const;
+const REVIEW_DELEGATIONS = ["never", "risk-based", "always"] as const;
+const REVIEW_REREVIEW = ["never", "after-fixes", "until-approved"] as const;
 type WorkflowMode = typeof WORKFLOW_MODES[number];
+export type ReviewProfile = typeof REVIEW_PROFILES[number];
+export type ReviewTrigger = typeof REVIEW_TRIGGERS[number];
+export type ReviewDelegation = typeof REVIEW_DELEGATIONS[number];
+export type AutoRereview = typeof REVIEW_REREVIEW[number];
 
 interface MatchRule {
   path?: string;
@@ -36,6 +44,39 @@ interface ExecutionPolicyConfig {
   restrictions: ExecutionRestriction[];
 }
 
+interface ReviewRestriction {
+  match: MatchRule;
+  profile?: ReviewProfile;
+  allowed_profiles?: ReviewProfile[];
+  trigger?: ReviewTrigger;
+  delegation?: ReviewDelegation;
+  auto_rereview?: AutoRereview;
+  max_rounds?: number;
+  plan_max_rounds?: number;
+}
+
+interface ReviewPolicyConfig {
+  default_profile?: ReviewProfile;
+  allowed_profiles?: ReviewProfile[];
+  trigger?: ReviewTrigger;
+  delegation?: ReviewDelegation;
+  auto_rereview?: AutoRereview;
+  max_rounds?: number;
+  plan_max_rounds?: number;
+  restrictions: ReviewRestriction[];
+}
+
+export interface ResolvedReviewPolicy {
+  profile: ReviewProfile;
+  allowed_profiles: ReviewProfile[];
+  trigger: ReviewTrigger;
+  delegation: ReviewDelegation;
+  auto_rereview: AutoRereview;
+  max_rounds: number;
+  plan_max_rounds: number;
+  sources: string[];
+}
+
 interface ProjectMemory {
   path: string;
   stack?: string;
@@ -50,6 +91,7 @@ interface ParsedRepoPolicy {
   mtimeMs: number;
   workflow: WorkflowPolicy;
   execution: ExecutionPolicyConfig;
+  review: ReviewPolicyConfig;
   projects: ProjectMemory[];
   verificationCommands: string[];
   agentWorkflowNotes: string[];
@@ -169,7 +211,7 @@ function parsePolicyYaml(source: string): Record<string, unknown> {
   let index = 0;
   while (index < lines.length) {
     const root = lines[index];
-    const rootMatch = root.text.match(/^(workflow|execution):\s*$/);
+    const rootMatch = root.text.match(/^(workflow|execution|review):\s*$/);
     if (!rootMatch || root.indent !== 0) {
       index++;
       continue;
@@ -207,6 +249,40 @@ function workflowModes(value: unknown): WorkflowMode[] | undefined {
   const modes = stringArray(value).filter((mode): mode is WorkflowMode =>
     (WORKFLOW_MODES as readonly string[]).includes(mode));
   return modes.length ? modes : undefined;
+}
+
+function reviewValues<T extends string>(value: unknown, allowed: readonly T[]): T[] | undefined {
+  const values = stringArray(value).filter((item): item is T => allowed.includes(item as T));
+  return values.length ? values : undefined;
+}
+
+function reviewValue<T extends string>(value: unknown, allowed: readonly T[]): T | undefined {
+  return typeof value === "string" && allowed.includes(value as T) ? value as T : undefined;
+}
+
+function reportInvalidEnum(
+  errors: string[],
+  record: Record<string, unknown>,
+  key: string,
+  allowed: readonly string[],
+  label = `review.${key}`,
+): void {
+  if (record[key] !== undefined && reviewValue(record[key], allowed) === undefined) {
+    errors.push(`${label} must be one of: ${allowed.join(", ")}`);
+  }
+}
+
+function reportInvalidEnumList(
+  errors: string[],
+  record: Record<string, unknown>,
+  key: string,
+  allowed: readonly string[],
+  label = `review.${key}`,
+): void {
+  if (record[key] === undefined) return;
+  const values = stringArray(record[key]);
+  const invalid = values.filter((value) => !allowed.includes(value));
+  if (!values.length || invalid.length) errors.push(`${label} contains invalid values: ${invalid.join(", ") || "empty"}`);
 }
 
 function finiteInteger(value: unknown): number | undefined {
@@ -281,12 +357,14 @@ function parsePolicyFile(filePath: string): ParsedRepoPolicy {
   const errors: string[] = [];
   let workflowRaw: Record<string, unknown> = {};
   let executionRaw: Record<string, unknown> = {};
+  let reviewRaw: Record<string, unknown> = {};
   for (const block of content.matchAll(/```ya?ml\s*\n([\s\S]*?)```/gi)) {
     try {
       const parsed = parsePolicyYaml(block[1]) as unknown;
       if (!isRecord(parsed)) continue;
       if (isRecord(parsed.workflow)) workflowRaw = { ...workflowRaw, ...parsed.workflow };
       if (isRecord(parsed.execution)) executionRaw = { ...executionRaw, ...parsed.execution };
+      if (isRecord(parsed.review)) reviewRaw = { ...reviewRaw, ...parsed.review };
     } catch (error) {
       errors.push(`YAML: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -319,6 +397,55 @@ function parsePolicyFile(filePath: string): ParsedRepoPolicy {
     }
   }
 
+  reportInvalidEnum(errors, reviewRaw, "default_profile", REVIEW_PROFILES);
+  reportInvalidEnum(errors, reviewRaw, "trigger", REVIEW_TRIGGERS);
+  reportInvalidEnum(errors, reviewRaw, "delegation", REVIEW_DELEGATIONS);
+  reportInvalidEnum(errors, reviewRaw, "auto_rereview", REVIEW_REREVIEW);
+  reportInvalidEnumList(errors, reviewRaw, "allowed_profiles", REVIEW_PROFILES);
+  if (reviewRaw.max_rounds !== undefined
+    && (finiteInteger(reviewRaw.max_rounds) === undefined || Number(reviewRaw.max_rounds) > 2)) {
+    errors.push("review.max_rounds must be an integer from 0 to 2");
+  }
+  if (reviewRaw.plan_max_rounds !== undefined
+    && (finiteInteger(reviewRaw.plan_max_rounds) === undefined
+      || Number(reviewRaw.plan_max_rounds) < 1
+      || Number(reviewRaw.plan_max_rounds) > 10)) {
+    errors.push("review.plan_max_rounds must be an integer from 1 to 10");
+  }
+
+  const reviewRestrictions: ReviewRestriction[] = [];
+  if (Array.isArray(reviewRaw.restrictions)) {
+    for (const [index, restriction] of reviewRaw.restrictions.entries()) {
+      if (!isRecord(restriction)) continue;
+      const label = `review.restrictions[${index}]`;
+      reportInvalidEnum(errors, restriction, "profile", REVIEW_PROFILES, `${label}.profile`);
+      reportInvalidEnum(errors, restriction, "trigger", REVIEW_TRIGGERS, `${label}.trigger`);
+      reportInvalidEnum(errors, restriction, "delegation", REVIEW_DELEGATIONS, `${label}.delegation`);
+      reportInvalidEnum(errors, restriction, "auto_rereview", REVIEW_REREVIEW, `${label}.auto_rereview`);
+      reportInvalidEnumList(errors, restriction, "allowed_profiles", REVIEW_PROFILES, `${label}.allowed_profiles`);
+      if (restriction.max_rounds !== undefined
+        && (finiteInteger(restriction.max_rounds) === undefined || Number(restriction.max_rounds) > 2)) {
+        errors.push(`${label}.max_rounds must be an integer from 0 to 2`);
+      }
+      if (restriction.plan_max_rounds !== undefined
+        && (finiteInteger(restriction.plan_max_rounds) === undefined
+          || Number(restriction.plan_max_rounds) < 1
+          || Number(restriction.plan_max_rounds) > 10)) {
+        errors.push(`${label}.plan_max_rounds must be an integer from 1 to 10`);
+      }
+      reviewRestrictions.push({
+        match: matchRule(restriction.match),
+        profile: reviewValue(restriction.profile, REVIEW_PROFILES),
+        allowed_profiles: reviewValues(restriction.allowed_profiles, REVIEW_PROFILES),
+        trigger: reviewValue(restriction.trigger, REVIEW_TRIGGERS),
+        delegation: reviewValue(restriction.delegation, REVIEW_DELEGATIONS),
+        auto_rereview: reviewValue(restriction.auto_rereview, REVIEW_REREVIEW),
+        max_rounds: finiteInteger(restriction.max_rounds),
+        plan_max_rounds: finiteInteger(restriction.plan_max_rounds),
+      });
+    }
+  }
+
   const defaultMode = typeof workflowRaw.default_mode === "string"
     && (WORKFLOW_MODES as readonly string[]).includes(workflowRaw.default_mode)
     ? workflowRaw.default_mode as WorkflowMode
@@ -338,6 +465,16 @@ function parsePolicyFile(filePath: string): ParsedRepoPolicy {
       restrictions: workflowRestrictions,
     },
     execution: { default_preset: preset, restrictions: executionRestrictions },
+    review: {
+      default_profile: reviewValue(reviewRaw.default_profile, REVIEW_PROFILES),
+      allowed_profiles: reviewValues(reviewRaw.allowed_profiles, REVIEW_PROFILES),
+      trigger: reviewValue(reviewRaw.trigger, REVIEW_TRIGGERS),
+      delegation: reviewValue(reviewRaw.delegation, REVIEW_DELEGATIONS),
+      auto_rereview: reviewValue(reviewRaw.auto_rereview, REVIEW_REREVIEW),
+      max_rounds: finiteInteger(reviewRaw.max_rounds),
+      plan_max_rounds: finiteInteger(reviewRaw.plan_max_rounds),
+      restrictions: reviewRestrictions,
+    },
     projects: parseProjects(content),
     verificationCommands: sectionLines(content, "Verification Commands"),
     agentWorkflowNotes: sectionLines(content, "Agent Workflow Notes"),
@@ -373,6 +510,13 @@ function pathMatches(value: string, pattern: string): boolean {
   return new RegExp(`^${regex}(?:/.*)?$`).test(normalizedValue);
 }
 
+const REVIEW_PROFILE_DEFAULTS: Record<ReviewProfile, Omit<ResolvedReviewPolicy, "profile" | "allowed_profiles" | "plan_max_rounds" | "sources">> = {
+  off: { trigger: "manual", delegation: "never", auto_rereview: "never", max_rounds: 0 },
+  poc: { trigger: "final", delegation: "never", auto_rereview: "never", max_rounds: 1 },
+  balanced: { trigger: "final", delegation: "risk-based", auto_rereview: "after-fixes", max_rounds: 2 },
+  strict: { trigger: "final", delegation: "risk-based", auto_rereview: "until-approved", max_rounds: 2 },
+};
+
 function restrictionMatches(match: MatchRule, paths: string[], operations: string[]): boolean {
   const pathOk = !match.path || paths.some((item) => pathMatches(item, match.path!));
   const operationOk = !match.operation || operations.includes(match.operation);
@@ -403,6 +547,62 @@ export class RepoPolicyManager {
     }
     const mtime = fs.statSync(rootPath).mtimeMs;
     if (!this.rootPolicy || this.rootPolicy.mtimeMs !== mtime) this.reload();
+  }
+
+  resolveReviewPolicy(context?: PolicyContext, override?: ReviewProfile): ResolvedReviewPolicy {
+    this.refreshIfChanged();
+    const paths = this.normalizePaths(context?.paths ?? []);
+    const operations = context?.operations ?? [];
+    const policies = this.policiesFor(paths);
+    this.assertValid();
+    let profile: ReviewProfile = "balanced";
+    let allowed = new Set<ReviewProfile>(REVIEW_PROFILES);
+    let explicit: Partial<Pick<ResolvedReviewPolicy, "trigger" | "delegation" | "auto_rereview" | "max_rounds" | "plan_max_rounds">> = {};
+
+    for (const policy of policies) {
+      if (policy.review.allowed_profiles) {
+        allowed = new Set([...allowed].filter((item) => policy.review.allowed_profiles!.includes(item)));
+      }
+      if (policy.review.default_profile) profile = policy.review.default_profile;
+      explicit = {
+        ...explicit,
+        ...(policy.review.trigger ? { trigger: policy.review.trigger } : {}),
+        ...(policy.review.delegation ? { delegation: policy.review.delegation } : {}),
+        ...(policy.review.auto_rereview ? { auto_rereview: policy.review.auto_rereview } : {}),
+        ...(policy.review.max_rounds !== undefined ? { max_rounds: policy.review.max_rounds } : {}),
+        ...(policy.review.plan_max_rounds !== undefined ? { plan_max_rounds: policy.review.plan_max_rounds } : {}),
+      };
+      for (const restriction of policy.review.restrictions) {
+        if (!restrictionMatches(restriction.match, paths, operations)) continue;
+        if (restriction.allowed_profiles) {
+          allowed = new Set([...allowed].filter((item) => restriction.allowed_profiles!.includes(item)));
+        }
+        if (restriction.profile) profile = restriction.profile;
+        explicit = {
+          ...explicit,
+          ...(restriction.trigger ? { trigger: restriction.trigger } : {}),
+          ...(restriction.delegation ? { delegation: restriction.delegation } : {}),
+          ...(restriction.auto_rereview ? { auto_rereview: restriction.auto_rereview } : {}),
+          ...(restriction.max_rounds !== undefined ? { max_rounds: restriction.max_rounds } : {}),
+          ...(restriction.plan_max_rounds !== undefined ? { plan_max_rounds: restriction.plan_max_rounds } : {}),
+        };
+      }
+    }
+    if (override) profile = override;
+    if (!allowed.has(profile)) {
+      throw new Error(`.itsol.md blocks review profile=${profile}; allowed profiles: ${[...allowed].join(", ") || "none"}`);
+    }
+    const defaults = REVIEW_PROFILE_DEFAULTS[profile];
+    return {
+      profile,
+      allowed_profiles: [...allowed],
+      trigger: explicit.trigger ?? defaults.trigger,
+      delegation: explicit.delegation ?? defaults.delegation,
+      auto_rereview: explicit.auto_rereview ?? defaults.auto_rereview,
+      max_rounds: Math.min(2, explicit.max_rounds ?? defaults.max_rounds),
+      plan_max_rounds: Math.min(10, explicit.plan_max_rounds ?? 10),
+      sources: policies.map((policy) => policy.filePath),
+    };
   }
 
   validateDefinition(definition: TaskStateDefinition): void {
@@ -465,7 +665,7 @@ export class RepoPolicyManager {
     if (!this.rootPolicy) {
       return [
         "## ITSOL repository policy (extension-managed)",
-        "No root .itsol.md was found. Use governed workflow and standard execution fallbacks unless the user explicitly selects an allowed alternative for the current task.",
+        "No root .itsol.md was found. Use governed workflow, standard execution, and balanced final-review fallbacks unless the user explicitly selects an allowed alternative for the current task.",
       ].join("\n");
     }
     const paths = this.normalizePaths(context?.paths ?? []);
@@ -481,6 +681,7 @@ export class RepoPolicyManager {
         policies: policies.map((policy) => ({
           workflow: policy.workflow,
           execution: policy.execution,
+          review: policy.review,
           projects: policy.projects,
           verification_commands: policy.verificationCommands,
           agent_workflow_notes: policy.agentWorkflowNotes,
@@ -500,6 +701,7 @@ export class RepoPolicyManager {
       `Workflow default: ${this.rootPolicy.workflow.default_mode ?? "governed fallback"}`,
       `Allowed modes: ${this.rootPolicy.workflow.allowed_modes?.join(", ") ?? "all"}`,
       `Execution default: ${this.rootPolicy.execution.default_preset ?? "standard fallback"}`,
+      `Review default: ${this.rootPolicy.review.default_profile ?? "balanced fallback"}`,
       `Projects: ${this.rootPolicy.projects.length}`,
       `Errors: ${this.rootPolicy.errors.length ? this.rootPolicy.errors.join("; ") : "none"}`,
     ].join("\n");
@@ -520,7 +722,10 @@ export class RepoPolicyManager {
         current = parent;
       }
     }
-    return [...policies.values()];
+    return [...policies.values()].sort((left, right) => {
+      const depth = (value: ParsedRepoPolicy) => path.relative(this.repoRoot, value.baseDir).split(path.sep).filter(Boolean).length;
+      return depth(left) - depth(right) || left.filePath.localeCompare(right.filePath);
+    });
   }
 
   private normalizePaths(paths: string[]): string[] {

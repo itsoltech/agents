@@ -4,11 +4,11 @@
 
 | Preset | Model | Reasoning | Max agents | Max parallel | Review cycles | Default stop | Escalation |
 | --- | --- | --- | ---: | ---: | ---: | --- | --- |
-| `economy` | `economy` | `low` | 0 | 0 | 0 | `requested-result` | `ask` |
-| `standard` | `balanced` | `medium` | 2 | 2 | 1 | `implementation-reviewed` | `ask` |
+| `economy` | `economy` | `low` | 0 | 0 | 1 | `requested-result` | `ask` |
+| `standard` | `balanced` | `medium` | 2 | 2 | 2 | `implementation-reviewed` | `ask` |
 | `deep` | `frontier` | `high` | 1 | 1 | 2 | `integration-validated` | `ask` |
 
-`custom` requires every field. Preset values are ceilings, not quotas.
+`custom` requires every field. Preset values are ceilings, not quotas. `max_review_rounds` bounds implementation/code-review loops. Planned Business, Technical, and Technical Fix artifacts use the separate `review.plan_max_rounds` repository setting (default 10 per artifact), so increasing plan quality does not force ten code-review rounds. Under `itsol-workflow-mode`, planned modes also require at least one available read-only reviewer identity and one parallel slot; `economy` is therefore intended for `direct` work unless explicitly expanded.
 
 ## Resolution
 

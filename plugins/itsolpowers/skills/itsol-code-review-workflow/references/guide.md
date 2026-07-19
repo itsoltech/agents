@@ -25,6 +25,8 @@ Pull request workflow, reviewer priorities, comment severity, stopping review fo
 
 For mandatory review area mapping, sub-agent gate, sub-agent selection, and sub-agent review contract, read `04-multi-agent-review-gate.md`.
 
+For project profiles, `.itsol.md` review configuration, trigger semantics, round accounting, diff fingerprints, and automatic re-review, read `05-review-profiles-and-rereview.md`.
+
 ## Pliki referencyjne
 
 
@@ -32,3 +34,4 @@ For mandatory review area mapping, sub-agent gate, sub-agent selection, and sub-
 - `02-code-review.md` (146 linii) - Code review
 - `03-handoffy-miedzy-rolami.md` (67 linii) - Handoffy między rolami; Checklist dla reviewera
 - `04-multi-agent-review-gate.md` (68 linii) - Obowiazkowa mapa review; gate na sub-agentow; dobor sub-agentow; kontrakt pracy sub-agenta review
+- `05-review-profiles-and-rereview.md` - Configurable review profiles, triggers, diff fingerprints, and bounded automatic re-review
