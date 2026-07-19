@@ -301,7 +301,8 @@ export class PlanReviewOrchestrator {
       .sort((left, right) => right.recordedAt - left.recordedAt)[0];
     const planMaxRounds = this.repoPolicy.resolveReviewPolicy(state.policy_context).plan_max_rounds;
     const canUseReviewer = state.execution_policy.max_parallel > 0
-      && (this.store.getUsedAgents(taskId).has(REVIEW_AGENT)
+      && (state.execution_policy.max_subagents === "unlimited"
+        || this.store.getUsedAgents(taskId).has(REVIEW_AGENT)
         || this.store.getUsedAgents(taskId).size < state.execution_policy.max_subagents);
     if (!record) {
       return {

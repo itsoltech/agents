@@ -633,7 +633,8 @@ export class RepoPolicyManager {
 
     const policy = definition.execution_policy;
     for (const restriction of matchedExecution) {
-      if (restriction.max_subagents !== undefined && policy.max_subagents > restriction.max_subagents) {
+      if (restriction.max_subagents !== undefined
+        && (policy.max_subagents === "unlimited" || policy.max_subagents > restriction.max_subagents)) {
         throw new Error(`.itsol.md limits max_subagents to ${restriction.max_subagents}`);
       }
       if (restriction.max_parallel !== undefined && policy.max_parallel > restriction.max_parallel) {

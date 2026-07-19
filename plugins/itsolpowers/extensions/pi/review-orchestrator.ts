@@ -515,7 +515,9 @@ export class ReviewOrchestrator {
       candidates.push({ agent: "itsol-code-review-workflow", surface: "general", rationale: "profile requires independent review", priority: 50 });
     }
     const used = this.store.getUsedAgents(params.task_id);
-    let remainingDistinct = Math.max(0, state.execution_policy.max_subagents - used.size);
+    let remainingDistinct = state.execution_policy.max_subagents === "unlimited"
+      ? Number.POSITIVE_INFINITY
+      : Math.max(0, state.execution_policy.max_subagents - used.size);
     const selected: ReviewerCandidate[] = [];
     const gaps: string[] = [];
     if (mandatorySubagents) {

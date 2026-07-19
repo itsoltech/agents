@@ -25,8 +25,11 @@ export const ExecutionPolicySchema = Type.Object({
   model_control: StringEnum(["enforced", "advisory"] as const),
   reasoning_profile: StringEnum(["low", "medium", "high"] as const),
   reasoning_control: StringEnum(["enforced", "advisory"] as const),
-  max_subagents: Type.Integer({ minimum: 0, maximum: 3 }),
-  max_parallel: Type.Integer({ minimum: 0, maximum: 3 }),
+  max_subagents: Type.Union([
+    Type.Integer({ minimum: 0, maximum: 64 }),
+    Type.Literal("unlimited"),
+  ], { description: "Distinct child identities for the task. Defaults to unlimited; use a number only for an explicit user or repository ceiling." }),
+  max_parallel: Type.Integer({ minimum: 0, maximum: 10 }),
   max_review_rounds: Type.Integer({ minimum: 0, maximum: 2 }),
   stop_after: StringEnum([
     "analysis",
@@ -83,7 +86,7 @@ export const ItsolDelegateParamsSchema = Type.Object({
     operations: Type.Array(Type.String()),
   })),
   task: Type.Optional(DelegatedTaskSchema),
-  tasks: Type.Optional(Type.Array(DelegatedTaskSchema, { minItems: 1, maxItems: 3 })),
+  tasks: Type.Optional(Type.Array(DelegatedTaskSchema, { minItems: 1, maxItems: 10 })),
 });
 
 export type WorkflowState = Static<typeof WorkflowStateSchema>;
@@ -131,8 +134,9 @@ export function validateDelegation(
       "execution_policy.model_control=enforced requires a configured profile mapping for every delegated model",
     );
   }
-  if (params.execution_policy.max_parallel > params.execution_policy.max_subagents) {
-    throw new Error("execution_policy.max_parallel cannot exceed max_subagents");
+  const agentLimit = params.execution_policy.max_subagents;
+  if (agentLimit !== "unlimited" && params.execution_policy.max_parallel > agentLimit) {
+    throw new Error("execution_policy.max_parallel cannot exceed a numeric max_subagents ceiling");
   }
   if (tasks.length > params.execution_policy.max_parallel) {
     throw new Error(
@@ -145,9 +149,9 @@ export function validateDelegation(
     throw new Error("Parallel delegation cannot run the same agent identity more than once");
   }
   const allNames = new Set([...previouslyUsedAgents, ...requestedNames]);
-  if (allNames.size > params.execution_policy.max_subagents) {
+  if (agentLimit !== "unlimited" && allNames.size > agentLimit) {
     throw new Error(
-      `Delegation would use ${allNames.size} distinct agents, but max_subagents is ${params.execution_policy.max_subagents}`,
+      `Delegation would use ${allNames.size} distinct agents, but max_subagents is ${agentLimit}`,
     );
   }
 

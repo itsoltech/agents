@@ -5,10 +5,10 @@
 | Preset | Model | Reasoning | Max agents | Max parallel | Review cycles | Default stop | Escalation |
 | --- | --- | --- | ---: | ---: | ---: | --- | --- |
 | `economy` | `economy` | `low` | 0 | 0 | 1 | `requested-result` | `ask` |
-| `standard` | `balanced` | `medium` | 2 | 2 | 2 | `implementation-reviewed` | `ask` |
-| `deep` | `frontier` | `high` | 1 | 1 | 2 | `integration-validated` | `ask` |
+| `standard` | `balanced` | `medium` | unlimited | 3 | 2 | `implementation-reviewed` | `ask` |
+| `deep` | `frontier` | `high` | unlimited | 3 | 2 | `integration-validated` | `ask` |
 
-`custom` requires every field. Preset values are ceilings, not quotas. `max_review_rounds` bounds implementation/code-review loops. Planned Business, Technical, and Technical Fix artifacts use the separate `review.plan_max_rounds` repository setting (default 10 per artifact), so increasing plan quality does not force ten code-review rounds. Under `itsol-workflow-mode`, planned modes also require at least one available read-only reviewer identity and one parallel slot; `economy` is therefore intended for `direct` work unless explicitly expanded.
+`custom` requires every field. Preset values are ceilings, not quotas. `unlimited` removes the whole-task distinct-identity ceiling; `max_parallel` remains a scheduling bound, so larger agent sets run in automatic batches rather than all at once. `max_review_rounds` bounds implementation/code-review loops. Planned Business, Technical, and Technical Fix artifacts use the separate `review.plan_max_rounds` repository setting (default 10 per artifact), so increasing plan quality does not force ten code-review rounds. Under `itsol-workflow-mode`, planned modes also require at least one available read-only reviewer identity and one parallel slot; `economy` is therefore intended for `direct` work unless explicitly expanded.
 
 ## Resolution
 
@@ -24,7 +24,7 @@ Order model profiles `economy < balanced < frontier` and reasoning profiles `low
 
 If a hard user/repository model or reasoning ceiling cannot be enforced, disable child delegation. Inline work may continue only in the user-selected current session and must be reported as not cost-enforced.
 
-Automatically tighten when useful. Never increase model intent, reasoning, distinct children, parallelism, review cycles, or stop stage after resolution.
+Automatically tighten models, reasoning, parallelism, review cycles, or stop stage when useful. Do not create a numeric distinct-child ceiling from heuristics: only an explicit user instruction, restrictive preset, or repository restriction may tighten `max_subagents: unlimited`.
 
 Choose inline execution for trivial tasks, strongly sequential work, overlapping write or semantic-contract ownership, or any platform/policy combination that cannot safely support delegation. Use children only for genuinely independent work or required independent review within every ceiling.
 

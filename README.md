@@ -310,6 +310,8 @@ Komendy stanu i modeli:
 /itsol activate <task-id>
 /itsol mode governed|autonomous-planned|direct
 /itsol preset economy|standard|deep
+/itsol agents unlimited|0..64
+/itsol parallel 0..10
 /itsol reset [task-id]
 /itsol-models status
 /itsol-models reload
@@ -321,6 +323,8 @@ Komendy stanu i modeli:
 /itsol-review off
 /itsol-review rerun
 ```
+
+`standard` i `deep` domyślnie używają `max_subagents: unlimited` oraz `max_parallel: 3`: workflow może dobrać dowolną liczbę różnych specjalistów, a extension wykonuje ich automatycznie batchami do trzech procesów. Numeryczny limit całkowitej liczby agentów pojawia się wyłącznie po jawnym `/itsol agents N`, restrykcji `.itsol.md` albo wyborze restrykcyjnego `economy`. `max_parallel` ogranicza tylko jednoczesne procesy, nie całkowite pokrycie workflow.
 
 ### Automatyczna polityka `.itsol.md`
 

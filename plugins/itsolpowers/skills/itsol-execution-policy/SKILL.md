@@ -19,8 +19,8 @@ execution_policy:
   model_control: enforced | advisory
   reasoning_profile: low | medium | high
   reasoning_control: enforced | advisory
-  max_subagents: 0..3
-  max_parallel: 0..max_subagents
+  max_subagents: unlimited | 0..64
+  max_parallel: 0..10
   max_review_rounds: 0..2
   stop_after: <resolved named stage>
   budget_escalation: forbidden | ask
@@ -28,11 +28,11 @@ done_when:
   - <observable criterion with evidence>
 ```
 
-Use `standard` when no explicit or repository policy exists. Apply platform constraints and repository restrictions by tightening fields; never expand a resolved ceiling automatically. Report advisory model or reasoning control honestly.
+Use `standard` when no explicit or repository policy exists. `standard` and `deep` default to `max_subagents: unlimited`; do not invent a numeric total-agent ceiling. Keep `max_parallel: 3` as a scheduling bound, so larger specialist sets run automatically in batches. A numeric total-agent ceiling is valid only when the user, an explicitly selected restrictive preset, or repository policy requests it. Apply platform constraints and repository restrictions by tightening fields; never expand a resolved ceiling automatically. Report advisory model or reasoning control honestly.
 
 Do not set `maxTurns` or use a turn count as completion. Accept `completed` only after validating every `done_when` criterion and required evidence. Preserve `partial`, `blocked`, and `failed` results.
 
-Only the main agent delegates. Count distinct child identities, bound concurrency, keep one writer per file or semantic contract, and prohibit nested delegation. A required independent review that does not fit the policy ends incomplete; do not weaken it.
+Only the main agent delegates. Count distinct child identities, bound concurrency, keep one writer per file or semantic contract, and prohibit nested delegation. A required independent review that does not fit an explicit numeric policy ends incomplete; do not weaken it. An unlimited identity budget should select all required specialists and schedule them in bounded parallel batches without asking for budget expansion.
 
 Read:
 

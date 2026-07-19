@@ -264,6 +264,12 @@ review:
       workflow_state: { ...base.workflow_state, workflow_mode: "governed" },
       policy_context: { paths: ["infra/production/app.hcl"], operations: [] },
     }), /max_subagents to 1/);
+    assert.throws(() => repoPolicy.validateDefinition({
+      ...base,
+      workflow_state: { ...base.workflow_state, workflow_mode: "governed" },
+      execution_policy: { ...base.execution_policy, max_subagents: "unlimited" },
+      policy_context: { paths: ["infra/production/app.hcl"], operations: [] },
+    }), /max_subagents to 1/);
     repoPolicy.validateDefinition({
       ...base,
       workflow_state: { ...base.workflow_state, workflow_mode: "governed" },
@@ -580,12 +586,29 @@ review:
     await fs.promises.rm(reviewCwd, { recursive: true, force: true });
   }
 
+  store.setAgentLimit("unlimited");
+  store.setParallelLimit(3);
+  assert.equal(store.getActive()?.execution_policy.max_subagents, "unlimited");
+  assert.equal(store.getActive()?.execution_policy.max_parallel, 3);
+  store.setAgentLimit(1);
+  assert.equal(store.getActive()?.execution_policy.max_subagents, 1);
+  assert.equal(store.getActive()?.execution_policy.max_parallel, 1);
+  assert.throws(() => store.setParallelLimit(2), /exceeds max_subagents/);
+  store.setPreset("standard");
+  assert.equal(store.getActive()?.execution_policy.max_subagents, "unlimited");
+  assert.equal(store.getActive()?.execution_policy.max_parallel, 3);
+
   const economy = applyPreset(base.execution_policy, "economy");
   assert.equal(economy.model_profile, "economy");
   assert.equal(economy.max_subagents, 0);
   assert.equal(economy.max_review_rounds, 1);
+  const standard = applyPreset(base.execution_policy, "standard");
+  assert.equal(standard.max_subagents, "unlimited");
+  assert.equal(standard.max_parallel, 3);
   const deep = applyPreset(base.execution_policy, "deep");
   assert.equal(deep.model_profile, "frontier");
+  assert.equal(deep.max_subagents, "unlimited");
+  assert.equal(deep.max_parallel, 3);
   assert.equal(deep.max_review_rounds, 2);
 
   const reviewer = {
@@ -606,6 +629,10 @@ review:
       artifact_state: "draft",
     },
   }, [reviewer], byName, new Set());
+  validateDelegation({
+    ...base,
+    execution_policy: { ...base.execution_policy, max_subagents: "unlimited" },
+  }, [reviewer], byName, new Set(["itsol-self-review", "itsol-feature-implementation", "svelte-review"]));
 
   const rubberDuckReviewer = {
     agent: "itsol-self-review",

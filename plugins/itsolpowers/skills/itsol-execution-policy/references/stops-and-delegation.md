@@ -39,7 +39,7 @@ Labels start at column one, occur once, and remain ordered. `completed` cannot u
 
 ## Delegation And Review
 
-`max_subagents` counts distinct child identities for the whole run. Continuing the same identity does not increment it; a replacement does. `max_parallel` limits simultaneous children.
+`max_subagents` counts distinct child identities for the whole run only when it is numeric. The default `unlimited` value removes that identity ceiling. Continuing the same identity does not increment a numeric ceiling; a replacement does. `max_parallel` always limits simultaneous children, so unlimited identities are still scheduled in bounded batches.
 
 Only the main agent delegates. Children must not expose delegation tools, spawn agents, or invoke external agent CLIs. Use one writer per file and semantic contract.
 

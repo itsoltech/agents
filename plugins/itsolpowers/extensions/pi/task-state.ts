@@ -121,8 +121,8 @@ export function applyPreset(current: ExecutionPolicy, preset: "economy" | "stand
       preset,
       model_profile: "frontier",
       reasoning_profile: "high",
-      max_subagents: 1,
-      max_parallel: 1,
+      max_subagents: "unlimited",
+      max_parallel: 3,
       max_review_rounds: 2,
       stop_after: "integration-validated",
     };
@@ -132,8 +132,8 @@ export function applyPreset(current: ExecutionPolicy, preset: "economy" | "stand
     preset,
     model_profile: "balanced",
     reasoning_profile: "medium",
-    max_subagents: 2,
-    max_parallel: 2,
+    max_subagents: "unlimited",
+    max_parallel: 3,
     max_review_rounds: 2,
     stop_after: "implementation-reviewed",
   };
@@ -408,6 +408,73 @@ export class TaskStateStore {
     return state;
   }
 
+  setAgentLimit(limit: number | "unlimited"): TaskRuntimeState {
+    const state = this.requireActive();
+    if (state.active_agents.length) throw new Error("Cannot change agent limits while delegated agents are active");
+    if (limit !== "unlimited" && (!Number.isInteger(limit) || limit < 0 || limit > 64)) {
+      throw new Error("max_subagents must be unlimited or an integer from 0 to 64");
+    }
+    const maxParallel = limit === "unlimited" ? state.execution_policy.max_parallel : Math.min(limit, state.execution_policy.max_parallel);
+    const executionPolicy: ExecutionPolicy = {
+      ...state.execution_policy,
+      max_subagents: limit,
+      max_parallel: maxParallel,
+      policy_sources: {
+        base: "explicit-user-task-instruction",
+        constraints: [...new Set([...state.execution_policy.policy_sources.constraints, `max_subagents=${limit}`])],
+      },
+    };
+    this.definitionValidator?.({
+      task_id: state.task_id,
+      workflow_state: state.workflow_state,
+      execution_policy: executionPolicy,
+      done_when: state.done_when,
+      policy_context: state.policy_context,
+    });
+    state.execution_policy = executionPolicy;
+    state.completion = undefined;
+    state.review_verdict = undefined;
+    state.review_runs = 0;
+    state.completion_attempts = 0;
+    state.last_completion_problems = [];
+    state.updated_at = Date.now();
+    this.persist();
+    this.updateHud();
+    return state;
+  }
+
+  setParallelLimit(limit: number): TaskRuntimeState {
+    const state = this.requireActive();
+    if (state.active_agents.length) throw new Error("Cannot change parallel limits while delegated agents are active");
+    if (!Number.isInteger(limit) || limit < 0 || limit > 10) throw new Error("max_parallel must be an integer from 0 to 10");
+    if (state.execution_policy.max_subagents !== "unlimited" && limit > state.execution_policy.max_subagents) {
+      throw new Error(`max_parallel=${limit} exceeds max_subagents=${state.execution_policy.max_subagents}`);
+    }
+    const executionPolicy: ExecutionPolicy = {
+      ...state.execution_policy,
+      max_parallel: limit,
+      policy_sources: {
+        base: "explicit-user-task-instruction",
+        constraints: [...new Set([...state.execution_policy.policy_sources.constraints, `max_parallel=${limit}`])],
+      },
+    };
+    this.definitionValidator?.({
+      task_id: state.task_id,
+      workflow_state: state.workflow_state,
+      execution_policy: executionPolicy,
+      done_when: state.done_when,
+      policy_context: state.policy_context,
+    });
+    state.execution_policy = executionPolicy;
+    state.completion = undefined;
+    state.completion_attempts = 0;
+    state.last_completion_problems = [];
+    state.updated_at = Date.now();
+    this.persist();
+    this.updateHud();
+    return state;
+  }
+
   setPreset(preset: "economy" | "standard" | "deep"): TaskRuntimeState {
     const state = this.requireActive();
     const executionPolicy = applyPreset(state.execution_policy, preset);
@@ -438,7 +505,8 @@ export class TaskStateStore {
     const completion = state.completion
       ? ` · ${state.completion.status}`
       : state.completion_attempts ? ` · gate rejected ${state.completion_attempts}` : "";
-    return `ITSOL v${this.pluginVersion}${completion} · ${state.workflow_state.workflow_mode} · ${policy.preset} · agents ${state.used_agents.length}/${policy.max_subagents}${active} · $${totalCost.toFixed(4)}`;
+    const agentLimit = policy.max_subagents === "unlimited" ? "∞" : String(policy.max_subagents);
+    return `ITSOL v${this.pluginVersion}${completion} · ${state.workflow_state.workflow_mode} · ${policy.preset} · agents ${state.used_agents.length}/${agentLimit}${active} · $${totalCost.toFixed(4)}`;
   }
 
   formatDetails(state = this.getActive()): string {
@@ -449,7 +517,7 @@ export class TaskStateStore {
       `Task: ${state.task_id}`,
       `Workflow: ${state.workflow_state.workflow_mode} (${state.workflow_state.artifact_state}, ${state.workflow_state.execution_mode})`,
       `Policy: ${state.execution_policy.preset} · ${state.execution_policy.model_profile}/${state.execution_policy.reasoning_profile}`,
-      `Agents: ${state.used_agents.length}/${state.execution_policy.max_subagents} used, ${state.active_agents.length} active`,
+      `Agents: ${state.used_agents.length}/${state.execution_policy.max_subagents === "unlimited" ? "∞" : state.execution_policy.max_subagents} used, ${state.active_agents.length} active`,
       `Delegations: ${state.delegation_count} · results: ${statuses}`,
       `Review runs: ${state.review_runs} · verdict: ${state.review_verdict?.verdict ?? "none"} · completion attempts: ${state.completion_attempts}`,
       `Completion: ${state.completion ? `${state.completion.status} at ${state.completion.achieved_stage}` : "not accepted"}`,
@@ -536,7 +604,7 @@ export function registerTaskState(pi: ExtensionAPI, store: TaskStateStore): void
   });
 
   pi.registerCommand("itsol", {
-    description: "Show or update ITSOL task state: status, activate, mode, preset, reset",
+    description: "Show or update ITSOL task state: status, activate, mode, preset, agents, parallel, reset",
     handler: async (args, ctx) => {
       const [action = "status", value] = args.trim().split(/\s+/, 2);
       try {
@@ -546,8 +614,14 @@ export function registerTaskState(pi: ExtensionAPI, store: TaskStateStore): void
           store.setMode(value as WorkflowState["workflow_mode"]);
         } else if (action === "preset" && ["economy", "standard", "deep"].includes(value)) {
           store.setPreset(value as "economy" | "standard" | "deep");
+        } else if (action === "agents" && value === "unlimited") {
+          store.setAgentLimit("unlimited");
+        } else if (action === "agents" && /^\d+$/.test(value ?? "")) {
+          store.setAgentLimit(Number(value));
+        } else if (action === "parallel" && /^\d+$/.test(value ?? "")) {
+          store.setParallelLimit(Number(value));
         } else if (action !== "status") {
-          throw new Error("Usage: /itsol status | activate <task-id> | mode <mode> | preset <preset> | reset [task-id]");
+          throw new Error("Usage: /itsol status | activate <task-id> | mode <mode> | preset <preset> | agents <unlimited|0..64> | parallel <0..10> | reset [task-id]");
         }
         if (ctx.hasUI) ctx.ui.notify(store.formatDetails(), "info");
       } catch (error) {
