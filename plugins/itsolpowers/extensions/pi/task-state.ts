@@ -13,6 +13,20 @@ import {
 const ENTRY_TYPE = "itsol-task-state";
 const STATE_VERSION = 1;
 
+export type AdministrativeRequestKind = "commit" | "inspect";
+
+export function classifyAdministrativeRequest(prompt: string): AdministrativeRequestKind | undefined {
+  const normalized = prompt.trim().toLowerCase().replace(/\s+/g, " ");
+  if (!normalized || normalized.length > 500) return undefined;
+  const hasAdditionalEngineeringAction = /\b(?:and|then|oraz|następnie)\s+(?:implement|fix|modify|edit|refactor|add|usuń|napraw|zmień|dodaj)\b/.test(normalized);
+  if (hasAdditionalEngineeringAction) return undefined;
+  if (/^(?:please\s+)?(?:commit\b|create\s+(?:a\s+)?commit\b|make\s+(?:a\s+)?commit\b|zacommituj\b|zrób\s+commit\b|wykonaj\s+commit\b)/.test(normalized)) {
+    return /\b(?:and|then|oraz|następnie)\s+(?:push|tag|release|deploy|publish)\b/.test(normalized) ? undefined : "commit";
+  }
+  if (/^(?:(?:please|show|check|inspect|display|pokaż|sprawdź)\s+)?(?:git\s+)?(?:status|diff|log)\b/.test(normalized)) return "inspect";
+  return undefined;
+}
+
 export interface DelegationAccountingResult {
   agent: string;
   role?: "explore" | "plan" | "implement" | "review";
@@ -534,6 +548,7 @@ export class TaskStateStore {
     return [
       "## Active ITSOL task state (extension-managed)",
       "Use this state as the canonical task state. Update it with `itsol_task_state` instead of silently changing fields.",
+      ...(state.completion ? ["A later commit-only or repository-inspection request is an administrative follow-up to this completed task, not a new engineering task. Reuse this state and its evidence; do not create replacement workflow/planning/completion state solely for that operation."] : []),
       "```json",
       JSON.stringify({
         task_id: state.task_id,

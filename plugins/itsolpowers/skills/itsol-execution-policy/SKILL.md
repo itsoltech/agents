@@ -5,6 +5,8 @@ description: "Resolve and preserve cost-aware model, reasoning, delegation, para
 
 # ITSOL Execution Policy
 
+A commit-only or repository-inspection follow-up for an already-produced slice reuses the preceding task's policy and evidence. Do not create a new execution policy, agent budget, review cycle, or completion gate solely for that bounded administrative operation.
+
 Resolve this policy after `itsol-workflow-mode`. Keep resource limits independent from decision authority and planning gates.
 
 Record and preserve:

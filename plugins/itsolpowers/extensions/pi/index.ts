@@ -10,7 +10,7 @@ import { ModelRouter, registerModelRouter } from "./model-router.ts";
 import { registerPlanReview } from "./plan-review.ts";
 import { registerRepoPolicy, RepoPolicyManager } from "./repo-policy.ts";
 import { registerReviewOrchestrator } from "./review-orchestrator.ts";
-import { registerTaskState, TaskStateStore } from "./task-state.ts";
+import { classifyAdministrativeRequest, registerTaskState, TaskStateStore } from "./task-state.ts";
 
 const extensionDirectory = path.dirname(fileURLToPath(import.meta.url));
 const pluginRoot = path.resolve(extensionDirectory, "../..");
@@ -22,6 +22,7 @@ const BOOTSTRAP_MARKER = 'id="itsolpowers-pi-bootstrap"';
 
 export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
   const agents = discoverItsolAgents(agentsDirectory);
+  let administrativeToolsToRestore: string[] | undefined;
   const resetHandlers: Array<() => void> = [];
   let pluginVersion = "unknown";
   try {
@@ -60,6 +61,7 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
   registerItsolDelegate(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy, resetHandlers);
 
   pi.on("session_start", (_event, ctx) => {
+    administrativeToolsToRestore = undefined;
     for (const reset of resetHandlers) reset();
     repoPolicy.startSession(ctx);
     modelRouter.startSession(ctx);
@@ -84,13 +86,34 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
 
   pi.on("agent_settled", () => {
     taskState.flush();
+    if (administrativeToolsToRestore) {
+      pi.setActiveTools([...new Set([...pi.getActiveTools(), ...administrativeToolsToRestore])]);
+      administrativeToolsToRestore = undefined;
+    }
   });
 
   pi.on("before_agent_start", (event) => {
+    const administrativeFollowUp = classifyAdministrativeRequest(event.prompt);
+    if (administrativeFollowUp && !administrativeToolsToRestore) {
+      administrativeToolsToRestore = pi.getActiveTools();
+      pi.setActiveTools(administrativeToolsToRestore.filter((tool) => !tool.startsWith("itsol_")));
+    }
     const loadedSkills = event.systemPromptOptions.skills ?? [];
     const router = loadedSkills.find((skill) => skill.name === "using-itsolpowers");
 
     const parts: string[] = [];
+    if (administrativeFollowUp) {
+      const action = administrativeFollowUp === "commit"
+        ? "Inspect git status and the exact diff, identify the already-produced coherent slice, stage only intended files, exclude unrelated/generated artifacts, use Angular commit convention, do not amend unless explicitly requested, create the local commit, then report the hash and remaining worktree status."
+        : "Perform only the requested read-only repository inspection and report the relevant status, diff, or log evidence without staging, committing, or editing files.";
+      parts.push([
+        "## ITSOL administrative fast path (extension-enforced for this turn)",
+        `This is a ${administrativeFollowUp}-only follow-up, not a new engineering task. ITSOL workflow, initiative, delegation, plan-review, code-review orchestration, and completion tools are disabled for this turn.`,
+        "Do not create a Business/Technical/Fix Plan, a new task state, or a review round.",
+        action,
+        "Reuse existing scope and verification evidence. If scope is ambiguous or an operation fails, report the focused blocker or ask one scoped question instead of starting a planning workflow.",
+      ].join("\n"));
+    }
     if (router && !event.systemPrompt.includes(BOOTSTRAP_MARKER)) {
       parts.push(
         bootstrap,

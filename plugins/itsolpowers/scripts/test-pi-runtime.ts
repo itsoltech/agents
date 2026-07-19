@@ -14,11 +14,19 @@ import { validateDelegation, type ItsolDelegateParams } from "../extensions/pi/p
 import { RepoPolicyManager } from "../extensions/pi/repo-policy.ts";
 import { parsePlanReviewVerdict, PlanReviewOrchestrator } from "../extensions/pi/plan-review.ts";
 import { ReviewOrchestrator } from "../extensions/pi/review-orchestrator.ts";
-import { applyPreset, TaskStateStore } from "../extensions/pi/task-state.ts";
+import { applyPreset, classifyAdministrativeRequest, TaskStateStore } from "../extensions/pi/task-state.ts";
 
 const pluginRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
+  assert.equal(classifyAdministrativeRequest("commit"), "commit");
+  assert.equal(classifyAdministrativeRequest("Please commit the verified changes with message feat(app): finish flow"), "commit");
+  assert.equal(classifyAdministrativeRequest("zacommituj obecny zakres"), "commit");
+  assert.equal(classifyAdministrativeRequest("git status"), "inspect");
+  assert.equal(classifyAdministrativeRequest("show diff"), "inspect");
+  assert.equal(classifyAdministrativeRequest("commit and push"), undefined);
+  assert.equal(classifyAdministrativeRequest("commit and then fix the failing endpoint"), undefined);
+  assert.equal(classifyAdministrativeRequest("implement commit handling"), undefined);
   assert.equal(parsePlanReviewVerdict("Rubber Duck Verdict: Ready", "ready for approval"), "ready for approval");
   assert.equal(parsePlanReviewVerdict("**Verdict:** changes required", "ready for execution"), "not ready for execution");
   assert.equal(parsePlanReviewVerdict("Plan Review Verdict: ready for execution", "ready for execution"), "ready for execution");

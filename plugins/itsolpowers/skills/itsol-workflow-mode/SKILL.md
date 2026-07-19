@@ -5,7 +5,7 @@ description: "Select and preserve the ITSOL engineering workflow mode. Use at ta
 
 # ITSOL Workflow Mode
 
-Resolve the workflow mode before applying planning or implementation gates. Treat this skill as the canonical authority contract; downstream skills must not redefine different mode semantics. Delivery scale is orthogonal: broad multi-phase work uses `itsol-initiative-delivery` with `delivery_scope: initiative`, normally layered on `autonomous-planned`, rather than inventing a fourth authority mode.
+Resolve the workflow mode before applying planning or implementation gates. Do not resolve or restart a mode for an administrative follow-up that only inspects repository state or locally commits an already-produced coherent slice; preserve the preceding task state and perform the bounded operation directly. If that request also introduces code, configuration, product, or behavior changes, resolve mode only for those new changes. Treat this skill as the canonical authority contract; downstream skills must not redefine different mode semantics. Delivery scale is orthogonal: broad multi-phase work uses `itsol-initiative-delivery` with `delivery_scope: initiative`, normally layered on `autonomous-planned`, rather than inventing a fourth authority mode.
 
 ## Resolve The Mode
 

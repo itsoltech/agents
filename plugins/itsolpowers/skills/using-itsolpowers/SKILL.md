@@ -7,6 +7,21 @@ description: "ITSOL router: planning, tech context, agent-browser dogfood, TDD, 
 
 Use this skill as the router for ITSOL engineering work. The goal is to load the smallest useful set of skills, not every checklist.
 
+## Administrative Fast Path
+
+Classify the request before resolving workflow mode. A request that only asks to inspect repository state or locally commit an already-produced coherent slice is an administrative follow-up, not a new engineering task. Examples: `git status`, show the current diff/log, stage the verified files from the just-completed task, or `commit`.
+
+For this fast path:
+
+- do not create Business, Technical, Technical Fix, or Initiative artifacts;
+- do not create replacement workflow/execution task state, invoke plan review, delegate, or run the task completion gate solely for the administrative action;
+- preserve and reuse the preceding task's scope, decisions, review, and verification evidence;
+- inspect the exact diff and worktree, stage only intended files, exclude unrelated or generated artifacts, use Angular convention, and never amend unless explicitly requested;
+- if the intended slice is ambiguous or a commit hook fails, ask/report that focused issue rather than escalating into governed planning;
+- keep push, tag, release, deployment, and other externally consequential actions separately authorized.
+
+If the request also asks for code, product, configuration, or behavior changes, route only those changes through the normal workflow; the eventual commit itself still does not need a second plan.
+
 ## Routing Rule
 
 Before refining requirements, implementing, debugging, reviewing, planning, or handing off an ITSOL task:
@@ -68,7 +83,7 @@ Validate every subagent response against its task packet and the canonical respo
 
 ## Commit Convention
 
-When creating commits for ITSOL work, use Angular commit convention. Keep commits focused and scoped to the completed slice:
+When creating commits for ITSOL work, use Angular commit convention. A separately authorized commit-only follow-up uses the Administrative Fast Path above and must not restart planning or review for the already-verified slice. Keep commits focused and scoped to the completed slice:
 
 - `feat(scope): add customer export filter`
 - `fix(scope): handle missing tenant permission`
