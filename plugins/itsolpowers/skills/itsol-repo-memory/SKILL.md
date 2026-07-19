@@ -22,6 +22,8 @@ Use `.itsol.md` as repo-level operational memory for stable facts that should gu
 
 ## Init Mode
 
+Creating or improving only `.itsol.md` is a bounded repository-policy administration workflow, not feature implementation. Do not create Business/Technical Plans, initiative state, delegated code review, application QA, or a completion gate solely for repo-memory initialization. Use lightweight inspection, user confirmation, extension/YAML validation, and one focused inline self-review of the resulting policy; then report and stop. Do not route the whole working tree through implementation review, and do not include unrelated modified/untracked files.
+
 When asked to create or initialize `.itsol.md`:
 
 1. Inspect the repo structure and detect candidate projects/apps/packages/services.

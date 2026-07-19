@@ -9,12 +9,12 @@ Use this skill as the router for ITSOL engineering work. The goal is to load the
 
 ## Administrative Fast Path
 
-Classify the request before resolving workflow mode. A request that only asks to inspect repository state or locally commit an already-produced coherent slice is an administrative follow-up, not a new engineering task. Examples: `git status`, show the current diff/log, stage the verified files from the just-completed task, or `commit`.
+Classify the request before resolving workflow mode. A request that only asks to inspect repository state, initialize/update `.itsol.md`, or locally commit an already-produced coherent slice is an administrative operation, not a new engineering task. Examples: `/itsol-init`, repo-memory policy discovery, `git status`, current diff/log, staging the verified files from the just-completed task, or `commit`.
 
 For this fast path:
 
-- do not create Business, Technical, Technical Fix, or Initiative artifacts;
-- do not create replacement workflow/execution task state, invoke plan review, delegate, or run the task completion gate solely for the administrative action;
+- do not create Business, Technical, Technical Fix, or Initiative artifacts; `.itsol.md` itself is the only expected artifact for repo-memory initialization;
+- do not create replacement workflow/execution task state, invoke delegated code review/application QA, or run the task completion gate solely for the administrative action; repo-memory init uses focused inline policy self-review and parser validation;
 - preserve and reuse the preceding task's scope, decisions, review, and verification evidence;
 - inspect the exact diff and worktree, stage only intended files, exclude unrelated or generated artifacts, use Angular convention, and never amend unless explicitly requested;
 - if the intended slice is ambiguous or a commit hook fails, ask/report that focused issue rather than escalating into governed planning;

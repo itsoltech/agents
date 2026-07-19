@@ -634,9 +634,19 @@ export class ReviewOrchestrator {
     const covered = new Set(params.covered_surfaces);
     const coverageGaps = plan.requiredCoverage.filter((surface) => !covered.has(surface));
     coverageGaps.push(...params.unverified, ...plan.coverageGaps);
+    const reviewerResult = (agent: string) => {
+      const packet = plan.delegations.find((delegation) => delegation.agent === agent);
+      if (packet?.work_item_id) {
+        const exact = state.agent_results[`${agent}:${packet.work_item_id}`];
+        if (exact) return exact;
+      }
+      return Object.values(state.agent_results)
+        .filter((result) => result.agent === agent && result.role === "review")
+        .sort((left, right) => right.updated_at - left.updated_at)[0];
+    };
     const unresolvedReviewers = plan.selectedReviewers
-      .filter((reviewer) => state.agent_results[reviewer.agent]?.status !== "completed")
-      .map((reviewer) => `${reviewer.surface}: ${reviewer.agent}=${state.agent_results[reviewer.agent]?.status ?? "missing"}`);
+      .filter((reviewer) => reviewerResult(reviewer.agent)?.status !== "completed")
+      .map((reviewer) => `${reviewer.surface}: ${reviewer.agent}=${reviewerResult(reviewer.agent)?.status ?? "missing"}`);
     coverageGaps.push(...unresolvedReviewers);
 
     let verdict: "approve" | "changes-requested" | "blocked" = "approve";

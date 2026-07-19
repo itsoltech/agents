@@ -78,7 +78,7 @@ assert.match(bootstrap, /`itsol_complete`/);
 assert.match(bootstrap, /`itsol_review_plan`/);
 assert.match(bootstrap, /`itsol_review_verdict`/);
 assert.match(bootstrap, /`itsol_plan_review`/);
-assert.match(bootstrap, /commit-only and repository-inspection follow-ups/);
+assert.match(bootstrap, /commit-only, repository inspection, and `.itsol\.md` initialization/);
 assert.match(bootstrap, /effective profile is `off`/);
 const piIndexSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'index.ts'), 'utf8');
 assert.match(piIndexSource, /classifyAdministrativeRequest/);
@@ -102,6 +102,8 @@ assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'repo-policy.t
 const repoPolicySource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'repo-policy.ts'), 'utf8');
 assert.match(repoPolicySource, /registerCommand\(\"itsol-init\"/);
 assert.match(repoPolicySource, /initializeMinimalPolicy/);
+assert.match(repoPolicySource, /repository-policy administration, not feature implementation/);
+assert.match(repoPolicySource, /do not create itsol_task_state/);
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'task-state.ts')));
 const delegationPolicySource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'policy.ts'), 'utf8');
 assert.doesNotMatch(delegationPolicySource, /same agent identity more than once/);

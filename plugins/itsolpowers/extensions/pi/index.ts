@@ -114,7 +114,9 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     if (administrativeFollowUp) {
       const action = administrativeFollowUp === "commit"
         ? "Inspect git status and the exact diff, identify the already-produced coherent slice, stage only intended files, exclude unrelated/generated artifacts, use Angular commit convention, do not amend unless explicitly requested, create the local commit, then report the hash and remaining worktree status."
-        : "Perform only the requested read-only repository inspection and report the relevant status, diff, or log evidence without staging, committing, or editing files.";
+        : administrativeFollowUp === "policy-init"
+          ? "Run bounded repo-memory discovery. Inspect only lightweight manifests, propose policy and ask material unknowns; after confirmation create/update only .itsol.md, validate YAML/policy inline, report, and stop. Never route unrelated worktree files into review."
+          : "Perform only the requested read-only repository inspection and report the relevant status, diff, or log evidence without staging, committing, or editing files.";
       parts.push([
         "## ITSOL administrative fast path (extension-enforced for this turn)",
         `This is a ${administrativeFollowUp}-only follow-up, not a new engineering task. ITSOL workflow, initiative, delegation, plan-review, code-review orchestration, and completion tools are disabled for this turn.`,

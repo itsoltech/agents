@@ -13,11 +13,14 @@ import {
 const ENTRY_TYPE = "itsol-task-state";
 const STATE_VERSION = 1;
 
-export type AdministrativeRequestKind = "commit" | "inspect";
+export type AdministrativeRequestKind = "commit" | "inspect" | "policy-init";
 
 export function classifyAdministrativeRequest(prompt: string): AdministrativeRequestKind | undefined {
   const normalized = prompt.trim().toLowerCase().replace(/\s+/g, " ");
-  if (!normalized || normalized.length > 500) return undefined;
+  if (!normalized) return undefined;
+  if (normalized.length <= 2_000 && (/^(?:initialize|create|improve|update).{0,120}(?:\.itsol\.md|itsol repository policy)/.test(normalized)
+    || /^(?:utwórz|zainicjalizuj|ulepsz|zaktualizuj).{0,120}\.itsol\.md/.test(normalized))) return "policy-init";
+  if (normalized.length > 500) return undefined;
   const hasAdditionalEngineeringAction = /\b(?:and|then|oraz|następnie)\s+(?:implement|fix|modify|edit|refactor|add|usuń|napraw|zmień|dodaj)\b/.test(normalized);
   if (hasAdditionalEngineeringAction) return undefined;
   if (/^(?:please\s+)?(?:commit\b|create\s+(?:a\s+)?commit\b|make\s+(?:a\s+)?commit\b|zacommituj\b|zrób\s+commit\b|wykonaj\s+commit\b)/.test(normalized)) {

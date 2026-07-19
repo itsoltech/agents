@@ -25,6 +25,7 @@ export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
   assert.equal(classifyAdministrativeRequest("zacommituj obecny zakres"), "commit");
   assert.equal(classifyAdministrativeRequest("git status"), "inspect");
   assert.equal(classifyAdministrativeRequest("show diff"), "inspect");
+  assert.equal(classifyAdministrativeRequest("Initialize or improve the root .itsol.md through the ITSOL repo-memory workflow"), "policy-init");
   assert.equal(classifyAdministrativeRequest("commit and push"), undefined);
   assert.equal(classifyAdministrativeRequest("commit and then fix the failing endpoint"), undefined);
   assert.equal(classifyAdministrativeRequest("implement commit handling"), undefined);
@@ -692,6 +693,7 @@ review:
     reviewStore.finishDelegation("review-fixture", plan.selectedReviewers.map((item: any) => item.agent),
       plan.selectedReviewers.map((item: any) => ({
         agent: item.agent,
+        workItemId: plan.delegations.find((packet: any) => packet.agent === item.agent)?.work_item_id,
         role: "review",
         status: "completed",
         usage: { input: 10, output: 5, cost: 0.001 },
@@ -748,6 +750,7 @@ review:
     reviewStore.finishDelegation("review-fixture", secondPlan.selectedReviewers.map((item: any) => item.agent),
       secondPlan.selectedReviewers.map((item: any) => ({
         agent: item.agent,
+        workItemId: secondPlan.delegations.find((packet: any) => packet.agent === item.agent)?.work_item_id,
         role: "review",
         status: "completed",
         usage: { input: 8, output: 4, cost: 0.001 },

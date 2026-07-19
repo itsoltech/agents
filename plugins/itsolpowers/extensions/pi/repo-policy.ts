@@ -962,7 +962,7 @@ export function registerRepoPolicy(pi: ExtensionAPI, manager: RepoPolicyManager)
     handler: async (args, ctx) => {
       const action = args.trim() || "minimal";
       if (action === "guided") {
-        pi.sendUserMessage("Initialize or improve the root .itsol.md through the ITSOL repo-memory workflow. Inspect the repository and project manifests, propose the monorepo map, TDD/verification support, review and QA policy, ask only for material unknowns that repository evidence cannot answer, then write the file after confirmation. Preserve an existing file and update it rather than replacing it blindly.");
+        pi.sendUserMessage("Initialize or improve the root .itsol.md through the bounded ITSOL repo-memory init workflow. This is repository-policy administration, not feature implementation: do not create itsol_task_state, Business/Technical plans, initiative state, delegated code review, QA runs, or an itsol_complete gate solely for this command. Inspect only lightweight repository/project manifests, propose the monorepo map plus TDD/verification/review/QA policy, and ask only material unknowns repository evidence cannot answer. After confirmation, create or carefully update .itsol.md, validate its YAML with the extension policy parser and a focused inline self-review, report the result, and stop. Preserve existing content and unrelated worktree files.");
         return;
       }
       if (action !== "minimal") {

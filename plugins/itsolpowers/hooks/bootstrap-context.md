@@ -4,7 +4,7 @@ You have ITSOL Powers.
 For every ITSOL engineering request:
 
 1. Load and follow `itsolpowers:using-itsolpowers` as the top-level router.
-2. First classify commit-only and repository-inspection follow-ups. For an already-produced coherent slice, reuse prior scope and evidence and perform the bounded administrative operation directly: no new workflow/execution state, plans, delegation, review cycle, or completion gate. Inspect exact scope, stage only intended files, use Angular convention, and keep push/tag/release/deploy separately authorized.
+2. Treat commit-only, repository inspection, and `.itsol.md` initialization as bounded administration: no new engineering state, plans, delegation, code-review/QA cycle, or completion gate. Repo init creates only `.itsol.md` and validates it inline. Commits reuse prior evidence; external actions remain separate.
 3. If root `.itsol.md` exists, or the user asks to create, inspect, or update it, load `itsolpowers:itsol-repo-memory` before routing and apply root plus most-specific project policy.
 4. Load `itsolpowers:itsol-workflow-mode` before functional, bugfix, planning, implementation, or delegation gates. Resolve `governed`, `autonomous-planned`, or `direct` from platform rules, repository restrictions, explicit task choice, repository default, then `governed`. Preserve all seven workflow fields.
    Required keys: `workflow_mode`, `mode_source`, `decision_authority`, `scope`, `artifact_state`, `execution_mode`, `protected_constraints`. Valid artifact states include `draft`, `approved`, `ready-for-execution`, and `not-required`; execution may be `pending`, `inline`, `subagents`, or `auto`.
