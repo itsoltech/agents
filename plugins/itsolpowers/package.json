@@ -43,7 +43,7 @@
     "test:subagent-stop": "node ./scripts/test-subagent-stop.mjs",
     "test:opencode-adapter": "node ./scripts/test-opencode-adapter.mjs",
     "test:pi-adapter": "node ./scripts/test-pi-adapter.mjs",
-    "test:pi-runtime": "pi --offline -e ./scripts/test-pi-runtime.ts --list-models",
+    "test:pi-runtime": "pi --offline --no-extensions -e ./scripts/test-pi-runtime.ts -p '/itsol-test-pi-runtime'",
     "test:execution-policy": "node ./scripts/test-execution-policy.mjs",
     "test:codex-agent-setup": "node ./scripts/test-codex-agent-setup.mjs"
   }

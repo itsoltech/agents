@@ -247,7 +247,7 @@ function parsePolicyYaml(source: string): Record<string, unknown> {
   let index = 0;
   while (index < lines.length) {
     const root = lines[index];
-    const rootMatch = root.text.match(/^(workflow|execution|review):\s*$/);
+    const rootMatch = root.text.match(/^(workflow|execution|review|qa):\s*$/);
     if (!rootMatch || root.indent !== 0) {
       index++;
       continue;

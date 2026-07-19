@@ -98,6 +98,17 @@ function expectedVerdict(mode: "governed" | "autonomous-planned" | "direct"): "r
 }
 
 export function parsePlanReviewVerdict(output: string, expected: "ready for approval" | "ready for execution"): PlanVerdict {
+  for (const rawLine of output.split(/\r?\n/)) {
+    const line = rawLine.replaceAll("**", "").trim();
+    const match = line.match(/^(?:(?:Plan Review|Rubber Duck)\s*)?Verdict:\s*(not ready for approval|not ready for execution|ready for approval|ready for execution|changes required|not ready|ready|pass|fail)\s*[.!]?$/i);
+    if (!match) continue;
+    const value = match[1].toLowerCase();
+    if (["ready", "pass"].includes(value)) return expected;
+    if (["changes required", "not ready", "fail"].includes(value)) {
+      return expected === "ready for approval" ? "not ready for approval" : "not ready for execution";
+    }
+    return value as PlanVerdict;
+  }
   const explicit = output.match(/^\s*(?:\*\*)?(?:Plan Review|Rubber Duck)?\s*Verdict(?:\*\*)?:\s*(?:\*\*)?(not ready for approval|not ready for execution|ready for approval|ready for execution)(?:\*\*)?\s*[.!]?\s*$/im);
   if (explicit?.[1]) return explicit[1].toLowerCase() as PlanVerdict;
   const normalized = output.toLowerCase();

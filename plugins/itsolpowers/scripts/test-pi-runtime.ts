@@ -19,7 +19,7 @@ import { applyPreset, classifyAdministrativeRequest, TaskStateStore } from "../e
 
 const pluginRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
+export async function runPiRuntimeFixtures(_pi: ExtensionAPI): Promise<void> {
   assert.equal(classifyAdministrativeRequest("commit"), "commit");
   assert.equal(classifyAdministrativeRequest("Please commit the verified changes with message feat(app): finish flow"), "commit");
   assert.equal(classifyAdministrativeRequest("zacommituj obecny zakres"), "commit");
@@ -936,4 +936,12 @@ review:
     }, [writer, reviewer], byName, new Set()),
     /max_parallel/,
   );
+  console.log("pi runtime fixtures: PASS");
+}
+
+export default function registerPiRuntimeFixtures(pi: ExtensionAPI): void {
+  pi.registerCommand("itsol-test-pi-runtime", {
+    description: "Run ITSOL Powers Pi runtime fixtures",
+    handler: async () => runPiRuntimeFixtures(pi),
+  });
 }
