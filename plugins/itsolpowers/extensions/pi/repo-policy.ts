@@ -580,6 +580,74 @@ function pathMatches(value: string, pattern: string): boolean {
   return new RegExp(`^${regex}(?:/.*)?$`).test(normalizedValue);
 }
 
+export function defaultItsolPolicyTemplate(reviewedAt = new Date().toISOString().slice(0, 10)): string {
+  return `# ITSOL Repository Notes
+
+Last reviewed: ${reviewedAt}
+Maintainers: unknown
+Repository type: unknown
+
+## Workflow
+
+\`\`\`yaml
+workflow:
+  default_mode: governed
+  allowed_modes: [governed, autonomous-planned, direct]
+  restrictions: []
+\`\`\`
+
+## Execution
+
+\`\`\`yaml
+execution:
+  default_preset: standard
+  restrictions: []
+\`\`\`
+
+## Review
+
+\`\`\`yaml
+review:
+  default_profile: balanced
+  allowed_profiles: [off, poc, balanced, strict]
+  trigger: final
+  delegation: risk-based
+  auto_rereview: after-fixes
+  max_rounds: 2
+  plan_max_rounds: 10
+  restrictions: []
+\`\`\`
+
+## QA
+
+\`\`\`yaml
+qa:
+  profile: automatic
+  max_cycles: 10
+  restrictions: []
+\`\`\`
+
+## Monorepo Map
+
+| Path | Type | Stack | TDD mode | Verification |
+| --- | --- | --- | --- | --- |
+| \`.\` | unknown | unknown | unknown | unknown |
+
+## Verification Commands
+
+- Unknown — inspect project configuration before running repository-wide commands.
+
+## Agent Workflow Notes
+
+- Use repository evidence and the most-specific project policy.
+- Keep production deployment and other protected actions separately authorized.
+
+## Known Constraints
+
+- Unknown.
+`;
+}
+
 const REVIEW_PROFILE_DEFAULTS: Record<ReviewProfile, Omit<ResolvedReviewPolicy, "profile" | "allowed_profiles" | "plan_max_rounds" | "sources">> = {
   off: { trigger: "manual", delegation: "never", auto_rereview: "never", max_rounds: 0 },
   poc: { trigger: "final", delegation: "never", auto_rereview: "never", max_rounds: 1 },
@@ -755,6 +823,16 @@ export class RepoPolicyManager {
     }
   }
 
+  initializeMinimalPolicy(): { created: boolean; filePath: string } {
+    if (!this.repoRoot) throw new Error("Repository policy manager has no active session");
+    const filePath = path.join(this.repoRoot, ".itsol.md");
+    if (fs.existsSync(filePath)) return { created: false, filePath };
+    fs.writeFileSync(filePath, defaultItsolPolicyTemplate(), { encoding: "utf8", flag: "wx" });
+    this.reload();
+    this.assertValid();
+    return { created: true, filePath };
+  }
+
   validateDelegation(definition: TaskStateDefinition, tasks: DelegatedTask[]): void {
     const paths = tasks.flatMap((task) => [...task.read_scope, ...task.write_scope]);
     const operations = tasks.flatMap((task) => task.operations ?? []);
@@ -858,6 +936,35 @@ export class RepoPolicyManager {
 }
 
 export function registerRepoPolicy(pi: ExtensionAPI, manager: RepoPolicyManager): void {
+  pi.registerCommand("itsol-init", {
+    description: "Create a safe root .itsol.md scaffold, or start guided repository-policy discovery",
+    handler: async (args, ctx) => {
+      const action = args.trim() || "minimal";
+      if (action === "guided") {
+        pi.sendUserMessage("Initialize or improve the root .itsol.md through the ITSOL repo-memory workflow. Inspect the repository and project manifests, propose the monorepo map, TDD/verification support, review and QA policy, ask only for material unknowns that repository evidence cannot answer, then write the file after confirmation. Preserve an existing file and update it rather than replacing it blindly.");
+        return;
+      }
+      if (action !== "minimal") {
+        if (ctx.hasUI) ctx.ui.notify("Usage: /itsol-init [minimal|guided]", "error");
+        return;
+      }
+      try {
+        const result = manager.initializeMinimalPolicy();
+        if (ctx.hasUI) {
+          ctx.ui.notify(
+            result.created
+              ? `Created ${result.filePath}. Defaults: governed, standard, balanced review, automatic QA. Replace unknown project facts when known.`
+              : `${result.filePath} already exists; nothing was overwritten. Use /itsol-init guided to inspect and improve it.`,
+            result.created ? "info" : "warning",
+          );
+        }
+      } catch (error) {
+        if (ctx.hasUI) ctx.ui.notify(error instanceof Error ? error.message : String(error), "error");
+        else throw error;
+      }
+    },
+  });
+
   pi.registerCommand("itsol-policy", {
     description: "Show or reload extension-parsed .itsol.md repository policy",
     handler: async (args, ctx) => {

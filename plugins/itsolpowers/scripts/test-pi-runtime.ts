@@ -327,6 +327,20 @@ review:
     await fs.promises.rm(policyCwd, { recursive: true, force: true });
   }
 
+  const initPolicyCwd = await fs.promises.mkdtemp(path.join(os.tmpdir(), "itsol-pi-init-policy-"));
+  try {
+    await fs.promises.mkdir(path.join(initPolicyCwd, ".git"));
+    const initPolicy = new RepoPolicyManager();
+    initPolicy.startSession({ cwd: initPolicyCwd } as any);
+    const initialized = initPolicy.initializeMinimalPolicy();
+    assert.equal(initialized.created, true);
+    assert.match(await fs.promises.readFile(initialized.filePath, "utf8"), /qa:\n  profile: automatic/);
+    assert.match(initPolicy.formatStatus(), /QA profile: automatic/);
+    assert.equal(initPolicy.initializeMinimalPolicy().created, false);
+  } finally {
+    await fs.promises.rm(initPolicyCwd, { recursive: true, force: true });
+  }
+
   const writer = {
     agent: "itsol-feature-implementation",
     task: "Implement fixture",

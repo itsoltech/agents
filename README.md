@@ -347,6 +347,8 @@ Role to `explore`, `plan`, `implement` i `review`. Można przekazać ją jawnie 
 Komendy stanu, inicjatyw i modeli:
 
 ```text
+/itsol-init
+/itsol-init guided
 /itsol initiative start <business-document-path>
 /itsol initiative status
 /itsol initiative activate <initiative-id>
@@ -375,6 +377,8 @@ Komendy stanu, inicjatyw i modeli:
 /itsol-review off
 /itsol-review rerun
 ```
+
+`/itsol-init` natychmiast tworzy bezpieczny root `.itsol.md`, bez nadpisywania istniejącego pliku. Scaffold używa `governed`, `standard`, `balanced` review i `automatic` QA, a nieznane fakty projektu oznacza jako `unknown`. `/itsol-init guided` uruchamia repo-memory discovery: agent inspekuje manifesty, proponuje mapę projektów, TDD/verification/review/QA policy i pyta tylko o brakujące materialne informacje przed zapisem lub aktualizacją.
 
 `standard` i `deep` domyślnie używają `max_subagents: unlimited` oraz `max_parallel: 3`: workflow może dobrać dowolną liczbę typów specjalistów, ponownie używać ten sam typ dla różnych work itemów i wykonywać je batchami do trzech procesów. Numeryczny limit typów agentów pojawia się wyłącznie po jawnym `/itsol agents N`, restrykcji `.itsol.md` albo wyborze restrykcyjnego `economy`. `max_parallel` ogranicza tylko jednoczesne procesy, nie całkowite pokrycie workflow.
 
