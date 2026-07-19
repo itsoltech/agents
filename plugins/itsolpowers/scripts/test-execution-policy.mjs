@@ -88,8 +88,7 @@ export const validatePolicy = (policy, capabilities = {}) => {
   if (!Number.isInteger(policy.max_review_rounds) || policy.max_review_rounds < 0 || policy.max_review_rounds > 2) {
     errors.push('invalid max_review_rounds');
   }
-  if (!Number.isInteger(policy.max_parallel) || policy.max_parallel < 0 || policy.max_parallel > 10
-    || (policy.max_subagents !== 'unlimited' && policy.max_parallel > policy.max_subagents)) {
+  if (!Number.isInteger(policy.max_parallel) || policy.max_parallel < 0 || policy.max_parallel > 10) {
     errors.push('invalid max_parallel');
   }
   if (!(policy.stop_after in stops)) errors.push('unresolved or invalid stop_after');
@@ -168,6 +167,7 @@ assert.ok(
   validatePolicy({ ...standard, reasoning_control: 'enforced' }).includes('unsupported reasoning enforcement')
 );
 assert.deepEqual(validatePolicy({ ...standard, preset: 'custom', max_parallel: 4 }), []);
+assert.deepEqual(validatePolicy({ ...standard, preset: 'custom', max_subagents: 1, max_parallel: 3 }), []);
 assert.ok(validatePolicy({ ...standard, preset: 'custom', max_parallel: 11 }).length > 0);
 assert.ok(
   validatePolicy({

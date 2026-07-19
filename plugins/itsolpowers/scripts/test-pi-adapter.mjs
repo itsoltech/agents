@@ -95,6 +95,9 @@ assert.match(reviewOrchestrator, /autoRereviewNotice/);
 assert.match(reviewOrchestrator, /fingerprint/);
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'repo-policy.ts')));
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'task-state.ts')));
+const delegationPolicySource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'policy.ts'), 'utf8');
+assert.doesNotMatch(delegationPolicySource, /same agent identity more than once/);
+assert.match(delegationPolicySource, /work_item_id/);
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'model-router.ts')));
 assert.ok(bootstrap.trim().split(/\s+/).length <= 600, 'Pi bootstrap exceeds 600 words');
 

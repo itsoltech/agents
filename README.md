@@ -110,13 +110,13 @@ Pi udostępnia `itsol_initiative_state` oraz `/itsol-initiative status|activate|
 
 `itsol-execution-policy` działa obok `itsol-workflow-mode`. Workflow określa, kto podejmuje decyzje i jakie bramki obowiązują; execution policy ogranicza model/reasoning, delegację, równoległość, review i etap zatrzymania. Preset nigdy nie zmienia trybu workflow.
 
-| Preset | Profil | Reasoning | Agenci / równolegle | Review | Domyślny stop |
+| Preset | Profil | Reasoning | Typy agentów / instancje równoległe | Review | Domyślny stop |
 | --- | --- | --- | --- | --- | --- |
 | `economy` | economy | low | 0 / 0 | 1 cykl inline | wynik żądany przez użytkownika |
 | `standard` | balanced | medium | unlimited / 3 | 2 cykle | `implementation-reviewed` |
 | `deep` | frontier | high | unlimited / 3 | 2 cykle | `integration-validated` |
 
-`max_parallel` jest limitem jednoczesnych procesów, więc większe zestawy specjalistów są automatycznie wykonywane batchami. Numeryczny limit całkowitej liczby agentów powstaje tylko z jawnej instrukcji użytkownika, `economy` albo restrykcji repozytorium.
+`max_subagents` ogranicza liczbę różnych typów/tożsamości agentów, nie liczbę ich uruchomień. Ten sam typ może równolegle realizować kilka niezależnych packetów oznaczonych stabilnym `work_item_id`; każdy proces liczy się osobno tylko do `max_parallel`. Równoległe writery nadal muszą mieć rozłączne scope. Numeryczny limit typów powstaje wyłącznie z jawnej instrukcji użytkownika, `economy` albo restrykcji repozytorium.
 
 ITSOL Powers celowo nie ustawia `maxTurns`. Zakończenie pętli agenta nie oznacza wykonania zadania. Każdy worker zwraca status `completed`, `partial`, `blocked` albo `failed`, weryfikację i braki; orchestrator akceptuje `completed` dopiero po sprawdzeniu `done_when` i dowodów. Claude plugin używa jednego deterministycznego retry dla brakującego envelope, bez nieskończonej pętli.
 
@@ -349,7 +349,7 @@ Komendy stanu, inicjatyw i modeli:
 /itsol-review rerun
 ```
 
-`standard` i `deep` domyślnie używają `max_subagents: unlimited` oraz `max_parallel: 3`: workflow może dobrać dowolną liczbę różnych specjalistów, a extension wykonuje ich automatycznie batchami do trzech procesów. Numeryczny limit całkowitej liczby agentów pojawia się wyłącznie po jawnym `/itsol agents N`, restrykcji `.itsol.md` albo wyborze restrykcyjnego `economy`. `max_parallel` ogranicza tylko jednoczesne procesy, nie całkowite pokrycie workflow.
+`standard` i `deep` domyślnie używają `max_subagents: unlimited` oraz `max_parallel: 3`: workflow może dobrać dowolną liczbę typów specjalistów, ponownie używać ten sam typ dla różnych work itemów i wykonywać je batchami do trzech procesów. Numeryczny limit typów agentów pojawia się wyłącznie po jawnym `/itsol agents N`, restrykcji `.itsol.md` albo wyborze restrykcyjnego `economy`. `max_parallel` ogranicza tylko jednoczesne procesy, nie całkowite pokrycie workflow.
 
 ### Automatyczna polityka `.itsol.md`
 

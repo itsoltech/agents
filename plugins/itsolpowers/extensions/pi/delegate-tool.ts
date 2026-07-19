@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -40,6 +41,7 @@ interface AgentActivity {
 
 export interface DelegationResult {
   agent: string;
+  workItemId?: string;
   task: string;
   status: "completed" | "partial" | "blocked" | "failed" | "invalid-envelope";
   output: string;
@@ -57,6 +59,7 @@ export interface DelegationResult {
 
 interface RunningAgentProgress {
   agent: string;
+  workItemId: string;
   activity: string;
   elapsedMs: number;
   model: string;
@@ -80,6 +83,17 @@ export function formatDuration(durationMs: number): string {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
   return `${hours}h${minutes ? ` ${minutes}min` : ""}`;
+}
+
+function automaticWorkItemId(task: DelegatedTask): string {
+  const basis = JSON.stringify({
+    agent: task.agent,
+    role: task.role,
+    task: task.task,
+    read_scope: [...task.read_scope].sort(),
+    write_scope: [...task.write_scope].sort(),
+  });
+  return `auto-${crypto.createHash("sha256").update(basis).digest("hex").slice(0, 12)}`;
 }
 
 function compact(text: string, maxLength = 72): string {
@@ -394,12 +408,13 @@ export function registerItsolDelegate(
   pi.registerTool({
     name: "itsol_delegate",
     label: "ITSOL Delegate",
-    description: "Delegate one or more independent tasks to bundled ITSOL agents in isolated Pi processes. Task state may be loaded by task_id from itsol_task_state. Models and reasoning resolve from task.model, configured profile+role mappings, execution policy, or the main model. Enforces agent ceilings, parallel ceilings, stop ordering, artifact authorization, and non-overlapping write scopes. Model-visible output is limited to 50KB/2000 lines, with larger reports saved to private temporary files.",
+    description: "Delegate one or more independent tasks to bundled ITSOL agents in isolated Pi processes. Task state may be loaded by task_id from itsol_task_state. Models and reasoning resolve from task.model, configured profile+role mappings, execution policy, or the main model. Enforces distinct-agent-type ceilings, parallel execution ceilings, stop ordering, artifact authorization, and non-overlapping write scopes. Model-visible output is limited to 50KB/2000 lines, with larger reports saved to private temporary files.",
     promptSnippet: "Delegate bounded work to an ITSOL specialist agent",
     promptGuidelines: [
       "Use itsol_delegate only after loading itsol-workflow-mode, itsol-execution-policy, and itsol-subagent-workflow.",
       "Before itsol_delegate, persist complete workflow state, execution policy, and done_when with itsol_task_state; subsequent calls may reuse them by task_id.",
       "For cheap exploration with itsol_delegate, set task.model to an exact available provider/model id within execution_policy.model_profile; omit it when the child should inherit the main model.",
+      "The same agent type may run several independent packets concurrently. Give each a stable work_item_id and reuse that id for follow-up runs of the same assignment; distinct scopes remain mandatory for parallel writers.",
     ],
     parameters: ItsolDelegateParamsSchema,
 
@@ -412,14 +427,23 @@ export function registerItsolDelegate(
       }
       const tasks = single.length ? single : parallel;
       const inheritedModel = ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined;
-      const resolutions = new Map(tasks.map((task) => {
+      const executions = tasks.map((task) => {
         const agent = agentsByName.get(task.agent);
         if (!agent) throw new Error(`Unknown ITSOL agent: ${task.agent}`);
-        return [task.agent, modelRouter.resolve(task, agent, params.execution_policy, inheritedModel, ctx)] as const;
-      }));
+        return {
+          task,
+          agent,
+          workItemId: task.work_item_id ?? automaticWorkItemId(task),
+          resolution: modelRouter.resolve(task, agent, params.execution_policy, inheritedModel, ctx),
+        };
+      });
+      const executionIds = new Set(executions.map((execution) => `${execution.agent.name}:${execution.workItemId}`));
+      if (executionIds.size !== executions.length) {
+        throw new Error("Parallel tasks for the same agent must have distinct work_item_id values or distinct task/scope packets");
+      }
       repoPolicy.validateDelegation(params, tasks);
       validateDelegation(params, tasks, agentsByName, store.getUsedAgents(params.task_id), {
-        modelControlEnforced: [...resolutions.values()].every((resolution) => resolution.profileEnforced),
+        modelControlEnforced: executions.every((execution) => execution.resolution.profileEnforced),
       });
       const active = activeByTask.get(params.task_id) ?? 0;
       if (active + tasks.length > params.execution_policy.max_parallel) {
@@ -431,10 +455,12 @@ export function registerItsolDelegate(
       store.beginDelegation(params.task_id, tasks.map((task) => task.agent));
 
       const progress = new Map<string, RunningAgentProgress>(
-        tasks.map((task) => {
-          const resolution = resolutions.get(task.agent)!;
-          return [task.agent, {
-            agent: task.agent,
+        executions.map((execution) => {
+          const { resolution } = execution;
+          const key = `${execution.agent.name}:${execution.workItemId}`;
+          return [key, {
+            agent: execution.agent.name,
+            workItemId: execution.workItemId,
             activity: "queued",
             elapsedMs: 0,
             model: resolution.model ?? "default model",
@@ -444,10 +470,13 @@ export function registerItsolDelegate(
           }];
         }),
       );
-      const update = (agent: string, activity: string, elapsedMs: number) => {
-        const resolution = resolutions.get(agent)!;
-        progress.set(agent, {
+      const update = (execution: typeof executions[number], activity: string, elapsedMs: number) => {
+        const { resolution, workItemId } = execution;
+        const agent = execution.agent.name;
+        const key = `${agent}:${workItemId}`;
+        progress.set(key, {
           agent,
+          workItemId,
           activity,
           elapsedMs,
           model: resolution.model ?? "default model",
@@ -459,7 +488,7 @@ export function registerItsolDelegate(
         onUpdate?.({
           content: [{
             type: "text",
-            text: current.map((item) => `${item.agent}: ${item.activity} · ${formatDuration(item.elapsedMs)}`).join("\n"),
+            text: current.map((item) => `${item.agent} [${item.workItemId}]: ${item.activity} · ${formatDuration(item.elapsedMs)}`).join("\n"),
           }],
           details: { taskId: params.task_id, results: [], progress: current } satisfies DelegationDetails,
         });
@@ -468,11 +497,10 @@ export function registerItsolDelegate(
       let results: DelegationResult[] = [];
       try {
         results = await Promise.all(
-          tasks.map((task) => {
-            const agent = agentsByName.get(task.agent)!;
-            const resolution = resolutions.get(agent.name)!;
-            update(agent.name, "analyzing task", 0);
-            return runAgent(
+          executions.map(async (execution) => {
+            const { agent, task, resolution, workItemId } = execution;
+            update(execution, "analyzing task", 0);
+            const result = await runAgent(
               pluginRoot,
               skillsDir,
               agent,
@@ -484,8 +512,9 @@ export function registerItsolDelegate(
               resolution.thinking,
               resolution.thinkingSource,
               signal,
-              (activity, elapsedMs) => update(agent.name, activity, elapsedMs),
+              (activity, elapsedMs) => update(execution, activity, elapsedMs),
             );
+            return { ...result, workItemId };
           }),
         );
       } finally {
@@ -497,13 +526,13 @@ export function registerItsolDelegate(
           tasks.map((task) => task.agent),
           results.map((result) => ({
             ...result,
-            role: resolutions.get(result.agent)?.role,
+            role: executions.find((execution) => execution.agent.name === result.agent && execution.workItemId === result.workItemId)?.resolution.role,
           })),
         );
       }
 
       const summaries = results.map((result) => [
-        `## ${result.agent} — ${result.status}`,
+        `## ${result.agent} [${result.workItemId ?? "default"}] — ${result.status}`,
         result.output,
         `Duration: ${formatDuration(result.durationMs)}. Model: ${result.model ?? "default"} (${result.modelSource}). Thinking: ${result.thinking} (${result.thinkingSource}). Usage: ${result.usage.input} input, ${result.usage.output} output, $${result.usage.cost.toFixed(4)}`,
       ].join("\n\n"));
@@ -530,7 +559,7 @@ export function registerItsolDelegate(
       if (!details?.results.length && details?.progress?.length) {
         const text = details.progress.map((item) => [
           theme.fg("warning", "⏳"),
-          theme.fg("toolTitle", theme.bold(item.agent)),
+          theme.fg("toolTitle", theme.bold(`${item.agent} [${item.workItemId}]`)),
           theme.fg("muted", ": "),
           theme.fg("accent", item.activity),
           theme.fg("dim", ` · ${formatDuration(item.elapsedMs)}`),
@@ -550,7 +579,7 @@ export function registerItsolDelegate(
       }
       const lines = details.results.map((item) => {
         const color = item.status === "completed" ? "success" : item.status === "failed" ? "error" : "warning";
-        let text = `${theme.fg(color, item.status === "completed" ? "✓" : "!")} ${theme.fg("accent", item.agent)} — ${item.status}`;
+        let text = `${theme.fg(color, item.status === "completed" ? "✓" : "!")} ${theme.fg("accent", `${item.agent} [${item.workItemId ?? "default"}]`)} — ${item.status}`;
         const activityTrail = item.activities.slice(-3).map((activity) => activity.text).join(" → ");
         if (activityTrail) text += `\n${theme.fg("muted", activityTrail)}`;
         if (expanded) text += `\n${item.output}`;

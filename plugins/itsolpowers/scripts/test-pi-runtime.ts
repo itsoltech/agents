@@ -686,8 +686,18 @@ review:
   assert.equal(store.getActive()?.execution_policy.max_parallel, 3);
   store.setAgentLimit(1);
   assert.equal(store.getActive()?.execution_policy.max_subagents, 1);
-  assert.equal(store.getActive()?.execution_policy.max_parallel, 1);
-  assert.throws(() => store.setParallelLimit(2), /exceeds max_subagents/);
+  assert.equal(store.getActive()?.execution_policy.max_parallel, 3);
+  store.setParallelLimit(2);
+  assert.equal(store.getActive()?.execution_policy.max_parallel, 2);
+  store.beginDelegation(base.task_id, [writer.agent, writer.agent]);
+  assert.equal(store.getActive()?.active_agents.length, 2);
+  store.finishDelegation(base.task_id, [writer.agent, writer.agent], [
+    { agent: writer.agent, workItemId: "auth-api", status: "completed", role: "implement", usage: { input: 1, output: 1, cost: 0 } },
+    { agent: writer.agent, workItemId: "billing-api", status: "completed", role: "implement", usage: { input: 1, output: 1, cost: 0 } },
+  ]);
+  assert.equal(store.getActive()?.active_agents.length, 0);
+  assert.equal(store.getActive()?.agent_results[`${writer.agent}:auth-api`]?.status, "completed");
+  assert.equal(store.getActive()?.agent_results[`${writer.agent}:billing-api`]?.status, "completed");
   store.setPreset("standard");
   assert.equal(store.getActive()?.execution_policy.max_subagents, "unlimited");
   assert.equal(store.getActive()?.execution_policy.max_parallel, 3);
@@ -727,6 +737,13 @@ review:
     ...base,
     execution_policy: { ...base.execution_policy, max_subagents: "unlimited" },
   }, [reviewer], byName, new Set(["itsol-self-review", "itsol-feature-implementation", "svelte-review"]));
+  validateDelegation({
+    ...base,
+    execution_policy: { ...base.execution_policy, max_subagents: 1, max_parallel: 2 },
+  }, [
+    { ...reviewer, work_item_id: "auth-api", read_scope: ["src/auth"] },
+    { ...reviewer, work_item_id: "billing-api", read_scope: ["src/billing"] },
+  ], byName, new Set());
 
   const rubberDuckReviewer = {
     agent: "itsol-self-review",

@@ -39,7 +39,7 @@ Labels start at column one, occur once, and remain ordered. `completed` cannot u
 
 ## Delegation And Review
 
-`max_subagents` counts distinct child identities for the whole run only when it is numeric. The default `unlimited` value removes that identity ceiling. Continuing the same identity does not increment a numeric ceiling; a replacement does. `max_parallel` always limits simultaneous children, so unlimited identities are still scheduled in bounded batches.
+`max_subagents` counts distinct child agent identities/types for the whole run only when numeric. It does not limit how many independent work items reuse one type. The default `unlimited` removes that type ceiling. `max_parallel` independently limits simultaneous execution instances, so `max_subagents: 1` with `max_parallel: 3` may run the same agent type for three non-conflicting packets. Give packets stable `work_item_id` values and reuse them for follow-ups; parallel writers still require non-overlapping ownership.
 
 Only the main agent delegates. Children must not expose delegation tools, spawn agents, or invoke external agent CLIs. Use one writer per file and semantic contract.
 

@@ -29,6 +29,8 @@ export function classifyAdministrativeRequest(prompt: string): AdministrativeReq
 
 export interface DelegationAccountingResult {
   agent: string;
+  workItemId?: string;
+  task?: string;
   role?: "explore" | "plan" | "implement" | "review";
   status: string;
   usage: { input: number; output: number; cost: number };
@@ -63,7 +65,7 @@ export interface TaskRuntimeState extends TaskStateDefinition {
   active_agents: string[];
   delegation_count: number;
   status_counts: Record<string, number>;
-  agent_results: Record<string, { status: string; role?: string; updated_at: number }>;
+  agent_results: Record<string, { agent: string; work_item_id?: string; status: string; role?: string; updated_at: number }>;
   review_runs: number;
   review_verdict?: ReviewVerdictRecord;
   completion_attempts: number;
@@ -95,7 +97,10 @@ function createRuntimeState(definition: TaskStateDefinition, previous?: TaskRunt
     active_agents: previous?.active_agents ?? [],
     delegation_count: previous?.delegation_count ?? 0,
     status_counts: previous?.status_counts ?? {},
-    agent_results: previous?.agent_results ?? {},
+    agent_results: Object.fromEntries(Object.entries(previous?.agent_results ?? {}).map(([key, result]) => [
+      key,
+      { ...result, agent: result.agent ?? key.split(":", 1)[0] },
+    ])),
     review_runs: previous?.review_runs ?? 0,
     review_verdict: previous?.review_verdict,
     completion_attempts: previous?.completion_attempts ?? 0,
@@ -283,7 +288,10 @@ export class TaskStateStore {
   prepareReviewers(taskId: string, agents: string[]): void {
     if (!agents.length) return;
     const state = this.require(taskId);
-    for (const agent of agents) delete state.agent_results[agent];
+    const selected = new Set(agents);
+    for (const [key, result] of Object.entries(state.agent_results)) {
+      if (selected.has(result.agent)) delete state.agent_results[key];
+    }
     state.completion = undefined;
     state.updated_at = Date.now();
     this.persist();
@@ -293,7 +301,7 @@ export class TaskStateStore {
   beginDelegation(taskId: string, agents: string[]): void {
     const state = this.require(taskId);
     state.used_agents = [...new Set([...state.used_agents, ...agents])];
-    state.active_agents = [...new Set([...state.active_agents, ...agents])];
+    state.active_agents.push(...agents);
     state.delegation_count++;
     state.completion = undefined;
     state.last_completion_problems = [];
@@ -304,14 +312,19 @@ export class TaskStateStore {
 
   finishDelegation(taskId: string, agents: string[], results: DelegationAccountingResult[] = []): void {
     const state = this.require(taskId);
-    const finished = new Set(agents);
-    state.active_agents = state.active_agents.filter((agent) => !finished.has(agent));
+    for (const agent of agents) {
+      const index = state.active_agents.indexOf(agent);
+      if (index >= 0) state.active_agents.splice(index, 1);
+    }
     for (const result of results) {
       state.child_cost += result.usage.cost;
       state.child_input_tokens += result.usage.input;
       state.child_output_tokens += result.usage.output;
       state.status_counts[result.status] = (state.status_counts[result.status] ?? 0) + 1;
-      state.agent_results[result.agent] = {
+      const resultKey = result.workItemId ? `${result.agent}:${result.workItemId}` : result.agent;
+      state.agent_results[resultKey] = {
+        agent: result.agent,
+        work_item_id: result.workItemId,
         status: result.status,
         role: result.role,
         updated_at: Date.now(),
@@ -428,11 +441,9 @@ export class TaskStateStore {
     if (limit !== "unlimited" && (!Number.isInteger(limit) || limit < 0 || limit > 64)) {
       throw new Error("max_subagents must be unlimited or an integer from 0 to 64");
     }
-    const maxParallel = limit === "unlimited" ? state.execution_policy.max_parallel : Math.min(limit, state.execution_policy.max_parallel);
     const executionPolicy: ExecutionPolicy = {
       ...state.execution_policy,
       max_subagents: limit,
-      max_parallel: maxParallel,
       policy_sources: {
         base: "explicit-user-task-instruction",
         constraints: [...new Set([...state.execution_policy.policy_sources.constraints, `max_subagents=${limit}`])],
@@ -461,9 +472,6 @@ export class TaskStateStore {
     const state = this.requireActive();
     if (state.active_agents.length) throw new Error("Cannot change parallel limits while delegated agents are active");
     if (!Number.isInteger(limit) || limit < 0 || limit > 10) throw new Error("max_parallel must be an integer from 0 to 10");
-    if (state.execution_policy.max_subagents !== "unlimited" && limit > state.execution_policy.max_subagents) {
-      throw new Error(`max_parallel=${limit} exceeds max_subagents=${state.execution_policy.max_subagents}`);
-    }
     const executionPolicy: ExecutionPolicy = {
       ...state.execution_policy,
       max_parallel: limit,
@@ -515,12 +523,12 @@ export class TaskStateStore {
     if (!state) return `ITSOL Powers v${this.pluginVersion} · ${this.agentCount} agents`;
     const policy = state.execution_policy;
     const totalCost = state.parent_cost + state.child_cost;
-    const active = state.active_agents.length ? ` · ${state.active_agents.length} active` : "";
+    const active = state.active_agents.length ? ` · ${state.active_agents.length} runs active` : "";
     const completion = state.completion
       ? ` · ${state.completion.status}`
       : state.completion_attempts ? ` · gate rejected ${state.completion_attempts}` : "";
     const agentLimit = policy.max_subagents === "unlimited" ? "∞" : String(policy.max_subagents);
-    return `ITSOL v${this.pluginVersion}${completion} · ${state.workflow_state.workflow_mode} · ${policy.preset} · agents ${state.used_agents.length}/${agentLimit}${active} · $${totalCost.toFixed(4)}`;
+    return `ITSOL v${this.pluginVersion}${completion} · ${state.workflow_state.workflow_mode} · ${policy.preset} · agent types ${state.used_agents.length}/${agentLimit}${active} · $${totalCost.toFixed(4)}`;
   }
 
   formatDetails(state = this.getActive()): string {
@@ -531,7 +539,7 @@ export class TaskStateStore {
       `Task: ${state.task_id}`,
       `Workflow: ${state.workflow_state.workflow_mode} (${state.workflow_state.artifact_state}, ${state.workflow_state.execution_mode})`,
       `Policy: ${state.execution_policy.preset} · ${state.execution_policy.model_profile}/${state.execution_policy.reasoning_profile}`,
-      `Agents: ${state.used_agents.length}/${state.execution_policy.max_subagents === "unlimited" ? "∞" : state.execution_policy.max_subagents} used, ${state.active_agents.length} active`,
+      `Agent types: ${state.used_agents.length}/${state.execution_policy.max_subagents === "unlimited" ? "∞" : state.execution_policy.max_subagents} used · executions: ${state.active_agents.length} active`,
       `Delegations: ${state.delegation_count} · results: ${statuses}`,
       `Review runs: ${state.review_runs} · verdict: ${state.review_verdict?.verdict ?? "none"} · completion attempts: ${state.completion_attempts}`,
       `Completion: ${state.completion ? `${state.completion.status} at ${state.completion.achieved_stage}` : "not accepted"}`,

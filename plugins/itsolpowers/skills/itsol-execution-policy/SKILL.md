@@ -30,11 +30,11 @@ done_when:
   - <observable criterion with evidence>
 ```
 
-Use `standard` when no explicit or repository policy exists. `standard` and `deep` default to `max_subagents: unlimited`; do not invent a numeric total-agent ceiling. Keep `max_parallel: 3` as a scheduling bound, so larger specialist sets run automatically in batches. A numeric total-agent ceiling is valid only when the user, an explicitly selected restrictive preset, or repository policy requests it. Apply platform constraints and repository restrictions by tightening fields; never expand a resolved ceiling automatically. Report advisory model or reasoning control honestly.
+Use `standard` when no explicit or repository policy exists. `standard` and `deep` default to `max_subagents: unlimited`; do not invent a numeric agent-type ceiling. `max_subagents` counts distinct identities/types, not executions, so one type may handle several independent work items. Keep `max_parallel: 3` as the execution-instance scheduling bound. A numeric identity ceiling is valid only when the user, an explicitly selected restrictive preset, or repository policy requests it. Apply platform constraints and repository restrictions by tightening fields; never expand a resolved ceiling automatically. Report advisory model or reasoning control honestly.
 
 Do not set `maxTurns` or use a turn count as completion. Accept `completed` only after validating every `done_when` criterion and required evidence. Preserve `partial`, `blocked`, and `failed` results.
 
-Only the main agent delegates. Count distinct child identities, bound concurrency, keep one writer per file or semantic contract, and prohibit nested delegation. A required independent review that does not fit an explicit numeric policy ends incomplete; do not weaken it. An unlimited identity budget should select all required specialists and schedule them in bounded parallel batches without asking for budget expansion.
+Only the main agent delegates. Count distinct child identities separately from execution instances, reuse stable `work_item_id` values for follow-ups, bound concurrency, keep one writer per file or semantic contract, and prohibit nested delegation. A required independent review that does not fit an explicit numeric policy ends incomplete; do not weaken it. An unlimited identity budget should select all required specialists and schedule them in bounded parallel batches without asking for budget expansion.
 
 Read:
 

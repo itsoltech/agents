@@ -28,8 +28,8 @@ export const ExecutionPolicySchema = Type.Object({
   max_subagents: Type.Union([
     Type.Integer({ minimum: 0, maximum: 64 }),
     Type.Literal("unlimited"),
-  ], { description: "Distinct child identities for the task. Defaults to unlimited; use a number only for an explicit user or repository ceiling." }),
-  max_parallel: Type.Integer({ minimum: 0, maximum: 10 }),
+  ], { description: "Distinct child agent identities/types for the task, not execution count. The same type may run multiple independent work items. Defaults to unlimited; use a number only for an explicit user or repository ceiling." }),
+  max_parallel: Type.Integer({ minimum: 0, maximum: 10, description: "Concurrent execution-instance ceiling, independent of the distinct agent-type ceiling." }),
   max_review_rounds: Type.Integer({ minimum: 0, maximum: 2 }),
   stop_after: StringEnum([
     "analysis",
@@ -54,6 +54,10 @@ export const DelegatedTaskSchema = Type.Object({
   model: Type.Optional(Type.String({
     pattern: "^[^/]+/.+$",
     description: "Exact Pi provider/model id for this child. Omit to use the configured model profile and role, then inherit the main model as fallback.",
+  })),
+  work_item_id: Type.Optional(Type.String({
+    pattern: "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+    description: "Stable work-item identity. Reuse it for follow-up runs of the same scoped assignment, especially when one agent type handles multiple areas.",
   })),
   task: Type.String({ minLength: 1 }),
   cwd: Type.Optional(Type.String()),
@@ -135,9 +139,6 @@ export function validateDelegation(
     );
   }
   const agentLimit = params.execution_policy.max_subagents;
-  if (agentLimit !== "unlimited" && params.execution_policy.max_parallel > agentLimit) {
-    throw new Error("execution_policy.max_parallel cannot exceed a numeric max_subagents ceiling");
-  }
   if (tasks.length > params.execution_policy.max_parallel) {
     throw new Error(
       `Delegation requests ${tasks.length} parallel tasks, but max_parallel is ${params.execution_policy.max_parallel}`,
@@ -145,9 +146,6 @@ export function validateDelegation(
   }
 
   const requestedNames = new Set(tasks.map((task) => task.agent));
-  if (requestedNames.size !== tasks.length) {
-    throw new Error("Parallel delegation cannot run the same agent identity more than once");
-  }
   const allNames = new Set([...previouslyUsedAgents, ...requestedNames]);
   if (agentLimit !== "unlimited" && allNames.size > agentLimit) {
     throw new Error(
