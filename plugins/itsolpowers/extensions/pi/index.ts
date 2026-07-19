@@ -3,8 +3,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { discoverItsolAgents } from "./agents.ts";
+import { registerCompletionGate } from "./completion-gate.ts";
 import { registerItsolDelegate } from "./delegate-tool.ts";
 import { ModelRouter, registerModelRouter } from "./model-router.ts";
+import { registerRepoPolicy, RepoPolicyManager } from "./repo-policy.ts";
 import { registerTaskState, TaskStateStore } from "./task-state.ts";
 
 const extensionDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -27,16 +29,21 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
   }
   const taskState = new TaskStateStore(pi, agents.length, pluginVersion);
   const modelRouter = new ModelRouter();
+  const repoPolicy = new RepoPolicyManager();
+  taskState.setDefinitionValidator((definition) => repoPolicy.validateDefinition(definition));
   const bootstrap = fs.existsSync(bootstrapPath)
     ? fs.readFileSync(bootstrapPath, "utf8").trim()
     : "ITSOL Powers Pi bootstrap is missing.";
 
   registerTaskState(pi, taskState);
+  registerCompletionGate(pi, taskState);
   registerModelRouter(pi, modelRouter);
-  registerItsolDelegate(pi, pluginRoot, agents, taskState, modelRouter, resetHandlers);
+  registerRepoPolicy(pi, repoPolicy);
+  registerItsolDelegate(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy, resetHandlers);
 
   pi.on("session_start", (_event, ctx) => {
     for (const reset of resetHandlers) reset();
+    repoPolicy.startSession(ctx);
     modelRouter.startSession(ctx);
     taskState.startSession(ctx);
   });
@@ -56,10 +63,9 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
   pi.on("before_agent_start", (event) => {
     const loadedSkills = event.systemPromptOptions.skills ?? [];
     const router = loadedSkills.find((skill) => skill.name === "using-itsolpowers");
-    if (!router) return;
 
     const parts: string[] = [];
-    if (!event.systemPrompt.includes(BOOTSTRAP_MARKER)) {
+    if (router && !event.systemPrompt.includes(BOOTSTRAP_MARKER)) {
       parts.push(
         bootstrap,
         `ITSOL Powers package root: ${pluginRoot}`,
@@ -69,6 +75,7 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     }
     const stateContext = taskState.formatPromptContext();
     if (stateContext) parts.push(stateContext);
+    parts.push(repoPolicy.formatPromptContext(taskState.getActive()?.policy_context));
     parts.push(modelRouter.formatPromptContext());
     if (!parts.length) return;
     return { systemPrompt: `${event.systemPrompt}\n\n${parts.join("\n\n")}` };
@@ -104,6 +111,7 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
         `Skill collisions: ${collisions.length ? collisions.join(", ") : "none"}`,
         `Superpowers conflict: ${hasSuperpowers ? "possible — disable competing workflow routing" : "not detected"}`,
         `Task state: ${taskState.getActive() ? taskState.getActive()!.task_id : "none"}`,
+        repoPolicy.formatStatus(),
         modelRouter.formatSummary(),
         "Delegation isolation: child Pi runs use --no-extensions and an explicit tool allowlist",
         "Filesystem note: write_scope is validated between task packets, but shell commands are not OS-sandboxed",

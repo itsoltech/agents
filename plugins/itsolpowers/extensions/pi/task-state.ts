@@ -15,8 +15,23 @@ const STATE_VERSION = 1;
 
 export interface DelegationAccountingResult {
   agent: string;
+  role?: "explore" | "plan" | "implement" | "review";
   status: string;
   usage: { input: number; output: number; cost: number };
+}
+
+export interface CompletionEvidenceRecord {
+  criterion: string;
+  evidence: string;
+}
+
+export interface CompletionRecord {
+  status: "completed" | "partial" | "blocked" | "failed";
+  achieved_stage: ExecutionPolicy["stop_after"];
+  evidence: CompletionEvidenceRecord[];
+  review_evidence: string[];
+  unverified: string[];
+  completed_at: number;
 }
 
 export interface TaskRuntimeState extends TaskStateDefinition {
@@ -24,6 +39,11 @@ export interface TaskRuntimeState extends TaskStateDefinition {
   active_agents: string[];
   delegation_count: number;
   status_counts: Record<string, number>;
+  agent_results: Record<string, { status: string; role?: string; updated_at: number }>;
+  review_runs: number;
+  completion_attempts: number;
+  last_completion_problems: string[];
+  completion?: CompletionRecord;
   parent_cost: number;
   child_cost: number;
   child_input_tokens: number;
@@ -50,6 +70,11 @@ function createRuntimeState(definition: TaskStateDefinition, previous?: TaskRunt
     active_agents: previous?.active_agents ?? [],
     delegation_count: previous?.delegation_count ?? 0,
     status_counts: previous?.status_counts ?? {},
+    agent_results: previous?.agent_results ?? {},
+    review_runs: previous?.review_runs ?? 0,
+    completion_attempts: previous?.completion_attempts ?? 0,
+    last_completion_problems: previous?.last_completion_problems ?? [],
+    completion: previous?.completion,
     parent_cost: previous?.parent_cost ?? 0,
     child_cost: previous?.child_cost ?? 0,
     child_input_tokens: previous?.child_input_tokens ?? 0,
@@ -138,12 +163,17 @@ export class TaskStateStore {
   private activeTaskId?: string;
   private context?: ExtensionContext;
   private parentCostDirty = false;
+  private definitionValidator?: (definition: TaskStateDefinition) => void;
 
   constructor(
     private readonly pi: ExtensionAPI,
     private readonly agentCount: number,
     private readonly pluginVersion: string,
   ) {}
+
+  setDefinitionValidator(validator: (definition: TaskStateDefinition) => void): void {
+    this.definitionValidator = validator;
+  }
 
   startSession(ctx: ExtensionContext): void {
     this.tasks.clear();
@@ -156,7 +186,7 @@ export class TaskStateStore {
       const data = entry.data as PersistedTaskState | undefined;
       if (!data || data.version !== STATE_VERSION || !Array.isArray(data.tasks)) break;
       for (const task of data.tasks) {
-        this.tasks.set(task.task_id, { ...clone(task), active_agents: [] });
+        this.tasks.set(task.task_id, { ...createRuntimeState(task, task), active_agents: [] });
       }
       this.activeTaskId = data.activeTaskId && this.tasks.has(data.activeTaskId) ? data.activeTaskId : undefined;
       break;
@@ -177,7 +207,23 @@ export class TaskStateStore {
   }
 
   setDefinition(definition: TaskStateDefinition, persist = true): TaskRuntimeState {
-    const state = createRuntimeState(definition, this.tasks.get(definition.task_id));
+    this.definitionValidator?.(definition);
+    const previous = this.tasks.get(definition.task_id);
+    const canonicalChanged = previous && JSON.stringify({
+      workflow_state: previous.workflow_state,
+      execution_policy: previous.execution_policy,
+      done_when: previous.done_when,
+    }) !== JSON.stringify({
+      workflow_state: definition.workflow_state,
+      execution_policy: definition.execution_policy,
+      done_when: definition.done_when,
+    });
+    const state = createRuntimeState(definition, previous);
+    if (canonicalChanged) {
+      state.completion = undefined;
+      state.completion_attempts = 0;
+      state.last_completion_problems = [];
+    }
     this.tasks.set(definition.task_id, state);
     this.activeTaskId = definition.task_id;
     if (persist) this.persist();
@@ -200,6 +246,7 @@ export class TaskStateStore {
       workflow_state: workflowState,
       execution_policy: executionPolicy,
       done_when: [...doneWhen],
+      policy_context: input.policy_context ?? existing?.policy_context,
     };
     this.setDefinition(definition);
     return { ...definition, task: input.task, tasks: input.tasks };
@@ -210,6 +257,8 @@ export class TaskStateStore {
     state.used_agents = [...new Set([...state.used_agents, ...agents])];
     state.active_agents = [...new Set([...state.active_agents, ...agents])];
     state.delegation_count++;
+    state.completion = undefined;
+    state.last_completion_problems = [];
     state.updated_at = Date.now();
     this.persist();
     this.updateHud();
@@ -224,7 +273,32 @@ export class TaskStateStore {
       state.child_input_tokens += result.usage.input;
       state.child_output_tokens += result.usage.output;
       state.status_counts[result.status] = (state.status_counts[result.status] ?? 0) + 1;
+      state.agent_results[result.agent] = {
+        status: result.status,
+        role: result.role,
+        updated_at: Date.now(),
+      };
+      if (result.role === "review" && ["completed", "partial"].includes(result.status)) state.review_runs++;
     }
+    state.updated_at = Date.now();
+    this.persist();
+    this.updateHud();
+  }
+
+  recordCompletionAttempt(taskId: string, problems: string[]): number {
+    const state = this.require(taskId);
+    state.completion_attempts++;
+    state.last_completion_problems = [...problems];
+    state.updated_at = Date.now();
+    this.persist();
+    this.updateHud();
+    return state.completion_attempts;
+  }
+
+  recordCompletion(taskId: string, completion: CompletionRecord): void {
+    const state = this.require(taskId);
+    state.completion = clone(completion);
+    state.last_completion_problems = [];
     state.updated_at = Date.now();
     this.persist();
     this.updateHud();
@@ -266,7 +340,18 @@ export class TaskStateStore {
 
   setMode(mode: WorkflowState["workflow_mode"]): TaskRuntimeState {
     const state = this.requireActive();
-    state.workflow_state = transitionMode(state.workflow_state, mode);
+    const workflowState = transitionMode(state.workflow_state, mode);
+    this.definitionValidator?.({
+      task_id: state.task_id,
+      workflow_state: workflowState,
+      execution_policy: state.execution_policy,
+      done_when: state.done_when,
+      policy_context: state.policy_context,
+    });
+    state.workflow_state = workflowState;
+    state.completion = undefined;
+    state.completion_attempts = 0;
+    state.last_completion_problems = [];
     state.updated_at = Date.now();
     this.persist();
     this.updateHud();
@@ -275,7 +360,18 @@ export class TaskStateStore {
 
   setPreset(preset: "economy" | "standard" | "deep"): TaskRuntimeState {
     const state = this.requireActive();
-    state.execution_policy = applyPreset(state.execution_policy, preset);
+    const executionPolicy = applyPreset(state.execution_policy, preset);
+    this.definitionValidator?.({
+      task_id: state.task_id,
+      workflow_state: state.workflow_state,
+      execution_policy: executionPolicy,
+      done_when: state.done_when,
+      policy_context: state.policy_context,
+    });
+    state.execution_policy = executionPolicy;
+    state.completion = undefined;
+    state.completion_attempts = 0;
+    state.last_completion_problems = [];
     state.updated_at = Date.now();
     this.persist();
     this.updateHud();
@@ -287,7 +383,10 @@ export class TaskStateStore {
     const policy = state.execution_policy;
     const totalCost = state.parent_cost + state.child_cost;
     const active = state.active_agents.length ? ` · ${state.active_agents.length} active` : "";
-    return `ITSOL v${this.pluginVersion} · ${state.workflow_state.workflow_mode} · ${policy.preset} · agents ${state.used_agents.length}/${policy.max_subagents}${active} · $${totalCost.toFixed(4)}`;
+    const completion = state.completion
+      ? ` · ${state.completion.status}`
+      : state.completion_attempts ? ` · gate rejected ${state.completion_attempts}` : "";
+    return `ITSOL v${this.pluginVersion}${completion} · ${state.workflow_state.workflow_mode} · ${policy.preset} · agents ${state.used_agents.length}/${policy.max_subagents}${active} · $${totalCost.toFixed(4)}`;
   }
 
   formatDetails(state = this.getActive()): string {
@@ -300,6 +399,8 @@ export class TaskStateStore {
       `Policy: ${state.execution_policy.preset} · ${state.execution_policy.model_profile}/${state.execution_policy.reasoning_profile}`,
       `Agents: ${state.used_agents.length}/${state.execution_policy.max_subagents} used, ${state.active_agents.length} active`,
       `Delegations: ${state.delegation_count} · results: ${statuses}`,
+      `Review runs: ${state.review_runs} · completion attempts: ${state.completion_attempts}`,
+      `Completion: ${state.completion ? `${state.completion.status} at ${state.completion.achieved_stage}` : "not accepted"}`,
       `Cost: $${totalCost.toFixed(4)} (main $${state.parent_cost.toFixed(4)}, children $${state.child_cost.toFixed(4)})`,
       `Child tokens: ${state.child_input_tokens} input, ${state.child_output_tokens} output`,
       `Stop after: ${state.execution_policy.stop_after}`,
@@ -319,11 +420,17 @@ export class TaskStateStore {
         workflow_state: state.workflow_state,
         execution_policy: state.execution_policy,
         done_when: state.done_when,
+        policy_context: state.policy_context,
         runtime: {
           used_agents: state.used_agents,
           active_agents: state.active_agents,
           delegation_count: state.delegation_count,
           status_counts: state.status_counts,
+          agent_results: state.agent_results,
+          review_runs: state.review_runs,
+          completion_attempts: state.completion_attempts,
+          last_completion_problems: state.last_completion_problems,
+          completion: state.completion,
         },
       }, null, 2),
       "```",

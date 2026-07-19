@@ -231,13 +231,13 @@ pi install https://github.com/itsoltech/agents
 Rekomendowana instalacja przypiętego release:
 
 ```bash
-pi install https://github.com/itsoltech/agents@v0.18.0
+pi install https://github.com/itsoltech/agents@v0.19.0
 ```
 
 Dla prywatnego repozytorium można użyć SSH:
 
 ```bash
-pi install git:git@github.com:itsoltech/agents@v0.18.0
+pi install git:git@github.com:itsoltech/agents@v0.19.0
 ```
 
 Rootowy `package.json` jest adapterem Pi wskazującym extension i skille z `plugins/itsolpowers/`. URL musi wskazywać repozytorium Git; adres GitHub `tree/.../plugins/itsolpowers` nie jest obsługiwanym źródłem pakietu.
@@ -312,7 +312,19 @@ Komendy stanu i modeli:
 /itsol-models status
 /itsol-models reload
 /itsol-models configure
+/itsol-policy status
+/itsol-policy reload
 ```
+
+### Automatyczna polityka `.itsol.md`
+
+Extension samodzielnie znajduje root repozytorium, czyta root `.itsol.md` oraz najbardziej szczegółowe lokalne override'y, parsuje bloki YAML i normalizuje workflow, execution restrictions, Monorepo Map, TDD mode, verification commands, agent workflow notes i known constraints. Znormalizowana polityka jest wstrzykiwana do system promptu; agent nie powinien ponownie czytać ani parsować `.itsol.md`, chyba że użytkownik prosi o utworzenie, edycję, inspekcję lub audyt tego pliku.
+
+`itsol_task_state` i `itsol_delegate` są walidowane względem dopasowanych `allowed_modes`, ograniczeń ścieżek i operacji, `max_subagents`, `max_parallel`, `max_review_rounds` oraz `stop_after`. Task state może przekazać `policy_context.paths` i `policy_context.operations`, a delegowane taski mogą wskazać `operations`. Błędny YAML jest raportowany i blokuje użycie polityki zamiast cichego fallbacku.
+
+### Completion gate
+
+Każde zarządzane zadanie kończy się przez `itsol_complete`. Narzędzie sprawdza dokładne pokrycie `done_when` dowodami, aktywnych agentów, najnowsze statusy delegacji, review evidence, artifact state i osiągnięty `stop_after`. Pierwsze odrzucenie daje jeden automatyczny corrective turn; kolejne odrzucenie przechodzi do końcowego podsumowania jako wynik niekompletny. Uczciwe `partial`, `blocked` i `failed` są akceptowane tylko z jawnymi `unverified` gaps. Po zaakceptowanym lub finalnie odrzuconym gate extension tymczasowo wyłącza narzędzia i wymusza jedną końcową turę tekstową z podsumowaniem rezultatu, osiągnięć, kluczowych ustaleń, weryfikacji i pozostałych luk, po czym przywraca wcześniejszy zestaw narzędzi. Zaakceptowany wynik jest utrwalany w task state i widoczny w footerze.
 
 Procesy nie są sandboxem systemu operacyjnego; write scopes są walidowane w task packetach, ale komendy shell nadal działają z uprawnieniami użytkownika.
 

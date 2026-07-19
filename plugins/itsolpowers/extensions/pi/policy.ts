@@ -54,6 +54,7 @@ export const DelegatedTaskSchema = Type.Object({
   })),
   task: Type.String({ minLength: 1 }),
   cwd: Type.Optional(Type.String()),
+  operations: Type.Optional(Type.Array(Type.String({ minLength: 1 }))),
   read_scope: Type.Array(Type.String(), { minItems: 1 }),
   write_scope: Type.Array(Type.String()),
   forbidden_scope: Type.Array(Type.String()),
@@ -66,6 +67,10 @@ export const TaskStateDefinitionSchema = Type.Object({
   workflow_state: WorkflowStateSchema,
   execution_policy: ExecutionPolicySchema,
   done_when: Type.Array(Type.String({ minLength: 1 }), { minItems: 1 }),
+  policy_context: Type.Optional(Type.Object({
+    paths: Type.Array(Type.String()),
+    operations: Type.Array(Type.String()),
+  })),
 });
 
 export const ItsolDelegateParamsSchema = Type.Object({
@@ -73,6 +78,10 @@ export const ItsolDelegateParamsSchema = Type.Object({
   workflow_state: Type.Optional(WorkflowStateSchema),
   execution_policy: Type.Optional(ExecutionPolicySchema),
   done_when: Type.Optional(Type.Array(Type.String({ minLength: 1 }), { minItems: 1 })),
+  policy_context: Type.Optional(Type.Object({
+    paths: Type.Array(Type.String()),
+    operations: Type.Array(Type.String()),
+  })),
   task: Type.Optional(DelegatedTaskSchema),
   tasks: Type.Optional(Type.Array(DelegatedTaskSchema, { minItems: 1, maxItems: 3 })),
 });
@@ -84,7 +93,7 @@ export type TaskStateDefinition = Static<typeof TaskStateDefinitionSchema>;
 export type ItsolDelegateInput = Static<typeof ItsolDelegateParamsSchema>;
 export type ItsolDelegateParams = TaskStateDefinition & Pick<ItsolDelegateInput, "task" | "tasks">;
 
-const STOP_RANK: Record<ExecutionPolicy["stop_after"], number> = {
+export const STOP_RANK: Record<ExecutionPolicy["stop_after"], number> = {
   analysis: 10,
   "business-plan": 20,
   "technical-plan": 30,

@@ -1,6 +1,6 @@
 {
   "name": "itsoltech-agents-pi",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "private": true,
   "description": "Git package adapter for installing ITSOL Powers in the Pi coding harness",
   "license": "MIT",

@@ -5,9 +5,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { discoverItsolAgents } from "../extensions/pi/agents.ts";
+import { evaluateCompletion, registerCompletionGate } from "../extensions/pi/completion-gate.ts";
 import { formatDuration, summarizeToolActivity } from "../extensions/pi/delegate-tool.ts";
 import { classifyAgentRole, ModelRouter, supportedThinkingLevels } from "../extensions/pi/model-router.ts";
 import { validateDelegation, type ItsolDelegateParams } from "../extensions/pi/policy.ts";
+import { RepoPolicyManager } from "../extensions/pi/repo-policy.ts";
 import { applyPreset, TaskStateStore } from "../extensions/pi/task-state.ts";
 
 const pluginRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -162,6 +164,75 @@ export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
     done_when: ["fixture passes"],
   };
 
+  const policyCwd = await fs.promises.mkdtemp(path.join(os.tmpdir(), "itsol-pi-policy-"));
+  try {
+    await fs.promises.mkdir(path.join(policyCwd, ".git"));
+    await fs.promises.writeFile(path.join(policyCwd, ".itsol.md"), `# ITSOL Repository Notes
+
+## Workflow
+
+\`\`\`yaml
+workflow:
+  default_mode: direct
+  allowed_modes: [governed, autonomous-planned, direct]
+  restrictions:
+    - match:
+        path: infra/production
+      allowed_modes: [governed]
+\`\`\`
+
+## Execution
+
+\`\`\`yaml
+execution:
+  default_preset: standard
+  restrictions:
+    - match:
+        path: infra/production
+      max_subagents: 1
+      max_parallel: 1
+      stop_after: technical-plan
+\`\`\`
+
+## Monorepo Map
+
+| Path | Type | Stack | TDD mode | Verification |
+|---|---|---|---|---|
+| \`apps/web\` | frontend | SvelteKit | limited | typecheck, build |
+
+## Verification Commands
+
+- Test: npm test
+`);
+    const repoPolicy = new RepoPolicyManager();
+    repoPolicy.startSession({ cwd: policyCwd } as any);
+    assert.match(repoPolicy.formatStatus(), /Workflow default: direct/);
+    assert.match(repoPolicy.formatPromptContext(), /apps\/web/);
+    assert.throws(() => repoPolicy.validateDefinition({
+      ...base,
+      workflow_state: { ...base.workflow_state, workflow_mode: "direct" },
+      policy_context: { paths: ["infra/production/app.hcl"], operations: [] },
+    }), /allowed modes: governed/);
+    assert.throws(() => repoPolicy.validateDefinition({
+      ...base,
+      workflow_state: { ...base.workflow_state, workflow_mode: "governed" },
+      policy_context: { paths: ["infra/production/app.hcl"], operations: [] },
+    }), /max_subagents to 1/);
+    repoPolicy.validateDefinition({
+      ...base,
+      workflow_state: { ...base.workflow_state, workflow_mode: "governed" },
+      execution_policy: {
+        ...base.execution_policy,
+        max_subagents: 1,
+        max_parallel: 1,
+        stop_after: "technical-plan",
+      },
+      policy_context: { paths: ["infra/production/app.hcl"], operations: [] },
+    });
+  } finally {
+    await fs.promises.rm(policyCwd, { recursive: true, force: true });
+  }
+
   const writer = {
     agent: "itsol-feature-implementation",
     task: "Implement fixture",
@@ -198,11 +269,11 @@ export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
     hasUI: false,
     sessionManager: { getBranch: () => [] },
   } as any;
-  const store = new TaskStateStore(fakePi, agents.length, "0.18.0");
+  const store = new TaskStateStore(fakePi, agents.length, "0.19.0");
   store.startSession(fakeContext);
-  assert.match(store.formatStatus(), /ITSOL Powers v0\.18\.0/);
+  assert.match(store.formatStatus(), /ITSOL Powers v0\.19\.0/);
   store.setDefinition(base);
-  assert.match(store.formatStatus(), /ITSOL v0\.18\.0/);
+  assert.match(store.formatStatus(), /ITSOL v0\.19\.0/);
   const reused = store.resolveDelegation({ task_id: base.task_id, task: writer });
   assert.equal(reused.execution_policy.preset, "standard");
   store.beginDelegation(base.task_id, [writer.agent]);
@@ -213,9 +284,48 @@ export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
   }]);
   assert.equal(store.getActive()?.child_cost, 0.01);
   assert.equal(store.getActive()?.used_agents[0], writer.agent);
+  const completionRequest = {
+    task_id: base.task_id,
+    status: "completed" as const,
+    achieved_stage: "implementation-reviewed" as const,
+    evidence: [{ criterion: "fixture passes", evidence: "npm test: PASS" }],
+    review_evidence: ["inline self-review completed"],
+    unverified: [],
+  };
+  assert.equal(evaluateCompletion(store.getActive()!, completionRequest).accepted, true);
+  assert.match(
+    evaluateCompletion(store.getActive()!, { ...completionRequest, review_evidence: [] }).problems.join("\n"),
+    /implementation review/,
+  );
+  assert.equal(evaluateCompletion(store.getActive()!, {
+    ...completionRequest,
+    status: "partial",
+    evidence: [],
+    review_evidence: [],
+    unverified: ["integration unavailable"],
+  }).accepted, true);
+  let completionTool: any;
+  let settledHandler: (() => void) | undefined;
+  let activeTools = ["read", "itsol_complete"];
+  const completionPi = {
+    registerTool(tool: unknown) { completionTool = tool; },
+    on(event: string, handler: () => void) {
+      if (event === "agent_settled") settledHandler = handler;
+    },
+    getActiveTools: () => [...activeTools],
+    setActiveTools: (tools: string[]) => { activeTools = [...tools]; },
+  } as unknown as ExtensionAPI;
+  registerCompletionGate(completionPi, store);
+  const gateResult = await completionTool.execute("gate", completionRequest);
+  assert.equal(gateResult.terminate, undefined);
+  assert.deepEqual(activeTools, []);
+  assert.match(gateResult.content[0].text, /tool-free turn/);
+  settledHandler?.();
+  assert.deepEqual(activeTools.sort(), ["itsol_complete", "read"]);
+  assert.match(store.formatStatus(), /completed/);
   assert.ok(persistedEntries.length >= 3);
   const persisted = persistedEntries.at(-1)!;
-  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.18.0");
+  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.19.0");
   restoredStore.startSession({
     hasUI: false,
     sessionManager: {

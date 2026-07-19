@@ -20,6 +20,7 @@ import {
   type DelegatedTask,
   type ItsolDelegateParams,
 } from "./policy.ts";
+import type { RepoPolicyManager } from "./repo-policy.ts";
 import type { TaskStateStore } from "./task-state.ts";
 import { validateEnvelope } from "../../hooks/validate-subagent-stop.mjs";
 
@@ -382,6 +383,7 @@ export function registerItsolDelegate(
   agents: ItsolAgentConfig[],
   store: TaskStateStore,
   modelRouter: ModelRouter,
+  repoPolicy: RepoPolicyManager,
   resetHandlers: Array<() => void>,
 ): void {
   const skillsDir = path.join(pluginRoot, "skills");
@@ -415,6 +417,7 @@ export function registerItsolDelegate(
         if (!agent) throw new Error(`Unknown ITSOL agent: ${task.agent}`);
         return [task.agent, modelRouter.resolve(task, agent, params.execution_policy, inheritedModel, ctx)] as const;
       }));
+      repoPolicy.validateDelegation(params, tasks);
       validateDelegation(params, tasks, agentsByName, store.getUsedAgents(params.task_id), {
         modelControlEnforced: [...resolutions.values()].every((resolution) => resolution.profileEnforced),
       });
@@ -489,7 +492,14 @@ export function registerItsolDelegate(
         const remaining = Math.max(0, (activeByTask.get(params.task_id) ?? tasks.length) - tasks.length);
         if (remaining === 0) activeByTask.delete(params.task_id);
         else activeByTask.set(params.task_id, remaining);
-        store.finishDelegation(params.task_id, tasks.map((task) => task.agent), results);
+        store.finishDelegation(
+          params.task_id,
+          tasks.map((task) => task.agent),
+          results.map((result) => ({
+            ...result,
+            role: resolutions.get(result.agent)?.role,
+          })),
+        );
       }
 
       const summaries = results.map((result) => [
