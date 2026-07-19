@@ -13,7 +13,9 @@ plugins/itsolpowers/agents/itsol-tdd-workflow.md
 plugins/itsolpowers/agents/itsol-technical-planning.md
 plugins/itsolpowers/agents/using-itsolpowers.md
 plugins/itsolpowers/extensions/pi/delegate-tool.ts
+plugins/itsolpowers/extensions/pi/model-router.ts
 plugins/itsolpowers/extensions/pi/policy.ts
+plugins/itsolpowers/extensions/pi/task-state.ts
 plugins/itsolpowers/hooks/bootstrap-context-pi.md
 plugins/itsolpowers/hooks/bootstrap-context.md
 plugins/itsolpowers/skills/itsol-bug-debugging/SKILL.md

@@ -55,12 +55,15 @@ for (const file of agentFiles) {
 const bootstrap = fs.readFileSync(path.join(pluginRoot, 'hooks', 'bootstrap-context-pi.md'), 'utf8');
 assert.match(bootstrap, /itsolpowers-pi-bootstrap/);
 assert.match(bootstrap, /`using-itsolpowers`/);
+assert.match(bootstrap, /`itsol_task_state`/);
 assert.match(bootstrap, /`itsol_delegate`/);
+assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'task-state.ts')));
+assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'model-router.ts')));
 assert.ok(bootstrap.trim().split(/\s+/).length <= 600, 'Pi bootstrap exceeds 600 words');
 
 if (process.env.ITSOLPOWERS_PI_SMOKE === '1') {
   for (const packageRoot of [pluginRoot, repoRoot]) {
-    const result = spawnSync('pi', ['--offline', '-e', packageRoot, '--list-models'], {
+    const result = spawnSync('pi', ['--offline', '--no-extensions', '-e', packageRoot, '--list-models'], {
       encoding: 'utf8',
       timeout: 30_000,
     });

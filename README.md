@@ -231,13 +231,13 @@ pi install https://github.com/itsoltech/agents
 Rekomendowana instalacja przypiętego release:
 
 ```bash
-pi install https://github.com/itsoltech/agents@v0.17.0
+pi install https://github.com/itsoltech/agents@v0.18.0
 ```
 
 Dla prywatnego repozytorium można użyć SSH:
 
 ```bash
-pi install git:git@github.com:itsoltech/agents@v0.17.0
+pi install git:git@github.com:itsoltech/agents@v0.18.0
 ```
 
 Rootowy `package.json` jest adapterem Pi wskazującym extension i skille z `plugins/itsolpowers/`. URL musi wskazywać repozytorium Git; adres GitHub `tree/.../plugins/itsolpowers` nie jest obsługiwanym źródłem pakietu.
@@ -254,7 +254,67 @@ Pi ładuje skille bez namespace pluginu. Główny router jest dostępny jako:
 /skill:using-itsolpowers
 ```
 
-Extension automatycznie dodaje krótki bootstrap dla zadań engineeringowych, mapuje współdzielone pojęcia narzędzi na Pi i rejestruje `itsol_delegate`. Delegowane agenty działają jako osobne procesy Pi z `--no-extensions`, jawną listą narzędzi, limitami z `itsol-execution-policy`, kontrolą stanu workflow i walidacją końcowego envelope. W trakcie pracy TUI pokazuje krótkie angielskie opisy bieżących akcji, np. `reading README.md`, `searching “workflow” in skills` lub `running: npm test`, aktywny model i poziom thinking oraz czas w formacie `5s`, `2min 6s` albo `1h 2min`. Domyślnie dziecko dziedziczy model głównej sesji, ale główny agent może przekazać w task packet dokładne `task.model: provider/model`, np. tańszy model do prostego exploration; wybór nadal musi respektować `execution_policy.model_profile`. Procesy nie są sandboxem systemu operacyjnego; write scopes są walidowane w task packetach, ale komendy shell nadal działają z uprawnieniami użytkownika.
+Extension automatycznie dodaje krótki bootstrap dla zadań engineeringowych, mapuje współdzielone pojęcia narzędzi na Pi i rejestruje `itsol_task_state` oraz `itsol_delegate`. Stan workflow, execution policy, `done_when`, użyci agenci i koszty są zapisywane w sesji Pi i odtwarzane po `/reload`, resume oraz compaction. Po zapisaniu stanu kolejne delegacje mogą przekazywać tylko `task_id` i właściwy task packet. Footer pokazuje wersję pluginu, aktywny tryb, preset, wykorzystanie agentów, aktywne delegacje i łączny koszt głównego modelu oraz dzieci.
+
+Delegowane agenty działają jako osobne procesy Pi z `--no-extensions`, jawną listą narzędzi, limitami z `itsol-execution-policy`, kontrolą stanu workflow i walidacją końcowego envelope. W trakcie pracy TUI pokazuje krótkie angielskie opisy bieżących akcji, np. `reading README.md`, `searching “workflow” in skills` lub `running: npm test`, aktywny model, źródło routingu, poziom thinking oraz czas w formacie `5s`, `2min 6s` albo `1h 2min`.
+
+Cost-aware model router używa kolejno jawnego `task.model`, mapowania `model_profile` i roli, modelu głównej sesji, a na końcu domyślnego modelu Pi. Mapowania można zdefiniować globalnie w `~/.pi/agent/itsolpowers.json` i nadpisać w zaufanym projekcie przez `.pi/itsolpowers.json`:
+
+```json
+{
+  "modelProfiles": {
+    "economy": {
+      "default": {
+        "model": "provider/cheap-model",
+        "thinking": "low"
+      }
+    },
+    "balanced": {
+      "explore": {
+        "model": "provider/cheap-model",
+        "thinking": "low"
+      },
+      "plan": {
+        "model": "provider/standard-model",
+        "thinking": "medium"
+      },
+      "implement": {
+        "model": "provider/standard-model",
+        "thinking": "medium"
+      },
+      "review": {
+        "model": "provider/strong-model",
+        "thinking": "medium"
+      }
+    },
+    "frontier": {
+      "default": {
+        "model": "provider/frontier-model",
+        "thinking": "high"
+      }
+    }
+  }
+}
+```
+
+Role to `explore`, `plan`, `implement` i `review`. Można przekazać ją jawnie jako `task.role`; w przeciwnym razie extension klasyfikuje rolę z definicji agenta. Agenci posiadający narzędzia zapisu są zawsze klasyfikowani jako `implement`. Jawny `task.model` ma pierwszeństwo. Przy `model_control: enforced` każdy model musi odpowiadać skonfigurowanemu mapowaniu profilu i roli. Stary skrócony format `"explore": "provider/model"` pozostaje obsługiwany.
+
+`/itsol-models configure` uruchamia interaktywny wizard wyboru scope i profilu. W ramach jednej sesji konfiguratora można ustawić wiele ról; dla każdej wybiera się model lub dziedziczenie oraz poziom reasoning. Po każdej roli można przejść do następnej, zapisać wszystkie zmiany w jednym kroku albo anulować bez zapisu. Lista poziomów reasoning w wizardzie jest pobierana dynamicznie z wybranego modelu przez natywne metadane Pi (`getSupportedThinkingLevels`), więc może obejmować np. `off`, `minimal`, `low`, `medium`, `high`, `xhigh` lub `max` zależnie od modelu. Przy uruchomieniu extension dodatkowo dopasowuje poziom do faktycznych możliwości modelu (`model-clamp`) oraz resolved execution policy (`policy-clamp`); konfiguracja nigdy nie rozszerza twardszego limitu zadania.
+
+Komendy stanu i modeli:
+
+```text
+/itsol status
+/itsol activate <task-id>
+/itsol mode governed|autonomous-planned|direct
+/itsol preset economy|standard|deep
+/itsol reset [task-id]
+/itsol-models status
+/itsol-models reload
+/itsol-models configure
+```
+
+Procesy nie są sandboxem systemu operacyjnego; write scopes są walidowane w task packetach, ale komendy shell nadal działają z uprawnieniami użytkownika.
 
 Diagnostyka:
 

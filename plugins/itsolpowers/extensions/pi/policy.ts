@@ -45,9 +45,12 @@ export const ExecutionPolicySchema = Type.Object({
 
 export const DelegatedTaskSchema = Type.Object({
   agent: Type.String({ minLength: 1, description: "ITSOL agent name, matching agents/<name>.md" }),
+  role: Type.Optional(StringEnum(["explore", "plan", "implement", "review"] as const, {
+    description: "Cost-routing role. Omit to infer it from the selected ITSOL agent.",
+  })),
   model: Type.Optional(Type.String({
     pattern: "^[^/]+/.+$",
-    description: "Exact Pi provider/model id for this child. Omit to inherit the main agent model. The choice must stay within execution_policy.model_profile.",
+    description: "Exact Pi provider/model id for this child. Omit to use the configured model profile and role, then inherit the main model as fallback.",
   })),
   task: Type.String({ minLength: 1 }),
   cwd: Type.Optional(Type.String()),
@@ -58,11 +61,18 @@ export const DelegatedTaskSchema = Type.Object({
   stop_after: Type.Optional(ExecutionPolicySchema.properties.stop_after),
 });
 
-export const ItsolDelegateParamsSchema = Type.Object({
+export const TaskStateDefinitionSchema = Type.Object({
   task_id: Type.String({ minLength: 1, description: "Stable identifier for this top-level task" }),
   workflow_state: WorkflowStateSchema,
   execution_policy: ExecutionPolicySchema,
   done_when: Type.Array(Type.String({ minLength: 1 }), { minItems: 1 }),
+});
+
+export const ItsolDelegateParamsSchema = Type.Object({
+  task_id: Type.String({ minLength: 1, description: "Stable identifier for this top-level task" }),
+  workflow_state: Type.Optional(WorkflowStateSchema),
+  execution_policy: Type.Optional(ExecutionPolicySchema),
+  done_when: Type.Optional(Type.Array(Type.String({ minLength: 1 }), { minItems: 1 })),
   task: Type.Optional(DelegatedTaskSchema),
   tasks: Type.Optional(Type.Array(DelegatedTaskSchema, { minItems: 1, maxItems: 3 })),
 });
@@ -70,7 +80,9 @@ export const ItsolDelegateParamsSchema = Type.Object({
 export type WorkflowState = Static<typeof WorkflowStateSchema>;
 export type ExecutionPolicy = Static<typeof ExecutionPolicySchema>;
 export type DelegatedTask = Static<typeof DelegatedTaskSchema>;
-export type ItsolDelegateParams = Static<typeof ItsolDelegateParamsSchema>;
+export type TaskStateDefinition = Static<typeof TaskStateDefinitionSchema>;
+export type ItsolDelegateInput = Static<typeof ItsolDelegateParamsSchema>;
+export type ItsolDelegateParams = TaskStateDefinition & Pick<ItsolDelegateInput, "task" | "tasks">;
 
 const STOP_RANK: Record<ExecutionPolicy["stop_after"], number> = {
   analysis: 10,
@@ -103,10 +115,11 @@ export function validateDelegation(
   tasks: DelegatedTask[],
   agentsByName: Map<string, ItsolAgentConfig>,
   previouslyUsedAgents: Set<string>,
+  options: { modelControlEnforced?: boolean } = {},
 ): void {
-  if (params.execution_policy.model_control === "enforced") {
+  if (params.execution_policy.model_control === "enforced" && !options.modelControlEnforced) {
     throw new Error(
-      "Pi adapter has no configured economy/balanced/frontier model mapping; model_control must remain advisory",
+      "execution_policy.model_control=enforced requires a configured profile mapping for every delegated model",
     );
   }
   if (params.execution_policy.max_parallel > params.execution_policy.max_subagents) {

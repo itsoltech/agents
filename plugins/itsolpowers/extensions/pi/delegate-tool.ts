@@ -12,6 +12,7 @@ import {
 } from "@earendil-works/pi-coding-agent";
 import { Text } from "@earendil-works/pi-tui";
 import { agentCanWrite, mapAgentTools, type ItsolAgentConfig } from "./agents.ts";
+import type { ModelRouter } from "./model-router.ts";
 import {
   ItsolDelegateParamsSchema,
   resolveTaskCwd,
@@ -19,6 +20,7 @@ import {
   type DelegatedTask,
   type ItsolDelegateParams,
 } from "./policy.ts";
+import type { TaskStateStore } from "./task-state.ts";
 import { validateEnvelope } from "../../hooks/validate-subagent-stop.mjs";
 
 interface ChildUsage {
@@ -46,7 +48,9 @@ interface DelegationResult {
   durationMs: number;
   activities: AgentActivity[];
   model?: string;
+  modelSource: string;
   thinking: string;
+  thinkingSource: string;
   fullOutputPath?: string;
 }
 
@@ -55,7 +59,9 @@ interface RunningAgentProgress {
   activity: string;
   elapsedMs: number;
   model: string;
+  modelSource: string;
   thinking: string;
+  thinkingSource: string;
 }
 
 interface DelegationDetails {
@@ -167,6 +173,7 @@ function buildChildPrompt(
   agent: ItsolAgentConfig,
   task: DelegatedTask,
   params: ItsolDelegateParams,
+  effectiveRuntime: { model?: string; modelSource: string; thinking: string; thinkingSource: string },
 ): string {
   const preloadedSkills = agent.skills.map((skillName) => {
     const skillPath = path.join(skillsDir, skillName, "SKILL.md");
@@ -188,6 +195,7 @@ function buildChildPrompt(
     execution_policy: params.execution_policy,
     done_when: params.done_when,
     delegated_task: task,
+    effective_runtime: effectiveRuntime,
   };
 
   return [
@@ -215,11 +223,19 @@ async function runAgent(
   params: ItsolDelegateParams,
   parentCwd: string,
   model: string | undefined,
+  modelSource: string,
+  thinking: string,
+  thinkingSource: string,
   signal: AbortSignal | undefined,
   onProgress: (activity: string, elapsedMs: number) => void,
 ): Promise<DelegationResult> {
   const startedAt = Date.now();
-  const prompt = buildChildPrompt(pluginRoot, skillsDir, agent, task, params);
+  const prompt = buildChildPrompt(pluginRoot, skillsDir, agent, task, params, {
+    model,
+    modelSource,
+    thinking,
+    thinkingSource,
+  });
   const temporaryDirectory = await fs.promises.mkdtemp(path.join(os.tmpdir(), "itsolpowers-pi-prompt-"));
   const promptPath = path.join(temporaryDirectory, `${agent.name}.md`);
   await fs.promises.writeFile(promptPath, prompt, { encoding: "utf8", mode: 0o600 });
@@ -250,7 +266,7 @@ async function runAgent(
     "--tools",
     mapAgentTools(agent).join(","),
     "--thinking",
-    params.execution_policy.reasoning_profile,
+    thinking,
     "--append-system-prompt",
     promptPath,
   ];
@@ -349,7 +365,9 @@ async function runAgent(
       durationMs: Date.now() - startedAt,
       activities,
       model: model ?? "default model",
-      thinking: params.execution_policy.reasoning_profile,
+      modelSource,
+      thinking,
+      thinkingSource,
       fullOutputPath: displayOutput.fullOutputPath,
     };
   } finally {
@@ -362,38 +380,44 @@ export function registerItsolDelegate(
   pi: ExtensionAPI,
   pluginRoot: string,
   agents: ItsolAgentConfig[],
+  store: TaskStateStore,
+  modelRouter: ModelRouter,
   resetHandlers: Array<() => void>,
 ): void {
   const skillsDir = path.join(pluginRoot, "skills");
   const agentsByName = new Map(agents.map((agent) => [agent.name, agent]));
-  const usedByTask = new Map<string, Set<string>>();
   const activeByTask = new Map<string, number>();
-  resetHandlers.push(() => {
-    usedByTask.clear();
-    activeByTask.clear();
-  });
+  resetHandlers.push(() => activeByTask.clear());
 
   pi.registerTool({
     name: "itsol_delegate",
     label: "ITSOL Delegate",
-    description: "Delegate one or more independent tasks to bundled ITSOL agents in isolated Pi processes. Each task may select an exact provider/model id or inherit the main model. Requires complete workflow and execution policy state. Enforces agent ceilings, parallel ceilings, stop ordering, artifact authorization, and non-overlapping write scopes. Model-visible output is limited to 50KB/2000 lines, with larger reports saved to private temporary files.",
+    description: "Delegate one or more independent tasks to bundled ITSOL agents in isolated Pi processes. Task state may be loaded by task_id from itsol_task_state. Models and reasoning resolve from task.model, configured profile+role mappings, execution policy, or the main model. Enforces agent ceilings, parallel ceilings, stop ordering, artifact authorization, and non-overlapping write scopes. Model-visible output is limited to 50KB/2000 lines, with larger reports saved to private temporary files.",
     promptSnippet: "Delegate bounded work to an ITSOL specialist agent",
     promptGuidelines: [
       "Use itsol_delegate only after loading itsol-workflow-mode, itsol-execution-policy, and itsol-subagent-workflow.",
-      "Every itsol_delegate task packet must include complete workflow state, execution policy, done_when, scopes, evidence, and stop boundary.",
+      "Before itsol_delegate, persist complete workflow state, execution policy, and done_when with itsol_task_state; subsequent calls may reuse them by task_id.",
       "For cheap exploration with itsol_delegate, set task.model to an exact available provider/model id within execution_policy.model_profile; omit it when the child should inherit the main model.",
     ],
     parameters: ItsolDelegateParamsSchema,
 
-    async execute(_toolCallId, params, signal, onUpdate, ctx) {
+    async execute(_toolCallId, input, signal, onUpdate, ctx) {
+      const params = store.resolveDelegation(input);
       const single = params.task ? [params.task] : [];
       const parallel = params.tasks ?? [];
       if ((single.length ? 1 : 0) + (parallel.length ? 1 : 0) !== 1) {
         throw new Error("Provide exactly one of task or tasks");
       }
       const tasks = single.length ? single : parallel;
-      const previouslyUsed = usedByTask.get(params.task_id) ?? new Set<string>();
-      validateDelegation(params, tasks, agentsByName, previouslyUsed);
+      const inheritedModel = ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined;
+      const resolutions = new Map(tasks.map((task) => {
+        const agent = agentsByName.get(task.agent);
+        if (!agent) throw new Error(`Unknown ITSOL agent: ${task.agent}`);
+        return [task.agent, modelRouter.resolve(task, agent, params.execution_policy, inheritedModel, ctx)] as const;
+      }));
+      validateDelegation(params, tasks, agentsByName, store.getUsedAgents(params.task_id), {
+        modelControlEnforced: [...resolutions.values()].every((resolution) => resolution.profileEnforced),
+      });
       const active = activeByTask.get(params.task_id) ?? 0;
       if (active + tasks.length > params.execution_policy.max_parallel) {
         throw new Error(
@@ -401,40 +425,32 @@ export function registerItsolDelegate(
         );
       }
       activeByTask.set(params.task_id, active + tasks.length);
-      const reservedAgents = usedByTask.get(params.task_id) ?? new Set<string>();
-      for (const task of tasks) reservedAgents.add(task.agent);
-      usedByTask.set(params.task_id, reservedAgents);
+      store.beginDelegation(params.task_id, tasks.map((task) => task.agent));
 
-      const inheritedModel = ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined;
-      const selectedModels = new Map(tasks.map((task) => {
-        const selected = task.model ?? inheritedModel;
-        if (task.model) {
-          const separator = task.model.indexOf("/");
-          const provider = task.model.slice(0, separator);
-          const modelId = task.model.slice(separator + 1);
-          if (!ctx.modelRegistry.find(provider, modelId)) {
-            throw new Error(`Unknown delegated Pi model: ${task.model}`);
-          }
-        }
-        return [task.agent, selected] as const;
-      }));
-      const thinking = params.execution_policy.reasoning_profile;
       const progress = new Map<string, RunningAgentProgress>(
-        tasks.map((task) => [task.agent, {
-          agent: task.agent,
-          activity: "queued",
-          elapsedMs: 0,
-          model: selectedModels.get(task.agent) ?? "default model",
-          thinking,
-        }]),
+        tasks.map((task) => {
+          const resolution = resolutions.get(task.agent)!;
+          return [task.agent, {
+            agent: task.agent,
+            activity: "queued",
+            elapsedMs: 0,
+            model: resolution.model ?? "default model",
+            modelSource: `${resolution.source}:${resolution.role}`,
+            thinking: resolution.thinking,
+            thinkingSource: resolution.thinkingSource,
+          }];
+        }),
       );
       const update = (agent: string, activity: string, elapsedMs: number) => {
+        const resolution = resolutions.get(agent)!;
         progress.set(agent, {
           agent,
           activity,
           elapsedMs,
-          model: selectedModels.get(agent) ?? "default model",
-          thinking,
+          model: resolution.model ?? "default model",
+          modelSource: `${resolution.source}:${resolution.role}`,
+          thinking: resolution.thinking,
+          thinkingSource: resolution.thinkingSource,
         });
         const current = [...progress.values()];
         onUpdate?.({
@@ -446,11 +462,12 @@ export function registerItsolDelegate(
         });
       };
 
-      let results: DelegationResult[];
+      let results: DelegationResult[] = [];
       try {
         results = await Promise.all(
           tasks.map((task) => {
             const agent = agentsByName.get(task.agent)!;
+            const resolution = resolutions.get(agent.name)!;
             update(agent.name, "analyzing task", 0);
             return runAgent(
               pluginRoot,
@@ -459,7 +476,10 @@ export function registerItsolDelegate(
               task,
               params,
               ctx.cwd,
-              selectedModels.get(agent.name),
+              resolution.model,
+              `${resolution.source}:${resolution.role}`,
+              resolution.thinking,
+              resolution.thinkingSource,
               signal,
               (activity, elapsedMs) => update(agent.name, activity, elapsedMs),
             );
@@ -469,12 +489,13 @@ export function registerItsolDelegate(
         const remaining = Math.max(0, (activeByTask.get(params.task_id) ?? tasks.length) - tasks.length);
         if (remaining === 0) activeByTask.delete(params.task_id);
         else activeByTask.set(params.task_id, remaining);
+        store.finishDelegation(params.task_id, tasks.map((task) => task.agent), results);
       }
 
       const summaries = results.map((result) => [
         `## ${result.agent} — ${result.status}`,
         result.output,
-        `Duration: ${formatDuration(result.durationMs)}. Model: ${result.model ?? "default"}. Thinking: ${result.thinking}. Usage: ${result.usage.input} input, ${result.usage.output} output, $${result.usage.cost.toFixed(4)}`,
+        `Duration: ${formatDuration(result.durationMs)}. Model: ${result.model ?? "default"} (${result.modelSource}). Thinking: ${result.thinking} (${result.thinkingSource}). Usage: ${result.usage.input} input, ${result.usage.output} output, $${result.usage.cost.toFixed(4)}`,
       ].join("\n\n"));
       const combined = await truncateForParent(`delegation-${params.task_id}`, summaries.join("\n\n---\n\n"));
 
@@ -506,8 +527,10 @@ export function registerItsolDelegate(
           "\n  ",
           theme.fg("dim", "model: "),
           theme.fg("muted", item.model),
+          theme.fg("dim", ` (${item.modelSource})`),
           theme.fg("dim", " · thinking: "),
           theme.fg("muted", item.thinking),
+          theme.fg("dim", ` (${item.thinkingSource})`),
         ].join("")).join("\n");
         return new Text(text, 0, 0);
       }
@@ -522,8 +545,8 @@ export function registerItsolDelegate(
         if (activityTrail) text += `\n${theme.fg("muted", activityTrail)}`;
         if (expanded) text += `\n${item.output}`;
         const stats = [
-          `model: ${item.model ?? "default"}`,
-          `thinking: ${item.thinking}`,
+          `model: ${item.model ?? "default"} (${item.modelSource})`,
+          `thinking: ${item.thinking} (${item.thinkingSource})`,
           formatDuration(item.durationMs),
           `$${item.usage.cost.toFixed(4)}`,
         ].join(" · ");
