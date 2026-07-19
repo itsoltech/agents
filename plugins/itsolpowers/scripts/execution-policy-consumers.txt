@@ -17,6 +17,7 @@ plugins/itsolpowers/extensions/pi/delegate-tool.ts
 plugins/itsolpowers/extensions/pi/model-router.ts
 plugins/itsolpowers/extensions/pi/plan-review.ts
 plugins/itsolpowers/extensions/pi/policy.ts
+plugins/itsolpowers/extensions/pi/qa-orchestrator.ts
 plugins/itsolpowers/extensions/pi/repo-policy.ts
 plugins/itsolpowers/extensions/pi/review-orchestrator.ts
 plugins/itsolpowers/extensions/pi/task-state.ts

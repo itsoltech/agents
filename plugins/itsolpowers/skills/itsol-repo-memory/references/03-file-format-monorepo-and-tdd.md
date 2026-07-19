@@ -39,6 +39,28 @@ execution:
       stop_after: technical-plan
 ```
 
+## QA
+
+```yaml
+qa:
+  profile: automatic # off | evidence | automatic | strict
+  max_cycles: 10
+  application_types: [web-ui, api]
+  commands: [npm run test:integration]
+  targets: [http://localhost:3000]
+  restrictions:
+    - match:
+        path: legacy/hard-to-run
+      profile: off
+    - match:
+        path: packages/cli
+      profile: evidence
+      application_types: [cli]
+      commands: [npm run test:cli]
+```
+
+Use `off` only as stable repository policy for a project that cannot be meaningfully run or tested; report the skip rather than PASS. `evidence` uses supported commands/manual evidence without automatic interactive QA agents. `automatic` routes by application type. `strict` adds the strongest coverage and treats low-severity findings as blocking.
+
 ## Monorepo Map
 
 | Path | Type | Stack | TDD mode | Verification |

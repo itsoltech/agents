@@ -17,7 +17,7 @@ Use `.itsol.md` as repo-level operational memory for stable facts that should gu
 4. If multiple projects are touched, apply each project's policy separately and state the selected policies in the plan or handoff.
 5. If no matching project policy exists, inspect local configs before assuming root commands, test support, or deployment behavior.
 6. Treat `.itsol.md` as stable team memory, not task scratchpad. Do not add temporary notes.
-7. Propose updates when you discover stable repo-level facts, especially testing/TDD support, verification commands, generated-code rules, deployment constraints, and legacy limits.
+7. Propose updates when you discover stable repo-level facts, especially testing/TDD support, verification commands, generated-code rules, deployment constraints, legacy limits, and stable QA capability (`off`, `evidence`, `automatic`, or `strict`) including application types, runnable commands, targets, and cycle limits.
 8. Resolve modes exactly through `itsol-workflow-mode`: intersect root and most-specific project `allowed_modes`, then every matching path/operation restriction. A task-level selection overrides a repo default but never an explicit restriction. Report conflicts and ask from the remaining allowed modes; never silently downgrade.
 
 ## Init Mode
@@ -28,7 +28,7 @@ When asked to create or initialize `.itsol.md`:
 2. Inspect only lightweight config files needed to infer stack and existing commands, such as workspace manifests, package files, solution files, project files, build configs, Docker/Nomad files, and test configs.
 3. Present a candidate Monorepo Map to the user.
 4. Ask the user to confirm or correct each project and choose TDD mode: `full`, `limited`, `not-supported`, `not-applicable`, or `unknown`.
-5. Ask for supported verification commands and known "do not spend time on" constraints per project.
+5. Ask for supported verification commands, QA profile/application types/targets, and known "do not spend time on" constraints per project. Use `qa.profile: off` for genuinely hard-to-run projects only when the user confirms the stable skip policy.
 6. Write `.itsol.md` only after the user confirms the project map and policies.
 7. Mark uncertain facts as `unknown`; do not invent policies from config detection alone.
 

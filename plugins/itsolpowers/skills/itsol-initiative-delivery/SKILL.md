@@ -22,14 +22,19 @@ Use this workflow for a broad business source whose complete intended outcome ne
 
 1. **Intake:** inspect the whole source and repository; extract requirements, acceptance criteria, constraints, unknowns, and initiative-level completion criteria.
 2. **Roadmap:** assign every requirement to one or more phases; document dependencies, phase outcomes, system QA, rollout, and cross-cutting architecture.
-3. **Review:** self-review and invoke the harness-native automatic plan-review capability for the initiative roadmap. Resolve findings before marking it ready.
-4. **Execute phases:** plan, review, implement, independently review, integrate, QA, and record evidence. Automatically start the next dependency-ready phase.
-5. **Adapt:** classify discoveries and QA feedback, record decisions, update impacted living documents, replan future work, and Rubber Duck-review the changed roadmap.
-6. **Complete:** require explicit disposition for every requirement, completed phases, no pending decisions, system verification, current documentation, and no hidden scope gaps.
+3. **Review:** self-review and invoke the harness-native automatic plan-review capability for the initiative roadmap. Initiative review is a read-only panel covering requirements/product, architecture, QA, self-review, and conditional security/data expertise. Resolve every material finding and rerun until the panel is material-blocker-free or the configured ceiling is genuinely exhausted.
+4. **Execute phases:** plan, review, implement, independently review all changed surfaces, integrate, run application-aware QA, and record fingerprint-bound evidence. Automatically start the next dependency-ready phase.
+5. **QA loop:** choose browser/UI, API, backend, interactive CLI, Electron, mobile, data, infrastructure, or combined system QA from the application shape. A failed verdict routes to implementation fix, plan revision, or a user decision. After fixes, rerun applicable plan review and code review, then execute fresh QA; repeat until PASS.
+6. **Adapt:** classify discoveries and QA feedback, record decisions, update impacted living documents, replan future work, and Rubber Duck-review the changed roadmap.
+7. **Complete:** require explicit disposition for every requirement, completed phases, a passing QA verdict per phase, current passing final-system QA, no pending decisions, synchronized documentation, and no hidden scope gaps.
 
 ## Decision boundary
 
 Resolve ordinary implementation and evidence-backed architecture choices autonomously and record them. Open a targeted user decision when equally plausible choices materially alter product intent, permissions, data handling, contractual behavior, cost/rollout, or initiative scope. Include context, options, recommendation, impacted requirements/phases, and the default that would be used if authority permits. Bundle related questions.
+
+Resolve `.itsol.md` QA policy before creating QA work. `qa.profile: off` explicitly skips QA gates for projects that cannot be run; `evidence` accepts configured command/manual evidence without automatic specialist execution; `automatic` selects application-aware agents; `strict` adds the strongest coverage. Preserve `qa.max_cycles`, configured application types, commands, targets, and matching restrictions. A policy skip must be reported honestly and must never be presented as QA PASS.
+
+QA evidence must be observed rather than planned. Use the harness-native QA planning/verdict capability to create domain packets, execute all required coverage, and bind PASS to the implementation fingerprint. Any implementation change invalidates final system QA. Do not substitute a generic test command when the application requires browser, interactive CLI, desktop/mobile, API, data, or infrastructure behavior checks.
 
 Deferring or rejecting a requirement changes initiative scope and therefore requires a resolved user decision. Production deployment, destructive data work, external communications, secret exposure, purchases, or security weakening retain separate protected-action authority.
 

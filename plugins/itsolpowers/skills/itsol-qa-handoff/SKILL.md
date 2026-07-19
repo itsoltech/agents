@@ -13,7 +13,10 @@ Make QA testable: provide scope, data, environments, risks, scenarios, and a cle
 2. Build scenarios from risk: happy path, negative path, edge cases, regression, permissions, data boundaries, integrations, retries, and security smoke.
 3. Use test-design techniques where useful: equivalence classes, boundary values, decision tables, state transitions, and exploratory testing.
 4. For bugs, require environment, reproducible steps, actual versus expected result, data, attachments, impact, severity, priority, and release-blocking status.
-5. For release readiness, check QA result, regression, support notes, monitoring, feature flags, rollback, and production verification needs.
+5. Select the real interaction surface: agent-browser for web UI, supported CDP/browser automation for Electron, interactive command execution for CLI, contract/integration/security tests for API/backend, device/runtime checks for mobile, integrity/migration/rollback for data, and readiness/observability/rollback for infrastructure.
+6. In Initiative Delivery, use the harness-native QA plan/verdict capability. Execute every required packet, bind the verdict to the implementation fingerprint, and never infer PASS from a planned check or agent completion label.
+7. Route failed QA to `implementation-fix`, `plan-revision`, or `user-decision`. After remediation, rerun applicable plan review and code review and then fresh QA. Do not close the phase until QA passes.
+8. For release readiness, check QA result, regression, support notes, monitoring, feature flags, rollback, and production verification needs.
 
 
 ## Execution Policy

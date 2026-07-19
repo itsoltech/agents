@@ -104,7 +104,34 @@ Agent analizuje pełny dokument, nadaje wymaganiom stabilne `REQ-NNN`, przypisuj
 .itsol/initiatives/<initiative-id>/
 ```
 
-Pi udostępnia `itsol_initiative_state` oraz `/itsol-initiative status|activate|resume|pause`. Stan jest przenośny między sesjami i harnessami dzięki artefaktom repozytorium. Completion gate blokuje zakończenie taska, dopóki wszystkie fazy i wymagania nie mają jawnego disposition oraz nie ma pending decisions. Agent wraca do użytkownika tylko dla materialnej decyzji biznesowej/produktowej/scope/data/security/architecture, protected action, jawnej pauzy albo rzeczywistego blockera; po odpowiedzi aktualizuje zależne dokumenty, ponownie reviewuje zmienioną roadmapę i automatycznie wznawia wykonanie.
+Pi udostępnia `itsol_initiative_state`, `itsol_qa_plan`, `itsol_qa_verdict` oraz `/itsol-initiative status|activate|resume|pause`. Stan jest przenośny między sesjami i harnessami dzięki artefaktom repozytorium. Initiative Roadmap przechodzi panel review obejmujący requirements/product, architecture, QA, self-review oraz warunkowo security/data. Panel działa batchami według `max_parallel` i plan przechodzi dalej dopiero bez material blockers.
+
+Po implementacji i code review każda faza otrzymuje application-aware QA matrix. Web UI używa agent-browser, Electron wspieranego CDP/browser path, CLI testów interaktywnych, API kontraktów/integracji/security, mobile runtime/device checks, data integrity/migration/rollback, a infrastruktura readiness/observability/rollback. Werdykt QA jest związany z fingerprintem implementacji. `FAIL` lub `BLOCKED` wymaga routingu `implementation-fix`, `plan-revision` albo `user-decision`, po czym workflow ponawia odpowiednie plan/code review i świeże QA. Po fazach wymagany jest aktualny final system QA PASS.
+
+Completion gate blokuje zakończenie taska, dopóki wszystkie fazy i wymagania nie mają jawnego disposition, każda faza nie ma QA PASS, final system QA nie jest aktualny albo istnieją pending decisions. QA można jawnie zmienić lub wyłączyć w `.itsol.md`; skip jest raportowany jako policy skip, nigdy jako PASS.
+
+```yaml
+qa:
+  profile: automatic # off | evidence | automatic | strict
+  max_cycles: 10
+  application_types: [web-ui, api]
+  commands:
+    - npm run test:integration
+  targets:
+    - http://localhost:3000
+  restrictions:
+    - match:
+        path: legacy/hard-to-run
+      profile: off
+    - match:
+        path: packages/cli
+      profile: evidence
+      application_types: [cli]
+      commands:
+        - npm run test:cli
+```
+
+`off` usuwa phase/system QA gate, `evidence` wymaga skonfigurowanych lub dostarczonych dowodów bez automatycznych agentów interaktywnych, `automatic` dobiera QA do aplikacji, a `strict` traktuje także low-severity findings jako blokujące. Agent wraca do użytkownika tylko dla materialnej decyzji biznesowej/produktowej/scope/data/security/architecture, protected action, jawnej pauzy albo rzeczywistego blockera; po odpowiedzi aktualizuje zależne dokumenty, ponownie reviewuje zmienioną roadmapę i automatycznie wznawia wykonanie.
 
 ### Polityka kosztu `itsol-execution-policy`
 
@@ -247,13 +274,13 @@ pi install https://github.com/itsoltech/agents
 Rekomendowana instalacja przypiętego release:
 
 ```bash
-pi install https://github.com/itsoltech/agents@v0.21.0
+pi install https://github.com/itsoltech/agents@v0.22.0
 ```
 
 Dla prywatnego repozytorium można użyć SSH:
 
 ```bash
-pi install git:git@github.com:itsoltech/agents@v0.21.0
+pi install git:git@github.com:itsoltech/agents@v0.22.0
 ```
 
 Rootowy `package.json` jest adapterem Pi wskazującym extension i skille z `plugins/itsolpowers/`. URL musi wskazywać repozytorium Git; adres GitHub `tree/.../plugins/itsolpowers` nie jest obsługiwanym źródłem pakietu.

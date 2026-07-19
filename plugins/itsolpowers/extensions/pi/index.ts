@@ -8,6 +8,7 @@ import { registerItsolDelegate } from "./delegate-tool.ts";
 import { registerInitiativeManager } from "./initiative-state.ts";
 import { ModelRouter, registerModelRouter } from "./model-router.ts";
 import { registerPlanReview } from "./plan-review.ts";
+import { registerQaOrchestrator } from "./qa-orchestrator.ts";
 import { registerRepoPolicy, RepoPolicyManager } from "./repo-policy.ts";
 import { registerReviewOrchestrator } from "./review-orchestrator.ts";
 import { classifyAdministrativeRequest, registerTaskState, TaskStateStore } from "./task-state.ts";
@@ -45,16 +46,22 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
   registerRepoPolicy(pi, repoPolicy);
   const reviewOrchestrator = registerReviewOrchestrator(pi, taskState, agents, repoPolicy);
   const planReview = registerPlanReview(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy);
+  const qaOrchestrator = registerQaOrchestrator(pi, taskState, initiative, agents, repoPolicy);
   initiative.setRoadmapReviewValidator((taskId, roadmapPath, cwd) => planReview.hasPassingReview(taskId, "initiative", roadmapPath, cwd));
+  initiative.setQaRequiredResolver((taskId) => {
+    const task = taskState.get(taskId);
+    return repoPolicy.resolveQaPolicy(task?.policy_context).profile !== "off";
+  });
   registerCompletionGate(pi, taskState, {
     async completionDecision(taskId, ctx, request) {
       const codeReview = await reviewOrchestrator.completionDecision(taskId, ctx);
       const artifactReview = planReview.completionDecision(taskId, request.achieved_stage, ctx.cwd);
       const initiativeDecision = initiative.completionDecision(taskId);
+      const qaDecision = await qaOrchestrator.completionDecision(taskId, ctx);
       return {
         ...codeReview,
-        problems: [...artifactReview.problems, ...initiativeDecision.problems, ...codeReview.problems],
-        forceContinuation: Boolean(codeReview.forceContinuation || artifactReview.forceContinuation || initiativeDecision.forceContinuation),
+        problems: [...artifactReview.problems, ...qaDecision.problems, ...initiativeDecision.problems, ...codeReview.problems],
+        forceContinuation: Boolean(codeReview.forceContinuation || artifactReview.forceContinuation || qaDecision.forceContinuation || initiativeDecision.forceContinuation),
       };
     },
   });
@@ -69,6 +76,7 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     initiative.startSession(ctx);
     reviewOrchestrator.startSession(ctx);
     planReview.startSession(ctx);
+    qaOrchestrator.startSession(ctx);
   });
 
   pi.on("session_shutdown", (_event, ctx) => {
@@ -77,6 +85,7 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
       ctx.ui.setStatus("itsol-review", undefined);
       ctx.ui.setStatus("itsol-plan-review", undefined);
       ctx.ui.setStatus("itsol-initiative", undefined);
+      ctx.ui.setStatus("itsol-qa", undefined);
     }
   });
 
@@ -131,6 +140,8 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     if (planReviewContext) parts.push(planReviewContext);
     const reviewContext = reviewOrchestrator.formatPromptContext();
     if (reviewContext) parts.push(reviewContext);
+    const qaContext = qaOrchestrator.formatPromptContext();
+    if (qaContext) parts.push(qaContext);
     parts.push(modelRouter.formatPromptContext());
     if (!parts.length) return;
     return { systemPrompt: `${event.systemPrompt}\n\n${parts.join("\n\n")}` };
@@ -167,6 +178,7 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
         `Superpowers conflict: ${hasSuperpowers ? "possible — disable competing workflow routing" : "not detected"}`,
         `Task state: ${taskState.getActive() ? taskState.getActive()!.task_id : "none"}`,
         `Initiative state: ${initiative.getActive() ? initiative.getActive()!.initiative_id : "none"}`,
+        `Initiative QA: ${initiative.getActive()?.qa_verdicts.length ?? 0} verdicts`,
         repoPolicy.formatStatus(),
         modelRouter.formatSummary(),
         "Delegation isolation: child Pi runs use --no-extensions and an explicit tool allowlist",

@@ -12,8 +12,9 @@ import { InitiativeManager } from "../extensions/pi/initiative-state.ts";
 import { classifyAgentRole, ModelRouter, supportedThinkingLevels } from "../extensions/pi/model-router.ts";
 import { validateDelegation, type ItsolDelegateParams } from "../extensions/pi/policy.ts";
 import { RepoPolicyManager } from "../extensions/pi/repo-policy.ts";
-import { parsePlanReviewVerdict, PlanReviewOrchestrator } from "../extensions/pi/plan-review.ts";
-import { ReviewOrchestrator } from "../extensions/pi/review-orchestrator.ts";
+import { initiativeReviewers, parsePlanReviewVerdict, PlanReviewOrchestrator } from "../extensions/pi/plan-review.ts";
+import { QaOrchestrator } from "../extensions/pi/qa-orchestrator.ts";
+import { currentWorktreeFingerprint, ReviewOrchestrator } from "../extensions/pi/review-orchestrator.ts";
 import { applyPreset, classifyAdministrativeRequest, TaskStateStore } from "../extensions/pi/task-state.ts";
 
 const pluginRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -27,6 +28,14 @@ export default async function testPiRuntime(_pi: ExtensionAPI): Promise<void> {
   assert.equal(classifyAdministrativeRequest("commit and push"), undefined);
   assert.equal(classifyAdministrativeRequest("commit and then fix the failing endpoint"), undefined);
   assert.equal(classifyAdministrativeRequest("implement commit handling"), undefined);
+  assert.deepEqual(initiativeReviewers("Account permissions, PostgreSQL migration, and QA rollout"), [
+    "itsol-requirements-review",
+    "itsol-technical-planning",
+    "itsol-qa-handoff",
+    "itsol-self-review",
+    "security-api-input-review",
+    "postgres-review",
+  ]);
   assert.equal(parsePlanReviewVerdict("Rubber Duck Verdict: Ready", "ready for approval"), "ready for approval");
   assert.equal(parsePlanReviewVerdict("**Verdict:** changes required", "ready for execution"), "not ready for execution");
   assert.equal(parsePlanReviewVerdict("Plan Review Verdict: ready for execution", "ready for execution"), "ready for execution");
@@ -231,6 +240,21 @@ review:
       plan_max_rounds: 6
 \`\`\`
 
+## QA
+
+\`\`\`yaml
+qa:
+  profile: automatic
+  max_cycles: 8
+  application_types: [web-ui, api]
+  commands: [npm run test:integration]
+  targets: [http://localhost:3000]
+  restrictions:
+    - match:
+        path: legacy/hard-to-run
+      profile: off
+\`\`\`
+
 ## Monorepo Map
 
 | Path | Type | Stack | TDD mode | Verification |
@@ -258,6 +282,12 @@ review:
     assert.equal(repoPolicy.resolveReviewPolicy().delegation, "never");
     assert.equal(repoPolicy.resolveReviewPolicy().plan_max_rounds, 10);
     assert.equal(repoPolicy.resolveReviewPolicy({ paths: ["apps/web/src/page.ts"] }).profile, "strict");
+    const qaPolicy = repoPolicy.resolveQaPolicy({ paths: ["apps/web/src/page.ts"] });
+    assert.equal(qaPolicy.profile, "automatic");
+    assert.equal(qaPolicy.max_cycles, 8);
+    assert.deepEqual(qaPolicy.application_types, ["web-ui", "api"]);
+    assert.deepEqual(qaPolicy.commands, ["npm run test:integration"]);
+    assert.equal(repoPolicy.resolveQaPolicy({ paths: ["legacy/hard-to-run/app.ts"] }).profile, "off");
     const productionReview = repoPolicy.resolveReviewPolicy({ paths: ["infra/production/app.hcl"] });
     assert.equal(productionReview.profile, "strict");
     assert.equal(productionReview.auto_rereview, "until-approved");
@@ -333,11 +363,11 @@ review:
     hasUI: false,
     sessionManager: { getBranch: () => [] },
   } as any;
-  const store = new TaskStateStore(fakePi, agents.length, "0.21.0");
+  const store = new TaskStateStore(fakePi, agents.length, "0.22.0");
   store.startSession(fakeContext);
-  assert.match(store.formatStatus(), /ITSOL Powers v0\.21\.0/);
+  assert.match(store.formatStatus(), /ITSOL Powers v0\.22\.0/);
   store.setDefinition(base);
-  assert.match(store.formatStatus(), /ITSOL v0\.21\.0/);
+  assert.match(store.formatStatus(), /ITSOL v0\.22\.0/);
   const reused = store.resolveDelegation({ task_id: base.task_id, task: writer });
   assert.equal(reused.execution_policy.preset, "standard");
   store.beginDelegation(base.task_id, [writer.agent]);
@@ -414,7 +444,7 @@ review:
   assert.match(store.formatStatus(), /completed/);
   assert.ok(persistedEntries.length >= 3);
   const persisted = persistedEntries.at(-1)!;
-  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.21.0");
+  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.22.0");
   restoredStore.startSession({
     hasUI: false,
     sessionManager: {
@@ -428,7 +458,10 @@ review:
   const initiativeCwd = await fs.promises.mkdtemp(path.join(os.tmpdir(), "itsol-pi-initiative-"));
   try {
     await fs.promises.writeFile(path.join(initiativeCwd, "business.md"), "Build the complete account module.\n");
-    const initiativeStore = new TaskStateStore(fakePi, agents.length, "0.21.0");
+    await _pi.exec("git", ["init"], { cwd: initiativeCwd });
+    await _pi.exec("git", ["add", "business.md"], { cwd: initiativeCwd });
+    await _pi.exec("git", ["-c", "user.name=ITSOL Test", "-c", "user.email=test@itsol.local", "commit", "-m", "fixture"], { cwd: initiativeCwd });
+    const initiativeStore = new TaskStateStore(fakePi, agents.length, "0.22.0");
     initiativeStore.startSession({ ...fakeContext, cwd: initiativeCwd });
     initiativeStore.setDefinition({
       ...base,
@@ -487,6 +520,42 @@ review:
       status: "implemented",
       evidence: ["account lifecycle test: PASS"],
     });
+    const qaRepoPolicy = new RepoPolicyManager();
+    qaRepoPolicy.startSession({ cwd: initiativeCwd } as any);
+    const qaPi = { appendEntry: () => {}, exec: _pi.exec.bind(_pi) } as unknown as ExtensionAPI;
+    const qa = new QaOrchestrator(qaPi, initiativeStore, initiative, agents, qaRepoPolicy);
+    qa.startSession({ ...fakeContext, cwd: initiativeCwd });
+    initiativeStore.recordReviewVerdict("initiative-fixture", {
+      plan_id: "code-review-before-qa",
+      fingerprint: await currentWorktreeFingerprint(qaPi, initiativeCwd),
+      round: 1,
+      verdict: "approve",
+      findings: 0,
+      coverage_gaps: [],
+      recorded_at: Date.now(),
+    });
+    const phaseQaPlan = await qa.createPlan({
+      task_id: "initiative-fixture",
+      initiative_id: "account-module",
+      scope: "phase",
+      phase_id: "P01",
+      application_types: ["cli"],
+      changed_paths: ["."],
+      acceptance_criteria: ["Account lifecycle passes system QA"],
+      available_targets: ["npm test"],
+      existing_test_evidence: ["unit tests: PASS"],
+    }, { cwd: initiativeCwd } as any);
+    assert.equal(phaseQaPlan.status, "ready");
+    assert.ok(phaseQaPlan.delegations.some((item) => item.operations?.includes("interactive-cli-qa")));
+    await qa.recordVerdict({
+      task_id: "initiative-fixture",
+      initiative_id: "account-module",
+      plan_id: phaseQaPlan.id,
+      covered_surfaces: [...phaseQaPlan.requiredCoverage],
+      checks: phaseQaPlan.requiredCoverage.map((surface) => ({ name: `CLI ${surface}`, surface, status: "pass" as const, evidence: `${surface}: PASS`, source: "itsol-qa-handoff" })),
+      findings: [],
+      unverified: [],
+    }, { cwd: initiativeCwd } as any);
     initiative.update({
       action: "update",
       initiative_id: "account-module",
@@ -495,6 +564,29 @@ review:
       status: "completed",
       evidence: ["system QA: PASS"],
     });
+    const systemQaPlan = await qa.createPlan({
+      task_id: "initiative-fixture",
+      initiative_id: "account-module",
+      scope: "system",
+      application_types: ["cli"],
+      changed_paths: ["."],
+      acceptance_criteria: ["Account lifecycle passes system QA"],
+      available_targets: ["npm test"],
+      existing_test_evidence: ["phase QA: PASS"],
+    }, { cwd: initiativeCwd } as any);
+    await qa.recordVerdict({
+      task_id: "initiative-fixture",
+      initiative_id: "account-module",
+      plan_id: systemQaPlan.id,
+      covered_surfaces: [...systemQaPlan.requiredCoverage],
+      checks: systemQaPlan.requiredCoverage.map((surface) => ({ name: `System ${surface}`, surface, status: "pass" as const, evidence: `${surface}: PASS`, source: "itsol-qa-handoff" })),
+      findings: [],
+      unverified: [],
+    }, { cwd: initiativeCwd } as any);
+    assert.equal((await qa.completionDecision("initiative-fixture", { cwd: initiativeCwd } as any)).problems.length, 0);
+    await fs.promises.writeFile(path.join(initiativeCwd, "post-qa-change.ts"), "export const changed = true;\n");
+    assert.match((await qa.completionDecision("initiative-fixture", { cwd: initiativeCwd } as any)).problems.join("\n"), /stale/);
+    await fs.promises.rm(path.join(initiativeCwd, "post-qa-change.ts"));
     const completedInitiative = initiative.complete("account-module", [{
       criterion: "Account lifecycle passes system QA",
       evidence: "full regression: PASS",
@@ -502,6 +594,7 @@ review:
     assert.equal(completedInitiative.status, "completed");
     assert.deepEqual(initiative.completionDecision("initiative-fixture").problems, []);
     assert.ok(fs.existsSync(path.join(initiativeCwd, ".itsol", "initiatives", "account-module", "state.json")));
+    assert.ok(fs.existsSync(path.join(initiativeCwd, ".itsol", "initiatives", "account-module", "qa", `${systemQaPlan.id}.md`)));
     assert.match(await fs.promises.readFile(path.join(initiativeCwd, ".itsol", "initiatives", "account-module", "requirements.md"), "utf8"), /REQ-001.*implemented/);
     const restoredInitiative = new InitiativeManager(fakePi, initiativeStore);
     restoredInitiative.startSession({ ...fakeContext, cwd: initiativeCwd });
@@ -520,7 +613,7 @@ review:
     await _pi.exec("git", ["-c", "user.name=ITSOL Test", "-c", "user.email=test@itsol.local", "commit", "-m", "fixture"], { cwd: reviewCwd });
     await fs.promises.writeFile(reviewFile, "export const session = getUntrustedSession();\n");
 
-    const reviewStore = new TaskStateStore(fakePi, agents.length, "0.21.0");
+    const reviewStore = new TaskStateStore(fakePi, agents.length, "0.22.0");
     reviewStore.startSession(fakeContext);
     reviewStore.setDefinition({
       ...base,

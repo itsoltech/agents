@@ -9,11 +9,15 @@ const REVIEW_PROFILES = ["off", "poc", "balanced", "strict"] as const;
 const REVIEW_TRIGGERS = ["manual", "final", "checkpoint"] as const;
 const REVIEW_DELEGATIONS = ["never", "risk-based", "always"] as const;
 const REVIEW_REREVIEW = ["never", "after-fixes", "until-approved"] as const;
+const QA_PROFILES = ["off", "evidence", "automatic", "strict"] as const;
+const QA_APPLICATION_TYPES = ["web-ui", "api", "backend", "cli", "electron", "mobile", "data", "infrastructure"] as const;
 type WorkflowMode = typeof WORKFLOW_MODES[number];
 export type ReviewProfile = typeof REVIEW_PROFILES[number];
 export type ReviewTrigger = typeof REVIEW_TRIGGERS[number];
 export type ReviewDelegation = typeof REVIEW_DELEGATIONS[number];
 export type AutoRereview = typeof REVIEW_REREVIEW[number];
+export type QaProfile = typeof QA_PROFILES[number];
+export type QaApplicationType = typeof QA_APPLICATION_TYPES[number];
 
 interface MatchRule {
   path?: string;
@@ -55,6 +59,33 @@ interface ReviewRestriction {
   plan_max_rounds?: number;
 }
 
+interface QaRestriction {
+  match: MatchRule;
+  profile?: QaProfile;
+  max_cycles?: number;
+  application_types?: QaApplicationType[];
+  commands?: string[];
+  targets?: string[];
+}
+
+interface QaPolicyConfig {
+  profile?: QaProfile;
+  max_cycles?: number;
+  application_types?: QaApplicationType[];
+  commands?: string[];
+  targets?: string[];
+  restrictions: QaRestriction[];
+}
+
+export interface ResolvedQaPolicy {
+  profile: QaProfile;
+  max_cycles: number;
+  application_types: QaApplicationType[];
+  commands: string[];
+  targets: string[];
+  sources: string[];
+}
+
 interface ReviewPolicyConfig {
   default_profile?: ReviewProfile;
   allowed_profiles?: ReviewProfile[];
@@ -92,6 +123,7 @@ interface ParsedRepoPolicy {
   workflow: WorkflowPolicy;
   execution: ExecutionPolicyConfig;
   review: ReviewPolicyConfig;
+  qa: QaPolicyConfig;
   projects: ProjectMemory[];
   verificationCommands: string[];
   agentWorkflowNotes: string[];
@@ -358,6 +390,7 @@ function parsePolicyFile(filePath: string): ParsedRepoPolicy {
   let workflowRaw: Record<string, unknown> = {};
   let executionRaw: Record<string, unknown> = {};
   let reviewRaw: Record<string, unknown> = {};
+  let qaRaw: Record<string, unknown> = {};
   for (const block of content.matchAll(/```ya?ml\s*\n([\s\S]*?)```/gi)) {
     try {
       const parsed = parsePolicyYaml(block[1]) as unknown;
@@ -365,6 +398,7 @@ function parsePolicyFile(filePath: string): ParsedRepoPolicy {
       if (isRecord(parsed.workflow)) workflowRaw = { ...workflowRaw, ...parsed.workflow };
       if (isRecord(parsed.execution)) executionRaw = { ...executionRaw, ...parsed.execution };
       if (isRecord(parsed.review)) reviewRaw = { ...reviewRaw, ...parsed.review };
+      if (isRecord(parsed.qa)) qaRaw = { ...qaRaw, ...parsed.qa };
     } catch (error) {
       errors.push(`YAML: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -446,6 +480,34 @@ function parsePolicyFile(filePath: string): ParsedRepoPolicy {
     }
   }
 
+  reportInvalidEnum(errors, qaRaw, "profile", QA_PROFILES, "qa.profile");
+  reportInvalidEnumList(errors, qaRaw, "application_types", QA_APPLICATION_TYPES, "qa.application_types");
+  if (qaRaw.max_cycles !== undefined
+    && (finiteInteger(qaRaw.max_cycles) === undefined || Number(qaRaw.max_cycles) < 1 || Number(qaRaw.max_cycles) > 10)) {
+    errors.push("qa.max_cycles must be an integer from 1 to 10");
+  }
+  const qaRestrictions: QaRestriction[] = [];
+  if (Array.isArray(qaRaw.restrictions)) {
+    for (const [index, restriction] of qaRaw.restrictions.entries()) {
+      if (!isRecord(restriction)) continue;
+      const label = `qa.restrictions[${index}]`;
+      reportInvalidEnum(errors, restriction, "profile", QA_PROFILES, `${label}.profile`);
+      reportInvalidEnumList(errors, restriction, "application_types", QA_APPLICATION_TYPES, `${label}.application_types`);
+      if (restriction.max_cycles !== undefined
+        && (finiteInteger(restriction.max_cycles) === undefined || Number(restriction.max_cycles) < 1 || Number(restriction.max_cycles) > 10)) {
+        errors.push(`${label}.max_cycles must be an integer from 1 to 10`);
+      }
+      qaRestrictions.push({
+        match: matchRule(restriction.match),
+        profile: reviewValue(restriction.profile, QA_PROFILES),
+        max_cycles: finiteInteger(restriction.max_cycles),
+        application_types: reviewValues(restriction.application_types, QA_APPLICATION_TYPES),
+        commands: stringArray(restriction.commands),
+        targets: stringArray(restriction.targets),
+      });
+    }
+  }
+
   const defaultMode = typeof workflowRaw.default_mode === "string"
     && (WORKFLOW_MODES as readonly string[]).includes(workflowRaw.default_mode)
     ? workflowRaw.default_mode as WorkflowMode
@@ -474,6 +536,14 @@ function parsePolicyFile(filePath: string): ParsedRepoPolicy {
       max_rounds: finiteInteger(reviewRaw.max_rounds),
       plan_max_rounds: finiteInteger(reviewRaw.plan_max_rounds),
       restrictions: reviewRestrictions,
+    },
+    qa: {
+      profile: reviewValue(qaRaw.profile, QA_PROFILES),
+      max_cycles: finiteInteger(qaRaw.max_cycles),
+      application_types: reviewValues(qaRaw.application_types, QA_APPLICATION_TYPES),
+      commands: stringArray(qaRaw.commands),
+      targets: stringArray(qaRaw.targets),
+      restrictions: qaRestrictions,
     },
     projects: parseProjects(content),
     verificationCommands: sectionLines(content, "Verification Commands"),
@@ -605,6 +675,42 @@ export class RepoPolicyManager {
     };
   }
 
+  resolveQaPolicy(context?: PolicyContext): ResolvedQaPolicy {
+    this.refreshIfChanged();
+    const paths = this.normalizePaths(context?.paths ?? []);
+    const operations = context?.operations ?? [];
+    const policies = this.policiesFor(paths);
+    this.assertValid();
+    let profile: QaProfile = "automatic";
+    let maxCycles = 10;
+    let applicationTypes: QaApplicationType[] = [];
+    let commands: string[] = [];
+    let targets: string[] = [];
+    for (const policy of policies) {
+      if (policy.qa.profile) profile = policy.qa.profile;
+      if (policy.qa.max_cycles !== undefined) maxCycles = policy.qa.max_cycles;
+      if (policy.qa.application_types?.length) applicationTypes = [...policy.qa.application_types];
+      commands = [...new Set([...commands, ...(policy.qa.commands ?? [])])];
+      targets = [...new Set([...targets, ...(policy.qa.targets ?? [])])];
+      for (const restriction of policy.qa.restrictions) {
+        if (!restrictionMatches(restriction.match, paths, operations)) continue;
+        if (restriction.profile) profile = restriction.profile;
+        if (restriction.max_cycles !== undefined) maxCycles = restriction.max_cycles;
+        if (restriction.application_types?.length) applicationTypes = [...restriction.application_types];
+        commands = [...new Set([...commands, ...(restriction.commands ?? [])])];
+        targets = [...new Set([...targets, ...(restriction.targets ?? [])])];
+      }
+    }
+    return {
+      profile,
+      max_cycles: Math.min(10, Math.max(1, maxCycles)),
+      application_types: applicationTypes,
+      commands,
+      targets,
+      sources: policies.map((policy) => policy.filePath),
+    };
+  }
+
   validateDefinition(definition: TaskStateDefinition): void {
     const paths = this.normalizePaths(definition.policy_context?.paths ?? []);
     const operations = definition.policy_context?.operations ?? [];
@@ -666,7 +772,7 @@ export class RepoPolicyManager {
     if (!this.rootPolicy) {
       return [
         "## ITSOL repository policy (extension-managed)",
-        "No root .itsol.md was found. Use governed workflow, standard execution, and balanced final-review fallbacks unless the user explicitly selects an allowed alternative for the current task.",
+        "No root .itsol.md was found. Use governed workflow, standard execution, balanced final-review, and automatic Initiative QA fallbacks unless the user explicitly selects an allowed alternative for the current task.",
       ].join("\n");
     }
     const paths = this.normalizePaths(context?.paths ?? []);
@@ -683,6 +789,7 @@ export class RepoPolicyManager {
           workflow: policy.workflow,
           execution: policy.execution,
           review: policy.review,
+          qa: policy.qa,
           projects: policy.projects,
           verification_commands: policy.verificationCommands,
           agent_workflow_notes: policy.agentWorkflowNotes,
@@ -703,6 +810,7 @@ export class RepoPolicyManager {
       `Allowed modes: ${this.rootPolicy.workflow.allowed_modes?.join(", ") ?? "all"}`,
       `Execution default: ${this.rootPolicy.execution.default_preset ?? "standard fallback"}`,
       `Review default: ${this.rootPolicy.review.default_profile ?? "balanced fallback"}`,
+      `QA profile: ${this.rootPolicy.qa.profile ?? "automatic fallback"} · max cycles ${this.rootPolicy.qa.max_cycles ?? 10}`,
       `Projects: ${this.rootPolicy.projects.length}`,
       `Errors: ${this.rootPolicy.errors.length ? this.rootPolicy.errors.join("; ") : "none"}`,
     ].join("\n");

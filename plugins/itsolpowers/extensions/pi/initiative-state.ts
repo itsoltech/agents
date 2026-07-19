@@ -118,6 +118,22 @@ interface PhaseRecord extends Static<typeof PhaseInputSchema> {
   note?: string;
 }
 
+export interface InitiativeQaVerdictRecord {
+  qa_plan_id: string;
+  scope: "phase" | "system";
+  phase_id?: string;
+  fingerprint: string;
+  verdict: "pass" | "fail" | "blocked";
+  failure_route?: "implementation-fix" | "plan-revision" | "user-decision";
+  findings: number;
+  coverage_gaps: string[];
+  evidence: string[];
+  checks?: Array<{ name: string; surface: string; status: string; evidence: string; source: string }>;
+  finding_details?: Array<{ severity: string; title: string; evidence: string; source: string; requirement_ids: string[] }>;
+  unverified?: string[];
+  recorded_at: number;
+}
+
 interface DecisionRecord {
   id: string;
   kind: "business" | "product" | "architecture" | "qa" | "scope";
@@ -146,6 +162,7 @@ export interface InitiativeState {
   requirements: RequirementRecord[];
   phases: PhaseRecord[];
   decisions: DecisionRecord[];
+  qa_verdicts: InitiativeQaVerdictRecord[];
   change_log: Array<{ at: number; summary: string; decision_ids: string[] }>;
   verification_evidence: Array<{ criterion: string; evidence: string }>;
   created_at: number;
@@ -168,6 +185,7 @@ function isInitiativeState(value: unknown, expectedId: string): value is Initiat
     && Array.isArray(state.requirements)
     && Array.isArray(state.phases)
     && Array.isArray(state.decisions)
+    && Array.isArray(state.qa_verdicts)
     && Array.isArray(state.change_log)
     && Array.isArray(state.completion_criteria)
     && Array.isArray(state.verification_evidence);
@@ -229,11 +247,16 @@ export class InitiativeManager {
   private activeId?: string;
   private readonly states = new Map<string, InitiativeState>();
   private roadmapReviewValidator?: (taskId: string, roadmapPath: string, cwd: string) => boolean;
+  private qaRequiredResolver?: (taskId: string) => boolean;
 
   constructor(private readonly pi: ExtensionAPI, private readonly tasks: TaskStateStore) {}
 
   setRoadmapReviewValidator(validator: (taskId: string, roadmapPath: string, cwd: string) => boolean): void {
     this.roadmapReviewValidator = validator;
+  }
+
+  setQaRequiredResolver(resolver: (taskId: string) => boolean): void {
+    this.qaRequiredResolver = resolver;
   }
 
   startSession(ctx: ExtensionContext): void {
@@ -247,7 +270,9 @@ export class InitiativeManager {
         const statePath = path.join(root, entry.name, "state.json");
         if (!fs.existsSync(statePath)) continue;
         try {
-          const state = JSON.parse(fs.readFileSync(statePath, "utf8")) as unknown;
+          const parsed = JSON.parse(fs.readFileSync(statePath, "utf8")) as Partial<InitiativeState>;
+          if (!Array.isArray(parsed.qa_verdicts)) parsed.qa_verdicts = [];
+          const state = parsed as unknown;
           if (isInitiativeState(state, entry.name)) {
             this.validateGraph(state);
             this.states.set(entry.name, state);
@@ -276,6 +301,10 @@ export class InitiativeManager {
 
   get(id: string): InitiativeState | undefined {
     return this.states.get(id);
+  }
+
+  getForTask(taskId: string): InitiativeState | undefined {
+    return [...this.states.values()].find((state) => state.task_id === taskId);
   }
 
   start(params: Static<typeof StartSchema>, cwd: string): InitiativeState {
@@ -324,6 +353,7 @@ export class InitiativeManager {
       requirements: params.requirements.map((item) => ({ ...item, acceptance_criteria: [...item.acceptance_criteria], status: "planned", evidence: [] })),
       phases: params.phases.map((item) => ({ ...item, requirement_ids: [...item.requirement_ids], depends_on: [...item.depends_on], done_when: [...item.done_when], status: "planned", evidence: [] })),
       decisions: [],
+      qa_verdicts: [],
       change_log: [{ at: now, summary: "Initiative created from the supplied business source", decision_ids: [] }],
       verification_evidence: [],
       created_at: now,
@@ -462,6 +492,42 @@ export class InitiativeManager {
     this.states.set(state.initiative_id, state);
     this.persist(state);
     return state;
+  }
+
+  recordQaVerdict(initiativeId: string, verdict: InitiativeQaVerdictRecord): InitiativeState {
+    const state = this.require(initiativeId);
+    if (verdict.scope === "phase") {
+      if (!verdict.phase_id) throw new Error("Phase QA verdict requires phase_id");
+      const phase = state.phases.find((item) => item.id === verdict.phase_id);
+      if (!phase) throw new Error(`Unknown initiative phase: ${verdict.phase_id}`);
+      phase.status = verdict.verdict === "pass" ? "qa" : "blocked";
+    }
+    state.qa_verdicts.push(structuredClone(verdict));
+    if (verdict.verdict === "pass") {
+      state.status = verdict.scope === "system" ? "qa" : "executing";
+    } else if (verdict.failure_route === "user-decision") {
+      state.status = "blocked-decision";
+    } else if (verdict.failure_route === "plan-revision") {
+      state.status = "planning";
+      state.change_log.push({
+        at: verdict.recorded_at,
+        summary: `QA ${verdict.scope}${verdict.phase_id ? ` ${verdict.phase_id}` : ""} requires plan revision (${verdict.qa_plan_id})`,
+        decision_ids: [],
+      });
+    } else {
+      state.status = "executing";
+    }
+    state.completed_at = undefined;
+    state.updated_at = Date.now();
+    this.persist(state);
+    return state;
+  }
+
+  latestQaVerdict(initiativeId: string, scope: "phase" | "system", phaseId?: string): InitiativeQaVerdictRecord | undefined {
+    const state = this.require(initiativeId);
+    return [...state.qa_verdicts]
+      .filter((item) => item.scope === scope && (scope === "system" || item.phase_id === phaseId))
+      .sort((left, right) => right.recorded_at - left.recorded_at)[0];
   }
 
   complete(initiativeId: string, verificationEvidence: Array<{ criterion: string; evidence: string }>): InitiativeState {
@@ -618,6 +684,19 @@ export class InitiativeManager {
     if (requirements.length) problems.push(`unresolved requirements: ${requirements.join(", ")}`);
     const decisions = state.decisions.filter((item) => item.status === "pending").map((item) => item.id);
     if (decisions.length) problems.push(`pending decisions: ${decisions.join(", ")}`);
+    if (this.qaRequiredResolver?.(state.task_id) ?? true) {
+      const phasesWithoutQa = state.phases.filter((phase) => {
+        const latest = [...state.qa_verdicts]
+          .filter((item) => item.scope === "phase" && item.phase_id === phase.id)
+          .sort((left, right) => right.recorded_at - left.recorded_at)[0];
+        return latest?.verdict !== "pass";
+      }).map((phase) => phase.id);
+      if (phasesWithoutQa.length) problems.push(`phases lack a passing QA verdict: ${phasesWithoutQa.join(", ")}`);
+      const systemQa = [...state.qa_verdicts]
+        .filter((item) => item.scope === "system")
+        .sort((left, right) => right.recorded_at - left.recorded_at)[0];
+      if (systemQa?.verdict !== "pass") problems.push("final system QA has no passing verdict");
+    }
     const invalidDispositions = state.requirements.filter((item) => ["deferred", "rejected"].includes(item.status)).filter((item) => {
       const decision = state.decisions.find((candidate) => candidate.id === item.decision_id);
       return !decision || decision.status !== "resolved" || decision.resolved_by !== "user";
@@ -741,6 +820,10 @@ export class InitiativeManager {
       "## Phases",
       ...state.phases.map((phase) => `- [${phase.status === "completed" ? "x" : " "}] **${phase.id} ${phase.title}** — ${phase.status}${phase.evidence.length ? ` — ${phase.evidence.join("; ")}` : ""}`),
       "",
+      "## QA verdicts",
+      ...state.qa_verdicts.slice(-10).map((item) => `- **${item.scope}${item.phase_id ? ` ${item.phase_id}` : ""}:** ${item.verdict} · ${item.qa_plan_id}${item.coverage_gaps.length ? ` · gaps: ${item.coverage_gaps.join(", ")}` : ""}`),
+      ...(state.qa_verdicts.length ? [] : ["- none"]),
+      "",
       "## Pending decisions",
       ...state.decisions.filter((item) => item.status === "pending").map((item) => `- **${item.id}** ${item.question} — recommendation: ${item.recommendation}`),
       ...(state.decisions.some((item) => item.status === "pending") ? [] : ["- none"]),
@@ -770,6 +853,30 @@ export class InitiativeManager {
         "",
         `**Resolved by:** ${decision.resolved_by ?? "pending"}`,
         `**Impacts:** ${decision.impacts.join(", ") || "none recorded"}`,
+        "",
+      ].join("\n"));
+    }
+    fs.mkdirSync(path.join(directory, "qa"), { recursive: true });
+    for (const verdict of state.qa_verdicts) {
+      atomicWrite(path.join(directory, "qa", `${verdict.qa_plan_id}.md`), [
+        `# QA Verdict: ${verdict.qa_plan_id}`,
+        "",
+        `**Scope:** ${verdict.scope}${verdict.phase_id ? ` ${verdict.phase_id}` : ""}`,
+        `**Verdict:** ${verdict.verdict}`,
+        `**Fingerprint:** ${verdict.fingerprint}`,
+        `**Failure route:** ${verdict.failure_route ?? "none"}`,
+        "",
+        "## Checks",
+        ...(verdict.checks?.map((check) => `- **${check.surface} / ${check.name}:** ${check.status} — ${check.evidence} (${check.source})`) ?? verdict.evidence.map((item) => `- ${item}`)),
+        "",
+        "## Findings",
+        ...(verdict.finding_details?.map((finding) => `- **${finding.severity}: ${finding.title}** — ${finding.evidence} (${finding.source})${finding.requirement_ids.length ? ` · ${finding.requirement_ids.join(", ")}` : ""}`) ?? [verdict.findings ? `- ${verdict.findings} finding(s); details unavailable` : "- none"]),
+        "",
+        "## Coverage gaps",
+        ...(verdict.coverage_gaps.length ? verdict.coverage_gaps.map((gap) => `- ${gap}`) : ["- none"]),
+        "",
+        "## Unverified",
+        ...(verdict.unverified?.length ? verdict.unverified.map((item) => `- ${item}`) : ["- none"]),
         "",
       ].join("\n"));
     }

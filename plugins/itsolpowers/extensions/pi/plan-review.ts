@@ -41,6 +41,7 @@ interface PlanReviewProgress {
 interface PlanReviewRecord {
   id: string;
   taskId: string;
+  reviewers: string[];
   planType: PlanType;
   planPath: string;
   fingerprint: string;
@@ -48,6 +49,7 @@ interface PlanReviewRecord {
   verdict: PlanVerdict;
   childStatus: DelegationResult["status"];
   output: string;
+  reviewerVerdicts: Array<{ agent: string; verdict: PlanVerdict; status: DelegationResult["status"] }>;
   recordedAt: number;
 }
 
@@ -79,6 +81,16 @@ function planFingerprint(filePath: string): string {
   return crypto.createHash("sha256").update(normalizePlanForFingerprint(content)).digest("hex");
 }
 
+function contextualPlanFingerprint(
+  filePath: string,
+  planType: PlanType,
+  qaPolicy?: { profile: string; max_cycles: number; application_types: string[]; commands: string[]; targets: string[] },
+): string {
+  const hash = crypto.createHash("sha256").update(planFingerprint(filePath));
+  if (planType === "initiative" && qaPolicy) hash.update(JSON.stringify(qaPolicy));
+  return hash.digest("hex");
+}
+
 function expectedVerdict(mode: "governed" | "autonomous-planned" | "direct"): "ready for approval" | "ready for execution" {
   if (mode === "governed") return "ready for approval";
   if (mode === "autonomous-planned") return "ready for execution";
@@ -100,6 +112,17 @@ export function parsePlanReviewVerdict(output: string, expected: "ready for appr
     return expected === "ready for approval" ? "not ready for approval" : "not ready for execution";
   }
   return "invalid";
+}
+
+export function initiativeReviewers(content: string): string[] {
+  const reviewers = ["itsol-requirements-review", "itsol-technical-planning", "itsol-qa-handoff", REVIEW_AGENT];
+  if (/(security|permission|authorization|authentication|tenant|secret|token|privacy)/i.test(content)) {
+    reviewers.push("security-api-input-review");
+  }
+  if (/(migration|schema|database|postgres|mongodb|mssql|data integrity)/i.test(content)) {
+    reviewers.push(/mongodb/i.test(content) ? "mongodb-review" : /mssql|sql server/i.test(content) ? "mssql-review" : "postgres-review");
+  }
+  return [...new Set(reviewers)];
 }
 
 function normalizedPlanPath(cwd: string, requested: string): { absolute: string; relative: string } {
@@ -144,7 +167,7 @@ export class PlanReviewOrchestrator {
     ctx: ExtensionContext,
     signal: AbortSignal | undefined,
     onProgress?: (progress: PlanReviewProgress) => void,
-  ): Promise<{ record: PlanReviewRecord; result: DelegationResult; expected: string }> {
+  ): Promise<{ record: PlanReviewRecord; results: DelegationResult[]; expected: string }> {
     const state = this.store.get(params.task_id);
     if (!state) throw new Error(`Unknown ITSOL task state: ${params.task_id}`);
     if (state.workflow_state.workflow_mode === "direct") throw new Error("Direct workflow does not require plan review");
@@ -153,14 +176,15 @@ export class PlanReviewOrchestrator {
       throw new Error("Rubber Duck review is required by the planned workflow, but max_parallel=0");
     }
     const selected = normalizedPlanPath(ctx.cwd, params.plan_path);
-    const fingerprint = planFingerprint(selected.absolute);
+    const qaPolicy = this.repoPolicy.resolveQaPolicy(state.policy_context);
+    const fingerprint = contextualPlanFingerprint(selected.absolute, params.plan_type, qaPolicy);
     const previous = this.latest(params.task_id, params.plan_type, selected.relative);
     const expected = expectedVerdict(state.workflow_state.workflow_mode);
     if (previous?.fingerprint === fingerprint && previous.verdict === expected && previous.childStatus === "completed") {
       return {
         record: previous,
         expected,
-        result: {
+        results: [{
           agent: REVIEW_AGENT,
           task: `Rubber Duck review ${selected.relative}`,
           status: "completed",
@@ -173,7 +197,7 @@ export class PlanReviewOrchestrator {
           modelSource: "cached-plan-verdict",
           thinking: "cached",
           thinkingSource: "cached-plan-verdict",
-        },
+        }],
       };
     }
     const round = (previous?.round ?? 0) + 1;
@@ -181,115 +205,143 @@ export class PlanReviewOrchestrator {
       throw new Error(`Rubber Duck review round limit reached for ${selected.relative}: ${previous?.round ?? 0}/${planMaxRounds}`);
     }
 
-    const agent = this.agents.find((candidate) => candidate.name === REVIEW_AGENT);
-    if (!agent) throw new Error(`Missing ITSOL reviewer: ${REVIEW_AGENT}`);
-    const task: DelegatedTask = {
-      agent: REVIEW_AGENT,
-      role: "review",
-      task: [
-        `Perform isolated read-only Rubber Duck Review round ${round}/${planMaxRounds} for the ${params.plan_type} plan at ${selected.relative}.`,
-        `Original request: ${params.request_summary}`,
-        `Confirmed scope or selected/recommended approach: ${params.confirmed_scope_or_approach}`,
-        `Minimal repository evidence: ${params.repo_evidence.join("; ") || "none supplied"}`,
-        `Workflow mode: ${state.workflow_state.workflow_mode}. Expected passing verdict: ${expected}.`,
-        "Inspect the plan and relevant read-only repository evidence. Do not modify files and do not delegate.",
-        "Report blockers, important gaps, non-blocking suggestions, user-decision questions, sections to update, unverified items, and coverage gaps.",
-        `Before the required Status/Verification/Unverified envelope, include exactly one column-one line: Plan Review Verdict: ${expected} or Plan Review Verdict: not ${expected}.`,
-        "Use the ready verdict only when no material finding remains.",
-      ].join("\n"),
-      operations: ["rubber-duck-plan-review"],
-      read_scope: [...new Set([
-        selected.relative,
-        ...(params.plan_type === "initiative" ? [path.posix.dirname(selected.relative)] : []),
-        ...(state.policy_context?.paths ?? []),
-      ])],
-      write_scope: [],
-      forbidden_scope: [],
-      required_evidence: ["plan path inspected", "material findings", "explicit Plan Review Verdict"],
-      stop_after: "analysis",
-    };
-    const delegation: ItsolDelegateParams = {
+    const planContent = fs.readFileSync(selected.absolute, "utf8");
+    const reviewerNames = params.plan_type === "initiative" ? initiativeReviewers(planContent) : [REVIEW_AGENT];
+    const agentByName = new Map(this.agents.map((item) => [item.name, item]));
+    const inheritedModel = ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined;
+    const readScope = [...new Set([
+      selected.relative,
+      ...(params.plan_type === "initiative" ? [path.posix.dirname(selected.relative)] : []),
+      ...(state.policy_context?.paths ?? []),
+    ])];
+    const executions = reviewerNames.map((reviewer, index) => {
+      const agent = agentByName.get(reviewer);
+      if (!agent) throw new Error(`Missing ITSOL plan reviewer: ${reviewer}`);
+      const task: DelegatedTask = {
+        agent: reviewer,
+        work_item_id: `plan-${params.plan_type}-${reviewer}-${index + 1}`,
+        role: "review",
+        task: [
+          `Perform isolated read-only Rubber Duck Review round ${round}/${planMaxRounds} for the ${params.plan_type} plan at ${selected.relative}.`,
+          `Reviewer focus: ${reviewer}. For Initiative Roadmaps, independently assess the full source, requirement disposition, architecture/dependencies, QA strategy, security/data risk when relevant, and autonomous phase loop.`,
+          `Original request: ${params.request_summary}`,
+          `Confirmed scope or selected/recommended approach: ${params.confirmed_scope_or_approach}`,
+          `Minimal repository evidence: ${params.repo_evidence.join("; ") || "none supplied"}`,
+          `Effective repository QA policy: ${qaPolicy.profile}; max cycles ${qaPolicy.max_cycles}; application types ${qaPolicy.application_types.join(", ") || "auto-detect"}; commands ${qaPolicy.commands.join("; ") || "none"}. Treat profile=off as an authorized QA skip, not a missing-plan blocker or PASS.`,
+          `Workflow mode: ${state.workflow_state.workflow_mode}. Expected passing verdict: ${expected}.`,
+          "Inspect the plan and relevant read-only repository evidence. Do not modify files and do not delegate.",
+          "Report blockers, important gaps, non-blocking suggestions, user-decision questions, sections to update, unverified items, and coverage gaps.",
+          `Before the required Status/Verification/Unverified envelope, include exactly one column-one line: Plan Review Verdict: ${expected} or Plan Review Verdict: not ${expected}.`,
+          "Use the ready verdict only when no material finding remains in your review focus.",
+        ].join("\n"),
+        operations: ["rubber-duck-plan-review"],
+        read_scope: readScope,
+        write_scope: [],
+        forbidden_scope: [],
+        required_evidence: ["plan path inspected", "material findings", "explicit Plan Review Verdict"],
+        stop_after: "analysis",
+      };
+      return { agent, task, resolution: this.modelRouter.resolve(task, agent, state.execution_policy, inheritedModel, ctx) };
+    });
+    if (state.execution_policy.max_parallel === 0) throw new Error("Rubber Duck review requires max_parallel > 0");
+    const delegationBase: Omit<ItsolDelegateParams, "task" | "tasks"> = {
       task_id: state.task_id,
       workflow_state: state.workflow_state,
       execution_policy: state.execution_policy,
       done_when: state.done_when,
       policy_context: state.policy_context,
-      task,
     };
-    const inheritedModel = ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined;
-    const resolution = this.modelRouter.resolve(task, agent, state.execution_policy, inheritedModel, ctx);
-    this.repoPolicy.validateDelegation(delegation, [task]);
-    validateDelegation(delegation, [task], new Map(this.agents.map((item) => [item.name, item])), this.store.getUsedAgents(state.task_id), {
-      modelControlEnforced: resolution.profileEnforced,
-    });
-    if (state.active_agents.length + 1 > state.execution_policy.max_parallel) {
-      throw new Error(`Rubber Duck review exceeds max_parallel=${state.execution_policy.max_parallel}`);
-    }
-
-    const progressBase = {
-      agent: REVIEW_AGENT,
-      planType: params.plan_type,
-      planPath: selected.relative,
-      round,
-      maxRounds: planMaxRounds,
-      model: resolution.model ?? "default model",
-      modelSource: `${resolution.source}:${resolution.role}`,
-      thinking: resolution.thinking,
-      thinkingSource: resolution.thinkingSource,
-    };
-    const reportProgress = (activity: string, elapsedMs: number) => {
-      const progress = { ...progressBase, activity, elapsedMs };
-      if (this.context?.hasUI) {
-        this.context.ui.setStatus(
-          "itsol-plan-review",
-          `Plan review ${params.plan_type} r${round}/${planMaxRounds} · ${activity} · ${formatDuration(elapsedMs)}`,
-        );
+    this.store.prepareReviewers(state.task_id, reviewerNames);
+    const results: DelegationResult[] = [];
+    const batchSize = state.execution_policy.max_parallel;
+    for (let offset = 0; offset < executions.length; offset += batchSize) {
+      const batch = executions.slice(offset, offset + batchSize);
+      const tasks = batch.map((item) => item.task);
+      const delegation: ItsolDelegateParams = { ...delegationBase, tasks };
+      this.repoPolicy.validateDelegation(delegation, tasks);
+      validateDelegation(delegation, tasks, agentByName, this.store.getUsedAgents(state.task_id), {
+        modelControlEnforced: batch.every((item) => item.resolution.profileEnforced),
+      });
+      if (state.active_agents.length + batch.length > state.execution_policy.max_parallel) {
+        throw new Error(`Rubber Duck review exceeds max_parallel=${state.execution_policy.max_parallel}`);
       }
-      onProgress?.(progress);
-    };
-    reportProgress("queued", 0);
-    this.store.prepareReviewers(state.task_id, [REVIEW_AGENT]);
-    this.store.beginDelegation(state.task_id, [REVIEW_AGENT]);
-    let result: DelegationResult | undefined;
-    try {
-      result = await runAgent(
-        this.pluginRoot,
-        path.join(this.pluginRoot, "skills"),
-        agent,
-        task,
-        delegation,
-        ctx.cwd,
-        resolution.model,
-        `${resolution.source}:${resolution.role}`,
-        resolution.thinking,
-        resolution.thinkingSource,
-        signal,
-        (activity, elapsedMs) => reportProgress(activity, elapsedMs),
-      );
-    } finally {
-      this.store.finishDelegation(state.task_id, [REVIEW_AGENT], result ? [{ ...result, role: "review" }] : []);
+      this.store.beginDelegation(state.task_id, batch.map((item) => item.agent.name));
+      let batchResults: DelegationResult[] = [];
+      try {
+        batchResults = await Promise.all(batch.map(async (execution) => {
+          const progressBase = {
+            agent: execution.agent.name,
+            planType: params.plan_type,
+            planPath: selected.relative,
+            round,
+            maxRounds: planMaxRounds,
+            model: execution.resolution.model ?? "default model",
+            modelSource: `${execution.resolution.source}:${execution.resolution.role}`,
+            thinking: execution.resolution.thinking,
+            thinkingSource: execution.resolution.thinkingSource,
+          };
+          const reportProgress = (activity: string, elapsedMs: number) => {
+            const progress = { ...progressBase, activity, elapsedMs };
+            if (this.context?.hasUI) this.context.ui.setStatus(
+              "itsol-plan-review",
+              `Plan review ${params.plan_type} r${round}/${planMaxRounds} · ${execution.agent.name}: ${activity} · ${formatDuration(elapsedMs)}`,
+            );
+            onProgress?.(progress);
+          };
+          reportProgress("queued", 0);
+          const result = await runAgent(
+            this.pluginRoot,
+            path.join(this.pluginRoot, "skills"),
+            execution.agent,
+            execution.task,
+            delegation,
+            ctx.cwd,
+            execution.resolution.model,
+            `${execution.resolution.source}:${execution.resolution.role}`,
+            execution.resolution.thinking,
+            execution.resolution.thinkingSource,
+            signal,
+            (activity, elapsedMs) => reportProgress(activity, elapsedMs),
+          );
+          return { ...result, workItemId: execution.task.work_item_id };
+        }));
+        results.push(...batchResults);
+      } finally {
+        this.store.finishDelegation(state.task_id, batch.map((item) => item.agent.name), batchResults.map((result) => ({ ...result, role: "review" })));
+      }
     }
-    if (!result) {
+    if (results.length !== executions.length) {
       if (this.context?.hasUI) this.context.ui.setStatus("itsol-plan-review", "Plan review failed");
-      throw new Error("Rubber Duck reviewer did not return a result");
+      throw new Error("One or more Rubber Duck reviewers did not return a result");
     }
-    const verdict = result.status === "completed" ? parsePlanReviewVerdict(result.output, expected) : "invalid";
+    const reviewerVerdicts = results.map((result) => ({
+      agent: result.agent,
+      status: result.status,
+      verdict: result.status === "completed" ? parsePlanReviewVerdict(result.output, expected) : "invalid" as PlanVerdict,
+    }));
+    const passed = reviewerVerdicts.every((item) => item.status === "completed" && item.verdict === expected);
+    const childStatus: DelegationResult["status"] = results.every((item) => item.status === "completed")
+      ? "completed"
+      : results.find((item) => item.status !== "completed")!.status;
+    const output = results.map((result) => `## ${result.agent}\n\n${result.output}`).join("\n\n---\n\n");
     const record: PlanReviewRecord = {
       id: `plan-review-${params.task_id}-${Date.now()}`,
       taskId: params.task_id,
+      reviewers: reviewerNames,
       planType: params.plan_type,
       planPath: selected.relative,
       fingerprint,
       round,
-      verdict,
-      childStatus: result.status,
-      output: result.output,
+      verdict: passed ? expected : expected === "ready for approval" ? "not ready for approval" : "not ready for execution",
+      childStatus,
+      output,
+      reviewerVerdicts,
       recordedAt: Date.now(),
     };
     this.records.push(record);
     this.persist();
     this.updateStatus();
-    return { record, result, expected };
+    return { record, results, expected };
   }
 
   hasPassingReview(taskId: string, planType: PlanType, planPath: string, cwd: string): boolean {
@@ -299,7 +351,7 @@ export class PlanReviewOrchestrator {
     const record = this.latest(taskId, planType, relative);
     if (!record || record.childStatus !== "completed" || record.verdict !== expectedVerdict(state.workflow_state.workflow_mode)) return false;
     try {
-      return planFingerprint(path.resolve(cwd, relative)) === record.fingerprint;
+      return contextualPlanFingerprint(path.resolve(cwd, relative), planType, this.repoPolicy.resolveQaPolicy(state.policy_context)) === record.fingerprint;
     } catch {
       return false;
     }
@@ -331,7 +383,7 @@ export class PlanReviewOrchestrator {
     const absolute = path.resolve(cwd, record.planPath);
     let stale = true;
     try {
-      stale = planFingerprint(absolute) !== record.fingerprint;
+      stale = contextualPlanFingerprint(absolute, record.planType, this.repoPolicy.resolveQaPolicy(state.policy_context)) !== record.fingerprint;
     } catch {
       // Missing artifacts are stale.
     }
@@ -348,7 +400,7 @@ export class PlanReviewOrchestrator {
     if (!state || state.workflow_state.workflow_mode === "direct") return "";
     return [
       "## ITSOL automatic plan review (extension-managed)",
-      "Initiative Roadmaps and Business, Technical, and Technical Fix Plans must pass isolated Rubber Duck Review through itsol_plan_review before being presented to the user or marked ready for execution.",
+      "Initiative Roadmaps must pass an isolated requirements/architecture/QA/self-review panel (plus conditional security/data reviewers); Business, Technical, and Technical Fix Plans must pass isolated Rubber Duck Review through itsol_plan_review before being presented to the user or marked ready for execution.",
       "This read-only reviewer is pre-authorized by the planned workflow within execution ceilings. Do not ask the user to authorize a review subagent or call itsol_complete while an actionable plan review remains.",
       "If findings are material, update the plan and rerun itsol_plan_review. Return to the user only after a current passing verdict, or after the reviewer/round ceiling creates a genuine blocker.",
     ].join("\n");
@@ -388,11 +440,11 @@ export function registerPlanReview(
   pi.registerTool({
     name: "itsol_plan_review",
     label: "ITSOL Plan Review",
-    description: "Automatically run the isolated read-only itsol-self-review agent against an Initiative Roadmap, Business, Technical, or Technical Fix Plan, persist a fingerprint-bound Rubber Duck verdict, and enforce bounded review rounds before user handoff.",
+    description: "Automatically run an isolated read-only specialist panel for an Initiative Roadmap, or itsol-self-review for a Business, Technical, or Technical Fix Plan, persist a fingerprint-bound Rubber Duck verdict, and enforce bounded review rounds before user handoff.",
     promptSnippet: "Run automatic isolated Rubber Duck review for a planning artifact",
     promptGuidelines: [
       "In governed and autonomous-planned modes, call itsol_plan_review after plan self-review and before presenting the plan, asking for approval, marking it ready, or calling itsol_complete.",
-      "Do not ask the user to authorize this read-only reviewer. Resolve material findings in the plan and rerun within the configured ceiling before user handoff.",
+      "Do not ask the user to authorize the read-only reviewer or Initiative Roadmap panel. Resolve material findings in the plan and rerun within the configured ceiling before user handoff.",
     ],
     parameters: PlanReviewParamsSchema,
     async execute(_toolCallId, params, signal, onUpdate, ctx) {
@@ -420,7 +472,7 @@ export function registerPlanReview(
             `Verdict: ${outcome.record.verdict}`,
             `Expected: ${outcome.expected}`,
             "",
-            outcome.result.output,
+            outcome.record.output,
             "",
             passed
               ? "The current plan fingerprint passed isolated review. Continue according to workflow mode without requesting reviewer authorization."
@@ -441,7 +493,7 @@ export function registerPlanReview(
       const details = result.details as {
         progress?: PlanReviewProgress;
         record?: PlanReviewRecord;
-        result?: DelegationResult;
+        results?: DelegationResult[];
         expected?: string;
       } | undefined;
       if (details?.progress && (isPartial || !details.record)) {
@@ -454,22 +506,22 @@ export function registerPlanReview(
       }
       if (!details?.record) return new Text(theme.fg("warning", "(plan review returned no details)"), 0, 0);
       const passed = details.record.childStatus === "completed" && details.record.verdict === details.expected;
-      const child = details.result;
-      const activityTrail = child?.activities.slice(-3).map((activity) => activity.text).join(" → ");
-      const usage = child
-        ? `${child.usage.input} in · ${child.usage.output} out · ${child.usage.turns} turns · $${child.usage.cost.toFixed(4)}`
+      const children = details.results ?? [];
+      const activityTrail = children.flatMap((child) => child.activities.slice(-1).map((activity) => `${child.agent}: ${activity.text}`)).join(" → ");
+      const usage = children.length
+        ? `${children.reduce((sum, child) => sum + child.usage.input, 0)} in · ${children.reduce((sum, child) => sum + child.usage.output, 0)} out · ${children.reduce((sum, child) => sum + child.usage.turns, 0)} turns · $${children.reduce((sum, child) => sum + child.usage.cost, 0).toFixed(4)}`
         : "usage unavailable";
-      const runtime = child
-        ? `${formatDuration(child.durationMs)} · ${child.model ?? "default model"} (${child.modelSource}) · thinking ${child.thinking} (${child.thinkingSource})`
+      const runtime = children.length
+        ? `${formatDuration(Math.max(...children.map((child) => child.durationMs)))} · ${children.length} reviewer${children.length === 1 ? "" : "s"}`
         : "runtime unavailable";
       const lines = [
         theme.fg(passed ? "success" : "warning", `${passed ? "✓ PASS" : "! CHANGES REQUIRED"} · ${details.record.planType} r${details.record.round}`),
         theme.fg("muted", `${details.record.planPath} · ${details.record.verdict}`),
-        theme.fg("dim", `${REVIEW_AGENT} · ${runtime}`),
+        theme.fg("dim", `${(details.record.reviewers ?? [REVIEW_AGENT]).join(", ")} · ${runtime}`),
         theme.fg("dim", usage),
       ];
       if (activityTrail) lines.push(theme.fg("muted", `activity: ${activityTrail}`));
-      if (expanded && child?.output) lines.push("", child.output);
+      if (expanded && details.record.output) lines.push("", details.record.output);
       return new Text(lines.join("\n"), 0, 0);
     },
   });

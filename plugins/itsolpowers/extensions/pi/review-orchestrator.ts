@@ -222,19 +222,21 @@ function reviewDiffArgs(params: Pick<ReviewPlanParams, "target" | "base" | "head
   return params.target === "staged" ? ["diff", "--cached"] : ["diff", "HEAD"];
 }
 
+const CODE_REVIEW_PATHSPEC = [".", ":(exclude).itsol/initiatives/**"];
+
 async function currentFingerprint(
   pi: ExtensionAPI,
   params: Pick<ReviewPlanParams, "target" | "base" | "head">,
   cwd: string,
   signal?: AbortSignal,
 ): Promise<string> {
-  const diff = await pi.exec("git", [...reviewDiffArgs(params), "--binary", "--"], { cwd, signal });
+  const diff = await pi.exec("git", [...reviewDiffArgs(params), "--binary", "--", ...CODE_REVIEW_PATHSPEC], { cwd, signal });
   if (diff.code !== 0) throw new Error(`Unable to fingerprint git diff: ${diff.stderr}`);
   const hash = crypto.createHash("sha256").update(params.target).update(params.base ?? "").update(params.head ?? "").update(diff.stdout);
   if (params.target === "working-tree") {
     const untracked = await pi.exec("git", ["ls-files", "--others", "--exclude-standard"], { cwd, signal });
     if (untracked.code === 0) {
-      for (const file of untracked.stdout.split("\n").filter(Boolean).sort()) {
+      for (const file of untracked.stdout.split("\n").filter((item) => item && !item.replaceAll("\\", "/").startsWith(".itsol/initiatives/")).sort()) {
         hash.update(file);
         try {
           hash.update(fs.readFileSync(path.join(cwd, file)));
@@ -245,6 +247,14 @@ async function currentFingerprint(
     }
   }
   return hash.digest("hex");
+}
+
+export async function currentWorktreeFingerprint(
+  pi: ExtensionAPI,
+  cwd: string,
+  signal?: AbortSignal,
+): Promise<string> {
+  return currentFingerprint(pi, { target: "working-tree" }, cwd, signal);
 }
 
 function parseNumstat(output: string): Map<string, { added: number; deleted: number }> {
@@ -443,9 +453,9 @@ export class ReviewOrchestrator {
     const fingerprint = await currentFingerprint(this.pi, params, ctx.cwd, signal);
 
     const [numstatResult, namesResult, patchResult] = await Promise.all([
-      this.pi.exec("git", [...diffArgs, "--numstat", "--"], { cwd: ctx.cwd, signal }),
-      this.pi.exec("git", [...diffArgs, "--name-status", "--"], { cwd: ctx.cwd, signal }),
-      this.pi.exec("git", [...diffArgs, "--unified=0", "--"], { cwd: ctx.cwd, signal }),
+      this.pi.exec("git", [...diffArgs, "--numstat", "--", ...CODE_REVIEW_PATHSPEC], { cwd: ctx.cwd, signal }),
+      this.pi.exec("git", [...diffArgs, "--name-status", "--", ...CODE_REVIEW_PATHSPEC], { cwd: ctx.cwd, signal }),
+      this.pi.exec("git", [...diffArgs, "--unified=0", "--", ...CODE_REVIEW_PATHSPEC], { cwd: ctx.cwd, signal }),
     ]);
     if (numstatResult.code !== 0 || namesResult.code !== 0 || patchResult.code !== 0) {
       throw new Error(`Unable to inspect git diff: ${numstatResult.stderr || namesResult.stderr || patchResult.stderr}`);
@@ -459,7 +469,7 @@ export class ReviewOrchestrator {
         signal,
       });
       if (untracked.code === 0) {
-        for (const file of untracked.stdout.split("\n").filter(Boolean)) {
+        for (const file of untracked.stdout.split("\n").filter((item) => item && !item.replaceAll("\\", "/").startsWith(".itsol/initiatives/"))) {
           if (!names.some((entry) => entry.path === file)) names.push({ status: "??", path: file });
           if (!stats.has(file)) {
             try {

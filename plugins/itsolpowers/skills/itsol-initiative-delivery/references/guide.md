@@ -13,6 +13,7 @@ This delivery-scale reference is governed by the authority and artifact semantic
 ├── architecture.md              # living baseline and accepted ADR links
 ├── progress.md                  # generated current progress and next action
 ├── decisions/                   # DEC/ADR records
+├── qa/                          # fingerprint-bound phase/system QA verdicts
 ├── phases/<phase-id>-<slug>/     # phase plans, QA, and result evidence
 └── state.json                    # canonical machine-readable state
 ```
@@ -70,10 +71,11 @@ load durable state
 → plan and review phase
 → delegate independent workstreams
 → review changed surfaces
-→ integrate and run QA
-→ record requirement and phase evidence
-→ classify discoveries and replan when needed
-→ continue
+→ integrate and run application-aware QA
+→ QA PASS: record requirement/phase evidence
+→ QA FAIL: classify implementation-fix | plan-revision | user-decision
+→ fix or replan, rerun plan/code review, execute fresh QA
+→ continue only after PASS
 ```
 
 Do not return to the user between executable phases. If a harness/session must stop, leave canonical state and next action resumable; never claim the initiative completed.
@@ -86,9 +88,11 @@ Initiative completion requires:
 2. every requirement `implemented`, `deferred`, or `rejected`;
 3. every defer/reject linked to a resolved user decision;
 4. no pending decision or unresolved material review finding;
-5. final system-level QA/regression evidence;
+5. a fingerprint-bound passing QA verdict for every phase and a current final system QA/regression PASS;
 6. documentation and architecture synchronized with implementation;
 7. rollout/rollback and operational evidence when applicable;
 8. exact initiative completion criteria covered.
+
+Application-aware QA selects real interaction evidence: agent-browser for web UI, CDP/browser automation for Electron, interactive execution for CLI, contract/integration/security scenarios for APIs, device/runtime checks for mobile, integrity/migration/rollback for data, and readiness/observability/rollback for infrastructure. A code change after final QA makes that verdict stale and requires fresh system QA.
 
 The final handoff summarizes delivered outcomes, requirement dispositions, decisions, verification, operational notes, and remaining explicitly authorized deferrals. It must not hide gaps behind completed phase counts.

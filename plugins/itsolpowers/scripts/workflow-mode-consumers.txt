@@ -39,6 +39,7 @@ mode-aware-consumer	plugins/itsolpowers/extensions/pi/delegate-tool.ts
 mode-aware-consumer	plugins/itsolpowers/extensions/pi/initiative-state.ts
 mode-aware-consumer	plugins/itsolpowers/extensions/pi/plan-review.ts
 mode-aware-consumer	plugins/itsolpowers/extensions/pi/policy.ts
+mode-aware-consumer	plugins/itsolpowers/extensions/pi/qa-orchestrator.ts
 mode-aware-consumer	plugins/itsolpowers/extensions/pi/repo-policy.ts
 mode-aware-consumer	plugins/itsolpowers/extensions/pi/review-orchestrator.ts
 mode-aware-consumer	plugins/itsolpowers/extensions/pi/task-state.ts

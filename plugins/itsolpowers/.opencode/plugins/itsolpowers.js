@@ -13,7 +13,8 @@ const toolMapping = `**Tool Mapping for OpenCode:**
 - Load bundled skills with the native \`skill\` tool. Prefer \`itsolpowers/<skill-name>\` when namespaced; otherwise use the frontmatter name.
 - Map ITSOL subagent guidance to OpenCode's native Task/@agent surfaces and permissions.
 - Persist Initiative Delivery state and living documents under \`.itsol/initiatives/<id>/\`; use native Task/@agent workstreams phase by phase and update traceability only after validating results.
-- For automatic Initiative Roadmap and phase-plan Rubber Duck Review, use a fresh read-only Task/@agent context instructed with \`itsol-self-review\`; wait for a passing verdict and never call Pi \`itsol_*\` tools.
+- For Initiative QA, create application-aware Task/@agent packets, execute real browser/CLI/API/desktop/mobile/data/infra checks, persist a fingerprint-bound verdict, and loop failures through remediation and applicable reviews before fresh QA.
+- For Initiative Roadmap review, use a read-only Task/@agent panel for requirements, architecture, QA, self-review, and conditional security/data. Use fresh \`itsol-self-review\` for phase plans; resolve all material findings and never call Pi \`itsol_*\` tools.
 - Map \`Read\`, \`Write\`, \`Edit\`, \`Bash\`, and task tracking to native equivalents.
 - Delegated agents must use \`permission.task: deny\`; model and reasoning profiles remain advisory unless native agent config enforces them.`;
 
