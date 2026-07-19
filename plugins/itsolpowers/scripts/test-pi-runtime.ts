@@ -8,6 +8,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { discoverItsolAgents } from "../extensions/pi/agents.ts";
 import { evaluateCompletion, registerCompletionGate } from "../extensions/pi/completion-gate.ts";
 import { formatDuration, summarizeToolActivity } from "../extensions/pi/delegate-tool.ts";
+import { InitiativeManager } from "../extensions/pi/initiative-state.ts";
 import { classifyAgentRole, ModelRouter, supportedThinkingLevels } from "../extensions/pi/model-router.ts";
 import { validateDelegation, type ItsolDelegateParams } from "../extensions/pi/policy.ts";
 import { RepoPolicyManager } from "../extensions/pi/repo-policy.ts";
@@ -324,11 +325,11 @@ review:
     hasUI: false,
     sessionManager: { getBranch: () => [] },
   } as any;
-  const store = new TaskStateStore(fakePi, agents.length, "0.20.0");
+  const store = new TaskStateStore(fakePi, agents.length, "0.21.0");
   store.startSession(fakeContext);
-  assert.match(store.formatStatus(), /ITSOL Powers v0\.20\.0/);
+  assert.match(store.formatStatus(), /ITSOL Powers v0\.21\.0/);
   store.setDefinition(base);
-  assert.match(store.formatStatus(), /ITSOL v0\.20\.0/);
+  assert.match(store.formatStatus(), /ITSOL v0\.21\.0/);
   const reused = store.resolveDelegation({ task_id: base.task_id, task: writer });
   assert.equal(reused.execution_policy.preset, "standard");
   store.beginDelegation(base.task_id, [writer.agent]);
@@ -405,7 +406,7 @@ review:
   assert.match(store.formatStatus(), /completed/);
   assert.ok(persistedEntries.length >= 3);
   const persisted = persistedEntries.at(-1)!;
-  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.20.0");
+  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.21.0");
   restoredStore.startSession({
     hasUI: false,
     sessionManager: {
@@ -415,6 +416,91 @@ review:
   assert.equal(restoredStore.getActive()?.task_id, base.task_id);
   assert.deepEqual(restoredStore.getActive()?.active_agents, []);
   assert.equal(restoredStore.getActive()?.child_cost, 0.01);
+
+  const initiativeCwd = await fs.promises.mkdtemp(path.join(os.tmpdir(), "itsol-pi-initiative-"));
+  try {
+    await fs.promises.writeFile(path.join(initiativeCwd, "business.md"), "Build the complete account module.\n");
+    const initiativeStore = new TaskStateStore(fakePi, agents.length, "0.21.0");
+    initiativeStore.startSession({ ...fakeContext, cwd: initiativeCwd });
+    initiativeStore.setDefinition({
+      ...base,
+      task_id: "initiative-fixture",
+      workflow_state: {
+        ...base.workflow_state,
+        workflow_mode: "autonomous-planned",
+        artifact_state: "draft",
+        execution_mode: "auto",
+      },
+      execution_policy: { ...base.execution_policy, max_subagents: "unlimited", max_parallel: 3 },
+    });
+    const initiative = new InitiativeManager(fakePi, initiativeStore);
+    initiative.startSession({ ...fakeContext, cwd: initiativeCwd });
+    const started = initiative.start({
+      action: "start",
+      task_id: "initiative-fixture",
+      initiative_id: "account-module",
+      title: "Account module",
+      objective: "Deliver the complete account module",
+      source_path: "business.md",
+      completion_criteria: ["Account lifecycle passes system QA"],
+      requirements: [{
+        id: "REQ-001",
+        summary: "Users can manage an account",
+        acceptance_criteria: ["Lifecycle test passes"],
+        priority: "must",
+      }],
+      phases: [{
+        id: "P01",
+        title: "Account lifecycle",
+        objective: "Deliver account lifecycle",
+        requirement_ids: ["REQ-001"],
+        depends_on: [],
+        done_when: ["System QA passes"],
+      }],
+    }, initiativeCwd);
+    assert.equal(started.status, "planning");
+    assert.equal(initiative.completionDecision("initiative-fixture").forceContinuation, true);
+    assert.throws(() => initiative.update({
+      action: "update",
+      initiative_id: "account-module",
+      entity: "initiative",
+      status: "ready",
+    }), /passing Rubber Duck Review/);
+    await fs.promises.appendFile(path.join(initiativeCwd, ".itsol", "initiatives", "account-module", "roadmap.md"), "\nDetailed rollout remains here.\n");
+    initiative.setRoadmapReviewValidator(() => true);
+    initiative.update({ action: "update", initiative_id: "account-module", entity: "initiative", status: "ready" });
+    assert.match(await fs.promises.readFile(path.join(initiativeCwd, ".itsol", "initiatives", "account-module", "roadmap.md"), "utf8"), /Detailed rollout remains here/);
+    initiative.update({ action: "update", initiative_id: "account-module", entity: "phase", entity_id: "P01", status: "in-progress" });
+    initiative.update({
+      action: "update",
+      initiative_id: "account-module",
+      entity: "requirement",
+      entity_id: "REQ-001",
+      status: "implemented",
+      evidence: ["account lifecycle test: PASS"],
+    });
+    initiative.update({
+      action: "update",
+      initiative_id: "account-module",
+      entity: "phase",
+      entity_id: "P01",
+      status: "completed",
+      evidence: ["system QA: PASS"],
+    });
+    const completedInitiative = initiative.complete("account-module", [{
+      criterion: "Account lifecycle passes system QA",
+      evidence: "full regression: PASS",
+    }]);
+    assert.equal(completedInitiative.status, "completed");
+    assert.deepEqual(initiative.completionDecision("initiative-fixture").problems, []);
+    assert.ok(fs.existsSync(path.join(initiativeCwd, ".itsol", "initiatives", "account-module", "state.json")));
+    assert.match(await fs.promises.readFile(path.join(initiativeCwd, ".itsol", "initiatives", "account-module", "requirements.md"), "utf8"), /REQ-001.*implemented/);
+    const restoredInitiative = new InitiativeManager(fakePi, initiativeStore);
+    restoredInitiative.startSession({ ...fakeContext, cwd: initiativeCwd });
+    assert.equal(restoredInitiative.getActive()?.initiative_id, "account-module");
+  } finally {
+    await fs.promises.rm(initiativeCwd, { recursive: true, force: true });
+  }
 
   const reviewCwd = await fs.promises.mkdtemp(path.join(os.tmpdir(), "itsol-pi-review-"));
   try {
@@ -426,7 +512,7 @@ review:
     await _pi.exec("git", ["-c", "user.name=ITSOL Test", "-c", "user.email=test@itsol.local", "commit", "-m", "fixture"], { cwd: reviewCwd });
     await fs.promises.writeFile(reviewFile, "export const session = getUntrustedSession();\n");
 
-    const reviewStore = new TaskStateStore(fakePi, agents.length, "0.20.0");
+    const reviewStore = new TaskStateStore(fakePi, agents.length, "0.21.0");
     reviewStore.startSession(fakeContext);
     reviewStore.setDefinition({
       ...base,

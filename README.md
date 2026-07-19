@@ -52,7 +52,7 @@ Centralny skill `itsol-workflow-mode` rozstrzyga poziom ceremonii przed planowan
 | `autonomous-planned` | Agent tworzy i reviewuje plany, wybiera udokumentowaną rekomendację i kontynuuje bez pauz na akceptację. | `Draft`, potem `Ready for execution` po review |
 | `direct` | Bez trwałych Business, Technical i Technical Fix Planów oraz ich bramek; nadal obowiązują evidence, TDD lub replacement verification i self-review. | `not-required` |
 
-Wspólne skille i definicje agentów opisują tę operację neutralnie jako harness-native automatic plan-review capability — nie zawierają nazw narzędzi konkretnego harnessu. Adapter Pi mapuje ją na `itsol_plan_review`; Claude Code używa natywnego Agent/Task z `itsol-self-review`, Codex używa natywnego subagenta z read-only forked context, a OpenCode używa Task/@agent. W trybach planowanych każde Business, Technical i Technical Fix Plan po self-review przechodzi taki automatyczny, izolowany i read-only Rubber Duck Review. Ta delegacja jest preautoryzowana przez wybór trybu planowanego w granicach execution policy — agent nie pyta użytkownika o zgodę na reviewera. Materialne findings są poprawiane i plan jest reviewowany ponownie przed handoffem. W `governed` użytkownik dostaje dopiero plan z werdyktem `ready for approval`; w `autonomous-planned` agent przechodzi dalej po `ready for execution`. Domyślny limit Rubber Duck wynosi 10 iteracyjnych rund na każdy artefakt; pętla kończy się wcześniej po pierwszym material-blocker-free verdict. Powrót przed werdyktem jest dozwolony tylko po rzeczywistej awarii reviewera lub wyczerpaniu skonfigurowanego limitu rund. Limit można obniżyć per repo lub ścieżka przez `review.plan_max_rounds` w `.itsol.md`.
+Wspólne skille i definicje agentów opisują tę operację neutralnie jako harness-native automatic plan-review capability — nie zawierają nazw narzędzi konkretnego harnessu. Adapter Pi mapuje ją na `itsol_plan_review`; Claude Code używa natywnego Agent/Task z `itsol-self-review`, Codex używa natywnego subagenta z read-only forked context, a OpenCode używa Task/@agent. W trybach planowanych każda Initiative Roadmap oraz każdy Business, Technical i Technical Fix Plan po self-review przechodzi taki automatyczny, izolowany i read-only Rubber Duck Review. Ta delegacja jest preautoryzowana przez wybór trybu planowanego w granicach execution policy — agent nie pyta użytkownika o zgodę na reviewera. Materialne findings są poprawiane i plan jest reviewowany ponownie przed handoffem. W `governed` użytkownik dostaje dopiero plan z werdyktem `ready for approval`; w `autonomous-planned` agent przechodzi dalej po `ready for execution`. Domyślny limit Rubber Duck wynosi 10 iteracyjnych rund na każdy artefakt; pętla kończy się wcześniej po pierwszym material-blocker-free verdict. Powrót przed werdyktem jest dozwolony tylko po rzeczywistej awarii reviewera lub wyczerpaniu skonfigurowanego limitu rund. Limit można obniżyć per repo lub ścieżka przez `review.plan_max_rounds` w `.itsol.md`.
 
 Tryb jest domyślnie ograniczony do bieżącego zadania. Kolejność rozstrzygania to: reguły platformy, `allowed_modes` i pasujące restrykcje repozytorium, jawny wybór użytkownika dla zadania, dozwolony default `.itsol.md`, a na końcu `governed`. Jawny wybór zadania może nadpisać default repo, ale nie zakaz dla ścieżki lub operacji.
 
@@ -92,17 +92,29 @@ workflow:
 
 Autonomia workflow nie rozszerza zakresu zadania. Destrukcyjne operacje na danych, niezlecony deploy lub publish na produkcję, sekrety poza zakresem, zewnętrzne wiadomości lub zakupy oraz osłabienie security pozostają osobnymi pytaniami o authority. Zwykłe edycje, testy, buildy i odwracalne działania w zakresie nie tworzą nowej approval pause.
 
+### Initiative Delivery Workflow
+
+Dla dużego dokumentu biznesowego opisującego cały moduł, aplikację, migrację albo wielofazową funkcję użyj `itsol-initiative-delivery`. Jest to osobna oś skali pracy (`delivery_scope: initiative`), zwykle połączona z `workflow_mode: autonomous-planned`, a nie czwarty tryb authority.
+
+Agent analizuje pełny dokument, nadaje wymaganiom stabilne `REQ-NNN`, przypisuje każde wymaganie do outcome-oriented faz, Rubber Duck-reviewuje roadmapę i prowadzi kolejne fazy przez planowanie, implementację, specialist review, integrację oraz QA. Nie może wybrać jednego wycinka i uznać całej inicjatywy za zakończoną. Oryginalny dokument jest zachowany jako immutable snapshot, a living intent, traceability, roadmapa, architektura, decyzje, progress i phase evidence trafiają do:
+
+```text
+.itsol/initiatives/<initiative-id>/
+```
+
+Pi udostępnia `itsol_initiative_state` oraz `/itsol-initiative status|activate|resume|pause`. Stan jest przenośny między sesjami i harnessami dzięki artefaktom repozytorium. Completion gate blokuje zakończenie taska, dopóki wszystkie fazy i wymagania nie mają jawnego disposition oraz nie ma pending decisions. Agent wraca do użytkownika tylko dla materialnej decyzji biznesowej/produktowej/scope/data/security/architecture, protected action, jawnej pauzy albo rzeczywistego blockera; po odpowiedzi aktualizuje zależne dokumenty, ponownie reviewuje zmienioną roadmapę i automatycznie wznawia wykonanie.
+
 ### Polityka kosztu `itsol-execution-policy`
 
 `itsol-execution-policy` działa obok `itsol-workflow-mode`. Workflow określa, kto podejmuje decyzje i jakie bramki obowiązują; execution policy ogranicza model/reasoning, delegację, równoległość, review i etap zatrzymania. Preset nigdy nie zmienia trybu workflow.
 
 | Preset | Profil | Reasoning | Agenci / równolegle | Review | Domyślny stop |
 | --- | --- | --- | --- | --- | --- |
-| `economy` | economy | low | 0 / 0 | 0 | wynik żądany przez użytkownika |
-| `standard` | balanced | medium | 2 / 2 | 1 cykl | `implementation-reviewed` |
-| `deep` | frontier | high | 1 / 1 | 2 cykle | `integration-validated` |
+| `economy` | economy | low | 0 / 0 | 1 cykl inline | wynik żądany przez użytkownika |
+| `standard` | balanced | medium | unlimited / 3 | 2 cykle | `implementation-reviewed` |
+| `deep` | frontier | high | unlimited / 3 | 2 cykle | `integration-validated` |
 
-Limity są sufitami, nie celem do wykorzystania. Jawne ograniczenie użytkownika lub repo może być tylko zaostrzone automatycznie. Zwiększenie kosztu, fan-outu, review albo przesunięcie stop pointu wymaga nowej instrukcji.
+`max_parallel` jest limitem jednoczesnych procesów, więc większe zestawy specjalistów są automatycznie wykonywane batchami. Numeryczny limit całkowitej liczby agentów powstaje tylko z jawnej instrukcji użytkownika, `economy` albo restrykcji repozytorium.
 
 ITSOL Powers celowo nie ustawia `maxTurns`. Zakończenie pętli agenta nie oznacza wykonania zadania. Każdy worker zwraca status `completed`, `partial`, `blocked` albo `failed`, weryfikację i braki; orchestrator akceptuje `completed` dopiero po sprawdzeniu `done_when` i dowodów. Claude plugin używa jednego deterministycznego retry dla brakującego envelope, bez nieskończonej pętli.
 
@@ -233,13 +245,13 @@ pi install https://github.com/itsoltech/agents
 Rekomendowana instalacja przypiętego release:
 
 ```bash
-pi install https://github.com/itsoltech/agents@v0.20.0
+pi install https://github.com/itsoltech/agents@v0.21.0
 ```
 
 Dla prywatnego repozytorium można użyć SSH:
 
 ```bash
-pi install git:git@github.com:itsoltech/agents@v0.20.0
+pi install git:git@github.com:itsoltech/agents@v0.21.0
 ```
 
 Rootowy `package.json` jest adapterem Pi wskazującym extension i skille z `plugins/itsolpowers/`. URL musi wskazywać repozytorium Git; adres GitHub `tree/.../plugins/itsolpowers` nie jest obsługiwanym źródłem pakietu.
@@ -256,7 +268,7 @@ Pi ładuje skille bez namespace pluginu. Główny router jest dostępny jako:
 /skill:using-itsolpowers
 ```
 
-Extension automatycznie dodaje krótki bootstrap dla zadań engineeringowych, mapuje współdzielone pojęcia narzędzi na Pi i rejestruje `itsol_task_state` oraz `itsol_delegate`. Stan workflow, execution policy, `done_when`, użyci agenci i koszty są zapisywane w sesji Pi i odtwarzane po `/reload`, resume oraz compaction. Po zapisaniu stanu kolejne delegacje mogą przekazywać tylko `task_id` i właściwy task packet. Footer pokazuje wersję pluginu, aktywny tryb, preset, wykorzystanie agentów, aktywne delegacje i łączny koszt głównego modelu oraz dzieci.
+Extension automatycznie dodaje krótki bootstrap dla zadań engineeringowych, mapuje współdzielone pojęcia narzędzi na Pi i rejestruje `itsol_task_state`, `itsol_initiative_state` oraz `itsol_delegate`. Stan workflow, execution policy, `done_when`, użyci agenci i koszty są zapisywane w sesji Pi i odtwarzane po `/reload`, resume oraz compaction. Po zapisaniu stanu kolejne delegacje mogą przekazywać tylko `task_id` i właściwy task packet. Footer pokazuje wersję pluginu, aktywny tryb, preset, wykorzystanie agentów, aktywne delegacje i łączny koszt głównego modelu oraz dzieci.
 
 Delegowane agenty działają jako osobne procesy Pi z `--no-extensions`, jawną listą narzędzi, limitami z `itsol-execution-policy`, kontrolą stanu workflow i walidacją końcowego envelope. W trakcie pracy TUI pokazuje krótkie angielskie opisy bieżących akcji, np. `reading README.md`, `searching “workflow” in skills` lub `running: npm test`, aktywny model, źródło routingu, poziom thinking oraz czas w formacie `5s`, `2min 6s` albo `1h 2min`.
 
@@ -303,9 +315,20 @@ Role to `explore`, `plan`, `implement` i `review`. Można przekazać ją jawnie 
 
 `/itsol-models configure` uruchamia interaktywny wizard wyboru scope i profilu. W ramach jednej sesji konfiguratora można ustawić wiele ról; dla każdej wybiera się model lub dziedziczenie oraz poziom reasoning. Po każdej roli można przejść do następnej, zapisać wszystkie zmiany w jednym kroku albo anulować bez zapisu. Lista poziomów reasoning w wizardzie jest pobierana dynamicznie z wybranego modelu przez natywne metadane Pi (`getSupportedThinkingLevels`), więc może obejmować np. `off`, `minimal`, `low`, `medium`, `high`, `xhigh` lub `max` zależnie od modelu. Przy uruchomieniu extension dodatkowo dopasowuje poziom do faktycznych możliwości modelu (`model-clamp`) oraz resolved execution policy (`policy-clamp`); konfiguracja nigdy nie rozszerza twardszego limitu zadania.
 
-Komendy stanu i modeli:
+Komendy stanu, inicjatyw i modeli:
 
 ```text
+/itsol initiative start <business-document-path>
+/itsol initiative status
+/itsol initiative activate <initiative-id>
+/itsol initiative resume [initiative-id]
+/itsol initiative pause
+# equivalent dedicated command:
+/itsol-initiative start <business-document-path>
+/itsol-initiative status
+/itsol-initiative activate <initiative-id>
+/itsol-initiative resume [initiative-id]
+/itsol-initiative pause
 /itsol status
 /itsol activate <task-id>
 /itsol mode governed|autonomous-planned|direct

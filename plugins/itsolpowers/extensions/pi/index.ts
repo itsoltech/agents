@@ -5,6 +5,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { discoverItsolAgents } from "./agents.ts";
 import { registerCompletionGate } from "./completion-gate.ts";
 import { registerItsolDelegate } from "./delegate-tool.ts";
+import { registerInitiativeManager } from "./initiative-state.ts";
 import { ModelRouter, registerModelRouter } from "./model-router.ts";
 import { registerPlanReview } from "./plan-review.ts";
 import { registerRepoPolicy, RepoPolicyManager } from "./repo-policy.ts";
@@ -37,19 +38,22 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     ? fs.readFileSync(bootstrapPath, "utf8").trim()
     : "ITSOL Powers Pi bootstrap is missing.";
 
-  registerTaskState(pi, taskState);
+  const initiative = registerInitiativeManager(pi, taskState);
+  registerTaskState(pi, taskState, initiative);
   registerModelRouter(pi, modelRouter);
   registerRepoPolicy(pi, repoPolicy);
   const reviewOrchestrator = registerReviewOrchestrator(pi, taskState, agents, repoPolicy);
   const planReview = registerPlanReview(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy);
+  initiative.setRoadmapReviewValidator((taskId, roadmapPath, cwd) => planReview.hasPassingReview(taskId, "initiative", roadmapPath, cwd));
   registerCompletionGate(pi, taskState, {
     async completionDecision(taskId, ctx, request) {
       const codeReview = await reviewOrchestrator.completionDecision(taskId, ctx);
       const artifactReview = planReview.completionDecision(taskId, request.achieved_stage, ctx.cwd);
+      const initiativeDecision = initiative.completionDecision(taskId);
       return {
         ...codeReview,
-        problems: [...artifactReview.problems, ...codeReview.problems],
-        forceContinuation: artifactReview.forceContinuation,
+        problems: [...artifactReview.problems, ...initiativeDecision.problems, ...codeReview.problems],
+        forceContinuation: Boolean(codeReview.forceContinuation || artifactReview.forceContinuation || initiativeDecision.forceContinuation),
       };
     },
   });
@@ -60,6 +64,7 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     repoPolicy.startSession(ctx);
     modelRouter.startSession(ctx);
     taskState.startSession(ctx);
+    initiative.startSession(ctx);
     reviewOrchestrator.startSession(ctx);
     planReview.startSession(ctx);
   });
@@ -69,6 +74,7 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
       ctx.ui.setStatus("itsolpowers", undefined);
       ctx.ui.setStatus("itsol-review", undefined);
       ctx.ui.setStatus("itsol-plan-review", undefined);
+      ctx.ui.setStatus("itsol-initiative", undefined);
     }
   });
 
@@ -95,6 +101,8 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     }
     const stateContext = taskState.formatPromptContext();
     if (stateContext) parts.push(stateContext);
+    const initiativeContext = initiative.formatPromptContext();
+    if (initiativeContext) parts.push(initiativeContext);
     parts.push(repoPolicy.formatPromptContext(taskState.getActive()?.policy_context));
     const planReviewContext = planReview.formatPromptContext();
     if (planReviewContext) parts.push(planReviewContext);
@@ -135,6 +143,7 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
         `Skill collisions: ${collisions.length ? collisions.join(", ") : "none"}`,
         `Superpowers conflict: ${hasSuperpowers ? "possible — disable competing workflow routing" : "not detected"}`,
         `Task state: ${taskState.getActive() ? taskState.getActive()!.task_id : "none"}`,
+        `Initiative state: ${initiative.getActive() ? initiative.getActive()!.initiative_id : "none"}`,
         repoPolicy.formatStatus(),
         modelRouter.formatSummary(),
         "Delegation isolation: child Pi runs use --no-extensions and an explicit tool allowlist",

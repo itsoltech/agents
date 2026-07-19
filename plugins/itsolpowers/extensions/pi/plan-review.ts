@@ -21,7 +21,7 @@ import type { TaskStateStore } from "./task-state.ts";
 const ENTRY_TYPE = "itsol-plan-reviews";
 const REVIEW_AGENT = "itsol-self-review";
 
-type PlanType = "business" | "technical" | "technical-fix";
+type PlanType = "initiative" | "business" | "technical" | "technical-fix";
 type PlanVerdict = "ready for approval" | "ready for execution" | "not ready for approval" | "not ready for execution" | "invalid";
 
 interface PlanReviewProgress {
@@ -58,7 +58,7 @@ export interface PlanReviewCompletionDecision {
 
 const PlanReviewParamsSchema = Type.Object({
   task_id: Type.String({ minLength: 1 }),
-  plan_type: StringEnum(["business", "technical", "technical-fix"] as const),
+  plan_type: StringEnum(["initiative", "business", "technical", "technical-fix"] as const),
   plan_path: Type.String({ minLength: 1 }),
   request_summary: Type.String({ minLength: 1 }),
   confirmed_scope_or_approach: Type.String({ minLength: 1 }),
@@ -198,7 +198,11 @@ export class PlanReviewOrchestrator {
         "Use the ready verdict only when no material finding remains.",
       ].join("\n"),
       operations: ["rubber-duck-plan-review"],
-      read_scope: [...new Set([selected.relative, ...(state.policy_context?.paths ?? [])])],
+      read_scope: [...new Set([
+        selected.relative,
+        ...(params.plan_type === "initiative" ? [path.posix.dirname(selected.relative)] : []),
+        ...(state.policy_context?.paths ?? []),
+      ])],
       write_scope: [],
       forbidden_scope: [],
       required_evidence: ["plan path inspected", "material findings", "explicit Plan Review Verdict"],
@@ -288,6 +292,19 @@ export class PlanReviewOrchestrator {
     return { record, result, expected };
   }
 
+  hasPassingReview(taskId: string, planType: PlanType, planPath: string, cwd: string): boolean {
+    const state = this.store.get(taskId);
+    if (!state || state.workflow_state.workflow_mode === "direct") return false;
+    const relative = path.relative(cwd, path.resolve(cwd, planPath)).replaceAll("\\", "/");
+    const record = this.latest(taskId, planType, relative);
+    if (!record || record.childStatus !== "completed" || record.verdict !== expectedVerdict(state.workflow_state.workflow_mode)) return false;
+    try {
+      return planFingerprint(path.resolve(cwd, relative)) === record.fingerprint;
+    } catch {
+      return false;
+    }
+  }
+
   completionDecision(taskId: string, achievedStage: keyof typeof STOP_RANK, cwd: string): PlanReviewCompletionDecision {
     const state = this.store.get(taskId);
     if (!state || state.workflow_state.workflow_mode === "direct") return { problems: [], forceContinuation: false };
@@ -331,7 +348,7 @@ export class PlanReviewOrchestrator {
     if (!state || state.workflow_state.workflow_mode === "direct") return "";
     return [
       "## ITSOL automatic plan review (extension-managed)",
-      "Business, Technical, and Technical Fix Plans must pass isolated Rubber Duck Review through itsol_plan_review before being presented to the user or marked ready for execution.",
+      "Initiative Roadmaps and Business, Technical, and Technical Fix Plans must pass isolated Rubber Duck Review through itsol_plan_review before being presented to the user or marked ready for execution.",
       "This read-only reviewer is pre-authorized by the planned workflow within execution ceilings. Do not ask the user to authorize a review subagent or call itsol_complete while an actionable plan review remains.",
       "If findings are material, update the plan and rerun itsol_plan_review. Return to the user only after a current passing verdict, or after the reviewer/round ceiling creates a genuine blocker.",
     ].join("\n");
@@ -371,7 +388,7 @@ export function registerPlanReview(
   pi.registerTool({
     name: "itsol_plan_review",
     label: "ITSOL Plan Review",
-    description: "Automatically run the isolated read-only itsol-self-review agent against a Business, Technical, or Technical Fix Plan, persist a diff-bound Rubber Duck verdict, and enforce bounded review rounds before user handoff.",
+    description: "Automatically run the isolated read-only itsol-self-review agent against an Initiative Roadmap, Business, Technical, or Technical Fix Plan, persist a fingerprint-bound Rubber Duck verdict, and enforce bounded review rounds before user handoff.",
     promptSnippet: "Run automatic isolated Rubber Duck review for a planning artifact",
     promptGuidelines: [
       "In governed and autonomous-planned modes, call itsol_plan_review after plan self-review and before presenting the plan, asking for approval, marking it ready, or calling itsol_complete.",

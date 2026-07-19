@@ -28,6 +28,7 @@ plugins/itsolpowers/skills/itsol-codex-setup/SKILL.md
 plugins/itsolpowers/skills/itsol-execution-policy/SKILL.md
 plugins/itsolpowers/skills/itsol-feature-implementation/SKILL.md
 plugins/itsolpowers/skills/itsol-functional-planning/SKILL.md
+plugins/itsolpowers/skills/itsol-initiative-delivery/SKILL.md
 plugins/itsolpowers/skills/itsol-qa-handoff/SKILL.md
 plugins/itsolpowers/skills/itsol-repo-memory/SKILL.md
 plugins/itsolpowers/skills/itsol-requirements-review/SKILL.md

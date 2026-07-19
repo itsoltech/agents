@@ -13,6 +13,8 @@ In `governed` and `autonomous-planned`, invoke the harness-native automatic plan
 
 ## Shared Process
 
+If the source describes a whole application, module, migration, or multi-phase capability, load `itsol-initiative-delivery` first. Build complete initiative traceability and a reviewed roadmap; then apply this Business/Technical planning process within outcome-oriented phases. Do not reduce the source to one phase and hand off as though the full request were complete.
+
 1. Inspect the request, repo context, and applicable `.itsol.md` policy; record and propagate all seven workflow-state fields.
 2. Load `itsol-requirements-review` and inspect enough code, contracts, tests, and conventions to avoid asking questions the repository answers.
 3. Ask one targeted question only when an unresolved material ambiguity cannot be resolved safely. Never invent product scope from internet defaults.

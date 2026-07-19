@@ -583,7 +583,11 @@ export class TaskStateStore {
   }
 }
 
-export function registerTaskState(pi: ExtensionAPI, store: TaskStateStore): void {
+export interface InitiativeCommandHandler {
+  handleCommand(args: string, ctx: ExtensionContext): Promise<void>;
+}
+
+export function registerTaskState(pi: ExtensionAPI, store: TaskStateStore, initiative?: InitiativeCommandHandler): void {
   pi.registerTool({
     name: "itsol_task_state",
     label: "ITSOL Task State",
@@ -606,9 +610,13 @@ export function registerTaskState(pi: ExtensionAPI, store: TaskStateStore): void
   pi.registerCommand("itsol", {
     description: "Show or update ITSOL task state: status, activate, mode, preset, agents, parallel, reset",
     handler: async (args, ctx) => {
-      const [action = "status", value] = args.trim().split(/\s+/, 2);
+      const [action, ...values] = args.trim() ? args.trim().split(/\s+/) : ["status"];
+      const value = values[0];
       try {
-        if (action === "activate" && value) store.activate(value);
+        if (action === "initiative" && initiative) {
+          await initiative.handleCommand(values.join(" "), ctx);
+          return;
+        } else if (action === "activate" && value) store.activate(value);
         else if (action === "reset") store.reset(value);
         else if (action === "mode" && ["governed", "autonomous-planned", "direct"].includes(value)) {
           store.setMode(value as WorkflowState["workflow_mode"]);
@@ -621,7 +629,7 @@ export function registerTaskState(pi: ExtensionAPI, store: TaskStateStore): void
         } else if (action === "parallel" && /^\d+$/.test(value ?? "")) {
           store.setParallelLimit(Number(value));
         } else if (action !== "status") {
-          throw new Error("Usage: /itsol status | activate <task-id> | mode <mode> | preset <preset> | agents <unlimited|0..64> | parallel <0..10> | reset [task-id]");
+          throw new Error("Usage: /itsol status | initiative <status|activate|resume|pause> | activate <task-id> | mode <mode> | preset <preset> | agents <unlimited|0..64> | parallel <0..10> | reset [task-id]");
         }
         if (ctx.hasUI) ctx.ui.notify(store.formatDetails(), "info");
       } catch (error) {

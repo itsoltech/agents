@@ -33,7 +33,7 @@ const skillNames = new Set(
 const agentFiles = fs.readdirSync(path.join(pluginRoot, 'agents')).filter((name) => name.endsWith('.md'));
 const agentNames = new Set(agentFiles.map((name) => name.replace(/\.md$/, '')));
 
-assert.equal(skillNames.size, 115);
+assert.equal(skillNames.size, 116);
 assert.equal(agentNames.size, 113);
 for (const required of ['using-itsolpowers', 'itsol-workflow-mode', 'itsol-execution-policy']) {
   assert.ok(skillNames.has(required), `missing required skill: ${required}`);
@@ -41,7 +41,7 @@ for (const required of ['using-itsolpowers', 'itsol-workflow-mode', 'itsol-execu
 for (const agent of agentNames) assert.ok(skillNames.has(agent), `agent has no matching skill: ${agent}`);
 assert.deepEqual(
   [...skillNames].filter((name) => !agentNames.has(name)).sort(),
-  ['itsol-codex-doctor', 'itsol-codex-setup']
+  ['itsol-codex-doctor', 'itsol-codex-setup', 'itsol-initiative-delivery']
 );
 
 for (const file of agentFiles) {
@@ -80,8 +80,11 @@ assert.match(bootstrap, /`itsol_review_verdict`/);
 assert.match(bootstrap, /`itsol_plan_review`/);
 assert.match(bootstrap, /effective profile is `off`/);
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'completion-gate.ts')));
+assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'initiative-state.ts')));
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'review-orchestrator.ts')));
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'plan-review.ts')));
+const planReviewSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'plan-review.ts'), 'utf8');
+assert.match(planReviewSource, /\"initiative\", \"business\", \"technical\", \"technical-fix\"/);
 const reviewOrchestrator = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'review-orchestrator.ts'), 'utf8');
 assert.match(reviewOrchestrator, /itsol-review/);
 assert.match(reviewOrchestrator, /autoRereviewNotice/);
