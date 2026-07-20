@@ -14,7 +14,7 @@ Use this workflow for a broad business source whose complete intended outcome ne
 - Preserve the original source as an immutable snapshot. Maintain clarified intent, roadmap, architecture, decisions, traceability, progress, and phase evidence as living repository artifacts.
 - Use the harness-native durable initiative-state capability. Do not rely on conversation history as the only state.
 - Decompose work into dependency-aware, outcome-oriented vertical phases. Existing Business, Technical, TDD, delegation, code-review, integration, and QA workflows apply inside each phase.
-- Rubber Duck-review the initiative roadmap and every required phase plan. A changed roadmap invalidates its earlier review.
+- Self-review the initiative roadmap and required phase plans proportionately. Use isolated review when required by policy or justified by material initiative risk; a materially changed reviewed roadmap invalidates its earlier verdict.
 - Continue through executable phases without returning for routine approval in `autonomous-planned`.
 - Ask only for a material business, product, scope, data, security, rollout, or architecture decision that cannot be safely recommended under delegated authority, or for a separately protected action.
 
@@ -22,10 +22,10 @@ Use this workflow for a broad business source whose complete intended outcome ne
 
 1. **Intake:** inspect the whole source and repository; extract requirements, acceptance criteria, constraints, unknowns, and initiative-level completion criteria.
 2. **Roadmap:** assign every requirement to one or more phases; document dependencies, phase outcomes, system QA, rollout, and cross-cutting architecture.
-3. **Review:** self-review and invoke the harness-native automatic plan-review capability for the initiative roadmap. Initiative review is a read-only panel covering requirements/product, architecture, QA, self-review, and conditional security/data expertise. Resolve every material finding and rerun until the panel is material-blocker-free or the configured ceiling is genuinely exhausted.
+3. **Review:** self-review the initiative roadmap, then follow the effective review trigger. With `adaptive`, use the read-only specialist panel only when breadth, uncertainty, novelty, cross-phase dependencies, or security/data risk justify its cost. Resolve concrete material findings; do not rerun for preferences, optional detail, or speculative concerns.
 4. **Execute phases:** plan, review, implement, independently review all changed surfaces, integrate, run application-aware QA, and record fingerprint-bound evidence. Automatically start the next dependency-ready phase.
 5. **QA loop:** choose browser/UI, API, backend, interactive CLI, Electron, mobile, data, infrastructure, or combined system QA from the application shape. A failed verdict routes to implementation fix, plan revision, or a user decision. After fixes, rerun applicable plan review and code review, then execute fresh QA; repeat until PASS.
-6. **Adapt:** classify discoveries and QA feedback, record decisions, update impacted living documents, replan future work, and Rubber Duck-review the changed roadmap.
+6. **Adapt:** classify discoveries and QA feedback, record decisions, update impacted living documents, replan future work, and re-review a changed roadmap only when policy requires it or the change materially affects confidence.
 7. **Complete:** require explicit disposition for every requirement, completed phases, a passing QA verdict per phase, current passing final-system QA, no pending decisions, synchronized documentation, and no hidden scope gaps.
 
 ## Decision boundary

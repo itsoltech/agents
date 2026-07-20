@@ -748,7 +748,12 @@ review:
     initPolicy.startSession({ cwd: initPolicyCwd } as any);
     const initialized = initPolicy.initializeMinimalPolicy();
     assert.equal(initialized.created, true);
-    assert.match(await fs.promises.readFile(initialized.filePath, "utf8"), /qa:\n  profile: automatic/);
+    const initializedPolicy = await fs.promises.readFile(initialized.filePath, "utf8");
+    assert.match(initializedPolicy, /trigger: adaptive/);
+    assert.match(initializedPolicy, /auto_rereview: never/);
+    assert.match(initializedPolicy, /plan_max_rounds: 2/);
+    assert.match(initializedPolicy, /qa:\n  profile: automatic/);
+    assert.equal(initPolicy.resolveReviewPolicy().max_rounds, 1);
     assert.match(initPolicy.formatStatus(), /QA profile: automatic/);
     assert.equal(initPolicy.initializeMinimalPolicy().created, false);
   } finally {
@@ -964,7 +969,7 @@ review:
       initiative_id: "account-module",
       entity: "initiative",
       status: "ready",
-    }), /passing Rubber Duck Review/);
+    }), /passing plan review under the effective policy/);
     await fs.promises.appendFile(path.join(initiativeCwd, ".itsol", "initiatives", "account-module", "roadmap.md"), "\nDetailed rollout remains here.\n");
     initiative.setRoadmapReviewValidator(() => true);
     initiative.update({ action: "update", initiative_id: "account-module", entity: "initiative", status: "ready" });
@@ -1066,10 +1071,13 @@ review:
     await _pi.exec("git", ["init"], { cwd: reviewCwd });
     await fs.promises.mkdir(path.join(reviewCwd, "src", "auth"), { recursive: true });
     const reviewFile = path.join(reviewCwd, "src", "auth", "session.ts");
+    const commentOnlyFile = path.join(reviewCwd, "src", "worker.ts");
     await fs.promises.writeFile(reviewFile, "export const session = 'v1';\n");
+    await fs.promises.writeFile(commentOnlyFile, "// waiting\nexport const workerReady = true;\n");
     await _pi.exec("git", ["add", "."], { cwd: reviewCwd });
     await _pi.exec("git", ["-c", "user.name=ITSOL Test", "-c", "user.email=test@itsol.local", "commit", "-m", "fixture"], { cwd: reviewCwd });
     await fs.promises.writeFile(reviewFile, "export const session = getUntrustedSession();\n");
+    await fs.promises.writeFile(commentOnlyFile, "// transaction ready\nexport const workerReady = true;\n");
 
     const reviewStore = new TaskStateStore(fakePi, agents.length, "0.22.0");
     reviewStore.startSession(fakeContext);
@@ -1085,6 +1093,9 @@ review:
     const reviewRepoPolicy = new RepoPolicyManager();
     reviewRepoPolicy.startSession({ cwd: reviewCwd } as any);
     const orchestrator = new ReviewOrchestrator(reviewPi, reviewStore, agents, reviewRepoPolicy);
+    assert.equal(orchestrator.resolvePolicy("review-fixture").trigger, "adaptive");
+    assert.equal((await orchestrator.completionDecision("review-fixture", { cwd: reviewCwd } as any)).required, false);
+    orchestrator.setProfile("review-fixture", "strict");
     const plan = await orchestrator.createPlan({
       task_id: "review-fixture",
       target: "working-tree",
@@ -1094,6 +1105,8 @@ review:
     assert.equal(plan.mandatorySubagents, true);
     assert.equal(plan.status, "ready");
     assert.ok(plan.selectedReviewers.some((item: any) => item.agent === "security-auth-session-review"));
+    assert.ok(!plan.selectedReviewers.some((item: any) => item.agent === "postgres-review"));
+    assert.ok(!plan.files.find((item: any) => item.path === "src/worker.ts")?.surfaces.includes("data"));
     reviewStore.beginDelegation("review-fixture", plan.selectedReviewers.map((item: any) => item.agent));
     reviewStore.finishDelegation("review-fixture", plan.selectedReviewers.map((item: any) => item.agent),
       plan.selectedReviewers.map((item: any) => ({
@@ -1191,6 +1204,23 @@ review:
     assert.equal(pocPlan.status, "inline");
     assert.equal(pocPlan.mandatorySubagents, false);
     assert.equal(pocPlan.selectedReviewers.length, 0);
+    const pragmaticPocVerdict = await orchestrator.consolidate({
+      task_id: "review-fixture",
+      plan_id: pocPlan.id,
+      covered_surfaces: ["scope", "correctness"],
+      findings: [{
+        intent: "Should",
+        severity: "medium",
+        title: "Consider a clearer local name",
+        file: "src/auth/session.ts",
+        line: 1,
+        evidence: "The current name is valid but could be more descriptive",
+        source: "inline-review",
+      }],
+      unverified: ["optional documentation wording"],
+    });
+    assert.equal(pragmaticPocVerdict.verdict, "approve");
+    assert.ok(pragmaticPocVerdict.coverageGaps.length > 0);
 
     const businessPlanPath = path.join(reviewCwd, ".itsol", "plans", "business.md");
     await fs.promises.mkdir(path.dirname(businessPlanPath), { recursive: true });
@@ -1226,9 +1256,14 @@ review:
       hasUI: false,
       sessionManager: { getBranch: () => [] },
     } as any);
+    const adaptivePlanReview = planReview.completionDecision("plan-review-fixture", "business-plan", reviewCwd);
+    assert.equal(adaptivePlanReview.forceContinuation, false);
+    assert.deepEqual(adaptivePlanReview.problems, []);
+    await fs.promises.writeFile(path.join(reviewCwd, ".itsol.md"), `# Strict handoff review\n\n\`\`\`yaml\nreview:\n  default_profile: balanced\n  trigger: final\n  max_rounds: 1\n  plan_max_rounds: 2\n\`\`\`\n`);
+    reviewRepoPolicy.reload();
     const missingPlanReview = planReview.completionDecision("plan-review-fixture", "business-plan", reviewCwd);
     assert.equal(missingPlanReview.forceContinuation, true);
-    assert.match(missingPlanReview.problems.join("\n"), /automatic isolated Rubber Duck Review/);
+    assert.match(missingPlanReview.problems.join("\n"), /effective final policy/);
   } finally {
     await fs.promises.rm(reviewCwd, { recursive: true, force: true });
   }

@@ -8,8 +8,8 @@ Resolve all seven task-state fields through `itsol-workflow-mode`. In every mode
 
 ## Mode Branches
 
-- `governed`: run the Fix Decision Gate, wait for the user's choice, create a `Draft` Technical Fix Plan, self-review and Rubber Duck-review it, resolve material findings, present the file, obtain explicit approval, mark it `Approved`, then implement.
-- `autonomous-planned`: record options and choose the documented recommendation, create the plan as `Draft`, self-review and Rubber Duck-review it, resolve material findings, mark it `Ready for execution` with delegated authorization, and continue without approval pauses.
+- `governed`: run the Fix Decision Gate, wait for the user's choice, create a `Draft` Technical Fix Plan, self-review it proportionately, use isolated review only when policy or material risk warrants it, resolve concrete material findings, present the file, obtain explicit approval, mark it `Approved`, then implement.
+- `autonomous-planned`: record options and choose the documented recommendation, create the plan as `Draft`, self-review it proportionately, decide whether isolated review adds value, resolve concrete material findings, mark it `Ready for execution` with delegated authorization, and continue without approval pauses.
 - `direct`: do not create or require a Fix Plan, Fix Decision Gate, plan review, approval, or plan path. Record `artifact_state: not-required` and proceed from evidence/root cause to TDD or replacement verification and implementation.
 
 Never call an autonomous plan user-approved. Ask only for unresolved material ambiguity or independent protected-action authority. Apply `.itsol.md` through `itsol-repo-memory` when present and propagate all seven fields to artifacts and handoffs.

@@ -34,7 +34,7 @@ Fix gaps inline. Ask one targeted question for unresolved material ambiguity; do
 
 ## Rubber Duck Review
 
-Use the harness-native automatic plan-review capability, which runs a separate read-only context with `itsol-self-review`. The harness adapter selects the concrete delegation tool; shared skills must not assume a Pi, Claude Code, Codex, or OpenCode tool name. This reviewer is pre-authorized by a planned workflow within execution ceilings; do not ask the user to authorize it. Provide plan path, request, complete workflow state, confirmed scope or selected/recommended approach, and minimal repo evidence. The reviewer must not edit or nest delegation. Repeat review after material changes. The extension allows up to `review.plan_max_rounds` iterative attempts per artifact (default 10) and stops earlier on the first material-blocker-free verdict.
+Follow the effective review trigger after self-review. With `adaptive`, the main agent decides whether the harness-native isolated review adds enough value from plan scale, uncertainty, novelty, blast radius, and verification strength. Skip it for small conventional plans. When selected, it runs a separate read-only context with `itsol-self-review`; the harness adapter selects the concrete tool, and no separate user authorization is needed. Provide the plan path, request, workflow state, confirmed approach, and minimal repo evidence. The reviewer must not edit or nest delegation. The default cap is 2 attempts per artifact, but a second pass is worthwhile only after a concrete material fix—not for suggestions.
 
 ### Business Plan Questions
 
@@ -62,7 +62,7 @@ Return plan/context inspected; blockers, important gaps, and non-blocking sugges
 
 - In `governed`, `ready for approval` permits presenting the specific `Draft`; explicit approval then changes it to `Approved`.
 - In `autonomous-planned`, `ready for execution` permits `Draft` to become `Ready for execution` without a pause; this is not user approval.
-- In both planned modes, material findings block progression.
+- In both planned modes, only concrete findings that could materially affect scope, acceptance, correctness, safety, feasibility, rollout, or verification block progression. Style, wording, optional detail, speculative edge cases, and personal preferences are non-blocking.
 - In `direct`, no plan-review verdict exists.
 
-If isolated review fails or the configured reviewer/round ceiling is exhausted, report the genuine blocker rather than inventing a verdict. Do not return to the user while another automatic review attempt remains actionable. Non-blocking suggestions may be deferred only with an explicit scope reason.
+If required isolated review fails or its ceiling is exhausted with a material blocker, report that honestly. Under `adaptive`, the main agent may stop after a useful pass and carry non-blocking suggestions without another round. Never manufacture work merely to satisfy review ceremony.

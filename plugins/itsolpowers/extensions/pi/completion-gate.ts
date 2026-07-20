@@ -103,8 +103,8 @@ export function evaluateCompletion(
         if (state.review_verdict && state.review_verdict.verdict !== "approve") {
           problems.push(`review verdict is ${state.review_verdict.verdict}`);
         }
-        if (state.review_verdict?.coverage_gaps.length) {
-          problems.push(`review coverage gaps remain: ${state.review_verdict.coverage_gaps.join(", ")}`);
+        if (managedReview.profile === "strict" && state.review_verdict?.coverage_gaps.length) {
+          problems.push(`strict review coverage gaps remain: ${state.review_verdict.coverage_gaps.join(", ")}`);
         }
       }
     } else {

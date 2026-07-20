@@ -1,4 +1,4 @@
-// Automatic isolated Rubber Duck review gate for Business and Technical Plan artifacts under itsol-workflow-mode and itsol-execution-policy.
+// Policy-driven, proportionate isolated review for planned artifacts under itsol-workflow-mode and itsol-execution-policy.
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -182,9 +182,13 @@ export class PlanReviewOrchestrator {
     const state = this.store.get(params.task_id);
     if (!state) throw new Error(`Unknown ITSOL task state: ${params.task_id}`);
     if (state.workflow_state.workflow_mode === "direct") throw new Error("Direct workflow does not require plan review");
-    const planMaxRounds = this.repoPolicy.resolveReviewPolicy(state.policy_context).plan_max_rounds;
+    const reviewPolicy = this.repoPolicy.resolveReviewPolicy(state.policy_context);
+    if (reviewPolicy.profile === "off" || reviewPolicy.max_rounds === 0) {
+      throw new Error(`Plan review is disabled for task ${params.task_id} by profile=${reviewPolicy.profile}`);
+    }
+    const planMaxRounds = reviewPolicy.plan_max_rounds;
     if (state.execution_policy.max_parallel === 0) {
-      throw new Error("Rubber Duck review is required by the planned workflow, but max_parallel=0");
+      throw new Error("Plan review was selected, but max_parallel=0");
     }
     const selected = normalizedPlanPath(ctx.cwd, params.plan_path);
     const qaPolicy = this.repoPolicy.resolveQaPolicy(state.policy_context);
@@ -241,9 +245,11 @@ export class PlanReviewOrchestrator {
           `Effective repository QA policy: ${qaPolicy.profile}; max cycles ${qaPolicy.max_cycles}; application types ${qaPolicy.application_types.join(", ") || "auto-detect"}; commands ${qaPolicy.commands.join("; ") || "none"}. Treat profile=off as an authorized QA skip, not a missing-plan blocker or PASS.`,
           `Workflow mode: ${state.workflow_state.workflow_mode}. Expected passing verdict: ${expected}.`,
           "Inspect the plan and relevant read-only repository evidence. Do not modify files and do not delegate.",
-          "Report blockers, important gaps, non-blocking suggestions, user-decision questions, sections to update, unverified items, and coverage gaps.",
+          "Be pragmatic and proportional to the plan's scale. Report only findings with a concrete effect on scope, acceptance, correctness, security/data safety, architecture feasibility, rollout, or verification. Do not block on style, wording, optional detail, speculative edge cases, personal preferences, or refactors outside the requested scope.",
+          "Separate material blockers from non-blocking suggestions. Suggestions never justify another review round. Prefer one consolidated pass over serial discovery of minor comments.",
+          "Report material blockers, important gaps, optional suggestions, user-decision questions, sections to update, unverified items, and meaningful coverage gaps.",
           `Before the required Status/Verification/Unverified envelope, include exactly one column-one line: Plan Review Verdict: ${expected} or Plan Review Verdict: not ${expected}.`,
-          "Use the ready verdict only when no material finding remains in your review focus.",
+          "Use the not-ready verdict only for a concrete material defect that could plausibly make implementation wrong, unsafe, or unverifiable; otherwise use the ready verdict and keep minor improvements non-blocking.",
         ].join("\n"),
         operations: ["rubber-duck-plan-review"],
         read_scope: readScope,
@@ -355,6 +361,12 @@ export class PlanReviewOrchestrator {
     return { record, results, expected };
   }
 
+  canAdvanceWithoutReview(taskId: string, planType: PlanType, planPath: string, cwd: string): boolean {
+    if (this.isRequired(taskId)) return false;
+    const relative = path.relative(cwd, path.resolve(cwd, planPath)).replaceAll("\\", "/");
+    return !this.latest(taskId, planType, relative);
+  }
+
   hasPassingReview(taskId: string, planType: PlanType, planPath: string, cwd: string): boolean {
     const state = this.store.get(taskId);
     if (!state || state.workflow_state.workflow_mode === "direct") return false;
@@ -368,9 +380,20 @@ export class PlanReviewOrchestrator {
     }
   }
 
+  isRequired(taskId: string): boolean {
+    const state = this.store.get(taskId);
+    if (!state || state.workflow_state.workflow_mode === "direct") return false;
+    const policy = this.repoPolicy.resolveReviewPolicy(state.policy_context);
+    return policy.profile !== "off"
+      && policy.max_rounds > 0
+      && ["final", "checkpoint"].includes(policy.trigger);
+  }
+
   completionDecision(taskId: string, achievedStage: keyof typeof STOP_RANK, cwd: string): PlanReviewCompletionDecision {
     const state = this.store.get(taskId);
     if (!state || state.workflow_state.workflow_mode === "direct") return { problems: [], forceContinuation: false };
+    const reviewPolicy = this.repoPolicy.resolveReviewPolicy(state.policy_context);
+    if (reviewPolicy.profile === "off" || reviewPolicy.max_rounds === 0) return { problems: [], forceContinuation: false };
     const rank = STOP_RANK[achievedStage];
     const acceptedTypes: PlanType[] = rank >= STOP_RANK["technical-plan"]
       ? ["technical", "technical-fix"]
@@ -379,14 +402,15 @@ export class PlanReviewOrchestrator {
     const record = [...this.records]
       .filter((item) => item.taskId === taskId && acceptedTypes.includes(item.planType))
       .sort((left, right) => right.recordedAt - left.recordedAt)[0];
-    const planMaxRounds = this.repoPolicy.resolveReviewPolicy(state.policy_context).plan_max_rounds;
+    const planMaxRounds = reviewPolicy.plan_max_rounds;
     const canUseReviewer = state.execution_policy.max_parallel > 0
       && (state.execution_policy.max_subagents === "unlimited"
         || this.store.getUsedAgents(taskId).has(REVIEW_AGENT)
         || this.store.getUsedAgents(taskId).size < state.execution_policy.max_subagents);
     if (!record) {
+      if (!this.isRequired(taskId)) return { problems: [], forceContinuation: false };
       return {
-        problems: [`${acceptedTypes.join("/")} plan requires automatic isolated Rubber Duck Review before user handoff`],
+        problems: [`${acceptedTypes.join("/")} plan requires isolated review by the effective ${reviewPolicy.trigger} policy`],
         forceContinuation: canUseReviewer,
       };
     }
@@ -409,11 +433,16 @@ export class PlanReviewOrchestrator {
   formatPromptContext(): string {
     const state = this.store.getActive();
     if (!state || state.workflow_state.workflow_mode === "direct") return "";
+    const policy = this.repoPolicy.resolveReviewPolicy(state.policy_context);
+    const required = this.isRequired(state.task_id);
     return [
-      "## ITSOL automatic plan review (extension-managed)",
-      "Initiative Roadmaps must pass an isolated requirements/architecture/QA/self-review panel (plus conditional security/data reviewers); Business, Technical, and Technical Fix Plans must pass isolated Rubber Duck Review through itsol_plan_review before being presented to the user or marked ready for execution.",
-      "This read-only reviewer is pre-authorized by the planned workflow within execution ceilings. Do not ask the user to authorize a review subagent or call itsol_complete while an actionable plan review remains.",
-      "If findings are material, update the plan and rerun itsol_plan_review. Return to the user only after a current passing verdict, or after the reviewer/round ceiling creates a genuine blocker.",
+      "## ITSOL plan review (extension-managed)",
+      `Plan review policy is ${required ? "required" : "agent-decided"} (profile=${policy.profile}, trigger=${policy.trigger}, cap=${policy.plan_max_rounds} per artifact).`,
+      required
+        ? "Run isolated plan review before handoff."
+        : "Decide whether isolated plan review adds value based on task scale, uncertainty, novelty, and material risk. Skip it for small, conventional, well-verified plans; do not run it merely as ceremony.",
+      "The read-only reviewer is pre-authorized when selected. Judge its feedback pragmatically: only concrete material findings block; style preferences, optional detail, and speculative edge cases remain non-blocking.",
+      "If a selected review returns a material finding, update the plan and rerun only when the fix materially changed readiness and another round is worthwhile. Do not spend rounds chasing suggestions.",
     ].join("\n");
   }
 
@@ -451,11 +480,11 @@ export function registerPlanReview(
   pi.registerTool({
     name: "itsol_plan_review",
     label: "ITSOL Plan Review",
-    description: "Automatically run an isolated read-only specialist panel for an Initiative Roadmap, or itsol-self-review for a Business, Technical, or Technical Fix Plan, persist a fingerprint-bound Rubber Duck verdict, and enforce bounded review rounds before user handoff.",
-    promptSnippet: "Run automatic isolated Rubber Duck review for a planning artifact",
+    description: "Run an isolated read-only specialist panel for an Initiative Roadmap, or itsol-self-review for a Business, Technical, or Technical Fix Plan, when required by policy or when the agent judges it proportionate to risk and scale.",
+    promptSnippet: "Run proportionate isolated review for a planning artifact",
     promptGuidelines: [
-      "In governed and autonomous-planned modes, call itsol_plan_review after plan self-review and before presenting the plan, asking for approval, marking it ready, or calling itsol_complete.",
-      "Do not ask the user to authorize the read-only reviewer or Initiative Roadmap panel. Resolve material findings in the plan and rerun within the configured ceiling before user handoff.",
+      "Follow the effective review trigger. With trigger=adaptive, call itsol_plan_review only when plan scale, uncertainty, novelty, or material risk justifies the cost; a routine small plan should rely on concise self-review.",
+      "Do not ask the user to authorize a selected read-only reviewer. Resolve concrete material findings, but do not rerun for style, optional detail, speculative concerns, or non-blocking suggestions.",
     ],
     parameters: PlanReviewParamsSchema,
     async execute(_toolCallId, params, signal, onUpdate, ctx) {
@@ -487,7 +516,7 @@ export function registerPlanReview(
             "",
             passed
               ? "The current plan fingerprint passed isolated review. Continue according to workflow mode without requesting reviewer authorization."
-              : "Resolve material findings in the plan and call itsol_plan_review again before user handoff.",
+              : "Resolve concrete material findings. Rerun only when required by policy or when the change materially benefits from another independent pass.",
           ].join("\n"),
         }],
         details: outcome,

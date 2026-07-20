@@ -380,7 +380,7 @@ export class InitiativeManager {
       if (requiresRoadmapReview) {
         const roadmapPath = `${INITIATIVE_ROOT}/${state.initiative_id}/roadmap.md`;
         if (!this.context || !this.roadmapReviewValidator?.(state.task_id, roadmapPath, this.context.cwd)) {
-          throw new Error(`Initiative roadmap requires a current passing Rubber Duck Review before status=${params.status}`);
+          throw new Error(`Initiative roadmap requires a current passing plan review under the effective policy before status=${params.status}`);
         }
       }
       state.status = params.status as Exclude<InitiativeStatus, "blocked-decision" | "completed">;
@@ -582,7 +582,7 @@ export class InitiativeManager {
     const [action, ...values] = args.trim() ? args.trim().split(/\s+/) : ["status"];
     const id = values.join(" ");
     if (action === "start" && id) {
-      this.pi.sendUserMessage(`Start autonomous Initiative Delivery from the complete business source @${id}. Resolve autonomous-planned workflow, load itsol-initiative-delivery, analyze the entire source, create complete requirements traceability and outcome-oriented phases through the harness-native initiative-state capability, Rubber Duck-review the initiative roadmap, then continue execution without routine approval pauses.`);
+      this.pi.sendUserMessage(`Start autonomous Initiative Delivery from the complete business source @${id}. Resolve autonomous-planned workflow, load itsol-initiative-delivery, analyze the entire source, create complete requirements traceability and outcome-oriented phases through the harness-native initiative-state capability, self-review the roadmap proportionately and follow the effective plan-review trigger, then continue execution without routine approval pauses.`);
       return;
     } else if (action === "activate" && id) this.activate(id);
     else if (action === "resume") this.resume(id);
@@ -715,7 +715,7 @@ export class InitiativeManager {
     if (state.status === "paused") return "resume when authorized";
     const pending = state.decisions.find((item) => item.status === "pending");
     if (pending) return `obtain and record user decision ${pending.id}`;
-    if (state.status === "planning") return "complete and Rubber Duck-review initiative roadmap, then mark ready";
+    if (state.status === "planning") return "complete and proportionately self-review the initiative roadmap, run isolated review if required or worthwhile, then mark ready";
     const active = state.phases.find((item) => ["in-progress", "qa"].includes(item.status));
     if (active) return `continue ${active.id} through implementation, review, integration, and QA`;
     const next = state.phases.find((phase) => phase.status === "planned"

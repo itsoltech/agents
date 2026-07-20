@@ -66,8 +66,8 @@ For planned modes under `itsol-workflow-mode`, the Business Plan must be underst
 - <Question or "None">
 ```
 
-In `governed`, after both reviews pass, present the path and summary, request explicit approval, and only then set `Approved`:
+In `governed`, after proportionate self-review and any required/selected isolated review pass, present the path and summary, request explicit approval, and only then set `Approved`:
 
 `Business Plan saved to <path>. Approve this file before I prepare the Technical Plan.`
 
-In `autonomous-planned`, resolve all material review findings, set `**Status:** Ready for execution`, add `**Rubber Duck Verdict:** Ready`, and continue without asking for approval. Never describe this state as user-approved.
+In `autonomous-planned`, resolve concrete material findings and set `**Status:** Ready for execution`. Add `**Rubber Duck Verdict:** Ready` only when isolated review ran, then continue without asking for approval. Never describe this state as user-approved.

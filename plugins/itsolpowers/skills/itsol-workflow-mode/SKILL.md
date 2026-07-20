@@ -47,11 +47,11 @@ If a subagent receives missing, incomplete, inconsistent, or restriction-conflic
 
 ### Governed
 
-Run the normal Discovery, Decision, plan-writing, self-review, automatic isolated Rubber Duck Review through the harness-native plan-review capability, explicit user-approval, and execution-mode gates. Record `artifact_state: draft` while required artifacts are absent or awaiting approval. Record `execution_mode: pending` until the user chooses inline or subagents. New plan files start as `Draft` and become `Approved` only after the user sees and explicitly approves the specific file; only then record `artifact_state: approved`.
+Run the normal Discovery, Decision, plan-writing, proportionate self-review, explicit user-approval, and execution-mode gates. Run isolated Rubber Duck Review only when required by the effective review policy or when the main agent judges it valuable for the plan's scale, uncertainty, novelty, or material risk. Record `artifact_state: draft` while required artifacts are absent or awaiting approval. Record `execution_mode: pending` until the user chooses inline or subagents. New plan files start as `Draft` and become `Approved` only after the user sees and explicitly approves the specific file; only then record `artifact_state: approved`.
 
 ### Autonomous Planned
 
-Create the normal Business, Technical, or Technical Fix Plan artifacts with `artifact_state: draft`. Run self-review and automatic isolated Rubber Duck Review through the harness-native plan-review capability, resolve material findings, choose the documented recommended approach, then change the artifact state to `ready-for-execution` and continue without asking the user to approve each plan.
+Create the normal Business, Technical, or Technical Fix Plan artifacts with `artifact_state: draft`. Run proportionate self-review, decide whether isolated Rubber Duck Review is warranted under the effective review policy, resolve concrete material findings, choose the documented recommended approach, then change the artifact state to `ready-for-execution` and continue without asking the user to approve each plan.
 
 Never describe `Ready for execution` as explicit user approval. Ask one targeted question only when equally plausible choices materially change user-visible behavior, permissions, data handling, rollout, or architecture.
 

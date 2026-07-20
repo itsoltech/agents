@@ -4,8 +4,8 @@ Resolve all seven fields through `itsol-workflow-mode`. Always gather reproducti
 
 ## Mode Flow And Fix Decision
 
-- In `governed`, summarize evidence/root cause, present two to four repair options or the forced option, compare tradeoffs, recommend one, and wait for the user's choice. Create one `Draft`, self-review and Rubber Duck-review it, resolve material findings, present the specific file, obtain explicit approval, set `Approved`, then implement. The original request, `continue`, silence, or agent inference is not approval.
-- In `autonomous-planned`, record the same options/tradeoffs, choose the documented recommendation, create a `Draft`, complete both reviews, resolve material findings, set `Ready for execution`, and continue without approval pause. Never call it user-approved.
+- In `governed`, summarize evidence/root cause, present two to four repair options or the forced option, compare tradeoffs, recommend one, and wait for the user's choice. Create one `Draft`, self-review it proportionately, use isolated review only when required or worthwhile, resolve concrete material findings, present the specific file, obtain explicit approval, set `Approved`, then implement. The original request, `continue`, silence, or agent inference is not approval.
+- In `autonomous-planned`, record the same options/tradeoffs, choose the documented recommendation, create a `Draft`, complete proportionate self-review and any applicable isolated review, resolve concrete material findings, set `Ready for execution`, and continue without approval pause. Never call it user-approved.
 - In `direct`, do not create a Fix Plan or run Fix Decision, plan-review, approval, or plan-path gates. Use `artifact_state: not-required` and proceed from root cause to regression verification and the smallest fix.
 
 Possible approaches include a minimal root-cause hotfix, compatibility handling for old data, bounded refactor, feature-flagged rollout, backend/frontend/full-stack slice, or diagnostic spike when root cause remains unconfirmed. Do not hide material decisions as implementation details.

@@ -79,7 +79,8 @@ assert.match(bootstrap, /`itsol_review_plan`/);
 assert.match(bootstrap, /`itsol_review_verdict`/);
 assert.match(bootstrap, /`itsol_plan_review`/);
 assert.match(bootstrap, /commit-only, repository inspection, and `.itsol\.md` initialization/);
-assert.match(bootstrap, /effective profile is `off`/);
+assert.match(bootstrap, /`trigger=adaptive`/);
+assert.match(bootstrap, /main agent decides whether formal code review is worth its cost/);
 const piIndexSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'index.ts'), 'utf8');
 assert.match(piIndexSource, /classifyAdministrativeRequest/);
 assert.match(piIndexSource, /!tool\.startsWith\(\"itsol_\"\)/);
@@ -115,6 +116,7 @@ assert.match(planReviewSource, /\"initiative\", \"business\", \"technical\", \"t
 const reviewOrchestrator = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'review-orchestrator.ts'), 'utf8');
 assert.match(reviewOrchestrator, /itsol-review/);
 assert.match(reviewOrchestrator, /autoRereviewNotice/);
+assert.match(reviewOrchestrator, /"adaptive", "inline", "specialists"/);
 assert.match(reviewOrchestrator, /fingerprint/);
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'repo-policy.ts')));
 const repoPolicySource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'repo-policy.ts'), 'utf8');

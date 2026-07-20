@@ -60,6 +60,8 @@ interface ReviewPlan {
   createdAt: number;
   files: ChangedFile[];
   totalLines: number;
+  strategy: "adaptive" | "inline" | "specialists";
+  strategyRationale?: string;
   requiredCoverage: string[];
   mandatorySubagents: boolean;
   inlineAllowed: boolean;
@@ -90,6 +92,10 @@ const ReviewPlanParamsSchema = Type.Object({
   head: Type.Optional(Type.String({ minLength: 1 })),
   acceptance_criteria: Type.Array(Type.String()),
   test_evidence: Type.Array(Type.String()),
+  strategy: Type.Optional(StringEnum(["adaptive", "inline", "specialists"] as const, {
+    description: "Agent-selected review depth. Balanced review may stay inline or use specialists; strict policy can still require independent coverage.",
+  })),
+  strategy_rationale: Type.Optional(Type.String({ minLength: 1 })),
 });
 
 type ReviewPlanParams = Static<typeof ReviewPlanParamsSchema>;
@@ -127,7 +133,7 @@ function classifySurfaces(filePath: string): string[] {
   if (/\.(svelte|tsx|jsx|css|scss|vue)$/.test(file) || /(frontend|ui|components|pages|app\/)/.test(file)) surfaces.push("frontend", "ui-ux");
   if (/\.(cs|rs|go|java|kt|py)$/.test(file) || /(api|backend|server|controllers|handlers|services)\//.test(file)) surfaces.push("backend");
   if (/(auth|oauth|session|permission|authoriz|tenant|secret|credential|token|crypto|security)/.test(file)) surfaces.push("security");
-  if (/(migration|schema|database|postgres|mongo|mssql|sqlserver|prisma|\.sql$)/.test(file)) surfaces.push("data");
+  if (/(migration|database|postgres|mongo|mssql|sqlserver|prisma|\.sql$|(^|\/)(db|data-access)(\/|$))/.test(file)) surfaces.push("data");
   if (/(dockerfile|docker-compose|\.nomad|terraform|\.tf$|k8s|kubernetes|helm|nginx|traefik|infra\/|deploy|observability)/.test(file)) surfaces.push("infrastructure");
   if (/(openapi|swagger|generated|codegen|api-client|client\.gen)/.test(file)) surfaces.push("api-contracts");
   if (/(migration|rewrite|legacy|cutover|strangler)/.test(file)) surfaces.push("migration");
@@ -137,11 +143,18 @@ function classifySurfaces(filePath: string): string[] {
   return unique(surfaces);
 }
 
+function stripCommentsForClassification(content: string): string {
+  return content
+    .replace(/\/\*[\s\S]*?\*\//g, " ")
+    .replace(/^\s*(?:\/\/|#|--).*$/gm, " ")
+    .replace(/\/\/.*$/gm, " ");
+}
+
 function classifyContent(content: string): string[] {
-  const text = content.toLowerCase();
+  const text = stripCommentsForClassification(content).toLowerCase();
   const surfaces: string[] = [];
   if (/(authorization|permission|tenant|password|secret|credential|access[_-]?token|refresh[_-]?token|dangerouslysetinnerhtml|\beval\(|\bexec\()/.test(text)) surfaces.push("security");
-  if (/(create table|alter table|drop table|migration|transaction|select\s+.+\s+from|insert\s+into|update\s+.+\s+set)/.test(text)) surfaces.push("data");
+  if (/(create\s+table|alter\s+table|drop\s+table|select\s+.+\s+from|insert\s+into|update\s+.+\s+set|delete\s+from)/.test(text)) surfaces.push("data");
   if (/(openapi|swagger|components\/schemas|operationid|generated client)/.test(text)) surfaces.push("api-contracts");
   if (/(docker|nomad|terraform|kubernetes|readiness|liveness|reverse proxy|tls|rollback)/.test(text)) surfaces.push("infrastructure");
   if (/(package\.json|dependencies|devdependencies|lockfileversion)/.test(text)) surfaces.push("current-tech", "supply-chain");
@@ -183,9 +196,10 @@ function reviewerCandidates(files: ChangedFile[]): ReviewerCandidate[] {
     else add("security-api-input-review", "security", "security-sensitive input or trust boundary", 100);
   }
   if (surfaces.has("data")) {
-    if (/(mongo)/.test(allPaths)) add("mongodb-review", "data", "MongoDB schema or query changes", 90);
-    else if (/(mssql|sqlserver|\.cs)/.test(allPaths)) add("mssql-review", "data", "SQL Server or .NET data changes", 90);
-    else add("postgres-review", "data", "database schema, migration, or query changes", 90);
+    if (/(mongo|mongoose)/.test(allPaths)) add("mongodb-review", "data", "MongoDB schema or query changes", 90);
+    else if (/(mssql|sqlserver|sql-server|dapper)/.test(allPaths)) add("mssql-review", "data", "SQL Server or Dapper data changes", 90);
+    else if (/(postgres|postgresql|psql|npgsql)/.test(allPaths)) add("postgres-review", "data", "PostgreSQL schema or query changes", 90);
+    else add("itsol-code-review-workflow", "data", "database engine is not established by the changed paths; use engine-neutral data review", 70);
   }
   if (surfaces.has("infrastructure")) {
     if (/(dockerfile|docker-compose)/.test(allPaths)) add("infra-container-runtime-review", "infrastructure", "container runtime changes", 88);
@@ -386,7 +400,7 @@ export class ReviewOrchestrator {
     const policySignature = codeReviewPolicySignature(policy);
     const stageRequiresReview = STOP_RANK[state.execution_policy.stop_after] >= STOP_RANK.implementation;
     const reviewStarted = Boolean(plan && plan.policySignature === policySignature);
-    const triggerRequiresReview = policy.trigger !== "manual" || reviewStarted;
+    const triggerRequiresReview = ["final", "checkpoint"].includes(policy.trigger) || reviewStarted;
     const required = policy.profile !== "off"
       && triggerRequiresReview
       && policy.max_rounds > 0
@@ -421,7 +435,9 @@ export class ReviewOrchestrator {
         ? "Review orchestration is disabled for this task. Do not add review ceremony unless the user explicitly asks."
         : policy.trigger === "manual"
           ? "Review is manual. Run it only when the user explicitly requests it."
-          : "Run one final review before completion. Do not review after every edit.",
+          : policy.trigger === "adaptive"
+            ? "Review is agent-decided. Use task scale, uncertainty, novelty, blast radius, and verification strength to decide whether an independent or formal review is worth its cost. Skip ceremony for small, conventional, well-verified changes."
+            : "Run one final review before completion. Do not review after every edit.",
     ].join("\n");
   }
 
@@ -508,14 +524,24 @@ export class ReviewOrchestrator {
     const sensitive = changedSurfaces.some((surface) =>
       ["security", "data", "infrastructure", "api-contracts", "migration", "supply-chain"].includes(surface));
     const riskRequiresSubagents = sensitive
-      || domainSurfaces.length > 1
-      || files.length > 5
-      || totalLines > 250
-      || (policy.profile === "strict" && domainSurfaces.length > 0);
+      || domainSurfaces.length > 2
+      || files.length > 12
+      || totalLines > 800;
+    const selectedStrategy = params.strategy ?? "adaptive";
+    if (selectedStrategy !== "adaptive" && !params.strategy_rationale) {
+      throw new Error("strategy_rationale is required when selecting inline or specialists explicitly");
+    }
+    if (selectedStrategy === "specialists" && policy.delegation === "never") {
+      throw new Error("The effective review policy sets delegation=never; choose strategy=inline");
+    }
+    const strictRiskRequirement = policy.profile === "strict"
+      && policy.delegation === "risk-based"
+      && riskRequiresSubagents;
     const mandatorySubagents = policy.delegation === "always"
-      || (policy.delegation === "risk-based" && riskRequiresSubagents);
+      || strictRiskRequirement
+      || (policy.delegation === "risk-based" && selectedStrategy === "specialists");
     const inlineAllowed = policy.delegation === "never"
-      || (!mandatorySubagents && domainSurfaces.length <= 1 && files.length <= 5 && totalLines <= 250);
+      || (!mandatorySubagents && selectedStrategy !== "specialists");
     const requiredCoverage = unique([...BASE_COVERAGE, ...changedSurfaces]);
     const reviewTooLarge = files.length > 100 || totalLines > 10_000;
 
@@ -559,7 +585,9 @@ export class ReviewOrchestrator {
           `Changed files in scope: ${reviewFiles.map((file) => file.path).join(", ")}.`,
           `Acceptance criteria: ${params.acceptance_criteria.join("; ") || "not provided"}.`,
           `Test evidence: ${params.test_evidence.join("; ") || "not provided"}.`,
-          "Return evidence-first findings with intent, severity, file references, affected behavior, verification, assumptions, unverified gaps, and the required ITSOL envelope. Do not modify files.",
+          "Be pragmatic and proportional. Report only concrete defects or risks introduced by this change; ignore style preferences, optional refactors, speculative edge cases without a plausible failure path, and unrelated legacy problems.",
+          "Use Blocker/high only for findings that could materially break requirements, correctness, security/data safety, compatibility, or operations. Keep minor improvements as non-blocking suggestions that do not justify re-review.",
+          "Return one consolidated evidence-first pass with intent, severity, file references, affected behavior, verification, assumptions, meaningful unverified gaps, and the required ITSOL envelope. Do not modify files.",
         ].join("\n"),
         read_scope: reviewFiles.map((file) => file.path),
         write_scope: [],
@@ -587,6 +615,8 @@ export class ReviewOrchestrator {
       createdAt: Date.now(),
       files,
       totalLines,
+      strategy: selectedStrategy,
+      strategyRationale: params.strategy_rationale,
       requiredCoverage,
       mandatorySubagents,
       inlineAllowed,
@@ -650,11 +680,14 @@ export class ReviewOrchestrator {
     coverageGaps.push(...unresolvedReviewers);
 
     let verdict: "approve" | "changes-requested" | "blocked" = "approve";
-    if (findings.some((finding) => ["Blocker", "Should"].includes(finding.intent)
+    if (findings.some((finding) => finding.intent === "Blocker"
       || ["critical", "high"].includes(finding.severity))) {
       verdict = "changes-requested";
     }
-    if (coverageGaps.length) verdict = "blocked";
+    const strictCoverageGaps = policy.profile === "strict"
+      ? coverageGaps
+      : [...plan.coverageGaps, ...unresolvedReviewers];
+    if (strictCoverageGaps.length) verdict = "blocked";
     const uniqueGaps = unique(coverageGaps);
     this.store.recordReviewVerdict(params.task_id, {
       plan_id: plan.id,
@@ -772,11 +805,12 @@ export function registerReviewOrchestrator(
   pi.registerTool({
     name: "itsol_review_plan",
     label: "ITSOL Review Plan",
-    description: "Inspect a git diff, build the mandatory review coverage map, decide inline versus multi-agent review, select focused ITSOL reviewers within execution ceilings, and return ready-to-use itsol_delegate task packets.",
-    promptSnippet: "Build a risk-based review coverage map and specialist delegation plan",
+    description: "Inspect a git diff, build a proportionate review coverage map, and honor the agent-selected inline or specialist strategy within the effective policy and execution ceilings.",
+    promptSnippet: "Build a pragmatic risk-based review plan with agent-selected depth",
     promptGuidelines: [
-      "Follow the extension-managed review profile. Use itsol_review_plan for required or explicitly requested review, but add no review ceremony when profile=off or trigger=manual without a user request.",
-      "Execute review_plan delegations through itsol_delegate, then consolidate all findings with itsol_review_verdict.",
+      "Follow the extension-managed review profile. With trigger=adaptive, first decide whether formal review adds value; skip it for small, conventional, well-verified changes.",
+      "Choose strategy=inline or specialists with a concise risk/scale rationale. Strict policy may override an under-scoped inline choice. Execute returned delegations through itsol_delegate, then consolidate with itsol_review_verdict.",
+      "Prioritize concrete behavioral and safety defects. Do not create blockers or extra rounds for style preferences, optional refactors, speculative edge cases, or unrelated legacy issues.",
     ],
     parameters: ReviewPlanParamsSchema,
     async execute(_toolCallId, params, signal, _onUpdate, ctx) {
@@ -787,8 +821,9 @@ export function registerReviewOrchestrator(
         `Profile: ${plan.profile} · round ${plan.round}`,
         `Target: ${plan.target}`,
         `Files: ${plan.files.length} · changed lines: ${plan.totalLines}`,
+        `Strategy: ${plan.strategy}${plan.strategyRationale ? ` — ${plan.strategyRationale}` : ""}`,
         `Coverage: ${plan.requiredCoverage.join(", ")}`,
-        `Subagents: ${plan.mandatorySubagents ? "mandatory" : plan.inlineAllowed ? "not required for tiny single-surface diff" : "recommended"}`,
+        `Subagents: ${plan.mandatorySubagents ? "selected/required" : plan.inlineAllowed ? "not needed for the selected proportionate strategy" : "recommended"}`,
         `Reviewers: ${plan.selectedReviewers.map((reviewer) => `${reviewer.agent} (${reviewer.surface})`).join(", ") || "inline main agent"}`,
         `Batches: ${plan.batches.map((batch) => `[${batch.join(", ")}]`).join(" → ") || "none"}`,
         `Coverage gaps: ${plan.coverageGaps.join("; ") || "none"}`,

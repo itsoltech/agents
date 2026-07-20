@@ -1,9 +1,9 @@
 ## Polityka nadrzędna
 
-Poniższy gate obowiązuje, gdy extension-managed review policy wymaga review oraz ustawia `delegation=risk-based` lub `always`. `profile=off`, `trigger=manual` bez jawnego żądania i `delegation=never` wyłączają automatyczny gate sub-agentów. Nie rozszerzaj polityki projektu własną decyzją agenta.
+Poniższe zasady obowiązują, gdy review zostało wymagane lub wybrane i agent zdecydował, że niezależni specjaliści istotnie zwiększą wiarygodność werdyktu. Przy `trigger=adaptive` agent może pominąć formalne review albo wybrać inline. `profile=off`, `trigger=manual` bez jawnego żądania i `delegation=never` wyłączają automatyczny gate sub-agentów. `strict` lub `delegation=always` pozostają twardymi wymaganiami.
 
-## Obowiązkowa mapa review
-Każdy wymagany lub jawnie zlecony code review zaczyna się od mapy obszarów, nawet jeśli finalnie jest mały:
+## Proporcjonalna mapa review
+Każdy wymagany lub jawnie zlecony code review zaczyna się od krótkiej mapy obszarów istotnych dla zmienionego zachowania. Nie rozszerzaj mapy na nietknięte sektory:
 
 - zakres biznesowy, acceptance criteria i zgodność PR z opisem;
 - poprawność działania i regresje;
@@ -16,11 +16,11 @@ Każdy wymagany lub jawnie zlecony code review zaczyna się od mapy obszarów, n
 - testy, TDD RED/GREEN evidence, edge cases, performance i release/QA readiness;
 - maintainability, czytelność, architektura i dług techniczny.
 
-Nie wolno zakończyć review po sprawdzeniu tylko jednego sektora, jeśli PR dotyka więcej niż jednego obszaru.
+Sprawdź wszystkie materialne obszary dotknięte zmianą, ale nie traktuj kompletności checklisty jako celu samego w sobie.
 
 ## Gate na sub-agentów
 
-Przy `delegation=risk-based` lub `always` sub-agenci są obowiązkowi, gdy PR jest duży, wieloobszarowy albo ryzykowny. Dotyczy to w szczególności PR, który:
+Przy `delegation=always` sub-agenci są obowiązkowi. Przy `delegation=risk-based` oraz profilu `balanced` to agent wybiera ich tylko wtedy, gdy konkretne ryzyko, nowość, blast radius albo rozmiar kontekstu uzasadnia koszt. Sam rozmiar lub dopasowanie nazwy pliku nie wystarcza. Specjalistów warto rozważyć, gdy PR:
 
 - dotyka więcej niż jednej powierzchni systemu, np. UI + API, API + database, app + infra, generated client + backend;
 - zawiera zmiany security, auth/session, authz/tenant, sekrety, dane osobowe, uploady, integracje zewnętrzne albo supply chain;
@@ -30,7 +30,7 @@ Przy `delegation=risk-based` lub `always` sub-agenci są obowiązkowi, gdy PR je
 - jest zbyt duży, aby jeden agent mógł wiarygodnie przeanalizować wszystkie obszary w jednym kontekście;
 - ma wiele typów plików, wiele modułów, dużą liczbę linii zmian albo łączy kod ręczny z wygenerowanym.
 
-Przy `delegation=risk-based` inline-only review jest dopuszczalny wyłącznie dla małego, jednoobszarowego diffu. Przy `delegation=never` jawna polityka pozwala na review inline niezależnie od automatycznego progu. W takim przypadku reviewer musi jawnie napisać, dlaczego sub-agenci nie byli potrzebni oraz które obszary z mapy review sprawdził.
+Przy profilu `balanced` inline review jest dopuszczalne zawsze, gdy jeden agent może wiarygodnie objąć materialne ryzyka; podaj krótki powód wyboru. Profil `strict` może wymusić niezależne pokrycie dla ryzykownego diffu. Przy `delegation=never` polityka zawsze pozwala na review inline.
 
 ## Dobór sub-agentów
 
@@ -52,7 +52,7 @@ Dobieraj sub-agentów pragmatycznie według zmienionego kodu i ryzyka:
 - rewrite, modernizacja, strangler, branch-by-abstraction, parallel run albo cutover: `application-technology-migration`;
 - QA/release readiness: `itsol-qa-handoff` oraz skille produkcyjnej gotowości, jeśli zmiana idzie na produkcję.
 
-Jeśli PR dotyka kilku powyższych obszarów, uruchom osobnych sub-agentów dla niezależnych ryzyk. Nie wysyłaj jednego ogólnego sub-agenta do sprawdzenia całego dużego PR.
+Jeśli kilka materialnych ryzyk faktycznie wymaga niezależnej wiedzy, użyj wąskich sub-agentów. Nie uruchamiaj agentów dla każdego wykrytego sektora automatycznie.
 
 ## Kontrakt pracy sub-agenta review
 
@@ -61,8 +61,8 @@ Każdy sub-agent review powinien dostać:
 - zakres: obszar systemu, ryzyko, pliki lub moduły do sprawdzenia;
 - kontekst: opis PR, acceptance criteria, istotne decyzje techniczne i test evidence;
 - aktualny kontekst technologii, jeśli finding zależy od frameworka, SDK, runtime, paczki, generatora albo API;
-- oczekiwany rezultat: findings według severity, file references, sprawdzona walidacja, brakujące testy, założenia i ryzyka resztkowe;
-- ograniczenie: nie komentować stylu bez wpływu na ryzyko, nie duplikować findings spoza zakresu, nie modyfikować kodu.
+- oczekiwany rezultat: jeden skonsolidowany zestaw findings według severity, file references, sprawdzona walidacja, materialne braki testów, założenia i ryzyka resztkowe;
+- ograniczenie: finding blokujący wymaga konkretnego wpływu i wiarygodnej ścieżki awarii; nie komentować stylu, opcjonalnych refaktorów, spekulacyjnych edge case'ów ani problemów legacy poza zmianą; nie duplikować findings spoza zakresu i nie modyfikować kodu.
 
 Główny agent po powrocie sub-agentów:
 

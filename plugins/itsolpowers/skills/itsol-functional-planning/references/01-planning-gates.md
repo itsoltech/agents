@@ -7,9 +7,9 @@ Resolve and record all seven fields through `itsol-workflow-mode` before applyin
 For functional tasks in `governed`, do not edit production code until:
 
 - Discovery has enough confirmed scope to avoid material guessing.
-- A Business Plan exists as `Draft`, passes self-review and Rubber Duck Review, has all material findings resolved, is presented to the user, and is explicitly approved as that specific file.
+- A Business Plan exists as `Draft`, passes proportionate self-review and any review required or selected under the effective policy, has concrete material findings resolved, is presented to the user, and is explicitly approved as that specific file.
 - The Technical Decision Gate presents options or a forced approach and the user chooses or approves the approach.
-- A Technical Plan exists as `Draft`, passes both reviews, has all material findings resolved, is presented, and is explicitly approved as that specific file.
+- A Technical Plan exists as `Draft`, passes proportionate self-review and any required/selected isolated review, has concrete material findings resolved, is presented, and is explicitly approved as that specific file.
 - The user chooses subagent-driven or inline execution.
 
 Governed approval is explicit, separate, and informed. Only after the user sees the specific artifact and answers the direct approval request may its status become `Approved`. The original request, `continue`, `direct user request`, silence, or a generic agent statement is not approval.
@@ -19,13 +19,13 @@ Governed approval is explicit, separate, and informed. Only after the user sees 
 For functional tasks in `autonomous-planned`:
 
 1. Gather enough scope to avoid material guessing; ask one targeted question only for an equally plausible choice that materially changes behavior, permissions, data, rollout, or architecture.
-2. Create the Business Plan as `Draft`, self-review it, run Rubber Duck Review, and resolve material findings.
+2. Create the Business Plan as `Draft`, self-review it proportionately, run isolated review only when policy or material risk warrants it, and resolve concrete material findings.
 3. Mark it `Ready for execution` with delegated current-task authorization; do not call it user-approved.
 4. Record feasible technical options and choose the documented recommendation without pausing at the Technical Decision Gate.
 5. Create and review the Technical Plan the same way, then mark it `Ready for execution`.
 6. Choose subagent-driven or inline execution based on task size and independent surfaces and continue.
 
-Rubber Duck material blockers remain blockers in this mode. Delegated authority removes approval pauses; it does not lower plan quality or broaden scope.
+Concrete material blockers remain blockers in this mode. Delegated authority removes approval pauses; it does not lower plan quality or broaden scope. Minor suggestions do not create another gate.
 
 ## Direct
 

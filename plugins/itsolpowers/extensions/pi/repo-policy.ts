@@ -6,7 +6,7 @@ import { STOP_RANK, type DelegatedTask, type TaskStateDefinition } from "./polic
 
 const WORKFLOW_MODES = ["governed", "autonomous-planned", "direct"] as const;
 const REVIEW_PROFILES = ["off", "poc", "balanced", "strict"] as const;
-const REVIEW_TRIGGERS = ["manual", "final", "checkpoint"] as const;
+const REVIEW_TRIGGERS = ["manual", "adaptive", "final", "checkpoint"] as const;
 const REVIEW_DELEGATIONS = ["never", "risk-based", "always"] as const;
 const REVIEW_REREVIEW = ["never", "after-fixes", "until-approved"] as const;
 const QA_PROFILES = ["off", "evidence", "automatic", "strict"] as const;
@@ -619,11 +619,11 @@ execution:
 review:
   default_profile: balanced
   allowed_profiles: [off, poc, balanced, strict]
-  trigger: final
+  trigger: adaptive
   delegation: risk-based
-  auto_rereview: after-fixes
-  max_rounds: 2
-  plan_max_rounds: 10
+  auto_rereview: never
+  max_rounds: 1
+  plan_max_rounds: 2
   restrictions: []
 \`\`\`
 
@@ -660,7 +660,7 @@ qa:
 const REVIEW_PROFILE_DEFAULTS: Record<ReviewProfile, Omit<ResolvedReviewPolicy, "profile" | "allowed_profiles" | "plan_max_rounds" | "sources">> = {
   off: { trigger: "manual", delegation: "never", auto_rereview: "never", max_rounds: 0 },
   poc: { trigger: "final", delegation: "never", auto_rereview: "never", max_rounds: 1 },
-  balanced: { trigger: "final", delegation: "risk-based", auto_rereview: "after-fixes", max_rounds: 2 },
+  balanced: { trigger: "adaptive", delegation: "risk-based", auto_rereview: "never", max_rounds: 1 },
   strict: { trigger: "final", delegation: "risk-based", auto_rereview: "until-approved", max_rounds: 2 },
 };
 
@@ -747,7 +747,7 @@ export class RepoPolicyManager {
       delegation: explicit.delegation ?? defaults.delegation,
       auto_rereview: explicit.auto_rereview ?? defaults.auto_rereview,
       max_rounds: Math.min(2, explicit.max_rounds ?? defaults.max_rounds),
-      plan_max_rounds: Math.min(10, explicit.plan_max_rounds ?? 10),
+      plan_max_rounds: Math.min(10, explicit.plan_max_rounds ?? 2),
       sources: policies.map((policy) => policy.filePath),
     };
   }
@@ -871,7 +871,7 @@ export class RepoPolicyManager {
     if (!this.rootPolicy) {
       return [
         "## ITSOL repository policy (extension-managed)",
-        "No root .itsol.md was found. Use governed workflow, standard execution, balanced final-review, and automatic Initiative QA fallbacks unless the user explicitly selects an allowed alternative for the current task.",
+        "No root .itsol.md was found. Use governed workflow, standard execution, balanced adaptive review, and automatic Initiative QA fallbacks unless the user explicitly selects an allowed alternative for the current task.",
       ].join("\n");
     }
     const paths = this.normalizePaths(context?.paths ?? []);
@@ -908,7 +908,7 @@ export class RepoPolicyManager {
       `Workflow default: ${this.rootPolicy.workflow.default_mode ?? "governed fallback"}`,
       `Allowed modes: ${this.rootPolicy.workflow.allowed_modes?.join(", ") ?? "all"}`,
       `Execution default: ${this.rootPolicy.execution.default_preset ?? "standard fallback"}`,
-      `Review default: ${this.rootPolicy.review.default_profile ?? "balanced fallback"}`,
+      `Review default: ${this.rootPolicy.review.default_profile ?? "balanced adaptive fallback"}`,
       `QA profile: ${this.rootPolicy.qa.profile ?? "automatic fallback"} · max cycles ${this.rootPolicy.qa.max_cycles ?? 10}`,
       `Projects: ${this.rootPolicy.projects.length}`,
       `Errors: ${this.rootPolicy.errors.length ? this.rootPolicy.errors.join("; ") : "none"}`,
@@ -974,7 +974,7 @@ export function registerRepoPolicy(pi: ExtensionAPI, manager: RepoPolicyManager)
         if (ctx.hasUI) {
           ctx.ui.notify(
             result.created
-              ? `Created ${result.filePath}. Defaults: governed, standard, balanced review, automatic QA. Replace unknown project facts when known.`
+              ? `Created ${result.filePath}. Defaults: governed, standard, balanced adaptive review, automatic QA. Replace unknown project facts when known.`
               : `${result.filePath} already exists; nothing was overwritten. Use /itsol-init guided to inspect and improve it.`,
             result.created ? "info" : "warning",
           );

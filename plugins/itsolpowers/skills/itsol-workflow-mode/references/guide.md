@@ -9,10 +9,10 @@ Workflow mode controls process ceremony. It does not expand task scope or replac
 | Mode | Decision authority | Artifact state | Planning pauses |
 | --- | --- | --- | --- |
 | `governed` | user | `draft`, then `approved` after specific approval | required |
-| `autonomous-planned` | delegated | `draft`, then `ready-for-execution` after reviews | omitted |
+| `autonomous-planned` | delegated | `draft`, then `ready-for-execution` after proportionate self-review and any applicable isolated review | omitted |
 | `direct` | delegated within requested scope | `not-required` | omitted |
 
-`Approved` is an audit claim that the user saw and accepted a specific artifact. Never use it for an autonomously reviewed artifact. `Ready for execution` means self-review and required Rubber Duck Review passed with material findings resolved.
+`Approved` is an audit claim that the user saw and accepted a specific artifact. Never use it for an autonomously reviewed artifact. `Ready for execution` means proportionate self-review passed, any review required or selected under the effective policy passed, and concrete material findings are resolved.
 
 Use `execution_mode: pending` before a governed execution-mode choice. Change it to `inline` or `subagents` only after the user chooses. Autonomous modes may use `auto` until the agent selects the execution shape from task size and independent surfaces.
 
@@ -82,7 +82,7 @@ Autonomous plan:
 **Status:** Ready for execution
 **Workflow Mode:** autonomous-planned
 **Authorization:** Delegated by user for the current task
-**Rubber Duck Verdict:** Ready
+**Rubber Duck Verdict:** Ready <!-- include only when isolated review ran -->
 ```
 
 Direct execution has no required plan artifact. Record `artifact_state: not-required` in task state and final handoff.

@@ -46,7 +46,9 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
   const reviewOrchestrator = registerReviewOrchestrator(pi, taskState, agents, repoPolicy);
   const planReview = registerPlanReview(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy);
   const qaOrchestrator = registerQaOrchestrator(pi, taskState, initiative, agents, repoPolicy);
-  initiative.setRoadmapReviewValidator((taskId, roadmapPath, cwd) => planReview.hasPassingReview(taskId, "initiative", roadmapPath, cwd));
+  initiative.setRoadmapReviewValidator((taskId, roadmapPath, cwd) =>
+    planReview.canAdvanceWithoutReview(taskId, "initiative", roadmapPath, cwd)
+      || planReview.hasPassingReview(taskId, "initiative", roadmapPath, cwd));
   initiative.setQaRequiredResolver((taskId) => {
     const task = taskState.get(taskId);
     return repoPolicy.resolveQaPolicy(task?.policy_context).profile !== "off";

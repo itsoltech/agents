@@ -5,7 +5,7 @@ description: "Technical planning by workflow mode: architecture, decisions, roll
 
 # ITSOL Technical Planning
 
-For every Technical or Technical Fix Plan in a planned mode, run the harness-native automatic plan-review capability after self-review and before user handoff or `Ready for execution`. Its isolated read-only reviewer is automatically authorized within execution ceilings. Resolve material findings and rerun; do not ask the user for reviewer authorization.
+After self-review of a Technical or Technical Fix Plan, follow the effective review trigger. With `adaptive`, the main agent decides whether isolated review is proportionate to scale, uncertainty, novelty, blast radius, and verification strength. A selected read-only reviewer is pre-authorized. Resolve concrete material findings, but do not rerun for optional improvements or minor comments.
 
 Resolve and preserve the complete task state through `itsol-workflow-mode` before applying any plan prerequisite or Decision Gate.
 
@@ -21,9 +21,9 @@ Resolve and preserve the complete task state through `itsol-workflow-mode` befor
 5. Capture the selected approach, rejected alternatives, risks, open questions, owners, and verification plan. In `autonomous-planned`, ask only when equally plausible choices materially change behavior, permissions, data, rollout, or architecture.
 6. Include concrete files/modules, repo-memory context, current-tech context, required ITSOL skills, logical branches, TDD entry points or documented exception, verification commands, and candidate subagent split.
 7. For risky release work, document deployment order, validation, monitoring, rollback, and responsibility.
-8. For planned modes, write new Technical Plans as `Draft`, self-review them, run Rubber Duck Review, and resolve material findings.
+8. For planned modes, write new Technical Plans as `Draft`, self-review them proportionately, run isolated review only when required or worthwhile, and resolve concrete material findings.
 9. In `governed`, present the specific Technical Plan, obtain explicit user approval, change it to `Approved`, and ask for execution mode. Do not infer approval from the original request, `continue`, silence, or a generic agent statement.
-10. In `autonomous-planned`, change a reviewed plan to `Ready for execution`, record delegated authorization honestly, choose execution mode, and continue without an approval pause. Never call it user-approved.
+10. In `autonomous-planned`, change a sufficiently self-reviewed plan to `Ready for execution`, record delegated authorization honestly, choose execution mode, and continue without an approval pause. Never call it user-approved.
 
 
 ## Execution Policy

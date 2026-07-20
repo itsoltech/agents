@@ -138,8 +138,8 @@ If inline execution is better, explain why subagents would add coordination over
 - <Question or "None">
 ```
 
-In `governed`, after both reviews pass, present the path and summary, request explicit approval, and only then set `Approved`:
+In `governed`, after proportionate self-review and any required/selected isolated review pass, present the path and summary, request explicit approval, and only then set `Approved`:
 
 `Technical Plan saved to <path>. Approve this file before I start implementation.`
 
-In `autonomous-planned`, resolve all material review findings, set `**Status:** Ready for execution`, add `**Rubber Duck Verdict:** Ready`, select the documented recommendation, choose execution mode, and continue without asking for approval. Never call this user-approved.
+In `autonomous-planned`, resolve concrete material findings and set `**Status:** Ready for execution`. Add `**Rubber Duck Verdict:** Ready` only when isolated review ran, select the documented recommendation, choose execution mode, and continue without asking for approval. Never call this user-approved.

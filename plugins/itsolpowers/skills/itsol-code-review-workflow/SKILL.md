@@ -13,24 +13,24 @@ When the Pi extension exposes an effective review profile, treat it as the contr
 
 - `off`: do not add review ceremony unless the user explicitly requests a review.
 - `poc`: perform at most one lightweight final inline review; do not delegate or automatically re-review.
-- `balanced`: perform final risk-based review and at most one re-review after actual fixes, within the execution ceiling.
+- `balanced`: let the main agent decide whether formal review is worth its cost, then use one proportionate inline or specialist pass; do not automatically re-review by default.
 - `strict`: require risk-based independent coverage and re-review after actual fixes until approved or the configured cap is reached.
 
-`trigger=manual` means review runs only on explicit request; `trigger=final` means once before completion, not after each edit. `delegation=never` authorizes inline review even for surfaces that would normally require specialists. Automatic re-review requires a prior `changes-requested` verdict, a changed diff fingerprint, and an available round. Never silently exceed `max_rounds` or `execution.max_review_rounds`.
+`trigger=manual` means review runs only on explicit request; `trigger=adaptive` delegates the run/skip and depth decision to the main agent; `trigger=final` means once before completion, not after each edit. `delegation=never` authorizes inline review even for surfaces that would normally require specialists. Automatic re-review requires a prior material `changes-requested` verdict, a changed diff fingerprint, and an available round. Never silently exceed `max_rounds` or `execution.max_review_rounds`.
 
 ## Process
 
 1. Read the story, acceptance criteria, tech notes, PR description, changed files, RED/GREEN evidence, tests, risks, migrations, config, and QA notes.
-2. Build a review coverage map before reading deeply: functional scope, changed system surfaces, current technology documentation/version context, security/trust boundaries, data/storage, infrastructure/deployment, tests/TDD evidence, performance, observability, maintainability, and release/QA risk.
-3. Check review priorities in order: scope and acceptance criteria, correctness, security, architecture, data, errors, TDD/test evidence, performance, observability, maintainability, then style.
-4. Every review that is required or explicitly requested must cover the relevant areas from the coverage map. For tiny single-surface diffs, or when the effective policy sets `delegation=never`, inline review is allowed when the verdict states why subagents were unnecessary and which areas were checked.
-5. Under `delegation=risk-based` or `always`, large, cross-cutting, multi-surface, security-sensitive, data-sensitive, infrastructure/deployment, migration/rewrite, generated-client/API-contract, or hard-to-fit-in-one-context PRs require subagents. Do not perform an inline-only review of one sector unless the effective project/task policy explicitly sets `delegation=never`.
+2. If `trigger=adaptive`, first decide whether formal review adds enough value. Consider scale, novelty, uncertainty, blast radius, trust/data boundaries, reversibility, and strength of tests/verification. Skip formal review for small, conventional, low-risk, well-verified changes and record that judgment briefly.
+3. When reviewing, build only the relevant coverage map: functional scope, changed surfaces, security/trust boundaries, data/storage, infrastructure/deployment, tests, performance, observability, maintainability, and release/QA risk. Do not expand into untouched areas.
+4. Check priorities in order: acceptance criteria and correctness, security/data safety, compatibility and operations, test evidence, then maintainability. Style is non-blocking unless it violates an enforced repository rule or obscures a real defect.
+5. Choose inline or specialist review proportionally. Use specialists when independent expertise has clear value—typically material security/data/infra risk, broad cross-cutting behavior, or a diff too large for reliable context—not merely because a filename matched a category.
 6. Delegate focused review subagents by changed surface and risk dimension, for example current technology context, UI/UX, security, infrastructure, frontend, backend, database, generated API clients, migration/rewrite, QA/release, performance, or test strategy. Use the narrowest ITSOL skill/subagent that matches each area.
 7. For subagent-driven implementation reviews, use `itsol-subagent-workflow` as the canonical contract for task packets, write scope, statuses, response validation, unverified items, coverage gap handling, review-loop closure, and final integration checks.
-8. Require each review subagent to return structured findings with severity, file references, affected behavior, evidence checked, missing verification, unverified items, assumptions, residual risk, and any coverage gap. Treat unsupported claims as unverified until checked against source, tests, logs, or command output.
-9. Consolidate subagent findings into one final verdict: validate `completed`, `partial`, `blocked`, or `failed` statuses against the task packet, deduplicate, order by severity, keep evidence and file references, call out coverage gaps, and distinguish blockers from suggestions.
-10. Label comments by intent: `Blocker`, `Should`, `Question`, `Suggestion`, `Nit`, or `Note`.
-11. Stop review and request a technical discussion when scope, architecture, requirements, migration, rollout, PR size, unresolved `partial`, `blocked`, or `failed` status, or unreviewable coverage gap prevents reliable review.
+8. Require each review subagent to return a single consolidated, evidence-based pass with severity, file references, affected behavior, meaningful missing verification, assumptions, and residual risk. Unsupported claims are unverified, not blockers.
+9. Consolidate findings, remove duplicates, and challenge false positives. A blocking finding needs a plausible failure path and concrete impact introduced by the change. Do not block on personal preferences, optional refactors, hypothetical edge cases without evidence, unrelated legacy debt, or missing tests that do not protect changed behavior.
+10. Label comments by intent: `Blocker`, `Should`, `Question`, `Suggestion`, `Nit`, or `Note`. Only `Blocker` or critical/high-severity concrete defects require changes; suggestions and nits never trigger re-review.
+11. Stop and request technical discussion only when a material scope, architecture, requirement, migration, rollout, or evidence gap prevents a reliable safety/correctness judgment.
 
 
 ## Execution Policy

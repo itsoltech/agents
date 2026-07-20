@@ -7,9 +7,9 @@ description: "Functional planning by workflow mode: governed approvals, autonomo
 
 Resolve and preserve the task state through `itsol-workflow-mode` before applying discovery or planning gates. Do not duplicate the canonical mode contract here.
 
-## Automatic Rubber Duck gate
+## Proportionate Plan Review
 
-In `governed` and `autonomous-planned`, invoke the harness-native automatic plan-review capability for each completed Business, Technical, or Technical Fix Plan after self-review. It runs an isolated read-only context with the `itsol-self-review` skill automatically. Do not ask the user to authorize this reviewer and do not hand off a plan before a current passing verdict. Resolve material findings in the artifact and rerun within the execution-policy round ceiling. Only a genuine reviewer failure or exhausted ceiling may return as an explicit blocker.
+After self-review, follow the effective review trigger. With `adaptive`, the main agent decides whether isolated review is worth its cost from the plan's scale, uncertainty, novelty, blast radius, and verification strength. Skip it for small, conventional plans; use it for broad or materially risky plans. When selected, the read-only reviewer is pre-authorized. Resolve only concrete material findings and never rerun for suggestions, wording, optional detail, or speculative edge cases.
 
 ## Shared Process
 
@@ -22,11 +22,11 @@ If the source describes a whole application, module, migration, or multi-phase c
 
 ## Governed
 
-In `governed`, retain the existing workflow: run the full Discovery Gate for incomplete requests; write a `Draft` Business Plan; self-review it; obtain a material-blocker-free Rubber Duck Review; present the specific file and get explicit user approval. Then run the Technical Decision Gate and wait for the user's approach choice, write and review a `Draft` Technical Plan, get explicit approval of that specific file, and ask for subagent-driven or inline execution. Only user-approved governed plans use `Approved`.
+In `governed`, retain the existing workflow: run the full Discovery Gate for incomplete requests; write and proportionately self-review a `Draft` Business Plan; perform isolated review when policy or material risk warrants it; present the specific file and get explicit user approval. Then run the Technical Decision Gate and wait for the user's approach choice, write and proportionately review a `Draft` Technical Plan, get explicit approval of that specific file, and ask for subagent-driven or inline execution. Only user-approved governed plans use `Approved`.
 
 ## Autonomous Planned
 
-In `autonomous-planned`, create the same Business and Technical Plan artifacts. Start each as `Draft`, self-review it, run Rubber Duck Review, resolve all material findings, record/choose the documented recommendation at the Technical Decision Gate without pausing, and mark the artifact `Ready for execution`. Record `Workflow Mode: autonomous-planned` and delegated current-task authorization; never describe it as user-approved. Choose execution mode from task size and independent surfaces and continue.
+In `autonomous-planned`, create the same Business and Technical Plan artifacts. Start each as `Draft`, self-review it, decide proportionately whether isolated review adds value, resolve concrete material findings, record/choose the documented recommendation at the Technical Decision Gate without pausing, and mark the artifact `Ready for execution`. Record `Workflow Mode: autonomous-planned` and delegated current-task authorization; never describe it as user-approved. Choose execution mode from task size and independent surfaces and continue.
 
 ## Direct
 
