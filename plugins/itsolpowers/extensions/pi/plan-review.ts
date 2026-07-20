@@ -6,15 +6,8 @@ import { StringEnum } from "@earendil-works/pi-ai";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Text } from "@earendil-works/pi-tui";
 import { Type, type Static } from "typebox";
-import type { ItsolAgentConfig } from "./agents.ts";
-import { formatDuration, runAgent, type DelegationResult } from "./delegate-tool.ts";
-import type { ModelRouter } from "./model-router.ts";
-import {
-  STOP_RANK,
-  validateDelegation,
-  type DelegatedTask,
-  type ItsolDelegateParams,
-} from "./policy.ts";
+import { formatDuration, type DelegationController, type DelegationResult } from "./delegate-tool.ts";
+import { STOP_RANK, type DelegatedTask } from "./policy.ts";
 import type { RepoPolicyManager } from "./repo-policy.ts";
 import type { TaskStateStore } from "./task-state.ts";
 
@@ -152,11 +145,9 @@ export class PlanReviewOrchestrator {
 
   constructor(
     private readonly pi: ExtensionAPI,
-    private readonly pluginRoot: string,
-    private readonly agents: ItsolAgentConfig[],
     private readonly store: TaskStateStore,
-    private readonly modelRouter: ModelRouter,
     private readonly repoPolicy: RepoPolicyManager,
+    private readonly delegation: DelegationController,
   ) {}
 
   startSession(ctx: ExtensionContext): void {
@@ -222,112 +213,75 @@ export class PlanReviewOrchestrator {
 
     const planContent = fs.readFileSync(selected.absolute, "utf8");
     const reviewerNames = params.plan_type === "initiative" ? initiativeReviewers(planContent) : [REVIEW_AGENT];
-    const agentByName = new Map(this.agents.map((item) => [item.name, item]));
-    const inheritedModel = ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined;
     const readScope = [...new Set([
       selected.relative,
       ...(params.plan_type === "initiative" ? [path.posix.dirname(selected.relative)] : []),
       ...(state.policy_context?.paths ?? []),
     ])];
-    const executions = reviewerNames.map((reviewer, index) => {
-      const agent = agentByName.get(reviewer);
-      if (!agent) throw new Error(`Missing ITSOL plan reviewer: ${reviewer}`);
-      const task: DelegatedTask = {
-        agent: reviewer,
-        work_item_id: `plan-${params.plan_type}-${reviewer}-${index + 1}`,
-        role: "review",
-        task: [
-          `Perform isolated read-only Rubber Duck Review round ${round}/${planMaxRounds} for the ${params.plan_type} plan at ${selected.relative}.`,
-          `Reviewer focus: ${reviewer}. For Initiative Roadmaps, independently assess the full source, requirement disposition, architecture/dependencies, QA strategy, security/data risk when relevant, and autonomous phase loop.`,
-          `Original request: ${params.request_summary}`,
-          `Confirmed scope or selected/recommended approach: ${params.confirmed_scope_or_approach}`,
-          `Minimal repository evidence: ${params.repo_evidence.join("; ") || "none supplied"}`,
-          `Effective repository QA policy: ${qaPolicy.profile}; max cycles ${qaPolicy.max_cycles}; application types ${qaPolicy.application_types.join(", ") || "auto-detect"}; commands ${qaPolicy.commands.join("; ") || "none"}. Treat profile=off as an authorized QA skip, not a missing-plan blocker or PASS.`,
-          `Workflow mode: ${state.workflow_state.workflow_mode}. Expected passing verdict: ${expected}.`,
-          "Inspect the plan and relevant read-only repository evidence. Do not modify files and do not delegate.",
-          "Be pragmatic and proportional to the plan's scale. Report only findings with a concrete effect on scope, acceptance, correctness, security/data safety, architecture feasibility, rollout, or verification. Do not block on style, wording, optional detail, speculative edge cases, personal preferences, or refactors outside the requested scope.",
-          "Separate material blockers from non-blocking suggestions. Suggestions never justify another review round. Prefer one consolidated pass over serial discovery of minor comments.",
-          "Report material blockers, important gaps, optional suggestions, user-decision questions, sections to update, unverified items, and meaningful coverage gaps.",
-          `Before the required Status/Verification/Unverified envelope, include exactly one column-one line: Plan Review Verdict: ${expected} or Plan Review Verdict: not ${expected}.`,
-          "Use the not-ready verdict only for a concrete material defect that could plausibly make implementation wrong, unsafe, or unverifiable; otherwise use the ready verdict and keep minor improvements non-blocking.",
-        ].join("\n"),
-        operations: ["rubber-duck-plan-review"],
-        read_scope: readScope,
-        write_scope: [],
-        forbidden_scope: [],
-        required_evidence: ["plan path inspected", "material findings", "explicit Plan Review Verdict"],
-        stop_after: "analysis",
-      };
-      return { agent, task, resolution: this.modelRouter.resolve(task, agent, state.execution_policy, inheritedModel, ctx) };
-    });
-    if (state.execution_policy.max_parallel === 0) throw new Error("Rubber Duck review requires max_parallel > 0");
-    const delegationBase: Omit<ItsolDelegateParams, "task" | "tasks"> = {
-      task_id: state.task_id,
-      workflow_state: state.workflow_state,
-      execution_policy: state.execution_policy,
-      done_when: state.done_when,
-      policy_context: state.policy_context,
-    };
+    const tasks: DelegatedTask[] = reviewerNames.map((reviewer, index) => ({
+      agent: reviewer,
+      work_item_id: `plan-${params.plan_type}-${reviewer}-${index + 1}`,
+      role: "review",
+      task: [
+        `Perform isolated read-only Rubber Duck Review round ${round}/${planMaxRounds} for the ${params.plan_type} plan at ${selected.relative}.`,
+        `Reviewer focus: ${reviewer}. For Initiative Roadmaps, independently assess the full source, requirement disposition, architecture/dependencies, QA strategy, security/data risk when relevant, and autonomous phase loop.`,
+        `Original request: ${params.request_summary}`,
+        `Confirmed scope or selected/recommended approach: ${params.confirmed_scope_or_approach}`,
+        `Minimal repository evidence: ${params.repo_evidence.join("; ") || "none supplied"}`,
+        `Effective repository QA policy: ${qaPolicy.profile}; max cycles ${qaPolicy.max_cycles}; application types ${qaPolicy.application_types.join(", ") || "auto-detect"}; commands ${qaPolicy.commands.join("; ") || "none"}. Treat profile=off as an authorized QA skip, not a missing-plan blocker or PASS.`,
+        `Workflow mode: ${state.workflow_state.workflow_mode}. Expected passing verdict: ${expected}.`,
+        "Inspect the plan and relevant read-only repository evidence. Do not modify files and do not delegate.",
+        "Be pragmatic and proportional to the plan's scale. Report only findings with a concrete effect on scope, acceptance, correctness, security/data safety, architecture feasibility, rollout, or verification. Do not block on style, wording, optional detail, speculative edge cases, personal preferences, or refactors outside the requested scope.",
+        "Separate material blockers from non-blocking suggestions. Suggestions never justify another review round. Prefer one consolidated pass over serial discovery of minor comments.",
+        "Report material blockers, important gaps, optional suggestions, user-decision questions, sections to update, unverified items, and meaningful coverage gaps.",
+        `Before the required Status/Verification/Unverified envelope, include exactly one column-one line: Plan Review Verdict: ${expected} or Plan Review Verdict: not ${expected}.`,
+        "Use the not-ready verdict only for a concrete material defect that could plausibly make implementation wrong, unsafe, or unverifiable; otherwise use the ready verdict and keep minor improvements non-blocking.",
+      ].join("\n"),
+      operations: ["rubber-duck-plan-review"],
+      read_scope: readScope,
+      write_scope: [],
+      forbidden_scope: [],
+      required_evidence: ["plan path inspected", "material findings", "explicit Plan Review Verdict"],
+      stop_after: "analysis",
+    }));
     this.store.prepareReviewers(state.task_id, reviewerNames);
-    const results: DelegationResult[] = [];
-    const batchSize = state.execution_policy.max_parallel;
-    for (let offset = 0; offset < executions.length; offset += batchSize) {
-      const batch = executions.slice(offset, offset + batchSize);
-      const tasks = batch.map((item) => item.task);
-      const delegation: ItsolDelegateParams = { ...delegationBase, tasks };
-      this.repoPolicy.validateDelegation(delegation, tasks);
-      validateDelegation(delegation, tasks, agentByName, this.store.getUsedAgents(state.task_id), {
-        modelControlEnforced: batch.every((item) => item.resolution.profileEnforced),
-      });
-      if (state.active_agents.length + batch.length > state.execution_policy.max_parallel) {
-        throw new Error(`Rubber Duck review exceeds max_parallel=${state.execution_policy.max_parallel}`);
-      }
-      this.store.beginDelegation(state.task_id, batch.map((item) => item.agent.name));
-      let batchResults: DelegationResult[] = [];
-      try {
-        batchResults = await Promise.all(batch.map(async (execution) => {
-          const progressBase = {
-            agent: execution.agent.name,
+    let results: DelegationResult[] = [];
+    try {
+      const outcome = await this.delegation.delegate({
+        task_id: state.task_id,
+        run_in_background: false,
+        tasks,
+      }, {
+        requestId: `plan-review:${state.task_id}:${params.plan_type}:${round}`,
+        signal,
+        context: ctx,
+        onProgress: (delegatedProgress) => {
+          const progress: PlanReviewProgress = {
+            agent: delegatedProgress.agent,
+            activity: delegatedProgress.activity,
+            elapsedMs: delegatedProgress.elapsedMs,
             planType: params.plan_type,
             planPath: selected.relative,
             round,
             maxRounds: planMaxRounds,
-            model: execution.resolution.model ?? "default model",
-            modelSource: `${execution.resolution.source}:${execution.resolution.role}`,
-            thinking: execution.resolution.thinking,
-            thinkingSource: execution.resolution.thinkingSource,
+            model: delegatedProgress.model,
+            modelSource: delegatedProgress.modelSource,
+            thinking: delegatedProgress.thinking,
+            thinkingSource: delegatedProgress.thinkingSource,
           };
-          const reportProgress = (activity: string, elapsedMs: number) => {
-            const progress = { ...progressBase, activity, elapsedMs };
-            if (this.context?.hasUI) this.context.ui.setStatus(
-              "itsol-plan-review",
-              `Plan review ${params.plan_type} r${round}/${planMaxRounds} · ${execution.agent.name}: ${activity} · ${formatDuration(elapsedMs)}`,
-            );
-            onProgress?.(progress);
-          };
-          reportProgress("queued", 0);
-          const result = await runAgent(
-            this.pluginRoot,
-            path.join(this.pluginRoot, "skills"),
-            execution.agent,
-            execution.task,
-            delegation,
-            ctx.cwd,
-            execution.resolution.model,
-            `${execution.resolution.source}:${execution.resolution.role}`,
-            execution.resolution.thinking,
-            execution.resolution.thinkingSource,
-            signal,
-            (activity, elapsedMs) => reportProgress(activity, elapsedMs),
+          if (this.context?.hasUI) this.context.ui.setStatus(
+            "itsol-plan-review",
+            `Plan review ${params.plan_type} r${round}/${planMaxRounds} · ${progress.agent}: ${progress.activity} · ${formatDuration(progress.elapsedMs)}`,
           );
-          return { ...result, workItemId: execution.task.work_item_id };
-        }));
-        results.push(...batchResults);
-      } finally {
-        this.store.finishDelegation(state.task_id, batch.map((item) => item.agent.name), batchResults.map((result) => ({ ...result, role: "review" })));
-      }
+          onProgress?.(progress);
+        },
+      });
+      results = outcome.results;
+    } catch (error) {
+      if (this.context?.hasUI) this.context.ui.setStatus("itsol-plan-review", "Plan review failed");
+      throw error;
     }
-    if (results.length !== executions.length) {
+    if (results.length !== tasks.length) {
       if (this.context?.hasUI) this.context.ui.setStatus("itsol-plan-review", "Plan review failed");
       throw new Error("One or more Rubber Duck reviewers did not return a result");
     }
@@ -417,13 +371,17 @@ export class PlanReviewOrchestrator {
     const expected = expectedVerdict(state.workflow_state.workflow_mode);
     const absolute = path.resolve(cwd, record.planPath);
     let stale = true;
+    let artifactReadable = false;
     try {
       stale = contextualPlanFingerprint(absolute, record.planType, this.repoPolicy.resolveQaPolicy(state.policy_context)) !== record.fingerprint;
+      artifactReadable = true;
     } catch {
-      // Missing artifacts are stale.
+      // Missing or unreadable artifacts remain blocking even after an optional PASS.
     }
     const problems: string[] = [];
-    if (stale) problems.push(`Rubber Duck verdict is stale because ${record.planPath} changed materially`);
+    const required = this.isRequired(taskId);
+    const passingOptionalReview = artifactReadable && !required && record.childStatus === "completed" && record.verdict === expected;
+    if (stale && !passingOptionalReview) problems.push(`Rubber Duck verdict is stale because ${record.planPath} changed materially`);
     if (record.childStatus !== "completed") problems.push(`Rubber Duck reviewer status is ${record.childStatus}`);
     if (record.verdict !== expected) problems.push(`Rubber Duck verdict is ${record.verdict}; expected ${expected}`);
     const roundsRemain = record.round < planMaxRounds;
@@ -442,7 +400,8 @@ export class PlanReviewOrchestrator {
         ? "Run isolated plan review before handoff."
         : "Decide whether isolated plan review adds value based on task scale, uncertainty, novelty, and material risk. Skip it for small, conventional, well-verified plans; do not run it merely as ceremony.",
       "The read-only reviewer is pre-authorized when selected. Judge its feedback pragmatically: only concrete material findings block; style preferences, optional detail, and speculative edge cases remain non-blocking.",
-      "If a selected review returns a material finding, update the plan and rerun only when the fix materially changed readiness and another round is worthwhile. Do not spend rounds chasing suggestions.",
+      "A passing optional adaptive review does not require another review solely because the plan fingerprint later changes. Required final/checkpoint reviews remain current-fingerprint gates.",
+      "Do not launch unrelated domain reviewers or change execution mode to compensate for optional fingerprint drift. If a selected review returns a material finding, update the plan and rerun only when the fix materially changed readiness and another round is worthwhile.",
     ].join("\n");
   }
 
@@ -470,13 +429,11 @@ export class PlanReviewOrchestrator {
 
 export function registerPlanReview(
   pi: ExtensionAPI,
-  pluginRoot: string,
-  agents: ItsolAgentConfig[],
   store: TaskStateStore,
-  modelRouter: ModelRouter,
   repoPolicy: RepoPolicyManager,
+  delegation: DelegationController,
 ): PlanReviewOrchestrator {
-  const orchestrator = new PlanReviewOrchestrator(pi, pluginRoot, agents, store, modelRouter, repoPolicy);
+  const orchestrator = new PlanReviewOrchestrator(pi, store, repoPolicy, delegation);
   pi.registerTool({
     name: "itsol_plan_review",
     label: "ITSOL Plan Review",
@@ -484,7 +441,8 @@ export function registerPlanReview(
     promptSnippet: "Run proportionate isolated review for a planning artifact",
     promptGuidelines: [
       "Follow the effective review trigger. With trigger=adaptive, call itsol_plan_review only when plan scale, uncertainty, novelty, or material risk justifies the cost; a routine small plan should rely on concise self-review.",
-      "Do not ask the user to authorize a selected read-only reviewer. Resolve concrete material findings, but do not rerun for style, optional detail, speculative concerns, or non-blocking suggestions.",
+      "Do not ask the user to authorize a selected read-only reviewer. Resolve concrete material findings, but do not rerun for style, optional detail, speculative concerns, non-blocking suggestions, or optional adaptive fingerprint drift after PASS.",
+      "Use only the reviewers selected by this action. Do not launch unrelated domain reviewers or change execution mode as a plan-review retry.",
     ],
     parameters: PlanReviewParamsSchema,
     async execute(_toolCallId, params, signal, onUpdate, ctx) {
@@ -515,7 +473,7 @@ export function registerPlanReview(
             outcome.record.output,
             "",
             passed
-              ? "The current plan fingerprint passed isolated review. Continue according to workflow mode without requesting reviewer authorization."
+              ? "The plan passed isolated review. Under adaptive policy, later fingerprint drift alone does not require another review; final/checkpoint policies still require a current verdict. Do not launch unrelated domain reviewers."
               : "Resolve concrete material findings. Rerun only when required by policy or when the change materially benefits from another independent pass.",
           ].join("\n"),
         }],

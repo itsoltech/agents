@@ -116,6 +116,8 @@ assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'review-orches
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'plan-review.ts')));
 const planReviewSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'plan-review.ts'), 'utf8');
 assert.match(planReviewSource, /\"initiative\", \"business\", \"technical\", \"technical-fix\"/);
+assert.doesNotMatch(planReviewSource, /\brunAgent\b/, 'plan review must launch reviewers only through DelegationController');
+assert.match(planReviewSource, /delegation\.delegate\(/);
 const reviewOrchestrator = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'review-orchestrator.ts'), 'utf8');
 assert.match(reviewOrchestrator, /itsol-review/);
 assert.match(reviewOrchestrator, /autoRereviewNotice/);

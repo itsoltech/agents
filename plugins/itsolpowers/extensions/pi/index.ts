@@ -44,7 +44,8 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
   registerModelRouter(pi, modelRouter);
   registerRepoPolicy(pi, repoPolicy);
   const reviewOrchestrator = registerReviewOrchestrator(pi, taskState, agents, repoPolicy);
-  const planReview = registerPlanReview(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy);
+  const delegation = registerItsolDelegate(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy);
+  const planReview = registerPlanReview(pi, taskState, repoPolicy, delegation);
   const qaOrchestrator = registerQaOrchestrator(pi, taskState, initiative, agents, repoPolicy);
   initiative.setRoadmapReviewValidator((taskId, roadmapPath, cwd) =>
     planReview.canAdvanceWithoutReview(taskId, "initiative", roadmapPath, cwd)
@@ -66,7 +67,6 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
       };
     },
   });
-  const delegation = registerItsolDelegate(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy);
 
   const restoreBranchState = (ctx: Parameters<typeof taskState.startSession>[0]) => {
     administrativeToolsToRestore = undefined;

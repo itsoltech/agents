@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { discoverItsolAgents } from "../extensions/pi/agents.ts";
 import { evaluateCompletion, registerCompletionGate } from "../extensions/pi/completion-gate.ts";
-import { createChildJsonlAccumulator, formatDuration, registerItsolDelegate, summarizeToolActivity, type DelegationResult } from "../extensions/pi/delegate-tool.ts";
+import { createChildJsonlAccumulator, formatDuration, registerItsolDelegate, summarizeToolActivity, type DelegationController, type DelegationResult } from "../extensions/pi/delegate-tool.ts";
 import { renderDelegationWidgetLines, sanitizeTerminalText } from "../extensions/pi/delegation-widget.ts";
 import { canonicalizeWriteScope, createDelegationCoordinator, writeScopesConflict } from "../extensions/pi/delegation-runtime.ts";
 import { InitiativeManager } from "../extensions/pi/initiative-state.ts";
@@ -616,6 +616,50 @@ export async function runPiRuntimeFixtures(_pi: ExtensionAPI): Promise<void> {
   });
   const foregroundReport = await foregroundResult;
   assert.match(foregroundReport.content[0].text, /foreground result/);
+  assert.equal(asyncStore.require(base.task_id).active_agents.length, 0);
+
+  resolveAsyncChild = undefined;
+  const programmaticProgress: string[] = [];
+  const programmaticResult = asyncController.delegate({
+    task_id: base.task_id,
+    run_in_background: false,
+    task: {
+      agent: "itsol-repo-memory",
+      role: "explore",
+      work_item_id: "programmatic-foreground-fixture",
+      task: "Inspect through the canonical programmatic path",
+      operations: ["inspect"],
+      read_scope: ["README.md"],
+      write_scope: [],
+      forbidden_scope: ["docs/"],
+      required_evidence: ["programmatic result"],
+    },
+  }, {
+    requestId: "programmatic-foreground-call",
+    context: asyncContext,
+    onProgress: (progress) => programmaticProgress.push(progress.activity),
+  });
+  for (let attempt = 0; attempt < 20 && !resolveAsyncChild; attempt++) await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.ok(resolveAsyncChild, "programmatic foreground delegation should reach the canonical runner");
+  assert.equal(programmaticProgress[0], "queued");
+  resolveAsyncChild!({
+    agent: "itsol-repo-memory",
+    workItemId: "programmatic-foreground-fixture",
+    task: "Inspect through the canonical programmatic path",
+    status: "completed",
+    output: "programmatic result",
+    exitCode: 0,
+    stderr: "",
+    usage: { input: 1, output: 1, cacheRead: 0, cacheWrite: 0, cost: 0, turns: 1 },
+    durationMs: 1,
+    activities: [],
+    modelSource: "fixture",
+    thinking: "medium",
+    thinkingSource: "fixture",
+  });
+  const programmaticOutcome = await programmaticResult;
+  assert.equal(programmaticOutcome.background, false);
+  assert.match(programmaticOutcome.reportText, /programmatic result/);
   assert.equal(asyncStore.require(base.task_id).active_agents.length, 0);
   await asyncController.shutdown();
 
@@ -1273,27 +1317,102 @@ review:
         stop_after: "business-plan",
       },
     });
-    const planReview = new PlanReviewOrchestrator(
-      reviewPi,
-      pluginRoot,
-      agents,
-      reviewStore,
-      new ModelRouter(),
-      reviewRepoPolicy,
-    );
+    const delegatedPlanInputs: any[] = [];
+    let delegatedPlanVerdict = "ready for approval";
+    const planDelegation = {
+      async delegate(input: any, options: any) {
+        delegatedPlanInputs.push(input);
+        options.onProgress?.({
+          agent: "itsol-self-review",
+          workItemId: "plan-business-itsol-self-review-1",
+          activity: "reading business plan",
+          elapsedMs: 5,
+          model: "fixture/model",
+          modelSource: "profile:review",
+          thinking: "high",
+          thinkingSource: "profile",
+        });
+        const task = input.tasks[0];
+        return {
+          taskId: input.task_id,
+          delegationId: `plan-delegation-${delegatedPlanInputs.length}`,
+          background: false,
+          results: [{
+            agent: task.agent,
+            workItemId: task.work_item_id,
+            task: task.task,
+            status: "completed",
+            output: `Plan Review Verdict: ${delegatedPlanVerdict}\n\nStatus: completed\nVerification: fixture\nUnverified: none`,
+            exitCode: 0,
+            stderr: "",
+            usage: { input: 10, output: 5, cacheRead: 0, cacheWrite: 0, cost: 0.001, turns: 1 },
+            durationMs: 5,
+            activities: [{ text: "reading business plan", elapsedMs: 5 }],
+            model: "fixture/model",
+            modelSource: "profile:review",
+            thinking: "high",
+            thinkingSource: "profile",
+          }],
+          reportText: "fixture plan review",
+        };
+      },
+      startSession() {},
+      async shutdown() {},
+      hasOutstanding: () => false,
+      canNavigateTree: () => true,
+    } as DelegationController;
+    const planReview = new PlanReviewOrchestrator(reviewPi, reviewStore, reviewRepoPolicy, planDelegation);
     planReview.startSession({
       cwd: reviewCwd,
       hasUI: false,
       sessionManager: { getBranch: () => [] },
     } as any);
-    const adaptivePlanReview = planReview.completionDecision("plan-review-fixture", "business-plan", reviewCwd);
-    assert.equal(adaptivePlanReview.forceContinuation, false);
-    assert.deepEqual(adaptivePlanReview.problems, []);
-    await fs.promises.writeFile(path.join(reviewCwd, ".itsol.md"), `# Strict handoff review\n\n\`\`\`yaml\nreview:\n  default_profile: balanced\n  trigger: final\n  max_rounds: 1\n  plan_max_rounds: 2\n\`\`\`\n`);
+    const progress: any[] = [];
+    const passingPlanReview = await planReview.review({
+      task_id: "plan-review-fixture",
+      plan_type: "business",
+      plan_path: ".itsol/plans/business.md",
+      request_summary: "Review fixture scope",
+      confirmed_scope_or_approach: "Use the approved fixture scope",
+      repo_evidence: ["fixture repository"],
+    }, { cwd: reviewCwd, hasUI: false } as any, undefined, (item) => progress.push(item));
+    assert.equal(passingPlanReview.record.verdict, "ready for approval");
+    assert.equal(delegatedPlanInputs.length, 1);
+    assert.equal(delegatedPlanInputs[0].run_in_background, false);
+    assert.deepEqual(delegatedPlanInputs[0].tasks.map((task: any) => task.agent), ["itsol-self-review"]);
+    assert.deepEqual(delegatedPlanInputs[0].tasks[0].write_scope, []);
+    assert.deepEqual(delegatedPlanInputs[0].tasks[0].operations, ["rubber-duck-plan-review"]);
+    assert.equal(progress[0].model, "fixture/model");
+
+    await fs.promises.appendFile(businessPlanPath, "\nOptional clarification after PASS.\n");
+    const adaptivePassingReview = planReview.completionDecision("plan-review-fixture", "business-plan", reviewCwd);
+    assert.equal(adaptivePassingReview.forceContinuation, false);
+    assert.deepEqual(adaptivePassingReview.problems, []);
+    const changedBusinessPlan = await fs.promises.readFile(businessPlanPath, "utf8");
+    await fs.promises.rm(businessPlanPath);
+    assert.match(planReview.completionDecision("plan-review-fixture", "business-plan", reviewCwd).problems.join("\n"), /stale/);
+    await fs.promises.writeFile(businessPlanPath, changedBusinessPlan);
+
+    const policyPath = path.join(reviewCwd, ".itsol.md");
+    await fs.promises.writeFile(policyPath, `# Strict handoff review\n\n\`\`\`yaml\nreview:\n  default_profile: balanced\n  trigger: final\n  max_rounds: 1\n  plan_max_rounds: 2\n\`\`\`\n`);
     reviewRepoPolicy.reload();
-    const missingPlanReview = planReview.completionDecision("plan-review-fixture", "business-plan", reviewCwd);
-    assert.equal(missingPlanReview.forceContinuation, true);
-    assert.match(missingPlanReview.problems.join("\n"), /effective final policy/);
+    const staleRequiredReview = planReview.completionDecision("plan-review-fixture", "business-plan", reviewCwd);
+    assert.equal(staleRequiredReview.forceContinuation, true);
+    assert.match(staleRequiredReview.problems.join("\n"), /stale/);
+
+    await fs.promises.rm(policyPath);
+    reviewRepoPolicy.reload();
+    delegatedPlanVerdict = "not ready for approval";
+    const notReadyPlanReview = await planReview.review({
+      task_id: "plan-review-fixture",
+      plan_type: "business",
+      plan_path: ".itsol/plans/business.md",
+      request_summary: "Review fixture scope",
+      confirmed_scope_or_approach: "Use the approved fixture scope",
+      repo_evidence: ["fixture repository"],
+    }, { cwd: reviewCwd, hasUI: false } as any, undefined);
+    assert.equal(notReadyPlanReview.record.verdict, "not ready for approval");
+    assert.match(planReview.completionDecision("plan-review-fixture", "business-plan", reviewCwd).problems.join("\n"), /not ready for approval/);
   } finally {
     await fs.promises.rm(reviewCwd, { recursive: true, force: true });
   }

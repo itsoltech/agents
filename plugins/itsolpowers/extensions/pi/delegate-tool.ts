@@ -22,6 +22,7 @@ import {
   resolveTaskCwd,
   validateDelegation,
   type DelegatedTask,
+  type ItsolDelegateInput,
   type ItsolDelegateParams,
 } from "./policy.ts";
 import type { RepoPolicyManager } from "./repo-policy.ts";
@@ -69,6 +70,36 @@ export interface DelegationResult {
   thinking: string;
   thinkingSource: string;
   fullOutputPath?: string;
+}
+
+export interface DelegationProgress {
+  agent: string;
+  workItemId: string;
+  activity: string;
+  elapsedMs: number;
+  model: string;
+  modelSource: string;
+  thinking: string;
+  thinkingSource: string;
+}
+
+export interface DelegationExecutionOptions {
+  requestId: string;
+  signal?: AbortSignal;
+  context: ExtensionContext;
+  onProgress?: (progress: DelegationProgress) => void;
+}
+
+export interface DelegationExecutionOutcome {
+  taskId: string;
+  delegationId: string;
+  background: boolean;
+  accepted?: number;
+  running?: number;
+  queued?: number;
+  workItems?: ReadonlyArray<{ agent: string; workItemId: string }>;
+  results: DelegationResult[];
+  reportText: string;
 }
 
 interface DelegationDetails {
@@ -475,6 +506,7 @@ interface RuntimePacket {
   resolution: ReturnType<ModelRouter["resolve"]>;
   parentCwd: string;
   deliveryToken: string;
+  onProgress?: (progress: DelegationProgress) => void;
 }
 
 interface StoredDelegationReport {
@@ -509,6 +541,7 @@ interface ScopeReservation {
 }
 
 export interface DelegationController {
+  delegate(input: ItsolDelegateInput, options: DelegationExecutionOptions): Promise<DelegationExecutionOutcome>;
   startSession(ctx: ExtensionContext): void;
   shutdown(reason?: string): Promise<void>;
   hasOutstanding(): boolean;
@@ -671,8 +704,18 @@ export function registerItsolDelegate(
           } : undefined,
         );
       },
-      onRecordChange() {
+      onRecordChange(record) {
         widget.setRecords(coordinator.snapshotRecords().map(toWidgetRecord));
+        record.packet.onProgress?.({
+          agent: record.agent,
+          workItemId: record.workItemId,
+          activity: record.activity,
+          elapsedMs: Math.max(0, Date.now() - (record.startedAt ?? record.queuedAt)),
+          model: record.model ?? "default model",
+          modelSource: record.modelSource ?? "unknown",
+          thinking: record.thinking ?? "off",
+          thinkingSource: record.thinkingSource ?? "unknown",
+        });
       },
       async onRecordTerminal(record) {
         const result = record.result!;
@@ -875,6 +918,87 @@ export function registerItsolDelegate(
     return new Text(lines.join("\n\n"), 0, 0);
   });
 
+  const executeDelegation = async (
+    input: ItsolDelegateInput,
+    options: DelegationExecutionOptions,
+  ): Promise<DelegationExecutionOutcome> => {
+    const { requestId, signal, context: ctx, onProgress } = options;
+    const params = store.resolveDelegation(input);
+    const single = params.task ? [params.task] : [];
+    const parallel = params.tasks ?? [];
+    if ((single.length ? 1 : 0) + (parallel.length ? 1 : 0) !== 1) throw new Error("Provide exactly one of task or tasks");
+    const tasks = single.length ? single : parallel;
+    const inheritedModel = ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined;
+    const deliveryToken = crypto.randomUUID();
+    const delegationId = `delegation-${crypto.randomUUID()}`;
+    const executions = tasks.map((task) => {
+      const agent = agentsByName.get(task.agent);
+      if (!agent) throw new Error(`Unknown ITSOL agent: ${task.agent}`);
+      const workItemId = task.work_item_id ?? automaticWorkItemId(task);
+      return { task, agent, workItemId, resolution: modelRouter.resolve(task, agent, params.execution_policy, inheritedModel, ctx) };
+    });
+    const identities = new Set(executions.map((item) => `${item.agent.name}:${item.workItemId}`));
+    if (identities.size !== executions.length) throw new Error("Parallel tasks for the same agent require distinct work_item_id values");
+    repoPolicy.validateDelegation(params, tasks);
+    validateDelegation(params, tasks, agentsByName, store.getUsedAgents(params.task_id), {
+      modelControlEnforced: executions.every((item) => item.resolution.profileEnforced),
+    });
+    if ((params.run_in_background ?? true) && store.getAll().reduce((sum, state) => sum + Object.keys(state.pending_deliveries).length, 0) >= 16) {
+      throw new Error("Delegation backpressure: at most 16 outstanding background result groups are allowed");
+    }
+    const reservationScopes = executions.flatMap((item) => item.task.write_scope.map((scope) => canonicalizeWriteScope(resolveTaskCwd(ctx.cwd, item.task.cwd), scope)));
+    const conflictOwner = reservationsConflict(reservationScopes, requestId);
+    if (conflictOwner) throw new Error(`Delegation write scope conflicts with ${conflictOwner}`);
+
+    const admitted = coordinator.admit({
+      taskId: params.task_id,
+      delegationId,
+      maxParallel: params.execution_policy.max_parallel,
+      runInBackground: params.run_in_background ?? true,
+      signal: params.run_in_background === false ? signal : undefined,
+      items: executions.map((item) => ({
+        agent: item.agent.name,
+        workItemId: item.workItemId,
+        description: item.task.task,
+        packet: { ...item, params, parentCwd: ctx.cwd, deliveryToken, onProgress },
+        cwd: resolveTaskCwd(ctx.cwd, item.task.cwd),
+        writeScopes: item.task.write_scope,
+        model: item.resolution.model ?? "default model",
+        modelSource: `${item.resolution.source}:${item.resolution.role}`,
+        thinking: item.resolution.thinking,
+        thinkingSource: item.resolution.thinkingSource,
+      })),
+    });
+
+    if (!(admitted instanceof Promise)) {
+      return {
+        taskId: admitted.taskId,
+        delegationId: admitted.delegationId,
+        background: true,
+        accepted: admitted.accepted,
+        running: admitted.running,
+        queued: admitted.queued,
+        workItems: admitted.workItems,
+        results: [],
+        reportText: admitted.message,
+      };
+    }
+
+    const group = await admitted;
+    const results = group.records.map((record) => record.result!).filter(Boolean);
+    const report = reports.get(group.delegationId) ?? await formatDelegationReport(group.taskId, group.delegationId, results);
+    reports.delete(group.delegationId);
+    coordinator.releaseGroup(group.delegationId);
+    widget.setRecords(coordinator.snapshotRecords().map(toWidgetRecord));
+    return {
+      taskId: group.taskId,
+      delegationId: group.delegationId,
+      background: false,
+      results,
+      reportText: report.text,
+    };
+  };
+
   pi.registerTool({
     name: "itsol_delegate",
     label: "ITSOL Delegate",
@@ -891,72 +1015,35 @@ export function registerItsolDelegate(
     parameters: ItsolDelegateParamsSchema,
 
     async execute(toolCallId, input, signal, _onUpdate, ctx) {
-      const params = store.resolveDelegation(input);
-      const single = params.task ? [params.task] : [];
-      const parallel = params.tasks ?? [];
-      if ((single.length ? 1 : 0) + (parallel.length ? 1 : 0) !== 1) throw new Error("Provide exactly one of task or tasks");
-      const tasks = single.length ? single : parallel;
-      const inheritedModel = ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : undefined;
-      const deliveryToken = crypto.randomUUID();
-      const delegationId = `delegation-${crypto.randomUUID()}`;
-      const executions = tasks.map((task) => {
-        const agent = agentsByName.get(task.agent);
-        if (!agent) throw new Error(`Unknown ITSOL agent: ${task.agent}`);
-        const workItemId = task.work_item_id ?? automaticWorkItemId(task);
-        return { task, agent, workItemId, resolution: modelRouter.resolve(task, agent, params.execution_policy, inheritedModel, ctx) };
-      });
-      const identities = new Set(executions.map((item) => `${item.agent.name}:${item.workItemId}`));
-      if (identities.size !== executions.length) throw new Error("Parallel tasks for the same agent require distinct work_item_id values");
-      repoPolicy.validateDelegation(params, tasks);
-      validateDelegation(params, tasks, agentsByName, store.getUsedAgents(params.task_id), {
-        modelControlEnforced: executions.every((item) => item.resolution.profileEnforced),
-      });
-      if ((params.run_in_background ?? true) && store.getAll().reduce((sum, state) => sum + Object.keys(state.pending_deliveries).length, 0) >= 16) {
-        throw new Error("Delegation backpressure: at most 16 outstanding background result groups are allowed");
-      }
-      const reservationScopes = executions.flatMap((item) => item.task.write_scope.map((scope) => canonicalizeWriteScope(resolveTaskCwd(ctx.cwd, item.task.cwd), scope)));
-      const conflictOwner = reservationsConflict(reservationScopes, toolCallId);
-      if (conflictOwner) throw new Error(`Delegation write scope conflicts with ${conflictOwner}`);
-
-      const admitted = coordinator.admit({
-        taskId: params.task_id,
-        delegationId,
-        maxParallel: params.execution_policy.max_parallel,
-        runInBackground: params.run_in_background ?? true,
-        signal: params.run_in_background === false ? signal : undefined,
-        items: executions.map((item) => ({
-          agent: item.agent.name,
-          workItemId: item.workItemId,
-          description: item.task.task,
-          packet: { ...item, params, parentCwd: ctx.cwd, deliveryToken },
-          cwd: resolveTaskCwd(ctx.cwd, item.task.cwd),
-          writeScopes: item.task.write_scope,
-          model: item.resolution.model ?? "default model",
-          modelSource: `${item.resolution.source}:${item.resolution.role}`,
-          thinking: item.resolution.thinking,
-          thinkingSource: item.resolution.thinkingSource,
-        })),
-      });
-
-      if (!(admitted instanceof Promise)) {
+      const outcome = await executeDelegation(input, { requestId: toolCallId, signal, context: ctx });
+      if (outcome.background) {
         return {
           content: [{ type: "text", text: [
-            `Started ITSOL delegation ${admitted.delegationId} in the background.`,
-            `Accepted: ${admitted.accepted}; running: ${admitted.running}; queued: ${admitted.queued}.`,
-            ...admitted.workItems.map((item) => `- ${item.agent} [${item.workItemId}]`),
-            admitted.message,
+            `Started ITSOL delegation ${outcome.delegationId} in the background.`,
+            `Accepted: ${outcome.accepted}; running: ${outcome.running}; queued: ${outcome.queued}.`,
+            ...(outcome.workItems ?? []).map((item) => `- ${item.agent} [${item.workItemId}]`),
+            outcome.reportText,
           ].join("\n") }],
-          details: { taskId: admitted.taskId, delegationId: admitted.delegationId, background: true, accepted: admitted.accepted, running: admitted.running, queued: admitted.queued, results: [] } satisfies DelegateToolDetails,
+          details: {
+            taskId: outcome.taskId,
+            delegationId: outcome.delegationId,
+            background: true,
+            accepted: outcome.accepted,
+            running: outcome.running,
+            queued: outcome.queued,
+            results: [],
+          } satisfies DelegateToolDetails,
         };
       }
-
-      const group = await admitted;
-      const results = group.records.map((record) => record.result!).filter(Boolean);
-      const report = reports.get(group.delegationId) ?? await formatDelegationReport(group.taskId, group.delegationId, results);
-      reports.delete(group.delegationId);
-      coordinator.releaseGroup(group.delegationId);
-      widget.setRecords(coordinator.snapshotRecords().map(toWidgetRecord));
-      return { content: [{ type: "text", text: report.text }], details: { taskId: group.taskId, delegationId: group.delegationId, background: false, results } satisfies DelegateToolDetails };
+      return {
+        content: [{ type: "text", text: outcome.reportText }],
+        details: {
+          taskId: outcome.taskId,
+          delegationId: outcome.delegationId,
+          background: false,
+          results: outcome.results,
+        } satisfies DelegateToolDetails,
+      };
     },
 
     renderCall(args, theme) {
@@ -1042,6 +1129,9 @@ export function registerItsolDelegate(
   });
 
   const controller: DelegationController = {
+    delegate(input, options) {
+      return executeDelegation(input, options);
+    },
     startSession(ctx) {
       context = ctx;
       generation++;
