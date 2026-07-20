@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { discoverItsolAgents } from "../extensions/pi/agents.ts";
 import { evaluateCompletion, registerCompletionGate } from "../extensions/pi/completion-gate.ts";
-import { formatDuration, registerItsolDelegate, summarizeToolActivity, type DelegationResult } from "../extensions/pi/delegate-tool.ts";
+import { createChildJsonlAccumulator, formatDuration, registerItsolDelegate, summarizeToolActivity, type DelegationResult } from "../extensions/pi/delegate-tool.ts";
 import { renderDelegationWidgetLines, sanitizeTerminalText } from "../extensions/pi/delegation-widget.ts";
 import { canonicalizeWriteScope, createDelegationCoordinator, writeScopesConflict } from "../extensions/pi/delegation-runtime.ts";
 import { InitiativeManager } from "../extensions/pi/initiative-state.ts";
@@ -46,6 +46,36 @@ export async function runPiRuntimeFixtures(_pi: ExtensionAPI): Promise<void> {
   assert.equal(formatDuration(126_000), "2min 6s");
   assert.equal(formatDuration(3_720_000), "1h 2min");
   assert.equal(summarizeToolActivity("read", { path: "README.md" }, pluginRoot), "reading README.md");
+
+  const childJsonl = createChildJsonlAccumulator(pluginRoot, () => {}, 1024);
+  const processedEvent = `${JSON.stringify({ type: "ignored", payload: "x".repeat(900) })}\n`;
+  const longProcessedStream = processedEvent.repeat(9_500);
+  assert.ok(Buffer.byteLength(longProcessedStream) > 8 * 1024 * 1024);
+  for (let offset = 0; offset < longProcessedStream.length; offset += 64 * 1024) {
+    assert.equal(childJsonl.push(Buffer.from(longProcessedStream.slice(offset, offset + 64 * 1024))), undefined);
+  }
+  const assistantEvent = JSON.stringify({
+    type: "message_end",
+    message: {
+      role: "assistant",
+      content: [{ type: "text", text: "final report" }],
+      usage: { input: 11, output: 7, cacheRead: 5, cacheWrite: 3, cost: { total: 0.25 } },
+    },
+  });
+  assert.equal(childJsonl.push(Buffer.from(`${assistantEvent}\n`)), undefined);
+  assert.equal(childJsonl.finalAssistantText, "final report");
+  assert.deepEqual(childJsonl.usage, { input: 11, output: 7, cacheRead: 5, cacheWrite: 3, cost: 0.25, turns: 1 });
+  const toolResultEvent = JSON.stringify({
+    type: "message_end",
+    message: { role: "toolResult", content: [{ type: "text", text: "y".repeat(900) }] },
+  });
+  assert.equal(childJsonl.push(Buffer.from(`${toolResultEvent}\n`)), undefined);
+  assert.equal(childJsonl.finalAssistantText, "final report");
+  assert.equal(childJsonl.finish(), undefined);
+
+  const oversizedChildEvent = createChildJsonlAccumulator(pluginRoot, () => {}, 128);
+  assert.match(oversizedChildEvent.push(Buffer.from("x".repeat(129))) ?? "", /single JSONL event exceeded/);
+
   assert.equal(sanitizeTerminalText("safe\u001b]8;;https://evil.invalid\u0007link\u001b]8;;\u0007\nnext", false), "safelink next");
   const widgetLines = renderDelegationWidgetLines([
     {

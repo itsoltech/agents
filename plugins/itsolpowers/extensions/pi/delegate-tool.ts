@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { StringDecoder } from "node:string_decoder";
 import type { Message } from "@earendil-works/pi-ai";
 import {
   DEFAULT_MAX_BYTES,
@@ -147,27 +148,104 @@ function getPiInvocation(args: string[]): { command: string; args: string[] } {
   return { command: "pi", args };
 }
 
-function finalAssistantOutput(messages: Message[]): string {
-  for (let index = messages.length - 1; index >= 0; index--) {
-    const message = messages[index];
-    if (message.role !== "assistant") continue;
-    return message.content
-      .filter((part) => part.type === "text")
-      .map((part) => part.text)
-      .join("\n")
-      .trim();
-  }
-  return "";
-}
-
 function envelopeStatus(output: string): DelegationResult["status"] {
   if (!validateEnvelope(output)) return "invalid-envelope";
   const match = output.match(/^Status: (completed|partial|blocked|failed)$/m);
   return (match?.[1] as DelegationResult["status"] | undefined) ?? "invalid-envelope";
 }
 
-const MAX_CHILD_STREAM_BYTES = 8 * 1024 * 1024;
+const MAX_CHILD_EVENT_BYTES = 8 * 1024 * 1024;
 const MAX_CHILD_STDERR_BYTES = 1024 * 1024;
+
+export interface ChildJsonlAccumulator {
+  readonly usage: ChildUsage;
+  readonly finalAssistantText: string;
+  push(data: Buffer | string): string | undefined;
+  finish(): string | undefined;
+}
+
+/** Process child JSONL incrementally while retaining only aggregate usage and the latest assistant response. */
+export function createChildJsonlAccumulator(
+  childCwd: string,
+  onActivity: (activity: string) => void,
+  maxEventBytes = MAX_CHILD_EVENT_BYTES,
+): ChildJsonlAccumulator {
+  if (!Number.isInteger(maxEventBytes) || maxEventBytes <= 0) throw new Error("maxEventBytes must be a positive integer");
+  const decoder = new StringDecoder("utf8");
+  const usage: ChildUsage = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, turns: 0 };
+  let pending = "";
+  let finalAssistantText = "";
+  let failure: string | undefined;
+
+  const eventTooLarge = () => `Child single JSONL event exceeded the ${formatSize(maxEventBytes)} capture limit`;
+  const processLine = (line: string): string | undefined => {
+    if (!line.trim()) return undefined;
+    if (Buffer.byteLength(line, "utf8") > maxEventBytes) return eventTooLarge();
+    let event: any;
+    try {
+      event = JSON.parse(line);
+    } catch {
+      return undefined;
+    }
+    if (event.type === "tool_execution_start" && event.toolName) {
+      onActivity(summarizeToolActivity(event.toolName, event.args ?? {}, childCwd));
+      return undefined;
+    }
+    if (event.type !== "message_end" || !event.message) return undefined;
+    const message = event.message as Message;
+    if (message.role !== "assistant") return undefined;
+    usage.turns++;
+    usage.input += message.usage?.input ?? 0;
+    usage.output += message.usage?.output ?? 0;
+    usage.cacheRead += message.usage?.cacheRead ?? 0;
+    usage.cacheWrite += message.usage?.cacheWrite ?? 0;
+    usage.cost += message.usage?.cost?.total ?? 0;
+    finalAssistantText = message.content
+      .filter((part) => part.type === "text")
+      .map((part) => part.text)
+      .join("\n")
+      .trim();
+    const toolCall = [...message.content].reverse().find((part) => part.type === "toolCall");
+    onActivity(toolCall?.type === "toolCall"
+      ? summarizeToolActivity(toolCall.name, toolCall.arguments, childCwd)
+      : "preparing response");
+    return undefined;
+  };
+
+  const consume = (text: string): string | undefined => {
+    pending += text;
+    let newline = pending.indexOf("\n");
+    while (newline >= 0) {
+      const line = pending.slice(0, newline);
+      pending = pending.slice(newline + 1);
+      const lineFailure = processLine(line);
+      if (lineFailure) return lineFailure;
+      newline = pending.indexOf("\n");
+    }
+    return Buffer.byteLength(pending, "utf8") > maxEventBytes ? eventTooLarge() : undefined;
+  };
+
+  return {
+    usage,
+    get finalAssistantText() { return finalAssistantText; },
+    push(data) {
+      if (failure) return failure;
+      const text = typeof data === "string" ? data : decoder.write(data);
+      failure = consume(text);
+      return failure;
+    },
+    finish() {
+      if (failure) return failure;
+      failure = consume(decoder.end());
+      if (failure) return failure;
+      if (pending) {
+        failure = processLine(pending);
+        pending = "";
+      }
+      return failure;
+    },
+  };
+}
 
 function appendBounded(current: string, incoming: string, maxBytes: number): string {
   const combined = current + incoming;
@@ -303,10 +381,9 @@ export async function runAgent(
   if (model) args.push("--model", model);
   args.push(`Task: ${task.task}`);
 
-  const messages: Message[] = [];
-  const usage: ChildUsage = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, turns: 0 };
+  const childEvents = createChildJsonlAccumulator(childCwd, (activity) => reportProgress(activity));
+  const usage = childEvents.usage;
   let stderr = "";
-  let buffer = "";
   let aborted = false;
 
   try {
@@ -320,7 +397,6 @@ export async function runAgent(
         env: { ...process.env, ITSOLPOWERS_DELEGATED_AGENT: "1" },
       });
       let closed = false;
-      let capturedStdoutBytes = 0;
       let streamOverflow = false;
 
       const abort = (reason?: string) => {
@@ -332,49 +408,13 @@ export async function runAgent(
         }, 5000).unref();
       };
 
-      const processLine = (line: string) => {
-        if (!line.trim()) return;
-        let event: any;
-        try {
-          event = JSON.parse(line);
-        } catch {
-          return;
-        }
-        if (event.type === "tool_execution_start" && event.toolName) {
-          reportProgress(summarizeToolActivity(event.toolName, event.args ?? {}, childCwd));
-          return;
-        }
-        if (event.type !== "message_end" || !event.message) return;
-        const message = event.message as Message;
-        messages.push(message);
-        if (message.role === "assistant") {
-          usage.turns++;
-          usage.input += message.usage?.input ?? 0;
-          usage.output += message.usage?.output ?? 0;
-          usage.cacheRead += message.usage?.cacheRead ?? 0;
-          usage.cacheWrite += message.usage?.cacheWrite ?? 0;
-          usage.cost += message.usage?.cost?.total ?? 0;
-          const toolCall = [...message.content].reverse().find((part) => part.type === "toolCall");
-          if (toolCall?.type === "toolCall") {
-            reportProgress(summarizeToolActivity(toolCall.name, toolCall.arguments, childCwd));
-          } else {
-            reportProgress("preparing response");
-          }
-        }
-      };
-
       child.stdout.on("data", (data) => {
         if (streamOverflow) return;
-        capturedStdoutBytes += Buffer.byteLength(data);
-        if (capturedStdoutBytes > MAX_CHILD_STREAM_BYTES) {
+        const overflow = childEvents.push(data);
+        if (overflow) {
           streamOverflow = true;
-          abort(`Child stdout exceeded the ${formatSize(MAX_CHILD_STREAM_BYTES)} capture limit`);
-          return;
+          abort(overflow);
         }
-        buffer += data.toString();
-        const lines = buffer.split("\n");
-        buffer = lines.pop() ?? "";
-        for (const line of lines) processLine(line);
       });
       child.stderr.on("data", (data) => {
         stderr = appendBounded(stderr, data.toString(), MAX_CHILD_STDERR_BYTES);
@@ -385,7 +425,12 @@ export async function runAgent(
       });
       child.on("close", (code) => {
         closed = true;
-        if (buffer.trim()) processLine(buffer);
+        const overflow = childEvents.finish();
+        if (overflow && !streamOverflow) {
+          streamOverflow = true;
+          aborted = true;
+          stderr = appendBounded(stderr, `${overflow}\n`, MAX_CHILD_STDERR_BYTES);
+        }
         resolve(code ?? 1);
       });
 
@@ -397,7 +442,7 @@ export async function runAgent(
     });
     detachAbort?.();
 
-    const rawOutput = finalAssistantOutput(messages) || stderr.trim() || "(no output)";
+    const rawOutput = childEvents.finalAssistantText || stderr.trim() || "(no output)";
     const displayOutput = await truncateForParent(agent.name, rawOutput);
     const status = aborted || exitCode !== 0 ? "failed" : envelopeStatus(rawOutput);
     return {
