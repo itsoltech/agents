@@ -321,6 +321,7 @@ Ochrona i backpressure:
 - budżet utrwalonych raportów tła wynosi 8 MiB; pojedynczy raport nadal ma limit 50 KB/2000 linii;
 - `max_parallel: 0` blokuje delegację, a batch większy od limitu jest kolejkowany, nie odrzucany;
 - nowe delegacje oraz bezpośrednie `edit`/`write` rezerwują zakres już w preflight, więc konflikt jest blokowany także wtedy, gdy oba narzędzia wystąpią w jednym batchu;
+- `write_scope` opisuje dozwoloną własność zapisu, a `forbidden_scope` wyłącznie dodatkowe, rozłączne wykluczenia (`[]`, gdy ich nie ma); globy z rozłącznymi statycznymi prefiksami katalogów mogą działać równolegle, natomiast wspólne, nadrzędne i niejednoznaczne prefiksy nadal są blokowane;
 - arbitralnych zapisów ukrytych w `bash` nie da się niezawodnie sklasyfikować — procesy nie są sandboxem OS, dlatego nadal obowiązują task packet, write scope i odpowiedzialność głównego agenta;
 - task state, limity, review/reset oraz completion pozostają zablokowane, dopóki aktywna praca, accounting albo dostarczenie wyniku nie zostaną domknięte.
 

@@ -106,6 +106,13 @@ export async function runPiRuntimeFixtures(_pi: ExtensionAPI): Promise<void> {
   const canonicalRoot = canonicalizeWriteScope(pluginRoot, ".");
   const canonicalDelegate = canonicalizeWriteScope(pluginRoot, "plugins/itsolpowers/extensions/pi");
   assert.equal(writeScopesConflict(canonicalRoot, canonicalDelegate), true);
+  const canonicalAuthGlob = canonicalizeWriteScope(pluginRoot, "src/auth/**");
+  const canonicalBillingGlob = canonicalizeWriteScope(pluginRoot, "src/billing/**");
+  const canonicalServiceGlob = canonicalizeWriteScope(pluginRoot, "src/*-service.ts");
+  const canonicalHandlerGlob = canonicalizeWriteScope(pluginRoot, "src/*-handler.ts");
+  assert.equal(writeScopesConflict(canonicalAuthGlob, canonicalBillingGlob), false);
+  assert.equal(writeScopesConflict(canonicalServiceGlob, canonicalHandlerGlob), true);
+  assert.equal(writeScopesConflict(canonicalRoot, canonicalAuthGlob), true);
 
   const runnerResolvers = new Map<string, (result: { status: string; output: string }) => void>();
   const runnerStarts: string[] = [];
@@ -844,6 +851,63 @@ review:
     stop_after: "implementation",
   } as const;
   validateDelegation(base, [writer], byName, new Set());
+
+  const disjointGlobWriter = {
+    ...writer,
+    work_item_id: "access-codes",
+    write_scope: ["libs/backend/Fixme.Domain/Entities/AccessCodes/**"],
+    forbidden_scope: ["apps/frontend/**", "docs/**"],
+  } as const;
+  validateDelegation(base, [disjointGlobWriter], byName, new Set());
+  validateDelegation(base, [{
+    ...writer,
+    work_item_id: "auth-writer",
+    write_scope: ["src/auth/**"],
+    forbidden_scope: ["docs/**"],
+  }, {
+    ...writer,
+    work_item_id: "billing-writer",
+    write_scope: ["src/billing/**"],
+    forbidden_scope: ["examples/**"],
+  }], byName, new Set());
+
+  assert.throws(() => validateDelegation(base, [{
+    ...writer,
+    write_scope: ["src/auth/**"],
+    forbidden_scope: ["src/auth/secrets/**"],
+  }], byName, new Set()), (error: unknown) => {
+    assert.ok(error instanceof Error);
+    assert.match(error.message, /write_scope=src\/auth\/\*\*/);
+    assert.match(error.message, /forbidden_scope=src\/auth\/secrets\/\*\*/);
+    assert.match(error.message, /disjoint exclusions/);
+    return true;
+  });
+  assert.throws(() => validateDelegation(base, [{
+    ...writer,
+    write_scope: ["src/auth/**"],
+    forbidden_scope: ["src/auth/**"],
+  }], byName, new Set()), /overlaps forbidden_scope/);
+  assert.throws(() => validateDelegation(base, [{
+    ...writer,
+    write_scope: ["src/auth/session"],
+    forbidden_scope: ["src/auth"],
+  }], byName, new Set()), /overlaps forbidden_scope/);
+  assert.throws(() => validateDelegation(base, [{
+    ...writer,
+    work_item_id: "service-glob",
+    write_scope: ["src/*-service.ts"],
+    forbidden_scope: [],
+  }, {
+    ...writer,
+    work_item_id: "handler-glob",
+    write_scope: ["src/*-handler.ts"],
+    forbidden_scope: [],
+  }], byName, new Set()), /overlapping write scopes/);
+  assert.throws(() => validateDelegation(base, [{
+    ...writer,
+    write_scope: ["**"],
+    forbidden_scope: ["docs/**"],
+  }], byName, new Set()), /overlaps forbidden_scope/);
 
   assert.throws(
     () => validateDelegation({

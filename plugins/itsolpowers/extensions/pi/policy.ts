@@ -66,9 +66,16 @@ export const DelegatedTaskSchema = Type.Object({
   task: Type.String({ minLength: 1 }),
   cwd: Type.Optional(Type.String()),
   operations: Type.Optional(Type.Array(Type.String({ minLength: 1 }))),
-  read_scope: Type.Array(Type.String(), { minItems: 1 }),
-  write_scope: Type.Array(Type.String()),
-  forbidden_scope: Type.Array(Type.String()),
+  read_scope: Type.Array(Type.String({ minLength: 1 }), {
+    minItems: 1,
+    description: "Repository paths the child may inspect. This does not grant write ownership.",
+  }),
+  write_scope: Type.Array(Type.String({ minLength: 1 }), {
+    description: "Exclusive repository paths the child may modify. Glob patterns are allowed. List only intended write ownership.",
+  }),
+  forbidden_scope: Type.Array(Type.String({ minLength: 1 }), {
+    description: "Optional explicit exclusions that must be disjoint from write_scope. Do not repeat, parent, or nest an allowed write path here; use [] when no additional exclusions are needed.",
+  }),
   required_evidence: Type.Array(Type.String(), { minItems: 1 }),
   stop_after: Type.Optional(ExecutionPolicySchema.properties.stop_after),
 });
@@ -121,16 +128,33 @@ export const STOP_RANK: Record<ExecutionPolicy["stop_after"], number> = {
 };
 
 function normalizeScope(scope: string): string {
-  const normalized = scope.replaceAll("\\", "/").replace(/^\.\//, "").replace(/\/+$/, "");
+  const normalized = scope.replaceAll("\\", "/").replace(/^\.\/+/, "").replace(/\/+$/, "");
   return normalized || ".";
 }
 
+/** Return the conservative static directory prefix before the first glob token. */
+function staticScopePrefix(scope: string): string {
+  const normalized = normalizeScope(scope);
+  const wildcardIndex = normalized.search(/[*?[\]{}]/);
+  if (wildcardIndex < 0) return normalized;
+  let prefix = normalized.slice(0, wildcardIndex);
+  if (!prefix) return ".";
+  if (!prefix.endsWith("/")) {
+    const separator = prefix.lastIndexOf("/");
+    prefix = separator >= 0 ? prefix.slice(0, separator) : ".";
+  }
+  return normalizeScope(prefix);
+}
+
+function pathPrefixesOverlap(left: string, right: string): boolean {
+  if (left === "." || right === ".") return true;
+  return left === right || left.startsWith(`${right}/`) || right.startsWith(`${left}/`);
+}
+
 function scopesOverlap(left: string, right: string): boolean {
-  const a = normalizeScope(left);
-  const b = normalizeScope(right);
-  if (a === "." || b === ".") return true;
-  if (/[*?{[]/.test(a) || /[*?{[]/.test(b)) return true;
-  return a === b || a.startsWith(`${b}/`) || b.startsWith(`${a}/`);
+  // Wildcard languages are accepted as disjoint only when their static directory
+  // prefixes prove separation. Same-prefix filename globs remain conservative.
+  return pathPrefixesOverlap(staticScopePrefix(left), staticScopePrefix(right));
 }
 
 export function validateDelegation(
@@ -195,8 +219,12 @@ export function validateDelegation(
     }
 
     for (const writePath of task.write_scope) {
-      if (task.forbidden_scope.some((forbidden) => scopesOverlap(writePath, forbidden))) {
-        throw new Error(`Task ${agent.name} write_scope overlaps forbidden_scope: ${writePath}`);
+      const forbiddenPath = task.forbidden_scope.find((forbidden) => scopesOverlap(writePath, forbidden));
+      if (forbiddenPath !== undefined) {
+        throw new Error(
+          `Task ${agent.name} write_scope overlaps forbidden_scope: write_scope=${writePath}; forbidden_scope=${forbiddenPath}. `
+          + "forbidden_scope must contain only disjoint exclusions; use [] when no additional exclusions are needed.",
+        );
       }
     }
   }

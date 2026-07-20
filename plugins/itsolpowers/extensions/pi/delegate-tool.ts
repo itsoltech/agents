@@ -1011,6 +1011,7 @@ export function registerItsolDelegate(
       "Use run_in_background=false only when the next action cannot proceed without the delegated result.",
       "A background acknowledgement is not completion evidence. Validate delivered results and preserve partial, blocked, failed, and invalid-envelope statuses.",
       "The same agent type may run several independent packets with distinct stable work_item_id values and non-overlapping write scopes.",
+      "write_scope lists allowed write ownership. forbidden_scope lists only additional exclusions disjoint from write_scope; never repeat or nest the allowed path there, and use [] when no exclusions are needed.",
     ],
     parameters: ItsolDelegateParamsSchema,
 

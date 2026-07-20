@@ -79,17 +79,11 @@ export function canonicalizeWriteScope(cwd: string, scope: string): CanonicalWri
   };
 }
 
-function domainsRelated(left: CanonicalWriteScope, right: CanonicalWriteScope): boolean {
-  return isBoundaryAncestor(left.domain, right.domain) || isBoundaryAncestor(right.domain, left.domain);
-}
-
 /** Return true when two canonical ownership scopes cannot safely be active together. */
 export function writeScopesConflict(left: CanonicalWriteScope, right: CanonicalWriteScope): boolean {
-  const pathsOverlap = isBoundaryAncestor(left.path, right.path) || isBoundaryAncestor(right.path, left.path);
-  if (pathsOverlap) return true;
-  if (!domainsRelated(left, right)) return false;
-  if (left.root || right.root || left.wildcard || right.wildcard) return true;
-  return false;
+  // Wildcard scopes are canonicalized to their conservative static directory
+  // prefix, so disjoint prefixes are safe while shared/ancestor prefixes conflict.
+  return isBoundaryAncestor(left.path, right.path) || isBoundaryAncestor(right.path, left.path);
 }
 
 export interface DelegationRuntimeProgress {
