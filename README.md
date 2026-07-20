@@ -301,6 +301,35 @@ Extension automatycznie dodaje krótki bootstrap dla zadań engineeringowych, ma
 
 Delegowane agenty działają jako osobne procesy Pi z `--no-extensions`, jawną listą narzędzi, limitami z `itsol-execution-policy`, kontrolą stanu workflow i walidacją końcowego envelope. W trakcie pracy TUI pokazuje krótkie angielskie opisy bieżących akcji, np. `reading README.md`, `searching “workflow” in skills` lub `running: npm test`, aktywny model, źródło routingu, poziom thinking oraz czas w formacie `5s`, `2min 6s` albo `1h 2min`.
 
+#### Asynchroniczne agenty ITSOL w Pi
+
+`itsol_delegate` domyślnie uruchamia zadania **w tle** i natychmiast zwraca identyfikator delegacji, liczbę uruchomionych/oczekujących work itemów oraz wyraźną informację, że acknowledgement nie jest dowodem ukończenia. Główny agent może w tym czasie wykonywać niezależną pracę. Nie powinien odpytywać statusu ani używać `sleep`; po zakończeniu dostaje automatyczny `followUp` zawierający zweryfikowane statusy, output/evidence, czas, usage, model i reasoning wraz ze źródłami routingu oraz ścieżkę pełnego wyniku, jeśli output został obcięty.
+
+Gdy kolejny krok naprawdę zależy od wyniku, można jawnie użyć:
+
+```text
+run_in_background: false
+```
+
+Ta opcja czeka na ten sam scheduler i zachowuje dotychczasowy wynik inline. Nie uruchamia osobnego, słabiej walidowanego mechanizmu.
+
+W interaktywnym TUI nad edytorem pojawia się widget `Agents` z agentem, `work_item_id`, opisem, czasem, modelem/reasoningiem i bieżącą aktywnością. Nadmiar zadań trafia do kolejki FIFO; `max_parallel` ogranicza tylko liczbę jednoczesnych procesów. Widget jest ograniczony do 12 linii, bezpiecznie skraca szerokie dane i usuwa sekwencje sterujące terminala. W trybach RPC/JSON/print scheduler, accounting i wyniki nadal działają, ale komponent TUI nie jest renderowany.
+
+Ochrona i backpressure:
+
+- maksymalnie 32 oczekujące/uruchomione work itemy i 16 niepotwierdzonych grup wyników na sesję;
+- budżet utrwalonych raportów tła wynosi 8 MiB; pojedynczy raport nadal ma limit 50 KB/2000 linii;
+- `max_parallel: 0` blokuje delegację, a batch większy od limitu jest kolejkowany, nie odrzucany;
+- nowe delegacje oraz bezpośrednie `edit`/`write` rezerwują zakres już w preflight, więc konflikt jest blokowany także wtedy, gdy oba narzędzia wystąpią w jednym batchu;
+- arbitralnych zapisów ukrytych w `bash` nie da się niezawodnie sklasyfikować — procesy nie są sandboxem OS, dlatego nadal obowiązują task packet, write scope i odpowiedzialność głównego agenta;
+- task state, limity, review/reset oraz completion pozostają zablokowane, dopóki aktywna praca, accounting albo dostarczenie wyniku nie zostaną domknięte.
+
+Dostarczenie jest potwierdzane dopiero po zapisaniu wiadomości w aktywnej gałęzi sesji. Jeżeli automatyczny wynik pozostaje niepotwierdzony, model może awaryjnie użyć `itsol_delegate_result` z `task_id` i `delegation_id`; nie jest to narzędzie do pollingu. Także ten fallback czyści blocker dopiero po trwałym zapisaniu jego tool resultu, więc równoległe `itsol_complete` nie może przedwcześnie zakończyć zadania.
+
+`/tree` jest blokowane, gdy istnieje uruchomiony/zakolejkowany agent, rezerwacja zapisu, błąd accountingu albo niepotwierdzony wynik. Operator powinien poczekać na zakończenie i automatyczny follow-up albo jawnie odebrać wskazany wynik przez `itsol_delegate_result`; po usunięciu zobowiązań nawigacja jest ponownie dostępna, a extension odtwarza stan wybranej gałęzi.
+
+Przy `/reload`, `/new`, `/resume`, `/fork` lub wyjściu procesy dzieci są kończone i **nie są wznawiane**. W starej sesji zostaje ograniczony raport `failed/interrupted`, który można odebrać po ponownym otwarciu. Extension nie wysyła go ponownie automatycznie, żeby uniknąć duplikatów. Pi przechowuje wpisy sesji append-only, więc wcześniejsze ograniczone snapshoty pozostają lokalnie do czasu rotacji/usunięcia sesji; prywatne pliki w katalogu tymczasowym mają żywotność zależną od systemu. Implementacja jest testowana z Pi `0.80.10`.
+
 Cost-aware model router używa kolejno jawnego `task.model`, mapowania `model_profile` i roli, modelu głównej sesji, a na końcu domyślnego modelu Pi. Mapowania można zdefiniować globalnie w `~/.pi/agent/itsolpowers.json` i nadpisać w zaufanym projekcie przez `.pi/itsolpowers.json`:
 
 ```json

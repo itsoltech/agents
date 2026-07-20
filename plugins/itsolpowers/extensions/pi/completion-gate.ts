@@ -54,6 +54,13 @@ export function evaluateCompletion(
   if (state.active_agents.length) {
     problems.push(`active delegated agents remain: ${state.active_agents.join(", ")}`);
   }
+  const pendingDeliveries = Object.keys(state.pending_deliveries ?? {});
+  if (pendingDeliveries.length) {
+    problems.push(`delegated results are not yet durably delivered or retrieved: ${pendingDeliveries.join(", ")}`);
+  }
+  if (state.accounting_errors?.length) {
+    problems.push(`delegation accounting errors remain: ${state.accounting_errors.join("; ")}`);
+  }
   if (STOP_RANK[request.achieved_stage] < STOP_RANK[state.execution_policy.stop_after]) {
     problems.push(
       `achieved_stage=${request.achieved_stage} is earlier than stop_after=${state.execution_policy.stop_after}`,

@@ -7,7 +7,9 @@ import { fileURLToPath } from "node:url";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { discoverItsolAgents } from "../extensions/pi/agents.ts";
 import { evaluateCompletion, registerCompletionGate } from "../extensions/pi/completion-gate.ts";
-import { formatDuration, summarizeToolActivity } from "../extensions/pi/delegate-tool.ts";
+import { formatDuration, registerItsolDelegate, summarizeToolActivity, type DelegationResult } from "../extensions/pi/delegate-tool.ts";
+import { renderDelegationWidgetLines, sanitizeTerminalText } from "../extensions/pi/delegation-widget.ts";
+import { canonicalizeWriteScope, createDelegationCoordinator, writeScopesConflict } from "../extensions/pi/delegation-runtime.ts";
 import { InitiativeManager } from "../extensions/pi/initiative-state.ts";
 import { classifyAgentRole, ModelRouter, supportedThinkingLevels } from "../extensions/pi/model-router.ts";
 import { validateDelegation, type ItsolDelegateParams } from "../extensions/pi/policy.ts";
@@ -44,6 +46,197 @@ export async function runPiRuntimeFixtures(_pi: ExtensionAPI): Promise<void> {
   assert.equal(formatDuration(126_000), "2min 6s");
   assert.equal(formatDuration(3_720_000), "1h 2min");
   assert.equal(summarizeToolActivity("read", { path: "README.md" }, pluginRoot), "reading README.md");
+  assert.equal(sanitizeTerminalText("safe\u001b]8;;https://evil.invalid\u0007link\u001b]8;;\u0007\nnext", false), "safelink next");
+  const widgetLines = renderDelegationWidgetLines([
+    {
+      id: "delegation-1:analysis",
+      taskId: "fixture",
+      delegationId: "delegation-1",
+      agent: "itsol-repo-memory",
+      workItemId: "analysis",
+      description: "Inspect repository structure",
+      status: "running",
+      activity: "reading README.md",
+      queuedAt: 1_000,
+      startedAt: 2_000,
+      model: "provider/model",
+      modelSource: "profile:explore",
+      thinking: "medium",
+      thinkingSource: "profile",
+    },
+  ], 60, {
+    now: 7_000,
+    frame: 0,
+    maxLines: 12,
+    theme: { fg: (_color: string, text: string) => text, bold: (text: string) => text },
+  });
+  assert.ok(widgetLines.some((line) => line.includes("itsol-repo-memory [analysis]")));
+  assert.ok(widgetLines.some((line) => line.includes("reading README.md")));
+  assert.ok(widgetLines.every((line) => line.replace(/\u001b\[[0-9;]*m/g, "").length <= 60));
+  const canonicalRoot = canonicalizeWriteScope(pluginRoot, ".");
+  const canonicalDelegate = canonicalizeWriteScope(pluginRoot, "plugins/itsolpowers/extensions/pi");
+  assert.equal(writeScopesConflict(canonicalRoot, canonicalDelegate), true);
+
+  const runnerResolvers = new Map<string, (result: { status: string; output: string }) => void>();
+  const runnerStarts: string[] = [];
+  const coordinator = createDelegationCoordinator<{ label: string }, { status: string; output: string }>({
+    runner: ({ workItemId }) => {
+      runnerStarts.push(workItemId);
+      return new Promise((resolve) => runnerResolvers.set(workItemId, resolve));
+    },
+  });
+  const acknowledgement = coordinator.admit({
+    taskId: "async-fixture",
+    maxParallel: 1,
+    runInBackground: true,
+    delegationId: "delegation-fixture",
+    items: [
+      { agent: "itsol-repo-memory", workItemId: "one", description: "First", packet: { label: "one" }, cwd: pluginRoot },
+      { agent: "itsol-repo-memory", workItemId: "two", description: "Second", packet: { label: "two" }, cwd: pluginRoot },
+    ],
+  });
+  assert.equal(acknowledgement instanceof Promise, false);
+  await Promise.resolve();
+  assert.deepEqual(runnerStarts, ["one"]);
+  assert.equal(coordinator.getGroup("delegation-fixture")?.records[1]?.status, "queued");
+  runnerResolvers.get("one")?.({ status: "completed", output: "one done" });
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.deepEqual(runnerStarts, ["one", "two"]);
+  runnerResolvers.get("two")?.({ status: "completed", output: "two done" });
+  const completedCoordinatorGroup = await coordinator.waitForGroup("delegation-fixture");
+  assert.equal(completedCoordinatorGroup.status, "terminal");
+  assert.deepEqual(completedCoordinatorGroup.records.map((record) => record.status), ["completed", "completed"]);
+  assert.equal(coordinator.releaseGroup("delegation-fixture"), true);
+
+  const heldCoordinator = createDelegationCoordinator<{ label: string }, { status: string; output: string }>({
+    maxOutstandingRecords: 1,
+    shutdownTimeoutMs: 1,
+    runner: () => new Promise(() => {}),
+  });
+  heldCoordinator.admit({
+    taskId: "held",
+    maxParallel: 1,
+    items: [{ agent: "itsol-feature-implementation", workItemId: "writer", description: "Writer", packet: { label: "writer" }, cwd: pluginRoot, writeScopes: ["plugins/itsolpowers/extensions/pi"] }],
+  });
+  assert.throws(() => heldCoordinator.admit({
+    taskId: "held",
+    maxParallel: 1,
+    items: [{ agent: "itsol-feature-implementation", workItemId: "other", description: "Other", packet: { label: "other" }, cwd: pluginRoot, writeScopes: ["plugins/itsolpowers/extensions/pi/delegate-tool.ts"] }],
+  }), /backpressure|Write scope conflict/);
+  await heldCoordinator.shutdown();
+
+  const preAborted = new AbortController();
+  preAborted.abort("already cancelled");
+  const preAbortedStarts: string[] = [];
+  const preAbortedCoordinator = createDelegationCoordinator<{ label: string }, { status: string; output: string }>({
+    runner: async ({ workItemId }) => {
+      preAbortedStarts.push(workItemId);
+      return { status: "completed", output: workItemId };
+    },
+  });
+  const preAbortedResult = await preAbortedCoordinator.admit({
+    taskId: "pre-aborted",
+    maxParallel: 2,
+    runInBackground: false,
+    signal: preAborted.signal,
+    items: [
+      { agent: "itsol-feature-implementation", workItemId: "a", description: "A", packet: { label: "a" }, cwd: pluginRoot },
+      { agent: "itsol-feature-implementation", workItemId: "b", description: "B", packet: { label: "b" }, cwd: pluginRoot },
+    ],
+  });
+  assert.deepEqual(preAbortedStarts, []);
+  assert.deepEqual(preAbortedResult.records.map((record) => record.status), ["failed", "failed"]);
+
+  const hookErrors: string[] = [];
+  let recordChangeCalls = 0;
+  const faultTolerantCoordinator = createDelegationCoordinator<{ label: string }, { status: string; output: string }>({
+    runner: async ({ workItemId }) => ({ status: "completed", output: workItemId }),
+    hooks: {
+      onRecordChange() {
+        recordChangeCalls++;
+        if (recordChangeCalls === 1) throw new Error("widget failed");
+      },
+      async onRecordTerminal() { throw new Error("record accounting failed"); },
+      async onGroupTerminal() { throw new Error("delivery hook failed"); },
+      onHookError(error, phase) { hookErrors.push(`${phase}:${error instanceof Error ? error.message : String(error)}`); },
+    },
+  });
+  const faultTolerantResult = await faultTolerantCoordinator.admit({
+    taskId: "fault-tolerant",
+    maxParallel: 1,
+    runInBackground: false,
+    items: [
+      { agent: "itsol-feature-implementation", workItemId: "one", description: "One", packet: { label: "one" }, cwd: pluginRoot },
+      { agent: "itsol-feature-implementation", workItemId: "two", description: "Two", packet: { label: "two" }, cwd: pluginRoot },
+    ],
+  });
+  assert.deepEqual(faultTolerantResult.records.map((record) => record.status), ["completed", "completed"]);
+  assert.ok(hookErrors.some((error) => error.startsWith("record-change:")));
+  assert.ok(hookErrors.some((error) => error.startsWith("record-terminal:")));
+  assert.ok(hookErrors.some((error) => error.startsWith("group-terminal:")));
+
+  let resolveLingeringRunner: (() => void) | undefined;
+  const lingeringCoordinator = createDelegationCoordinator<{ label: string }, { status: string; output: string }>({
+    shutdownTimeoutMs: 1,
+    runner: () => new Promise((resolve) => { resolveLingeringRunner = () => resolve({ status: "completed", output: "late" }); }),
+  });
+  lingeringCoordinator.admit({
+    taskId: "lingering",
+    maxParallel: 1,
+    items: [{ agent: "itsol-feature-implementation", workItemId: "old", description: "Old", packet: { label: "old" }, cwd: pluginRoot, writeScopes: ["plugins/itsolpowers/extensions/pi"] }],
+  });
+  await Promise.resolve();
+  await lingeringCoordinator.shutdown();
+  assert.equal(lingeringCoordinator.lingeringRunnerCount, 1);
+  assert.equal(lingeringCoordinator.activeWriteScopes().length, 1);
+  lingeringCoordinator.startSession();
+  assert.throws(() => lingeringCoordinator.admit({
+    taskId: "new-session",
+    maxParallel: 1,
+    items: [{ agent: "itsol-feature-implementation", workItemId: "new", description: "New", packet: { label: "new" }, cwd: pluginRoot, writeScopes: ["plugins/itsolpowers/extensions/pi/delegate-tool.ts"] }],
+  }), /Write scope conflict/);
+  resolveLingeringRunner?.();
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.equal(lingeringCoordinator.lingeringRunnerCount, 0);
+  assert.equal(lingeringCoordinator.activeWriteScopes().length, 0);
+
+  let reusedStarts = 0;
+  let resolveOldReuse: (() => void) | undefined;
+  let resolveNewReuse: (() => void) | undefined;
+  const reusedIdCoordinator = createDelegationCoordinator<{ label: string }, { status: string; output: string }>({
+    shutdownTimeoutMs: 1,
+    runner: () => new Promise((resolve) => {
+      reusedStarts++;
+      const finish = () => resolve({ status: "completed", output: `run-${reusedStarts}` });
+      if (reusedStarts === 1) resolveOldReuse = finish;
+      else resolveNewReuse = finish;
+    }),
+  });
+  reusedIdCoordinator.admit({
+    taskId: "reuse-old",
+    delegationId: "reused-delegation",
+    maxParallel: 1,
+    items: [{ agent: "itsol-feature-implementation", workItemId: "same", description: "Old read", packet: { label: "old" }, cwd: pluginRoot }],
+  });
+  await Promise.resolve();
+  await reusedIdCoordinator.shutdown();
+  reusedIdCoordinator.startSession();
+  reusedIdCoordinator.admit({
+    taskId: "reuse-new",
+    delegationId: "reused-delegation",
+    maxParallel: 1,
+    items: [{ agent: "itsol-feature-implementation", workItemId: "same", description: "New write", packet: { label: "new" }, cwd: pluginRoot, writeScopes: ["plugins/itsolpowers/extensions/pi"] }],
+  });
+  await Promise.resolve();
+  resolveOldReuse?.();
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  await reusedIdCoordinator.shutdown();
+  assert.equal(reusedIdCoordinator.lingeringRunnerCount, 1);
+  assert.equal(reusedIdCoordinator.activeWriteScopes().length, 1);
+  resolveNewReuse?.();
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  assert.equal(reusedIdCoordinator.lingeringRunnerCount, 0);
+
   assert.equal(
     summarizeToolActivity("bash", { command: "npm test\necho done" }, pluginRoot),
     "running: npm test",
@@ -213,6 +406,188 @@ export async function runPiRuntimeFixtures(_pi: ExtensionAPI): Promise<void> {
     },
     done_when: ["fixture passes"],
   };
+
+  const asyncBranch: any[] = [];
+  const asyncTools = new Map<string, any>();
+  const asyncHandlers = new Map<string, Array<(event: any, ctx: any) => unknown>>();
+  const asyncMessages: Array<{ message: any; options: any }> = [];
+  let resolveAsyncChild: ((result: DelegationResult) => void) | undefined;
+  const asyncPi = {
+    registerTool(tool: any) { asyncTools.set(tool.name, tool); },
+    registerMessageRenderer() {},
+    on(event: string, handler: (event: any, ctx: any) => unknown) {
+      asyncHandlers.set(event, [...(asyncHandlers.get(event) ?? []), handler]);
+    },
+    appendEntry(customType: string, data: unknown) { asyncBranch.push({ type: "custom", customType, data }); },
+    sendMessage(message: any, options: any) {
+      asyncMessages.push({ message, options });
+      asyncBranch.push({ type: "custom_message", customType: message.customType, content: message.content, details: message.details });
+    },
+  } as unknown as ExtensionAPI;
+  const asyncContext = {
+    cwd: pluginRoot,
+    hasUI: false,
+    model: undefined,
+    sessionManager: { getBranch: () => asyncBranch },
+    ui: { setWidget() {}, notify() {} },
+  } as any;
+  const asyncStore = new TaskStateStore(asyncPi, "fixture");
+  asyncStore.startSession(asyncContext);
+  asyncStore.setDefinition(base);
+  const asyncRepoPolicy = new RepoPolicyManager(pluginRoot);
+  asyncRepoPolicy.startSession(asyncContext);
+  const asyncController = registerItsolDelegate(
+    asyncPi,
+    pluginRoot,
+    agents,
+    asyncStore,
+    { resolve: () => ({ model: undefined, source: "inherited", role: "explore", thinking: "medium", thinkingSource: "policy", profileEnforced: true }) } as any,
+    asyncRepoPolicy,
+    { runner: (async () => await new Promise<DelegationResult>((resolve) => { resolveAsyncChild = resolve; })) as any },
+  );
+  asyncController.startSession(asyncContext);
+  const delegateTool = asyncTools.get("itsol_delegate");
+  assert.ok(delegateTool, "itsol_delegate should be registered");
+  const asyncAck = await delegateTool.execute("async-tool-call", {
+    task_id: base.task_id,
+    task: {
+      agent: "itsol-repo-memory",
+      role: "explore",
+      work_item_id: "async-fixture",
+      task: "Inspect asynchronously",
+      operations: ["inspect"],
+      read_scope: ["README.md"],
+      write_scope: [],
+      forbidden_scope: ["docs/"],
+      required_evidence: ["fixture result"],
+    },
+  }, undefined, undefined, asyncContext);
+  assert.match(asyncAck.content[0].text, /Started ITSOL delegation .* in the background/);
+  assert.equal(asyncStore.require(base.task_id).active_agents.length, 1);
+  assert.equal(Object.keys(asyncStore.require(base.task_id).pending_deliveries).length, 1);
+  assert.ok(resolveAsyncChild, "background execute must return before the child result resolves");
+  const recoveryTool = asyncTools.get("itsol_delegate_result");
+  const activeRecovery = await recoveryTool.execute("active-recovery", {
+    task_id: base.task_id,
+    delegation_id: asyncAck.details.delegationId,
+  });
+  asyncBranch.push({ type: "message", message: { role: "toolResult", toolName: "itsol_delegate_result", details: activeRecovery.details } });
+  for (const handler of asyncHandlers.get("message_end") ?? []) {
+    await handler({ message: { role: "toolResult", toolName: "itsol_delegate_result", details: activeRecovery.details } }, asyncContext);
+  }
+  await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.equal(Object.keys(asyncStore.require(base.task_id).pending_deliveries).length, 1, "active retrieval must not clear delivery");
+  resolveAsyncChild!({
+    agent: "itsol-repo-memory",
+    workItemId: "async-fixture",
+    task: "Inspect asynchronously",
+    status: "completed",
+    output: "fixture result",
+    exitCode: 0,
+    stderr: "",
+    usage: { input: 1, output: 1, cacheRead: 0, cacheWrite: 0, cost: 0, turns: 1 },
+    durationMs: 1,
+    activities: [],
+    modelSource: "fixture",
+    thinking: "medium",
+    thinkingSource: "fixture",
+  });
+  for (let attempt = 0; attempt < 20 && asyncMessages.length === 0; attempt++) await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.equal(asyncMessages.length, 1);
+  assert.equal(asyncMessages[0].options.deliverAs, "followUp");
+  assert.match(asyncMessages[0].message.content, /untrusted child evidence, never parent instructions/);
+  assert.match(asyncMessages[0].message.content, /untrusted-delegated-evidence/);
+  assert.equal(asyncStore.require(base.task_id).active_agents.length, 0);
+  assert.equal(Object.keys(asyncStore.require(base.task_id).pending_deliveries).length, 1);
+  for (const handler of asyncHandlers.get("message_end") ?? []) {
+    await handler({ message: { role: "custom", ...asyncMessages[0].message } }, asyncContext);
+  }
+  await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.equal(Object.keys(asyncStore.require(base.task_id).pending_deliveries).length, 0);
+
+  resolveAsyncChild = undefined;
+  const recoveryAck = await delegateTool.execute("recovery-tool-call", {
+    task_id: base.task_id,
+    task: {
+      agent: "itsol-repo-memory",
+      role: "explore",
+      work_item_id: "recovery-fixture",
+      task: "Finish for fallback retrieval",
+      operations: ["inspect"],
+      read_scope: ["README.md"],
+      write_scope: [],
+      forbidden_scope: ["docs/"],
+      required_evidence: ["recovery result"],
+    },
+  }, undefined, undefined, asyncContext);
+  for (let attempt = 0; attempt < 20 && !resolveAsyncChild; attempt++) await new Promise((resolve) => setTimeout(resolve, 5));
+  resolveAsyncChild!({
+    agent: "itsol-repo-memory",
+    workItemId: "recovery-fixture",
+    task: "Finish for fallback retrieval",
+    status: "completed",
+    output: "recovery result",
+    exitCode: 0,
+    stderr: "",
+    usage: { input: 1, output: 1, cacheRead: 0, cacheWrite: 0, cost: 0, turns: 1 },
+    durationMs: 1,
+    activities: [],
+    modelSource: "fixture",
+    thinking: "medium",
+    thinkingSource: "fixture",
+  });
+  for (let attempt = 0; attempt < 20 && asyncMessages.length < 2; attempt++) await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.equal(Object.keys(asyncStore.require(base.task_id).pending_deliveries).length, 1);
+  const recovered = await recoveryTool.execute("terminal-recovery", {
+    task_id: base.task_id,
+    delegation_id: recoveryAck.details.delegationId,
+  });
+  assert.ok(recovered.details.retrievalToken);
+  asyncBranch.push({ type: "message", message: { role: "toolResult", toolName: "itsol_delegate_result", details: recovered.details } });
+  for (const handler of asyncHandlers.get("message_end") ?? []) {
+    await handler({ message: { role: "toolResult", toolName: "itsol_delegate_result", details: recovered.details } }, asyncContext);
+  }
+  await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.equal(Object.keys(asyncStore.require(base.task_id).pending_deliveries).length, 0);
+
+  resolveAsyncChild = undefined;
+  const foregroundResult = delegateTool.execute("foreground-tool-call", {
+    task_id: base.task_id,
+    run_in_background: false,
+    task: {
+      agent: "itsol-repo-memory",
+      role: "explore",
+      work_item_id: "foreground-fixture",
+      task: "Inspect in foreground",
+      operations: ["inspect"],
+      read_scope: ["README.md"],
+      write_scope: [],
+      forbidden_scope: ["docs/"],
+      required_evidence: ["foreground result"],
+    },
+  }, undefined, undefined, asyncContext);
+  for (let attempt = 0; attempt < 20 && !resolveAsyncChild; attempt++) await new Promise((resolve) => setTimeout(resolve, 5));
+  assert.ok(resolveAsyncChild, "foreground execute should wait for its child result");
+  assert.equal(Object.keys(asyncStore.require(base.task_id).pending_deliveries).length, 0);
+  resolveAsyncChild!({
+    agent: "itsol-repo-memory",
+    workItemId: "foreground-fixture",
+    task: "Inspect in foreground",
+    status: "completed",
+    output: "foreground result",
+    exitCode: 0,
+    stderr: "",
+    usage: { input: 1, output: 1, cacheRead: 0, cacheWrite: 0, cost: 0, turns: 1 },
+    durationMs: 1,
+    activities: [],
+    modelSource: "fixture",
+    thinking: "medium",
+    thinkingSource: "fixture",
+  });
+  const foregroundReport = await foregroundResult;
+  assert.match(foregroundReport.content[0].text, /foreground result/);
+  assert.equal(asyncStore.require(base.task_id).active_agents.length, 0);
+  await asyncController.shutdown();
 
   const policyCwd = await fs.promises.mkdtemp(path.join(os.tmpdir(), "itsol-pi-policy-"));
   try {
@@ -423,6 +798,36 @@ review:
   assert.match(store.formatStatus(), /ITSOL v0\.22\.0/);
   const reused = store.resolveDelegation({ task_id: base.task_id, task: writer });
   assert.equal(reused.execution_policy.preset, "standard");
+
+  const deliveryStore = new TaskStateStore(fakePi, agents.length, "0.22.0");
+  deliveryStore.startSession(fakeContext);
+  deliveryStore.admitDelegation(base, [writer.agent], {
+    delegation_id: "delivery-fixture",
+    state: "pending",
+    delivery_token: "token-fixture",
+    work_items: [{ agent: writer.agent, work_item_id: "delivery-work" }],
+  });
+  assert.equal(deliveryStore.hasOutstandingObligations(base.task_id), true);
+  assert.throws(() => deliveryStore.setPreset("deep"), /outstanding/);
+  const pendingEvaluation = evaluateCompletion(deliveryStore.getActive()!, {
+    task_id: base.task_id,
+    status: "partial",
+    achieved_stage: "implementation-reviewed",
+    evidence: [],
+    review_evidence: [],
+    unverified: ["background result pending"],
+  });
+  assert.match(pendingEvaluation.problems.join("\n"), /active delegated agents|durably delivered/);
+  deliveryStore.finishDelegation(base.task_id, [writer.agent], [{
+    agent: writer.agent,
+    workItemId: "delivery-work",
+    status: "completed",
+    usage: { input: 1, output: 1, cost: 0 },
+  }]);
+  assert.equal(deliveryStore.hasOutstandingObligations(base.task_id), true);
+  deliveryStore.clearDelivery(base.task_id, "delivery-fixture");
+  assert.equal(deliveryStore.hasOutstandingObligations(base.task_id), false);
+
   store.beginDelegation(base.task_id, [writer.agent]);
   store.finishDelegation(base.task_id, [writer.agent], [{
     agent: writer.agent,
@@ -929,12 +1334,16 @@ review:
     () => validateDelegation(base, [writer, { ...writer, agent: "itsol-bug-debugging" }], byName, new Set()),
     /overlapping write scopes/,
   );
+  validateDelegation({
+    ...base,
+    execution_policy: { ...base.execution_policy, max_parallel: 1 },
+  }, [writer, reviewer], byName, new Set());
   assert.throws(
     () => validateDelegation({
       ...base,
-      execution_policy: { ...base.execution_policy, max_parallel: 1 },
-    }, [writer, reviewer], byName, new Set()),
-    /max_parallel/,
+      execution_policy: { ...base.execution_policy, max_parallel: 0 },
+    }, [reviewer], byName, new Set()),
+    /max_parallel is 0/,
   );
   console.log("pi runtime fixtures: PASS");
 }

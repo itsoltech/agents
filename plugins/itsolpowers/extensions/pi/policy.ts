@@ -93,6 +93,9 @@ export const ItsolDelegateParamsSchema = Type.Object({
     paths: Type.Array(Type.String()),
     operations: Type.Array(Type.String()),
   })),
+  run_in_background: Type.Optional(Type.Boolean({
+    description: "Run asynchronously by default. Set false only when subsequent work depends on the delegated result.",
+  })),
   task: Type.Optional(DelegatedTaskSchema),
   tasks: Type.Optional(Type.Array(DelegatedTaskSchema, { minItems: 1, maxItems: 10 })),
 });
@@ -102,7 +105,7 @@ export type ExecutionPolicy = Static<typeof ExecutionPolicySchema>;
 export type DelegatedTask = Static<typeof DelegatedTaskSchema>;
 export type TaskStateDefinition = Static<typeof TaskStateDefinitionSchema>;
 export type ItsolDelegateInput = Static<typeof ItsolDelegateParamsSchema>;
-export type ItsolDelegateParams = TaskStateDefinition & Pick<ItsolDelegateInput, "task" | "tasks">;
+export type ItsolDelegateParams = TaskStateDefinition & Pick<ItsolDelegateInput, "run_in_background" | "task" | "tasks">;
 
 export const STOP_RANK: Record<ExecutionPolicy["stop_after"], number> = {
   analysis: 10,
@@ -143,10 +146,8 @@ export function validateDelegation(
     );
   }
   const agentLimit = params.execution_policy.max_subagents;
-  if (tasks.length > params.execution_policy.max_parallel) {
-    throw new Error(
-      `Delegation requests ${tasks.length} parallel tasks, but max_parallel is ${params.execution_policy.max_parallel}`,
-    );
+  if (tasks.length > 0 && params.execution_policy.max_parallel === 0) {
+    throw new Error("Delegation cannot start non-empty work when max_parallel is 0");
   }
 
   const requestedNames = new Set(tasks.map((task) => task.agent));

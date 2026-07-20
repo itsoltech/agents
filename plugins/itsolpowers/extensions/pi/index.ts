@@ -24,7 +24,6 @@ const BOOTSTRAP_MARKER = 'id="itsolpowers-pi-bootstrap"';
 export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
   const agents = discoverItsolAgents(agentsDirectory);
   let administrativeToolsToRestore: string[] | undefined;
-  const resetHandlers: Array<() => void> = [];
   let pluginVersion = "unknown";
   try {
     const manifest = JSON.parse(fs.readFileSync(packagePath, "utf8")) as { version?: unknown };
@@ -65,11 +64,10 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
       };
     },
   });
-  registerItsolDelegate(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy, resetHandlers);
+  const delegation = registerItsolDelegate(pi, pluginRoot, agents, taskState, modelRouter, repoPolicy);
 
-  pi.on("session_start", (_event, ctx) => {
+  const restoreBranchState = (ctx: Parameters<typeof taskState.startSession>[0]) => {
     administrativeToolsToRestore = undefined;
-    for (const reset of resetHandlers) reset();
     repoPolicy.startSession(ctx);
     modelRouter.startSession(ctx);
     taskState.startSession(ctx);
@@ -77,9 +75,23 @@ export default function itsolPowersPiExtension(pi: ExtensionAPI): void {
     reviewOrchestrator.startSession(ctx);
     planReview.startSession(ctx);
     qaOrchestrator.startSession(ctx);
+    delegation.startSession(ctx);
+  };
+
+  pi.on("session_start", (_event, ctx) => {
+    restoreBranchState(ctx);
   });
 
-  pi.on("session_shutdown", (_event, ctx) => {
+  pi.on("session_before_tree", (_event, ctx) => {
+    if (!delegation.canNavigateTree(ctx)) return { cancel: true };
+  });
+
+  pi.on("session_tree", (_event, ctx) => {
+    restoreBranchState(ctx);
+  });
+
+  pi.on("session_shutdown", async (event, ctx) => {
+    await delegation.shutdown(`Delegation cancelled by session ${event.reason}`);
     if (ctx.hasUI) {
       ctx.ui.setStatus("itsolpowers", undefined);
       ctx.ui.setStatus("itsol-review", undefined);
