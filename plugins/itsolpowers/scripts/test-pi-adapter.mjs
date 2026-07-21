@@ -56,7 +56,7 @@ const markdownFiles = (directory) => fs.readdirSync(directory, { withFileTypes: 
   const target = path.join(directory, entry.name);
   return entry.isDirectory() ? markdownFiles(target) : entry.name.endsWith('.md') ? [target] : [];
 });
-const piOnlyToolPattern = /\bitsol_(?:task_state|delegate|review_plan|review_verdict|plan_review|complete)\b/;
+const piOnlyToolPattern = /\bitsol_(?:task_state|delegate|review_plan|review_verdict|plan_review|complete|qa_plan|qa_verdict|initiative_state)\b/;
 for (const file of [...markdownFiles(path.join(pluginRoot, 'skills')), ...markdownFiles(path.join(pluginRoot, 'agents'))]) {
   assert.doesNotMatch(fs.readFileSync(file, 'utf8'), piOnlyToolPattern,
     `shared skill/agent must use harness-neutral capabilities instead of Pi-only tools: ${path.relative(pluginRoot, file)}`);
@@ -73,70 +73,26 @@ const bootstrap = fs.readFileSync(path.join(pluginRoot, 'hooks', 'bootstrap-cont
 assert.match(bootstrap, /itsolpowers-pi-bootstrap/);
 assert.match(bootstrap, /`using-itsolpowers`/);
 assert.match(bootstrap, /`itsol_task_state`/);
-assert.match(bootstrap, /`itsol_delegate`/);
-assert.match(bootstrap, /`itsol_complete`/);
-assert.match(bootstrap, /`itsol_review_plan`/);
-assert.match(bootstrap, /`itsol_review_verdict`/);
-assert.match(bootstrap, /`itsol_plan_review`/);
-assert.match(bootstrap, /commit-only, repository inspection, and `.itsol\.md` initialization/);
-assert.match(bootstrap, /`trigger=adaptive`/);
-assert.match(bootstrap, /main agent decides whether formal code review is worth its cost/);
-const piIndexSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'index.ts'), 'utf8');
-assert.match(piIndexSource, /classifyAdministrativeRequest/);
-assert.match(piIndexSource, /!tool\.startsWith\(\"itsol_\"\)/);
-assert.match(piIndexSource, /session_before_tree/);
-assert.match(piIndexSource, /delegation\.shutdown/);
-const delegateSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'delegate-tool.ts'), 'utf8');
-assert.match(delegateSource, /run_in_background/);
-assert.match(delegateSource, /itsol_delegate_result/);
-assert.match(delegateSource, /deliverAs: \"followUp\"/);
-assert.match(delegateSource, /triggerTurn: true/);
-assert.match(delegateSource, /notification-event-observed|dispatch-requested/);
-assert.match(delegateSource, /createChildJsonlAccumulator/);
-assert.match(delegateSource, /MAX_CHILD_EVENT_BYTES/);
-assert.doesNotMatch(delegateSource, /capturedStdoutBytes|MAX_CHILD_STREAM_BYTES|messages\.push\(/);
-const delegationWidgetSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'delegation-widget.ts'), 'utf8');
-assert.match(delegationWidgetSource, /placement: \"aboveEditor\"/);
-assert.match(delegationWidgetSource, /truncateToWidth/);
-const delegationRuntimeSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'delegation-runtime.ts'), 'utf8');
-assert.match(delegationRuntimeSource, /maxOutstandingRecords \?\? 32/);
-assert.match(delegationRuntimeSource, /maxBackgroundGroups \?\? 16/);
-const readmeSource = fs.readFileSync(path.join(repoRoot, 'README.md'), 'utf8');
-assert.match(readmeSource, /Asynchroniczne agenty ITSOL w Pi/);
-assert.match(readmeSource, /itsol_delegate_result/);
-assert.match(readmeSource, /Pi `0\.80\.10`/);
-assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'completion-gate.ts')));
-assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'initiative-state.ts')));
-assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'qa-orchestrator.ts')));
-const qaOrchestratorSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'qa-orchestrator.ts'), 'utf8');
-assert.match(qaOrchestratorSource, /itsol_qa_plan/);
-assert.match(qaOrchestratorSource, /itsol_qa_verdict/);
-assert.match(qaOrchestratorSource, /implementation-fix/);
-assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'review-orchestrator.ts')));
-assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'plan-review.ts')));
-const planReviewSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'plan-review.ts'), 'utf8');
-assert.match(planReviewSource, /\"initiative\", \"business\", \"technical\", \"technical-fix\"/);
-assert.doesNotMatch(planReviewSource, /\brunAgent\b/, 'plan review must launch reviewers only through DelegationController');
-assert.match(planReviewSource, /delegation\.delegate\(/);
-const reviewOrchestrator = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'review-orchestrator.ts'), 'utf8');
-assert.match(reviewOrchestrator, /itsol-review/);
-assert.match(reviewOrchestrator, /autoRereviewNotice/);
-assert.match(reviewOrchestrator, /"adaptive", "inline", "specialists"/);
-assert.match(reviewOrchestrator, /fingerprint/);
-assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'repo-policy.ts')));
-const repoPolicySource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'repo-policy.ts'), 'utf8');
-assert.match(repoPolicySource, /registerCommand\(\"itsol-init\"/);
-assert.match(repoPolicySource, /initializeMinimalPolicy/);
-assert.match(repoPolicySource, /repository-policy administration, not feature implementation/);
-assert.match(repoPolicySource, /do not create itsol_task_state/);
+assert.match(bootstrap, /does not provide .*delegation tool/);
+assert.match(bootstrap, /another installed Pi extension exposes an `Agent`, `Task`, or equivalent subagent tool/);
+assert.match(bootstrap, /Never assume that `itsol_delegate` exists/);
+assert.match(bootstrap, /existence-only status/);
 assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'task-state.ts')));
-const delegationPolicySource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'policy.ts'), 'utf8');
-assert.doesNotMatch(delegationPolicySource, /same agent identity more than once/);
-assert.match(delegationPolicySource, /work_item_id/);
-assert.match(delegationPolicySource, /Optional explicit exclusions that must be disjoint from write_scope/);
-assert.match(delegationPolicySource, /write_scope=\$\{writePath\}; forbidden_scope=\$\{forbiddenPath\}/);
-assert.match(delegationPolicySource, /staticScopePrefix/);
-assert.ok(fs.existsSync(path.join(pluginRoot, 'extensions', 'pi', 'model-router.ts')));
+const piFiles = fs.readdirSync(path.join(pluginRoot, 'extensions', 'pi')).filter((name) => name.endsWith('.ts')).sort();
+assert.deepEqual(piFiles, ['agents.ts', 'index.ts', 'task-state.ts']);
+const piIndexSource = fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', 'index.ts'), 'utf8');
+assert.match(piIndexSource, /detectItsolMemoryPresence/);
+assert.match(piIndexSource, /parts\.push\(formatItsolMemoryPresence\(ctx\.cwd\)\)/);
+assert.match(piIndexSource, /fs\.existsSync\(filePath\)/);
+assert.doesNotMatch(piIndexSource, /readFileSync\([^\n]*\.itsol\.md/);
+const piExtensionSource = piFiles
+  .map((file) => fs.readFileSync(path.join(pluginRoot, 'extensions', 'pi', file), 'utf8'))
+  .join('\n');
+assert.equal([...piExtensionSource.matchAll(/registerTool\s*\(\s*\{[\s\S]*?name:\s*["']([^"']+)["']/g)].length, 1);
+for (const removedTool of ['itsol_delegate', 'itsol_complete', 'itsol_review_plan', 'itsol_review_verdict', 'itsol_plan_review', 'itsol_qa_plan', 'itsol_qa_verdict', 'itsol_initiative_state', 'itsol_phase_state']) {
+  assert.doesNotMatch(piExtensionSource, new RegExp(`name: ["']${removedTool}["']`));
+}
+assert.doesNotMatch(piExtensionSource, /node:child_process|--no-session|run_in_background|itsol_delegate_result/);
 assert.ok(bootstrap.trim().split(/\s+/).length <= 600, 'Pi bootstrap exceeds 600 words');
 
 const sessionStart = path.join(pluginRoot, 'hooks', 'session-start');
@@ -159,15 +115,12 @@ assert.match(codexBootstrap, /Codex harness adapter/);
 assert.doesNotMatch(codexBootstrap, /Claude Code harness adapter/);
 
 if (process.env.ITSOLPOWERS_PI_SMOKE === '1') {
-  for (const extensionTarget of [path.join(pluginRoot, 'extensions', 'pi', 'index.ts'), repoRoot]) {
-    const result = spawnSync('pi', ['--offline', '--no-extensions', '-e', extensionTarget, '--list-models'], {
+  for (const packageRoot of [pluginRoot, repoRoot]) {
+    const result = spawnSync('pi', ['--offline', '--no-extensions', '-e', packageRoot, '--list-models'], {
       encoding: 'utf8',
       timeout: 30_000,
     });
-    const output = `${result.stdout ?? ''}\n${result.stderr ?? ''}`;
-    assert.equal(result.status, 0, `Pi extension smoke failed for ${extensionTarget}:\n${output}`);
-    assert.doesNotMatch(output, /Failed to load extension|ParseError|SyntaxError|Unexpected token/i,
-      `Pi reported an extension load error for ${extensionTarget}:\n${output}`);
+    assert.equal(result.status, 0, `Pi extension smoke failed for ${packageRoot}:\n${result.stderr || result.stdout}`);
   }
 }
 

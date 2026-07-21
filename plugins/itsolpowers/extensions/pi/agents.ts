@@ -5,26 +5,10 @@ import { parseFrontmatter } from "@earendil-works/pi-coding-agent";
 export interface ItsolAgentConfig {
   name: string;
   description: string;
-  model?: string;
-  effort?: string;
   skills: string[];
-  tools?: string[];
-  disallowedTools: string[];
   systemPrompt: string;
   filePath: string;
 }
-
-const TOOL_NAME_MAP: Record<string, string> = {
-  Read: "read",
-  Grep: "grep",
-  Glob: "find",
-  Bash: "bash",
-  Write: "write",
-  Edit: "edit",
-  MultiEdit: "edit",
-};
-
-const DEFAULT_TOOLS = ["read", "bash", "edit", "write", "grep", "find", "ls"];
 
 function stringList(value: unknown): string[] {
   if (Array.isArray(value)) {
@@ -51,25 +35,6 @@ export function normalizeSkillName(value: string): string {
   return name;
 }
 
-export function mapAgentTools(agent: ItsolAgentConfig): string[] {
-  const requested = agent.tools?.length ? agent.tools : DEFAULT_TOOLS;
-  const denied = new Set(
-    agent.disallowedTools.flatMap((tool) => {
-      const mapped = TOOL_NAME_MAP[tool] ?? tool.toLowerCase();
-      return mapped === "agent" ? ["itsol_delegate", "subagent"] : [mapped];
-    }),
-  );
-
-  return [...new Set(requested.map((tool) => TOOL_NAME_MAP[tool] ?? tool.toLowerCase()))]
-    .filter((tool) => tool !== "agent" && tool !== "itsol_delegate" && tool !== "subagent")
-    .filter((tool) => !denied.has(tool));
-}
-
-export function agentCanWrite(agent: ItsolAgentConfig): boolean {
-  const tools = new Set(mapAgentTools(agent));
-  return tools.has("write") || tools.has("edit");
-}
-
 export function discoverItsolAgents(agentsDir: string): ItsolAgentConfig[] {
   if (!fs.existsSync(agentsDir)) return [];
 
@@ -86,11 +51,7 @@ export function discoverItsolAgents(agentsDir: string): ItsolAgentConfig[] {
     agents.push({
       name,
       description,
-      model: typeof frontmatter.model === "string" ? frontmatter.model : undefined,
-      effort: typeof frontmatter.effort === "string" ? frontmatter.effort : undefined,
       skills: stringList(frontmatter.skills).map(normalizeSkillName),
-      tools: stringList(frontmatter.tools),
-      disallowedTools: stringList(frontmatter.disallowedTools),
       systemPrompt: body.trim(),
       filePath,
     });

@@ -52,9 +52,9 @@ Centralny skill `itsol-workflow-mode` rozstrzyga poziom ceremonii przed planowan
 | `autonomous-planned` | Agent tworzy i proporcjonalnie sprawdza plany, sam decyduje o wartości izolowanego review, wybiera rekomendację i kontynuuje bez pauz na akceptację. | `Draft`, potem `Ready for execution` |
 | `direct` | Bez trwałych Business, Technical i Technical Fix Planów oraz ich bramek; nadal obowiązują evidence, TDD lub replacement verification i self-review. | `not-required` |
 
-Commit-only, `git status`, pokazanie diffu/logu oraz staging już wykonanego spójnego slice'a korzystają z **Administrative Fast Path**. Nie tworzą nowego workflow state, planów, subagentów, rund review ani completion gate. Agent sprawdza dokładny scope, reuse'uje wcześniejsze verification evidence, stage'uje tylko właściwe pliki, tworzy lokalny commit Angular bez amend i raportuje hash/status. Jeśli scope jest niejednoznaczny lub hook zawiedzie, pyta albo raportuje tylko ten konkretny problem. Push, tag, release i deploy pozostają osobno autoryzowane. Adapter Pi dodatkowo wyłącza narzędzia workflow na wykryty commit-only turn, więc agent nie może rozpocząć planowania samego commita.
+Commit-only, `git status`, pokazanie diffu/logu oraz staging już wykonanego spójnego slice'a korzystają z **Administrative Fast Path**. Nie tworzą nowego workflow state, planów, subagentów ani rund review. Agent sprawdza dokładny scope, reuse'uje wcześniejsze verification evidence, stage'uje tylko właściwe pliki, tworzy lokalny commit Angular bez amend i raportuje hash/status. Jeśli scope jest niejednoznaczny lub hook zawiedzie, pyta albo raportuje tylko ten konkretny problem. Push, tag, release i deploy pozostają osobno autoryzowane.
 
-Wspólne skille i definicje agentów opisują izolowane plan review neutralnie względem harnessu. Adapter Pi mapuje je na `itsol_plan_review`; Claude Code używa natywnego Agent/Task z `itsol-self-review`, Codex read-only forked context, a OpenCode Task/@agent. Domyślny profil `balanced` ma `trigger: adaptive`: po proporcjonalnym self-review agent sam ocenia, czy osobny reviewer wniesie wartość względem skali, niepewności, nowości, blast radius i jakości weryfikacji. Małe, konwencjonalne plany pomijają tę ceremonię; duże lub materialnie ryzykowne mogą użyć izolowanego review bez dodatkowej zgody użytkownika. Tylko konkretne problemy wpływające na zakres, acceptance, poprawność, bezpieczeństwo danych, wykonalność, rollout lub weryfikację blokują plan. Styl, wording, opcjonalne detale i spekulacyjne edge case'y są sugestiami i nie uruchamiają kolejnej rundy. Opcjonalny adaptive review zakończony `PASS` nie staje się później obowiązkową bramką wyłącznie dlatego, że fingerprint planu się zmienił; `final` i `checkpoint` nadal wymagają aktualnego werdyktu. Domyślny limit to 2 próby na artefakt.
+Wspólne skille i definicje agentów opisują plan review neutralnie względem harnessu. Claude Code może użyć natywnego Agent/Task, Codex read-only forked context, OpenCode Task/@agent, a Pi pracuje inline albo korzysta z narzędzia subagentowego dostarczonego przez osobno zainstalowaną extension. Adapter ITSOL dla Pi nie udostępnia własnej delegacji, osobnego plan-review orchestratora ani automatycznych reviewerów. Tylko konkretne problemy wpływające na zakres, acceptance, poprawność, bezpieczeństwo danych, wykonalność, rollout lub weryfikację powinny blokować plan.
 
 Tryb jest domyślnie ograniczony do bieżącego zadania. Kolejność rozstrzygania to: reguły platformy, `allowed_modes` i pasujące restrykcje repozytorium, jawny wybór użytkownika dla zadania, dozwolony default `.itsol.md`, a na końcu `governed`. Jawny wybór zadania może nadpisać default repo, ale nie zakaz dla ścieżki lub operacji.
 
@@ -104,11 +104,11 @@ Agent analizuje pełny dokument, nadaje wymaganiom stabilne `REQ-NNN`, przypisuj
 .itsol/initiatives/<initiative-id>/
 ```
 
-Pi udostępnia `itsol_initiative_state`, `itsol_qa_plan`, `itsol_qa_verdict` oraz `/itsol-initiative status|activate|resume|pause`. Stan jest przenośny między sesjami i harnessami dzięki artefaktom repozytorium. Initiative Roadmap przechodzi panel review obejmujący requirements/product, architecture, QA, self-review oraz warunkowo security/data. Panel działa batchami według `max_parallel` i plan przechodzi dalej dopiero bez material blockers.
+W Pi initiative delivery pozostaje instrukcją współdzielonych skilli i artefaktów repozytorium. Extension nie rejestruje initiative state, automatycznego panelu review ani narzędzi QA; agent prowadzi taki workflow wyłącznie w zakresie wynikającym z bieżącej rozmowy i jawnie wybranych narzędzi.
 
 Po implementacji i code review każda faza otrzymuje application-aware QA matrix. Web UI używa agent-browser, Electron wspieranego CDP/browser path, CLI testów interaktywnych, API kontraktów/integracji/security, mobile runtime/device checks, data integrity/migration/rollback, a infrastruktura readiness/observability/rollback. Werdykt QA jest związany z fingerprintem implementacji. `FAIL` lub `BLOCKED` wymaga routingu `implementation-fix`, `plan-revision` albo `user-decision`, po czym workflow ponawia odpowiednie plan/code review i świeże QA. Po fazach wymagany jest aktualny final system QA PASS.
 
-Completion gate blokuje zakończenie taska, dopóki wszystkie fazy i wymagania nie mają jawnego disposition, każda faza nie ma QA PASS, final system QA nie jest aktualny albo istnieją pending decisions. QA można jawnie zmienić lub wyłączyć w `.itsol.md`; skip jest raportowany jako policy skip, nigdy jako PASS.
+Wspólne skille mogą wymagać evidence lub QA zależnie od wybranego workflow, ale adapter Pi nie posiada extension-managed completion gate i nie może blokować zakończenia taska ani automatycznie ponawiać pracy.
 
 ```yaml
 qa:
@@ -297,176 +297,31 @@ Pi ładuje skille bez namespace pluginu. Główny router jest dostępny jako:
 /skill:using-itsolpowers
 ```
 
-Extension automatycznie dodaje krótki bootstrap dla zadań engineeringowych, mapuje współdzielone pojęcia narzędzi na Pi i rejestruje `itsol_task_state`, `itsol_initiative_state` oraz `itsol_delegate`. Stan workflow, execution policy, `done_when`, użyci agenci i koszty są zapisywane w sesji Pi i odtwarzane po `/reload`, resume oraz compaction. Po zapisaniu stanu kolejne delegacje mogą przekazywać tylko `task_id` i właściwy task packet. Footer pokazuje wersję pluginu, aktywny tryb, preset, wykorzystanie agentów, aktywne delegacje i łączny koszt głównego modelu oraz dzieci.
+Extension Pi używa minimalnego modelu opartego na wersji `0.18`: bootstrap routuje pracę przez skille ITSOL Powers, a `itsol_task_state` opcjonalnie przechowuje informacyjny workflow/execution context. Extension ITSOL samodzielnie nie uruchamia modeli ani agentów potomnych i nie posiada własnej delegacji, automatycznych review, QA, initiative loops, corrective turns ani completion gate.
 
-Delegowane agenty działają jako osobne procesy Pi z `--no-extensions`, jawną listą narzędzi, limitami z `itsol-execution-policy`, kontrolą stanu workflow i walidacją końcowego envelope. W trakcie pracy TUI pokazuje krótkie angielskie opisy bieżących akcji, np. `reading README.md`, `searching “workflow” in skills` lub `running: npm test`, aktywny model, źródło routingu, poziom thinking oraz czas w formacie `5s`, `2min 6s` albo `1h 2min`.
+Przed każdą turą extension sprawdza wyłącznie, czy w root repozytorium istnieje `.itsol.md`, i wstrzykuje krótką informację `EXISTS` albo `DOES NOT EXIST`. Nie czyta, nie parsuje, nie waliduje i nie egzekwuje zawartości tego pliku. Agent nie powinien ponownie używać `find`, `ls` ani `test -f` tylko po to, aby sprawdzić jego obecność. Gdy plik istnieje, jego treść obsługuje skill `itsol-repo-memory`.
 
-#### Asynchroniczne agenty ITSOL w Pi
+Bez dodatkowej extension Pi wykonuje pracę inline. Adapter ITSOL nie rejestruje narzędzia delegacji, nie uruchamia procesów dzieci i nie konfiguruje modeli subagentów. Jeżeli bieżąca sesja udostępnia `Agent`, `Task` albo równoważne narzędzie z innej extension, agent może użyć pracy wieloagentowej zgodnie z ITSOL workflow/execution policy i rzeczywistym kontraktem tego narzędzia. Przykładem jest [`@tintinweb/pi-subagents`](https://pi.dev/packages/@tintinweb/pi-subagents), instalowany opcjonalnie przez:
 
-`itsol_delegate` domyślnie uruchamia zadania **w tle** i natychmiast zwraca identyfikator delegacji, liczbę uruchomionych/oczekujących work itemów oraz wyraźną informację, że acknowledgement nie jest dowodem ukończenia. Główny agent może w tym czasie wykonywać niezależną pracę. Nie powinien odpytywać statusu ani używać `sleep`; po zakończeniu dostaje automatyczny `followUp` zawierający zweryfikowane statusy, output/evidence, czas, usage, model i reasoning wraz ze źródłami routingu oraz ścieżkę pełnego wyniku, jeśli output został obcięty.
+```bash
+pi install npm:@tintinweb/pi-subagents
+```
 
-Gdy kolejny krok naprawdę zależy od wyniku, można jawnie użyć:
+Ta extension udostępnia między innymi narzędzie `Agent`, agentów foreground/background oraz pracę równoległą. Nie jest zależnością ITSOL Powers i nie jest instalowana automatycznie.
+
+Task state nie kontroluje zakończenia głównego zadania. Jedynym narzędziem własnym adaptera jest `itsol_task_state`; nie istnieje `itsol_delegate` ani narzędzia Pi `itsol_complete`, `itsol_plan_review`, `itsol_review_plan`, `itsol_review_verdict`, `itsol_initiative_state`, `itsol_qa_plan` i `itsol_qa_verdict`.
+
+Podstawowe komendy:
 
 ```text
-run_in_background: false
-```
-
-Ta opcja czeka na ten sam scheduler i zachowuje dotychczasowy wynik inline. Nie uruchamia osobnego, słabiej walidowanego mechanizmu. `itsol_plan_review` korzysta programatycznie z tej samej foreground ścieżki `itsol_delegate`, więc routing modelu/reasoningu, kolejka, accounting, scope i walidacja polityki mają jedno miejsce implementacji.
-
-W interaktywnym TUI nad edytorem pojawia się widget `Agents` z agentem, `work_item_id`, opisem, czasem, modelem/reasoningiem i bieżącą aktywnością. Nadmiar zadań trafia do kolejki FIFO; `max_parallel` ogranicza tylko liczbę jednoczesnych procesów. Widget jest ograniczony do 12 linii, bezpiecznie skraca szerokie dane i usuwa sekwencje sterujące terminala. W trybach RPC/JSON/print scheduler, accounting i wyniki nadal działają, ale komponent TUI nie jest renderowany.
-
-Ochrona i backpressure:
-
-- maksymalnie 32 oczekujące/uruchomione work itemy i 16 niepotwierdzonych grup wyników na sesję;
-- budżet utrwalonych raportów tła wynosi 8 MiB; pojedynczy raport nadal ma limit 50 KB/2000 linii;
-- `max_parallel: 0` blokuje delegację, a batch większy od limitu jest kolejkowany, nie odrzucany;
-- nowe delegacje oraz bezpośrednie `edit`/`write` rezerwują zakres już w preflight, więc konflikt jest blokowany także wtedy, gdy oba narzędzia wystąpią w jednym batchu;
-- `write_scope` opisuje dozwoloną własność zapisu, a `forbidden_scope` wyłącznie dodatkowe, rozłączne wykluczenia (`[]`, gdy ich nie ma); globy z rozłącznymi statycznymi prefiksami katalogów mogą działać równolegle, natomiast wspólne, nadrzędne i niejednoznaczne prefiksy nadal są blokowane;
-- arbitralnych zapisów ukrytych w `bash` nie da się niezawodnie sklasyfikować — procesy nie są sandboxem OS, dlatego nadal obowiązują task packet, write scope i odpowiedzialność głównego agenta;
-- task state, limity, review/reset oraz completion pozostają zablokowane, dopóki aktywna praca, accounting albo dostarczenie wyniku nie zostaną domknięte.
-
-Dostarczenie jest potwierdzane dopiero po zapisaniu wiadomości w aktywnej gałęzi sesji. Jeżeli automatyczny wynik pozostaje niepotwierdzony, model może awaryjnie użyć `itsol_delegate_result` z `task_id` i `delegation_id`; nie jest to narzędzie do pollingu. Także ten fallback czyści blocker dopiero po trwałym zapisaniu jego tool resultu, więc równoległe `itsol_complete` nie może przedwcześnie zakończyć zadania.
-
-`/tree` jest blokowane, gdy istnieje uruchomiony/zakolejkowany agent, rezerwacja zapisu, błąd accountingu albo niepotwierdzony wynik. Operator powinien poczekać na zakończenie i automatyczny follow-up albo jawnie odebrać wskazany wynik przez `itsol_delegate_result`; po usunięciu zobowiązań nawigacja jest ponownie dostępna, a extension odtwarza stan wybranej gałęzi.
-
-Przy `/reload`, `/new`, `/resume`, `/fork` lub wyjściu procesy dzieci są kończone i **nie są wznawiane**. W starej sesji zostaje ograniczony raport `failed/interrupted`, który można odebrać po ponownym otwarciu. Extension nie wysyła go ponownie automatycznie, żeby uniknąć duplikatów. Pi przechowuje wpisy sesji append-only, więc wcześniejsze ograniczone snapshoty pozostają lokalnie do czasu rotacji/usunięcia sesji; prywatne pliki w katalogu tymczasowym mają żywotność zależną od systemu. Implementacja jest testowana z Pi `0.80.10`.
-
-Cost-aware model router używa kolejno jawnego `task.model`, mapowania `model_profile` i roli, modelu głównej sesji, a na końcu domyślnego modelu Pi. Mapowania można zdefiniować globalnie w `~/.pi/agent/itsolpowers.json` i nadpisać w zaufanym projekcie przez `.pi/itsolpowers.json`:
-
-```json
-{
-  "modelProfiles": {
-    "economy": {
-      "default": {
-        "model": "provider/cheap-model",
-        "thinking": "low"
-      }
-    },
-    "balanced": {
-      "explore": {
-        "model": "provider/cheap-model",
-        "thinking": "low"
-      },
-      "plan": {
-        "model": "provider/standard-model",
-        "thinking": "medium"
-      },
-      "implement": {
-        "model": "provider/standard-model",
-        "thinking": "medium"
-      },
-      "review": {
-        "model": "provider/strong-model",
-        "thinking": "medium"
-      }
-    },
-    "frontier": {
-      "default": {
-        "model": "provider/frontier-model",
-        "thinking": "high"
-      }
-    }
-  }
-}
-```
-
-Role to `explore`, `plan`, `implement` i `review`. Można przekazać ją jawnie jako `task.role`; w przeciwnym razie extension klasyfikuje rolę z definicji agenta. Agenci posiadający narzędzia zapisu są zawsze klasyfikowani jako `implement`. Jawny `task.model` ma pierwszeństwo. Przy `model_control: enforced` każdy model musi odpowiadać skonfigurowanemu mapowaniu profilu i roli. Stary skrócony format `"explore": "provider/model"` pozostaje obsługiwany.
-
-`/itsol-models configure` uruchamia interaktywny wizard wyboru scope i profilu. W ramach jednej sesji konfiguratora można ustawić wiele ról; dla każdej wybiera się model lub dziedziczenie oraz poziom reasoning. Po każdej roli można przejść do następnej, zapisać wszystkie zmiany w jednym kroku albo anulować bez zapisu. Lista poziomów reasoning w wizardzie jest pobierana dynamicznie z wybranego modelu przez natywne metadane Pi (`getSupportedThinkingLevels`), więc może obejmować np. `off`, `minimal`, `low`, `medium`, `high`, `xhigh` lub `max` zależnie od modelu. Extension zawsze dopasowuje poziom do faktycznych możliwości modelu (`model-clamp`). Mapping profile+role — również `xhigh` lub `max` — wygrywa z advisory reasoning presetu. `policy-clamp` pojawia się wyłącznie wtedy, gdy użytkownik albo `.itsol.md` jawnie ustawi `reasoning_control: enforced`; domyślne presety używają advisory fallback i nie obcinają skonfigurowanych ról. Przykładowy twardy limit repo:
-
-```yaml
-execution:
-  restrictions:
-    - match:
-        path: cost-sensitive
-      reasoning_profile: medium
-      reasoning_control: enforced
-```
-
-Dla istniejącego task state utworzonego przez starszą wersję można zdjąć dawny domyślny clamp bez zmiany modelu/presetu:
-
-```text
-/itsol reasoning advisory
-```
-
-Komendy stanu, inicjatyw i modeli:
-
-```text
-/itsol-init
-/itsol-init guided
-/itsol initiative start <business-document-path>
-/itsol initiative status
-/itsol initiative activate <initiative-id>
-/itsol initiative resume [initiative-id]
-/itsol initiative pause
-# equivalent dedicated command:
-/itsol-initiative start <business-document-path>
-/itsol-initiative status
-/itsol-initiative activate <initiative-id>
-/itsol-initiative resume [initiative-id]
-/itsol-initiative pause
 /itsol status
 /itsol activate <task-id>
 /itsol mode governed|autonomous-planned|direct
 /itsol preset economy|standard|deep
-/itsol reasoning advisory
-/itsol reasoning enforced <low|medium|high>
-/itsol agents unlimited|0..64
-/itsol parallel 0..10
 /itsol reset [task-id]
-/itsol-models status
-/itsol-models reload
-/itsol-models configure
-/itsol-policy status
-/itsol-policy reload
-/itsol-review status
-/itsol-review profile off|poc|balanced|strict|default
-/itsol-review off
-/itsol-review rerun
 ```
 
-`/itsol-init` natychmiast tworzy bezpieczny root `.itsol.md`, bez nadpisywania istniejącego pliku. Scaffold używa `governed`, `standard`, `balanced` review i `automatic` QA, a nieznane fakty projektu oznacza jako `unknown`. `/itsol-init guided` uruchamia bounded repo-memory discovery: agent inspekuje lekkie manifesty, proponuje mapę projektów, TDD/verification/review/QA policy i pyta tylko o materialne braki. Nie tworzy task state ani planów, nie uruchamia delegowanego code review/QA i nie przepuszcza całego worktree przez review; po zapisie waliduje `.itsol.md` parserem oraz jednym inline self-review i kończy.
-
-`standard` i `deep` domyślnie używają `max_subagents: unlimited` oraz `max_parallel: 3`: workflow może dobrać dowolną liczbę typów specjalistów, ponownie używać ten sam typ dla różnych work itemów i wykonywać je batchami do trzech procesów. Numeryczny limit typów agentów pojawia się wyłącznie po jawnym `/itsol agents N`, restrykcji `.itsol.md` albo wyborze restrykcyjnego `economy`. `max_parallel` ogranicza tylko jednoczesne procesy, nie całkowite pokrycie workflow.
-
-### Automatyczna polityka `.itsol.md`
-
-Extension samodzielnie znajduje root repozytorium, czyta root `.itsol.md` oraz najbardziej szczegółowe lokalne override'y, parsuje bloki YAML i normalizuje workflow, execution i review restrictions, Monorepo Map, TDD mode, verification commands, agent workflow notes i known constraints. Znormalizowana polityka jest wstrzykiwana do system promptu; agent nie powinien ponownie czytać ani parsować `.itsol.md`, chyba że użytkownik prosi o utworzenie, edycję, inspekcję lub audyt tego pliku.
-
-`itsol_task_state` i `itsol_delegate` są walidowane względem dopasowanych `allowed_modes`, ograniczeń ścieżek i operacji, `max_subagents`, `max_parallel`, `max_review_rounds` oraz `stop_after`. Task state może przekazać `policy_context.paths` i `policy_context.operations`, a delegowane taski mogą wskazać `operations`. Błędny YAML jest raportowany i blokuje użycie polityki zamiast cichego fallbacku.
-
-### Review orchestrator
-
-Review jest sterowane niezależną polityką projektu. Profile `off`, `poc`, `balanced` i `strict` określają trigger, delegowanie, automatyczny re-review oraz limit rund. Domyślny `balanced` używa `adaptive`: agent sam decyduje, czy formalne review ma sens oraz czy wykonać je inline czy przez specjalistów. `manual` działa wyłącznie na żądanie, a `final` wymusza jedną rundę przed completion. Execution policy pozostaje twardym sufitem zasobów.
-
-```yaml
-workflow:
-  default_mode: direct
-execution:
-  default_preset: economy
-review:
-  default_profile: poc
-  trigger: final
-  delegation: never
-  auto_rereview: never
-  max_rounds: 1
-  plan_max_rounds: 2
-  allowed_profiles: [off, poc, balanced, strict]
-```
-
-Dla profilu `off` completion nie wymaga planu ani verdictu. Przy `adaptive` agent najpierw ocenia koszt i wartość review; mała, konwencjonalna, dobrze zweryfikowana zmiana może zakończyć się bez formalnej rundy. Jeśli review jest wymagane albo wybrane, `itsol_review_plan` analizuje diff i przyjmuje strategię `inline`, `specialists` lub `adaptive` wraz z uzasadnieniem. `strict` może nadpisać zbyt wąski wybór.
-
-Specjaliści są dobierani tylko wtedy, gdy niezależna wiedza realnie zwiększa pewność — np. przy materialnym ryzyku security/data/infra, szerokim cross-cutting scope lub diffie zbyt dużym na jeden kontekst. Sama liczba plików, słowo w komentarzu albo luźne dopasowanie kategorii nie wystarcza. Klasyfikacja treści pomija komentarze, a reviewer konkretnego silnika bazy jest wybierany wyłącznie przy śladzie tego silnika w zmienionych ścieżkach; nieznany silnik używa review neutralnego technologicznie. Plan respektuje limity wykonania; obowiązkowe review z profilu `strict`, które się w nich nie mieści, pozostaje jawnie `blocked`.
-
-Po inline lub multi-agent review `itsol_review_verdict` deduplikuje findings i odrzuca niematerialne blokady. `changes-requested` wymaga `Blocker` albo konkretnego findingu `critical/high` z wiarygodną ścieżką awarii. Sugestie, nity, preferencje stylistyczne, opcjonalne refaktory, spekulacyjne edge case'y i unrelated legacy debt nie blokują ani nie uzasadniają re-review. Pełne coverage gaps są twarde w `strict`; w `balanced` blokują tylko brak wybranego/wymaganego reviewera.
-
-Każdy plan zapisuje fingerprint diffu. Zmiana kodu po verdictcie unieważnia wcześniejsze `approve`. Automatyczny re-review jest sygnalizowany tylko po `changes-requested`, gdy fingerprint faktycznie się zmienił i pozostała dostępna runda. `after-fixes` uruchamia pojedynczą kolejną rundę, `until-approved` działa do zatwierdzenia lub twardego limitu, a `never` wyłącza automatyzację.
-
-### Completion gate
-
-Każde zarządzane zadanie kończy się przez `itsol_complete`. Narzędzie sprawdza dokładne pokrycie `done_when` dowodami, aktywnych agentów, najnowsze statusy delegacji, review evidence, artifact state i osiągnięty `stop_after`. Pierwsze odrzucenie daje jeden automatyczny corrective turn; kolejne odrzucenie przechodzi do końcowego podsumowania jako wynik niekompletny. Uczciwe `partial`, `blocked` i `failed` są akceptowane tylko z jawnymi `unverified` gaps. Po zaakceptowanym lub finalnie odrzuconym gate extension tymczasowo wyłącza narzędzia i wymusza jedną końcową turę tekstową z podsumowaniem rezultatu, osiągnięć, kluczowych ustaleń, weryfikacji i pozostałych luk, po czym przywraca wcześniejszy zestaw narzędzi. Zaakceptowany wynik jest utrwalany w task state i widoczny w footerze.
-
-Procesy nie są sandboxem systemu operacyjnego; write scopes są walidowane w task packetach, ale komendy shell nadal działają z uprawnieniami użytkownika.
+Adapter nie zarządza wyborem modelu ani reasoningiem Pi. Pola model/reasoning w informacyjnym task state pozostają częścią wspólnego kontraktu execution policy, ale extension ich nie egzekwuje.
 
 Diagnostyka:
 

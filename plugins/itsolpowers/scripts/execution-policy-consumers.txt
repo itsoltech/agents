@@ -12,14 +12,6 @@ plugins/itsolpowers/agents/itsol-task-intake.md
 plugins/itsolpowers/agents/itsol-tdd-workflow.md
 plugins/itsolpowers/agents/itsol-technical-planning.md
 plugins/itsolpowers/agents/using-itsolpowers.md
-plugins/itsolpowers/extensions/pi/completion-gate.ts
-plugins/itsolpowers/extensions/pi/delegate-tool.ts
-plugins/itsolpowers/extensions/pi/model-router.ts
-plugins/itsolpowers/extensions/pi/plan-review.ts
-plugins/itsolpowers/extensions/pi/policy.ts
-plugins/itsolpowers/extensions/pi/qa-orchestrator.ts
-plugins/itsolpowers/extensions/pi/repo-policy.ts
-plugins/itsolpowers/extensions/pi/review-orchestrator.ts
 plugins/itsolpowers/extensions/pi/task-state.ts
 plugins/itsolpowers/hooks/bootstrap-context-pi.md
 plugins/itsolpowers/hooks/bootstrap-context.md
