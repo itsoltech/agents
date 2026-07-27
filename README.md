@@ -66,7 +66,10 @@ uczciwych statusów niepełnego wykonania.
 
 Powtarzana wiedza domenowa znajduje się w
 `skills/_shared/references/`, natomiast procedury implementacji, debugowania i
-review pozostają lokalne dla odpowiednich skilli. Definicje 113 agentów są
+review pozostają bezpośrednio w odpowiednich `SKILL.md`. Skill wskazuje
+konkretne, warunkowo ładowane referencje bez pośredniego `references/guide.md`;
+historia migracji i ogólne instrukcje typu „przeczytaj indeks” nie należą do
+kontekstu runtime. Definicje 113 agentów są
 generowane z czytelnych źródeł w `scripts/agent-sources/`; wygenerowany drift
 sprawdza `npm run check:agent-contracts`.
 
@@ -75,6 +78,7 @@ Zmiany kontekstu można mierzyć i weryfikować lokalnie:
 ```bash
 npm --prefix plugins/itsolpowers run audit:context -- --plugin-root . --revision working-tree --format human
 npm --prefix plugins/itsolpowers run validate:context-evals
+npm --prefix plugins/itsolpowers run test:skill-layout
 npm --prefix plugins/itsolpowers run validate:context-engineering
 ```
 

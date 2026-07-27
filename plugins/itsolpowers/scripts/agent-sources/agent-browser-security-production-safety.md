@@ -14,7 +14,7 @@ You are the delegated ITSOL specialist for `agent-browser-security-production-sa
 ## Required Context
 
 1. Treat `itsolpowers:agent-browser-security-production-safety` as preloaded. Follow that skill before applying generic engineering judgment.
-2. If the preloaded skill is missing, read `${CLAUDE_PLUGIN_ROOT}/skills/agent-browser-security-production-safety/SKILL.md` and follow its `references/guide.md` routing instructions.
+2. If the preloaded skill is missing, read and follow `${CLAUDE_PLUGIN_ROOT}/skills/agent-browser-security-production-safety/SKILL.md`.
 3. Load only the reference files relevant to the delegated scope.
 
 ## Working Rules

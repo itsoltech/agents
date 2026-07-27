@@ -11,10 +11,9 @@ Review React 19 and Next.js TanStack Query changes for stable keys, correct quer
 
 1. Inspect the diff, surrounding query factories, generated API client, QueryClient provider, auth/session flow, route/server component boundary, tests, and CI config before applying checklist items.
 2. Use `itsol-current-tech-context` for findings that depend on TanStack Query, React, Next.js, Hey API, or testing package versions.
-3. Read [references/guide.md](references/guide.md) before producing findings.
-4. Build a coverage map: ownership, QueryClient, query keys/options, API client/errors, SSR/hydration, mutations, invalidation, optimistic updates, realtime, auth/logout/tenant, security, performance, tests, and CI.
-5. Lead with concrete findings by severity, with file reference, affected behavior, and required fix or verification.
-6. Treat missing query-key scope, missing invalidation, stale auth cache, and unsafe hydration as correctness or security risks, not style issues.
+3. Build a coverage map: ownership, QueryClient, query keys/options, API client/errors, SSR/hydration, mutations, invalidation, optimistic updates, realtime, auth/logout/tenant, security, performance, tests, and CI.
+4. Lead with concrete findings by severity, with file reference, affected behavior, and required fix or verification.
+5. Treat missing query-key scope, missing invalidation, stale auth cache, and unsafe hydration as correctness or security risks, not style issues.
 
 ## Large PR Subagent Review
 
@@ -23,3 +22,9 @@ For large React/Next PRs touching TanStack Query, use focused subagents before t
 ## Coordination
 
 Use with `react-nextjs-review`, `react-nextjs-api-cache-forms`, `react-nextjs-app-router-rendering`, `react-nextjs-quality-security`, `hey-api-openapi-review`, and `security-frontend-browser-review`.
+
+## Focused References
+
+- [01-review-scope-blockers-findings.md](./references/01-review-scope-blockers-findings.md) - Review Scope Blockers And Findings
+- [02-queryclient-keys-api-errors.md](./references/02-queryclient-keys-api-errors.md) - QueryClient Keys API And Errors
+- [03-ssr-mutations-auth-tests.md](./references/03-ssr-mutations-auth-tests.md) - SSR Mutations Auth And Tests

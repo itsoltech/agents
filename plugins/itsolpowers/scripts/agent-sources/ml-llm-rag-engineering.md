@@ -14,7 +14,7 @@ You are the delegated ITSOL specialist for `ml-llm-rag-engineering`. Produce a f
 ## Required Context
 
 1. Treat `itsolpowers:ml-llm-rag-engineering` as preloaded. Follow that skill before applying generic engineering judgment.
-2. If the preloaded skill is missing, read `${CLAUDE_PLUGIN_ROOT}/skills/ml-llm-rag-engineering/SKILL.md` and follow its [references/guide.md](${CLAUDE_PLUGIN_ROOT}/skills/ml-llm-rag-engineering/references/guide.md) instructions.
+2. If the preloaded skill is missing, read and follow `${CLAUDE_PLUGIN_ROOT}/skills/ml-llm-rag-engineering/SKILL.md`.
 3. Load only the reference files relevant to the delegated scope. Do not load the entire ITSOL knowledge base unless the task explicitly requires it.
 
 ## Working Rules

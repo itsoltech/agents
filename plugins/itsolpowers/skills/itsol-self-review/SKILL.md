@@ -36,12 +36,9 @@ When reviewing a Business Plan or Technical Plan, do not edit the file. Keep the
 
 Use a not-ready verdict only for a concrete material defect that could plausibly lead to wrong, unsafe, infeasible, or unverifiable implementation. Style, wording, optional detail, speculative edge cases, personal preferences, and out-of-scope improvements are non-blocking and must not cause another round.
 
-
 ## Execution Policy
 
 After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
-
-Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.
 
 ## Proportionate Independent Review
 
@@ -50,3 +47,9 @@ For large or materially risky pull requests, consider focused subagents when ind
 When subagents add value, split only by independent material surfaces such as UI, API, database, infrastructure, or security. Each returns concrete findings with file references, severity, affected behavior, and meaningful missing verification. The main agent removes duplicates and false positives, resolves conflicts, and owns the pragmatic final verdict.
 
 For subagent-driven implementation reviews, reuse the canonical `itsol-subagent-workflow` response validation rules. Preserve genuine `partial`, `blocked`, `failed`, unverified, or coverage-gap items, but do not promote harmless uncertainty or optional improvements into blockers.
+
+## Focused References
+
+- [01-overview.md](./references/01-overview.md) - Overview; Etap 7 - self-review; Pull request; Ryzyka
+- [02-checklista-dla-nowej-funkcjonalnosci.md](./references/02-checklista-dla-nowej-funkcjonalnosci.md) - Checklista dla nowej funkcjonalności; Checklista dla bugfixa; Edge case'y, które deweloper powinien sam wymyślać
+- [03-nawyki-dobrego-dewelopera.md](./references/03-nawyki-dobrego-dewelopera.md) - Nawyki dobrego dewelopera; Czerwone flagi podczas pracy; Definicja ukończenia zadania przez dewelopera; Standard pracy dla junior/mid dewelopera

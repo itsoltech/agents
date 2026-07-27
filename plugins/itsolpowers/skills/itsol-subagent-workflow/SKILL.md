@@ -14,9 +14,11 @@ Build a dependency-aware task graph, set a concurrency limit, and assign every p
 
 Only the main agent delegates. Delegated agents must not spawn agents or invoke external agent CLIs. Never set `maxTurns`. A child response must use `completed`, `partial`, `blocked`, or `failed`, but the main agent accepts `completed` only after validating packet evidence and every `done_when` criterion. Commit only when separately authorized, using Angular convention and one coherent verified slice; otherwise leave changes uncommitted.
 
-
 ## Execution Policy
 
 After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
 
-Read [references/guide.md](references/guide.md) and the focused delegation/review references before delegating.
+## Focused References
+
+- [01-planning-and-delegation.md](./references/01-planning-and-delegation.md) - Planning And Delegation
+- [02-review-commit-validation.md](./references/02-review-commit-validation.md) - Review Commit And Validation

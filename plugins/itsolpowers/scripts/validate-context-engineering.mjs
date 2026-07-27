@@ -27,6 +27,7 @@ const commands = [
   ["npm", ["run", "check:agent-contracts"]],
   ["npm", ["run", "test:agent-contracts"]],
   ["npm", ["run", "test:context-package"]],
+  ["npm", ["run", "test:skill-layout"]],
   ["npm", ["run", "test:context-rollback"]],
 ];
 

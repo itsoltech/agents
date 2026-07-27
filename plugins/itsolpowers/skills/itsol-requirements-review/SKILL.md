@@ -20,9 +20,15 @@ Resolve and preserve the complete task state through `itsol-workflow-mode` befor
 6. In `governed`, feed clarified material to `itsol-functional-planning` and require explicit user approval before technical planning. In `autonomous-planned`, feed it forward without an approval pause. In `direct`, route directly to implementation with `artifact_state: not-required`.
 7. Distinguish clarification from scope change and make blockers, assumptions, owners, protected constraints, and unresolved risks explicit.
 
-
 ## Execution Policy
 
 After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
 
-Read [references/guide.md](references/guide.md) first; then read only the sector files relevant to the situation.
+## Focused References
+
+- [01-overview.md](./references/01-overview.md) - Overview; Cel dokumentu; Zakres; Zasady ogólne
+- [02-role-i-odpowiedzialnosci.md](./references/02-role-i-odpowiedzialnosci.md) - Role i odpowiedzialności
+- [03-zbieranie-informacji-od-klienta.md](./references/03-zbieranie-informacji-od-klienta.md) - Zbieranie informacji od klienta; Dokumentowanie ustaleń
+- [04-user-story.md](./references/04-user-story.md) - User story
+- [05-definition-of-ready.md](./references/05-definition-of-ready.md) - Definition of Ready; Refinement funkcjonalny; Dzielenie zadań; Zarządzanie zmianą zakresu
+- [06-standard-pracy-dla-mvp.md](./references/06-standard-pracy-dla-mvp.md) - Standard pracy dla MVP; Standard pracy dla rozwijanego produktu; Standard pracy dla produktu o wysokim ryzyku; Checklist dla prowadzącego projekt

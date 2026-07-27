@@ -20,8 +20,20 @@ Debug local browser interactions by treating `agent-browser` as a user-facing in
 7. Wait for concrete user-visible or business results before judging behavior. Use fixed sleeps only for diagnostics, videos, or animation states that have no observable end condition.
 8. Reproduce interactions through the UI. Do not use eval or DOM surgery to bypass overlays, validation, focus behavior, scroll behavior, or disabled states.
 9. Classify findings clearly as product, test-script, tooling, environment, data, permissions, session, or external-service issues.
-10. Read [references/guide.md](references/guide.md), then load only the focused reference files needed for the issue.
 
 ## Coordination
 
 Use with `agent-browser-diagnostics-evidence` when console, network, HAR, trace, screenshots, videos, Web Vitals, or artifact redaction are in scope. Use with `agent-browser-qa-reporting` when turning reproduction evidence into QA handoff findings. Use framework-specific debugging skills after the browser evidence points to React, Svelte, routing, cache, auth, or API boundaries.
+
+## Reference Routing
+
+- Fresh snapshots, short-lived `@eN` references, semantic locator choice, and concrete waits: read [01-snapshots-refs-waits.md](./references/01-snapshots-refs-waits.md).
+- Scroll, hidden elements, forms, modals, dialogs, popups, tabs, and iframes: read [02-forms-scroll-modals-tabs-iframes.md](./references/02-forms-scroll-modals-tabs-iframes.md).
+- Stale refs, blocked clicks, never-ending loading, expired sessions, flaky behavior, and product-vs-tooling classification: read [03-flaky-tooling-environment.md](./references/03-flaky-tooling-environment.md).
+
+## Command Policy
+
+- Before command-sensitive work, check the installed command surface with `agent-browser --version` and `agent-browser --help`.
+- If the installed CLI supports versioned local guidance such as `agent-browser skills get core` or `agent-browser skills get dogfood`, load it and prefer that output. Older versions may not provide those commands.
+- Treat command snippets in these references as patterns. If installed CLI guidance differs, follow the local CLI guidance and preserve the interaction intent.
+- Prefer evidence from visible UI behavior, snapshots, current URL, console, network, screenshots, and repeatable reproduction over assumptions from one command result.

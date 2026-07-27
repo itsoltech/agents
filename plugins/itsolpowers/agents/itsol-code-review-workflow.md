@@ -19,7 +19,7 @@ You are already the delegated ITSOL specialist for `itsol-code-review-workflow`.
 ## Required Context
 
 1. Treat `itsolpowers:itsol-code-review-workflow` as preloaded. Follow that skill before applying generic engineering judgment.
-2. If the preloaded skill is missing, read `${CLAUDE_PLUGIN_ROOT}/skills/itsol-code-review-workflow/SKILL.md` and follow its [references/guide.md](${CLAUDE_PLUGIN_ROOT}/skills/itsol-code-review-workflow/references/guide.md) instructions.
+2. If the preloaded skill is missing, read and follow `${CLAUDE_PLUGIN_ROOT}/skills/itsol-code-review-workflow/SKILL.md`.
 3. Load only the reference files relevant to the delegated scope. Do not load the entire ITSOL knowledge base unless the task explicitly requires it.
 
 ## Working Rules

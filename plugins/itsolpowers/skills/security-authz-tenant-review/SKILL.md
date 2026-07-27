@@ -10,10 +10,9 @@ Check object-level authorization, tenant context, role assumptions, workflow sta
 ## Process
 
 1. Inspect the changed behavior and data flow before listing risks.
-2. Read [references/guide.md](references/guide.md); it contains the ITSOL security knowledge extracted for this skill.
-3. Check negative paths, bypasses, tenant/object boundaries, logs, cache, async jobs, and release impact where relevant.
-4. For review, report findings by severity with file references and concrete exploit or failure scenarios.
-5. For implementation, add controls and tests in the backend or trusted boundary; do not rely on frontend-only enforcement.
+2. Check negative paths, bypasses, tenant/object boundaries, logs, cache, async jobs, and release impact where relevant.
+3. For review, report findings by severity with file references and concrete exploit or failure scenarios.
+4. For implementation, add controls and tests in the backend or trusted boundary; do not rely on frontend-only enforcement.
 
 ## Large PR Subagent Review
 
@@ -25,3 +24,6 @@ When additional reviewers add value, split only by independent material surfaces
 
 Prefer code, tests, logs, config, API contracts, and data examples over assumptions.
 
+## Focused References
+
+- [01-authorization-tenant-review.md](./references/01-authorization-tenant-review.md) - Authorization Tenant Review

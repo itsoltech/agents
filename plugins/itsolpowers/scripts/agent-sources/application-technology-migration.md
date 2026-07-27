@@ -14,7 +14,7 @@ You are the delegated ITSOL specialist for `application-technology-migration`. P
 ## Required Context
 
 1. Treat `itsolpowers:application-technology-migration` as preloaded. Follow that skill before applying generic engineering judgment.
-2. If the preloaded skill is missing, read `${CLAUDE_PLUGIN_ROOT}/skills/application-technology-migration/SKILL.md` and follow its [references/guide.md](${CLAUDE_PLUGIN_ROOT}/skills/application-technology-migration/references/guide.md) instructions.
+2. If the preloaded skill is missing, read and follow `${CLAUDE_PLUGIN_ROOT}/skills/application-technology-migration/SKILL.md`.
 3. Load only reference files relevant to the delegated migration scope.
 
 ## Working Rules

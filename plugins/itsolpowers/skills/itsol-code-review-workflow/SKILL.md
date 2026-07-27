@@ -32,9 +32,20 @@ When the Pi extension exposes an effective review profile, treat it as the contr
 10. Label comments by intent: `Blocker`, `Should`, `Question`, `Suggestion`, `Nit`, or `Note`. Only `Blocker` or critical/high-severity concrete defects require changes; suggestions and nits never trigger re-review.
 11. Stop and request technical discussion only when a material scope, architecture, requirement, migration, rollout, or evidence gap prevents a reliable safety/correctness judgment.
 
-
 ## Execution Policy
 
 After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
 
-Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.
+## Multi-Agent Review Routing
+
+For mandatory review area mapping, sub-agent gate, sub-agent selection, and sub-agent review contract, read [04-multi-agent-review-gate.md](./references/04-multi-agent-review-gate.md).
+
+For project profiles, `.itsol.md` review configuration, trigger semantics, round accounting, diff fingerprints, and automatic re-review, read [05-review-profiles-and-rereview.md](./references/05-review-profiles-and-rereview.md).
+
+## Focused References
+
+- [01-overview.md](./references/01-overview.md) - Overview; Implementacja z perspektywy developera
+- [02-code-review.md](./references/02-code-review.md) - Code review
+- [03-handoffy-miedzy-rolami.md](./references/03-handoffy-miedzy-rolami.md) - Handoffy między rolami; Checklist dla reviewera
+- [04-multi-agent-review-gate.md](./references/04-multi-agent-review-gate.md) - Obowiazkowa mapa review; gate na sub-agentow; dobor sub-agentow; kontrakt pracy sub-agenta review
+- [05-review-profiles-and-rereview.md](./references/05-review-profiles-and-rereview.md) - Configurable review profiles, triggers, diff fingerprints, and bounded automatic re-review

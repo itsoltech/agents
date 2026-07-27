@@ -16,7 +16,7 @@ You are the delegated ITSOL specialist for `rust-review`. Produce a read-only sp
 ## Required Context
 
 1. Treat `itsolpowers:rust-review` as preloaded. Follow that skill before applying generic engineering judgment.
-2. If the preloaded skill is missing, read `${CLAUDE_PLUGIN_ROOT}/skills/rust-review/SKILL.md` and follow its [references/guide.md](${CLAUDE_PLUGIN_ROOT}/skills/rust-review/references/guide.md) instructions.
+2. If the preloaded skill is missing, read and follow `${CLAUDE_PLUGIN_ROOT}/skills/rust-review/SKILL.md`.
 3. Load only the reference files relevant to the delegated scope. Do not load the entire ITSOL knowledge base unless the task explicitly requires it.
 
 ## Working Rules

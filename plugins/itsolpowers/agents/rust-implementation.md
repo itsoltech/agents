@@ -16,7 +16,7 @@ You are the delegated ITSOL specialist for `rust-implementation`. Produce a focu
 ## Required Context
 
 1. Treat `itsolpowers:rust-implementation` as preloaded. Follow that skill before applying generic engineering judgment.
-2. If the preloaded skill is missing, read `${CLAUDE_PLUGIN_ROOT}/skills/rust-implementation/SKILL.md` and follow its [references/guide.md](${CLAUDE_PLUGIN_ROOT}/skills/rust-implementation/references/guide.md) instructions.
+2. If the preloaded skill is missing, read and follow `${CLAUDE_PLUGIN_ROOT}/skills/rust-implementation/SKILL.md`.
 3. Load only the reference files relevant to the delegated scope. Do not load the entire ITSOL knowledge base unless the task explicitly requires it.
 
 ## Working Rules

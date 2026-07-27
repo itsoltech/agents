@@ -48,7 +48,6 @@ export async function validateTargetStructure(pluginRoot) {
     "hooks/bootstrap-context-codex.md",
     "hooks/bootstrap-context-pi.md",
     "skills/using-itsolpowers/SKILL.md",
-    "skills/using-itsolpowers/references/guide.md",
   ]) {
     await requireNonEmptyFile(pluginRoot, relativePath);
   }
@@ -218,7 +217,7 @@ export async function evaluateTargetArchitecture({ pluginRoot, revision }) {
     audit.metrics.bootstrap.file_count !== 1 ||
     audit.metrics.adapters.file_count !== 3 ||
     audit.metrics.router.file_count !== 1 ||
-    audit.metrics.router_guide.file_count !== 1 ||
+    audit.metrics.router_guide.file_count > 1 ||
     audit.metrics.codex_default_prompt.file_count === 0
   ) {
     throw new Error(

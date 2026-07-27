@@ -14,9 +14,24 @@ Resolve all seven task-state fields through `itsol-workflow-mode`. In every mode
 
 Never call an autonomous plan user-approved. Ask only for unresolved material ambiguity or independent protected-action authority. Apply `.itsol.md` through `itsol-repo-memory` when present and propagate all seven fields to artifacts and handoffs.
 
-
 ## Execution Policy
 
 After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
 
-Read [references/guide.md](references/guide.md), then only relevant evidence references.
+Only relevant evidence references.
+
+Apply plan and approval prerequisites only after resolving `itsol-workflow-mode`; evidence and root-cause analysis remain mandatory in every mode.
+
+## Technical Fix Plan Gate Routing
+
+For bugfix planning, approval guardrails, Fix Decision Gate, Technical Fix Plan template, self-review, and Rubber Duck Plan Review, read [07-technical-fix-plan-gate.md](./references/07-technical-fix-plan-gate.md).
+
+## Focused References
+
+- [01-overview.md](./references/01-overview.md) - Overview; Zasada ogólna; Dwa tryby pracy
+- [02-praca-nad-naprawa-bledu.md](./references/02-praca-nad-naprawa-bledu.md) - Praca nad naprawą błędu
+- [03-pytania-do-gumowej-kaczki-przy-bugfixie.md](./references/03-pytania-do-gumowej-kaczki-przy-bugfixie.md) - Pytania do gumowej kaczki przy bugfixie; Antywzorce przy bugfixach
+- [04-debugowanie-krok-po-kroku.md](./references/04-debugowanie-krok-po-kroku.md) - Debugowanie krok po kroku; Checklista dla bugfixa; Proces myślowy - przykład bugfixa
+- [05-edge-case-y-ktore-deweloper-powinien-sam-wymyslac.md](./references/05-edge-case-y-ktore-deweloper-powinien-sam-wymyslac.md) - Edge case'y, które deweloper powinien sam wymyślać; Kiedy prosić o pomoc; Komunikacja statusu; Czerwone flagi podczas pracy
+- [06-definicja-ukonczenia-zadania-przez-dewelopera.md](./references/06-definicja-ukonczenia-zadania-przez-dewelopera.md) - Definicja ukończenia zadania przez dewelopera
+- [07-technical-fix-plan-gate.md](./references/07-technical-fix-plan-gate.md) - Technical Fix Plan Gate; Fix Decision Gate; Approval Gate; plan file template; self-review; Rubber Duck Plan Review

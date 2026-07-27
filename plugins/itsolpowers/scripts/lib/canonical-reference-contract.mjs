@@ -379,24 +379,24 @@ async function validateCanonicalContent({
       cluster.members.map((memberPath) => memberPath.split("/")[1]),
     );
     for (const consumer of consumers) {
-      const guidePath = `skills/${consumer}/references/guide.md`;
-      const guideAbsolute = path.join(pluginRoot, guidePath);
-      if (!(await pathExists(guideAbsolute))) {
-        findings.push({ kind: "missing-consumer-guide", path: guidePath });
+      const skillPath = `skills/${consumer}/SKILL.md`;
+      const skillAbsolute = path.join(pluginRoot, skillPath);
+      if (!(await pathExists(skillAbsolute))) {
+        findings.push({ kind: "missing-consumer-skill", path: skillPath });
         continue;
       }
-      const guide = await readFile(guideAbsolute, "utf8");
-      const linkedTargets = [...guide.matchAll(MARKDOWN_LINK_PATTERN)].map(
+      const skill = await readFile(skillAbsolute, "utf8");
+      const linkedTargets = [...skill.matchAll(MARKDOWN_LINK_PATTERN)].map(
         (match) =>
           path.resolve(
-            path.dirname(guideAbsolute),
+            path.dirname(skillAbsolute),
             decodeURIComponent(match[2].split("#", 1)[0].split("?", 1)[0]),
           ),
       );
       if (!linkedTargets.includes(canonicalTarget)) {
         findings.push({
-          kind: "consumer-guide-missing-canonical-link",
-          path: guidePath,
+          kind: "consumer-skill-missing-canonical-link",
+          path: skillPath,
           target: cluster.canonical,
         });
       }

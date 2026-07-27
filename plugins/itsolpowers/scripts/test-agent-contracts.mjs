@@ -593,14 +593,8 @@ for (const filename of runtimeFiles) {
   if (sha256(generatedBytes) !== baseline.raw_sha256) rawMismatches.push(filename);
 }
 assert.deepEqual(semanticMismatches, []);
-assert.deepEqual(rawMismatches, [
-  "itsol-bug-debugging.md",
-  "itsol-feature-implementation.md",
-  "itsol-repo-memory.md",
-  "itsol-self-review.md",
-  "itsol-subagent-workflow.md",
-]);
+assert.deepEqual(rawMismatches, []);
 
 console.log(
-  `agent-contract generation: PASS (${sourceContracts.length} agents; semantic parity 113/113; raw parity 108/113)`,
+  `agent-contract generation: PASS (${sourceContracts.length} agents; semantic parity 113/113; raw parity 113/113)`,
 );

@@ -32,9 +32,20 @@ In `autonomous-planned`, create the same Business and Technical Plan artifacts. 
 
 In `direct`, do not create or require persistent Business or Technical Plans, plan reviews, approvals, planning Decision Gates, plan paths, or execution-mode approval. Record `artifact_state: not-required`, establish the smallest safe implementation scope from the request and repo evidence, ask only about material ambiguity, then route to `itsol-feature-implementation` and `itsol-tdd-workflow` inline or through `itsol-subagent-workflow` as appropriate.
 
-
 ## Execution Policy
 
 After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
 
-Read [references/guide.md](references/guide.md) before presenting or reviewing planned-mode artifacts. If the task is not functional implementation, route to the narrower workflow.
+If the task is not functional implementation, route to the narrower workflow.
+
+This directory supplements the canonical `itsol-workflow-mode` contract; it does not redefine mode selection, authority, or transitions.
+
+## Routing
+
+- [01-planning-gates.md](./references/01-planning-gates.md) — mode-specific discovery, decision, artifact, approval, and execution routing.
+- [02-plan-review.md](./references/02-plan-review.md) — self-review and Rubber Duck Review for planned modes.
+- [03-deep-planning-interview.md](./references/03-deep-planning-interview.md) — governed discovery depth and autonomous material-ambiguity handling.
+- [04-business-plan.md](./references/04-business-plan.md) — Business Plan template with honest workflow and authorization metadata.
+- [05-technical-plan.md](./references/05-technical-plan.md) — Technical Plan template, TDD, delegation, and honest artifact state.
+
+Read only the references needed for the resolved mode. `direct` normally needs no planning reference beyond [01-planning-gates.md](./references/01-planning-gates.md); do not turn implementation notes into substitute plan gates.

@@ -19,4 +19,12 @@ Treat a rewrite as a product, technical, and operational migration. Do not start
 8. Self-review the migration plan for hidden scope, missing contracts, missing data strategy, weak rollback, missing current tech context, missing skills, untested behavior, and unresolved operational risk.
 9. For implementation, route each approved slice through `itsol-functional-planning` or `itsol-bug-debugging` as appropriate, then `itsol-tdd-workflow`, focused domain skills, review skills, and `itsol-subagent-workflow` when the slice is subagent-driven.
 
-Read [references/guide.md](references/guide.md) before making migration recommendations. If the task is only a small feature or bug in an existing migration, route to the narrower skill after checking migration constraints.
+If the task is only a small feature or bug in an existing migration, route to the narrower skill after checking migration constraints.
+
+## Focused References
+
+- [01-decision-and-inventory.md](./references/01-decision-and-inventory.md) - Decision And Inventory
+- [02-strategy-architecture-data.md](./references/02-strategy-architecture-data.md) - Strategy Architecture And Data
+- [03-implementation-testing-rollout.md](./references/03-implementation-testing-rollout.md) - Implementation Testing And Rollout
+- [04-security-docs-decommissioning.md](./references/04-security-docs-decommissioning.md) - Security Documentation And Decommissioning
+- [05-planning-templates-and-review.md](./references/05-planning-templates-and-review.md) - Planning Templates And Review

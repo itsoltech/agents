@@ -166,11 +166,20 @@ try {
     }
   }
 
-  const unrelatedTrackedPath =
-    "plugins/itsolpowers/skills/itsol-workflow-mode/SKILL.md";
+  const unrelatedTrackedPath = run(
+    "git",
+    ["ls-files", "-z"],
+    safetyRoot,
+  ).stdout
+    .split("\0")
+    .filter(Boolean)
+    .find((relativePath) =>
+      classify(relativePath) === null
+      && existsSync(path.join(safetyRoot, relativePath)),
+    );
   assert(
-    !manifest.behavior_paths.some((entry) => entry.path === unrelatedTrackedPath),
-    "safety fixture requires an unrelated tracked path",
+    unrelatedTrackedPath,
+    "safety fixture requires a tracked path outside the rollback manifest",
   );
   const unrelatedTracked = path.join(safetyRoot, unrelatedTrackedPath);
   const unrelatedTrackedOriginal = readFileSync(unrelatedTracked);

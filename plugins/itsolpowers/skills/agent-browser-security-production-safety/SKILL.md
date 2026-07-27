@@ -22,8 +22,7 @@ Use this skill when `agent-browser` work touches production-like environments, a
 6. Redact evidence before sharing: screenshots, videos, HAR, traces, console logs, network summaries, auth-state files, downloaded files, and copied page text must not expose secrets, PII, customer data, billing details, or sensitive identifiers unless explicitly required and approved.
 7. Use mocking, request interception, time travel, seeded failures, or resilience simulations only when the user allows them and the target is not production. Document that mocked results do not prove live production behavior.
 8. Run only security smoke scenarios inside the agreed scope. Do not perform invasive attacks, fuzzing, brute force, scanner-style crawling, exploit chaining, destructive payloads, or broad enumeration without explicit written scope.
-9. Read [references/guide.md](references/guide.md), then load only the focused reference files needed for the current session.
-10. End with a compact safety report: environment, permissions, consent status, actions taken, sensitive-data handling, redaction status, security smoke coverage, blocked checks, cleanup status, and residual risk.
+9. End with a compact safety report: environment, permissions, consent status, actions taken, sensitive-data handling, redaction status, security smoke coverage, blocked checks, cleanup status, and residual risk.
 
 ## Stop Conditions
 
@@ -38,3 +37,23 @@ Stop and ask for clarification before proceeding when:
 ## Coordination
 
 Use with `agent-browser-dogfood-workflow` for session chartering and black-box flow coverage. Use with `agent-browser-diagnostics-evidence` when collecting console, network, HAR, trace, screenshots, videos, or Web Vitals. Use security review skills when smoke checks expose authorization, browser security, file handling, secrets, or tenant-boundary risks.
+
+## Reference Routing
+
+- Auth state, cookies, tokens, secrets, PII, trusted versus untrusted browser content, prompt injection, and artifact redaction: read [01-auth-state-secrets-trust.md](./references/01-auth-state-secrets-trust.md).
+- Production read-only defaults, destructive-operation consent, billing, emails, payments, admin actions, data mutation, cleanup, test accounts, feature flags, mocking, and resilience limits: read [02-production-destructive-actions.md](./references/02-production-destructive-actions.md).
+- Security smoke scenarios for auth/session, permissions, tenant isolation, sensitive data exposure, CSP/security headers, file upload/download, CORS/CSRF signals, and scope limits: read [03-security-smoke-scenarios.md](./references/03-security-smoke-scenarios.md).
+
+## Command Version Policy
+
+- Before command work, inspect the installed CLI surface with `agent-browser --version` and `agent-browser --help`.
+- If the installed version supports versioned or local guidance such as `agent-browser skills get core` and `agent-browser skills get dogfood`, load it and treat it as the source of truth.
+- Older CLI versions may not support local skill guidance. In that case, rely on `--help`, keep commands conservative, and document the limitation.
+- Treat command snippets here as safe patterns only. The installed CLI guidance wins when syntax, flags, artifact paths, or behavior differ.
+- Record the `agent-browser` version in session metadata when evidence is collected.
+
+## Evidence Boundary
+
+- Do not paste secrets, bearer tokens, cookies, auth headers, passwords, API keys, one-time codes, raw auth-state files, PII, or private business data into the report.
+- Mask IDs when they are not required to prove the behavior.
+- Prefer artifact paths plus redacted summaries over raw logs, raw HAR, raw traces, or unredacted screenshots.

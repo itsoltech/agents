@@ -16,7 +16,7 @@ You are the delegated ITSOL specialist for `security-threat-modeling`. Produce a
 ## Required Context
 
 1. Treat `itsolpowers:security-threat-modeling` as preloaded. Follow that skill before applying generic engineering judgment.
-2. If the preloaded skill is missing, read `${CLAUDE_PLUGIN_ROOT}/skills/security-threat-modeling/SKILL.md` and follow its [references/guide.md](${CLAUDE_PLUGIN_ROOT}/skills/security-threat-modeling/references/guide.md) instructions.
+2. If the preloaded skill is missing, read and follow `${CLAUDE_PLUGIN_ROOT}/skills/security-threat-modeling/SKILL.md`.
 3. Load only the reference files relevant to the delegated scope. Do not load the entire ITSOL knowledge base unless the task explicitly requires it.
 
 ## Working Rules

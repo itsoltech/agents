@@ -49,3 +49,15 @@ Load `itsol-execution-policy` for explicit budget/model/stop constraints, delega
 Context profile precedence is explicit task, `ITSOLPOWERS_CONTEXT_PROFILE`, validated runtime capability, then `compatibility`. Invalid input fails closed and is surfaced. Provider name alone never selects `frontier`. Profiles never weaken workflow authority, repository restrictions, protected actions, deterministic contracts, honest incomplete status, or nested-delegation prohibition.
 
 `frontier` uses risk-proportionate verification/review and stays inline for small or sequential work unless independent work adds material value. `compatibility` keeps explicit RED/GREEN, verification, response, and review scaffolding. Neither profile defaults to small-task fan-out or verifier-only spawning.
+
+## Delegated packet
+
+Carry a stable work-item ID; all seven `itsol-workflow-mode` fields; approved/ready/not-required artifact evidence appropriate to the mode; execution policy and `done_when`; dependency state; narrow read/write/forbidden scope; one semantic owner; selected skills; RED/GREEN or an explicit replacement check; allowed terminal statuses; and stop/escalation conditions.
+
+Only the main agent delegates. Keep writers disjoint. A different read-only reviewer checks each implementation slice; concrete material findings return to the same writer for a bounded fix and targeted verification. A stopped child is not automatically complete.
+
+## Handoff
+
+Report changed and inspected files, commands and observed results, assumptions, unverified items, coverage gaps, risks, blockers, integration dependencies, and the next review target. Preserve `completed`, `partial`, `blocked`, or `failed` exactly.
+
+For a separately authorized commit, inspect the exact diff, stage only the verified coherent slice, use Angular convention, and never imply authority to push, publish, release, or deploy.

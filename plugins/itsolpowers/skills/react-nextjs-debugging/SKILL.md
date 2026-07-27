@@ -14,10 +14,16 @@ Debug React 19 and Next.js issues by isolating whether the failure belongs to se
 1. State expected behavior, actual behavior, impact, affected route/component, environment, and smallest reproducible symptom.
 2. Gather evidence from browser console, terminal logs, Network tab, request ids, telemetry, tests, build output, generated API output, config, and package versions before proposing a fix.
 3. Use `itsol-current-tech-context` when symptoms depend on React, Next.js, TanStack Query, Hey API, browser APIs, or package versions.
-4. Read [references/guide.md](references/guide.md), then isolate one failing boundary and compare with a known working path.
+4. Isolate one failing boundary and compare with a known working path.
 5. Write or update a regression test when repo policy supports it; otherwise document replacement verification.
 6. Use `itsol-bug-debugging`; in `governed`, require an approved Technical Fix Plan before implementation, while autonomous/direct prerequisites come from `itsol-workflow-mode`.
 
 ## Coordination
 
 Use with `react-nextjs-app-router-rendering`, `react-nextjs-api-cache-forms`, `react-nextjs-quality-security`, `security-frontend-browser-review`, `ui-frontend-testing-qa`, and `itsol-tdd-workflow`.
+
+## Focused References
+
+- [01-triage-rendering-hydration.md](./references/01-triage-rendering-hydration.md) - Triage Rendering And Hydration
+- [02-api-auth-runtime.md](./references/02-api-auth-runtime.md) - API Auth And Runtime
+- [03-ui-performance-fix-discipline.md](./references/03-ui-performance-fix-discipline.md) - UI Performance And Fix Discipline

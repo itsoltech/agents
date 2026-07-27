@@ -54,11 +54,6 @@ async function runSelfTest() {
       "skills/using-itsolpowers/SKILL.md",
       "---\nname: using-itsolpowers\ndescription: fixture\n---\nrouter\n",
     );
-    await writeFixture(
-      fixtureRoot,
-      "skills/using-itsolpowers/references/guide.md",
-      "fixture guide\n",
-    );
     await writeFixture(fixtureRoot, "agents/sample.md", "fixture agent\n");
     await writeFixture(
       fixtureRoot,

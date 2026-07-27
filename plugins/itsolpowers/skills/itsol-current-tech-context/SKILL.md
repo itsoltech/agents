@@ -20,4 +20,8 @@ Use current technology facts instead of stale model memory. Before making planni
 9. For Bun/npm/Node projects, use the package manager detected in the repo. For new projects, choose current stable packages and record major-version assumptions.
 10. Include the result in plans and reviews as `Current Tech Context`: versions found, sources checked, version/upgrade decisions, compatibility risks, and any places where internet access was unavailable.
 
-Read [references/guide.md](references/guide.md) for source selection, repo detection hints, and how to write the Current Tech Context section.
+## Focused References
+
+- [01-output-and-existing-repo.md](./references/01-output-and-existing-repo.md) - Output And Existing Repository
+- [02-new-projects-and-sources.md](./references/02-new-projects-and-sources.md) - New Projects And Sources
+- [03-planning-and-review-rules.md](./references/03-planning-and-review-rules.md) - Planning And Review Rules

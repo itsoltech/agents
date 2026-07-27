@@ -22,9 +22,12 @@ Classify the work before changing code. Resolve and record the task's mode throu
 8. Keep protected-action authority separate from workflow mode. Stop only for missing authority or an unresolved material choice described by the canonical contract.
 9. Propagate the complete seven-field state through compaction, handoffs, plan metadata when plans exist, and every subagent task packet.
 
-
 ## Execution Policy
 
 After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
 
-Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files.
+## Focused References
+
+- [01-overview.md](./references/01-overview.md) - Overview; Cel dokumentu; Zasada ogólna; Dwa tryby pracy
+- [02-etap-2-doprecyzowanie-brakow.md](./references/02-etap-2-doprecyzowanie-brakow.md) - Etap 2 - doprecyzowanie braków; Etap 3 - analiza wpływu na system; Kiedy prosić o pomoc; Komunikacja statusu
+- [03-definicja-gotowosci-zadania-do-implementacji.md](./references/03-definicja-gotowosci-zadania-do-implementacji.md) - Definicja gotowości zadania do implementacji; Standard pracy dla junior/mid dewelopera

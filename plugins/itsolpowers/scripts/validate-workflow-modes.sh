@@ -114,7 +114,6 @@ done < "${tmp_dir}/entries"
 
 required_contract_files=(
   "plugins/itsolpowers/skills/itsol-workflow-mode/SKILL.md"
-  "plugins/itsolpowers/skills/itsol-workflow-mode/references/guide.md"
   "plugins/itsolpowers/skills/itsol-workflow-mode/agents/openai.yaml"
   "plugins/itsolpowers/agents/itsol-workflow-mode.md"
 )

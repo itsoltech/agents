@@ -18,9 +18,15 @@ Make QA testable: provide scope, data, environments, risks, scenarios, and a cle
 7. Route failed QA to `implementation-fix`, `plan-revision`, or `user-decision`. After remediation, rerun applicable plan review and code review and then fresh QA. Do not close the phase until QA passes.
 8. For release readiness, check QA result, regression, support notes, monitoring, feature flags, rollback, and production verification needs.
 
-
 ## Execution Policy
 
 After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
 
-Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files. Then read only the sector files relevant to the current situation.
+## Focused References
+
+- [01-overview.md](./references/01-overview.md) - Overview; Definition of Done
+- [02-qa-i-testowanie.md](./references/02-qa-i-testowanie.md) - QA i testowanie
+- [03-bug-report.md](./references/03-bug-report.md) - Bug report; Jak wymyślać edge case'y
+- [04-statusy-w-issue-trackerze.md](./references/04-statusy-w-issue-trackerze.md) - Statusy w issue trackerze; Handoffy między rolami; Release i wdrożenie; Metryki procesu
+- [05-szablony.md](./references/05-szablony.md) - Szablony
+- [06-checklist-dla-developera.md](./references/06-checklist-dla-developera.md) - Checklist dla developera; Checklist dla QA

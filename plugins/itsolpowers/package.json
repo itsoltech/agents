@@ -48,6 +48,7 @@
     "test:context-package": "node ./scripts/test-context-package.mjs",
     "test:context-profiles": "node ./scripts/test-context-profiles.mjs",
     "test:context-rollback": "node ./scripts/test-context-rollback.mjs",
+    "test:skill-layout": "node ./scripts/test-skill-layout.mjs",
     "validate:workflow-modes": "bash ./scripts/validate-workflow-modes.sh",
     "validate:canonical-references": "node ./scripts/test-canonical-references.mjs",
     "validate:context-engineering": "node ./scripts/validate-context-engineering.mjs",

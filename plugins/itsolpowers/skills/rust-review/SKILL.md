@@ -10,10 +10,9 @@ Review Rust changes for correctness, clear ownership, controlled allocation, asy
 ## Process
 
 1. Inspect the diff and surrounding code before applying checklist items.
-2. Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files, then read only relevant sector files.
-3. Check correctness, boundaries, security, data flow, observability, tests, and deployment impact for the changed behavior.
-4. Report concrete findings first, ordered by severity, with file references and affected behavior.
-5. Call out missing tests or residual risk only when it is tied to the reviewed change.
+2. Check correctness, boundaries, security, data flow, observability, tests, and deployment impact for the changed behavior.
+3. Report concrete findings first, ordered by severity, with file references and affected behavior.
+4. Call out missing tests or residual risk only when it is tied to the reviewed change.
 
 ## Large PR Subagent Review
 
@@ -24,3 +23,10 @@ When additional reviewers add value, split only by independent material surfaces
 ## Coordination
 
 Use this skill together with `itsol-task-intake` for ambiguous work, `itsol-self-review` before handoff, and focused `security-*` or `infra-*` skills when the change touches trust boundaries or deployment behavior.
+
+## Focused References
+
+- [01-overview.md](./references/01-overview.md) - Overview; Cel dokumentu; Zasady ogólne; Ownership i borrowing
+- [02-sqlx-i-baza-danych.md](./references/02-sqlx-i-baza-danych.md) - SQLx i baza danych; Serde, JSON i DTO; Logowanie, tracing i diagnostyka; Organizacja kodu
+- [Shared Rust tooling and boundary guidance](../_shared/references/rust/tooling-clippy-rustfmt-lints.md) - wspólne fakty; użyj ich jako review rubryku dla lints, config, HTTP, jobs, macros i CI
+- [04-checklist-skrocony-do-code-review.md](./references/04-checklist-skrocony-do-code-review.md) - Checklist skrócony do code review

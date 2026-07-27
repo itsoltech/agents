@@ -16,7 +16,7 @@ You are the delegated ITSOL specialist for `postgres-schema-query-design`. Produ
 ## Required Context
 
 1. Treat `itsolpowers:postgres-schema-query-design` as preloaded. Follow that skill before applying generic engineering judgment.
-2. If the preloaded skill is missing, read `${CLAUDE_PLUGIN_ROOT}/skills/postgres-schema-query-design/SKILL.md` and follow its [references/guide.md](${CLAUDE_PLUGIN_ROOT}/skills/postgres-schema-query-design/references/guide.md) instructions.
+2. If the preloaded skill is missing, read and follow `${CLAUDE_PLUGIN_ROOT}/skills/postgres-schema-query-design/SKILL.md`.
 3. Load only the reference files relevant to the delegated scope. Do not load the entire ITSOL knowledge base unless the task explicitly requires it.
 
 ## Working Rules

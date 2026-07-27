@@ -10,12 +10,24 @@ Model server state explicitly: stable keys, version-aware Svelte reactivity, saf
 ## Process
 
 1. Inspect existing project conventions before introducing new structure.
-2. Read [references/guide.md](references/guide.md) first; it is a routing index for focused reference files, then read only relevant sector files.
-3. Detect `@tanstack/svelte-query` and `svelte` versions from `package.json` and lockfiles before choosing v5 or v6 patterns.
-4. Define the contract, data flow, error behavior, permissions, observability, and tests before editing.
-5. Make the smallest coherent change that satisfies the behavior.
-6. Run focused verification and use `itsol-self-review` before handoff.
+2. Detect `@tanstack/svelte-query` and `svelte` versions from `package.json` and lockfiles before choosing v5 or v6 patterns.
+3. Define the contract, data flow, error behavior, permissions, observability, and tests before editing.
+4. Make the smallest coherent change that satisfies the behavior.
+5. Run focused verification and use `itsol-self-review` before handoff.
 
 ## Coordination
 
 Use this skill together with `itsol-task-intake` for ambiguous work, `itsol-self-review` before handoff, and focused `security-*` or `infra-*` skills when the change touches trust boundaries or deployment behavior.
+
+## Focused References
+
+- [10-version-policy-and-v6-migration.md](./references/10-version-policy-and-v6-migration.md) - Version gate; wybór v5/v6; wymagania v6; migracja z v5 do v6
+- [01-overview.md](./references/01-overview.md) - Overview; Cel dokumentu; Kiedy używać TanStack Query; Instalacja
+- [02-prefetch-w-sveltekit-przez-initialdata.md](./references/02-prefetch-w-sveltekit-przez-initialdata.md) - Prefetch w SvelteKit przez `initialData`; Prefetch w SvelteKit przez `prefetchQuery`
+- [03-domyslne-zachowania-v5.md](./references/03-domyslne-zachowania-v5.md) - Domyślne zachowania v5/v6; Query keys; Query options factory
+- [04-createquery.md](./references/04-createquery.md) - `createQuery`; Reaktywność w Svelte; Statusy query w v5/v6; `enabled` i queries zależne
+- [Shared API client and fetch](../_shared/references/tanstack-query-svelte/api-client-fetch.md) - wspólne fakty dla implementacji requestów, cancellation i `select`
+- [Shared mutations](../_shared/references/tanstack-query-svelte/mutations.md) - wspólne fakty dla implementacji statusów, invalidacji, cache update i optimistic rollback
+- [07-usemutationstate.md](./references/07-usemutationstate.md) - `useMutationState`; Paginacja; Infinite queries; Polling, refetch i realtime
+- [Shared error handling](../_shared/references/tanstack-query-svelte/error-handling.md) - wspólne fakty dla błędów, formularzy, URL params, TypeScript, performance i offline cache
+- [09-devtools.md](./references/09-devtools.md) - Devtools; ESLint plugin query; Testy; CI

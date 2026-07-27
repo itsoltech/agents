@@ -34,9 +34,12 @@ When asked to create or initialize `.itsol.md`:
 6. Write `.itsol.md` only after the user confirms the project map and policies.
 7. Mark uncertain facts as `unknown`; do not invent policies from config detection alone.
 
-
 ## Execution Policy
 
 After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
 
-Read [references/guide.md](references/guide.md) before creating or changing `.itsol.md`.
+## Focused References
+
+- [01-usage-priority-and-updates.md](./references/01-usage-priority-and-updates.md) - Usage Priority And Updates
+- [02-init-workflow.md](./references/02-init-workflow.md) - Init Workflow
+- [03-file-format-monorepo-and-tdd.md](./references/03-file-format-monorepo-and-tdd.md) - File Format Monorepo And TDD

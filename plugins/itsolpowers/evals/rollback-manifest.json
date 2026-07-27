@@ -13,24 +13,11 @@
   },
   "behavior_paths": [
     {
-      "path": ".claude-plugin/marketplace.json",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "8ee9dfa53043a45002957aa6c07da17fef2e936e9a4e6e1c2a4b4dce4fa4f960"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "ca7c47b77af36c488da4e3ce4386163b7fbff5eb2a0a02a5deeab6c18db85bc4"
-      }
-    },
-    {
       "path": "README.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "400192e1b627dd330a5b3422cbdd21f8c911f7d84fb7baf7f37a6e6aededc9d4"
+        "sha256": "61e689b34b99a032bc8305dd765a246eee0e9fd4700ef6328bad80f524dd516b"
       },
       "baseline": {
         "state": "file",
@@ -39,194 +26,1043 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/.claude-plugin/plugin.json",
+      "path": "plugins/itsolpowers/agents/agent-browser-diagnostics-evidence.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "72896a82be0aaf185d23b52e92cb9a42fc41bcdcf2a9f988e9f7e47fc842de27"
+        "sha256": "105436344db6b85990dc57281bd31f5bdd0c07cbf33dbd62a342a517c65ca977"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "486859e2ca71bd712b20013721306a5bb9a4bd755e1836d1ab084e38bebded6f"
+        "sha256": "944162841c95ba0afd1515d420021b0886630aa9231084d04bdc784e297b8450"
       }
     },
     {
-      "path": "plugins/itsolpowers/.codex-plugin/plugin.json",
+      "path": "plugins/itsolpowers/agents/agent-browser-dogfood-workflow.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d323f6e330dbe431bfc82859c5319cf60351eed428b6cc1904e8d404d5f53c64"
+        "sha256": "4ee2014e49b2a8451b7137be265d7543b0122b48ec96b4693582567cf0962765"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "46aa8b9fcb41da88d55173baba3f5f137fcfcd1e2fc1a956a19af08159bcb4f4"
+        "sha256": "7c1f0ab46bd429cddf0d566027835465afc3c4c83088c5e2f2163ce85e9e9c8e"
       }
     },
     {
-      "path": "plugins/itsolpowers/.opencode/plugins/itsolpowers.js",
+      "path": "plugins/itsolpowers/agents/agent-browser-qa-reporting.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "111ae5d8679c3a9591d88735ee431c8a2fd8eabe12ff927e9c65bdd1150791ba"
+        "sha256": "8dd73d15e97ac7022c97e3ac3ea7cde4207b078bdd50c0f4af4e1e9e348a6e8a"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "bd4912ff33b5343b241985563db6c475bb07822d6efd4ca577a219d60bd93ef7"
+        "sha256": "90bb27cf07e71a31d4f833bc0e9ec0ea61b23a17cbac81dd10775c2e6b254fde"
       }
     },
     {
-      "path": "plugins/itsolpowers/agents/itsol-bug-debugging.md",
+      "path": "plugins/itsolpowers/agents/agent-browser-security-production-safety.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c302dcf881b8a0f9b41eeddf0c59bac4e3c22459c42e37b94b2deba384470a42"
+        "sha256": "d4c129077aebadf002b8bdca751fe75255469f7d2ce6caf35d1d6d9281c55b38"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "c5308a7d240145b104e2ae39928b4037069652f68721486ded6103d8aae6cc5e"
+        "sha256": "7ab69c61a73a7f41d08060617296f0d57d634a4da70721f1a8b8e9b032a8ffe8"
       }
     },
     {
-      "path": "plugins/itsolpowers/agents/itsol-feature-implementation.md",
+      "path": "plugins/itsolpowers/agents/application-technology-migration.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c158180536b456f2b41b9dc71556875b42ddd906af68fde48701938691d609d2"
+        "sha256": "dcfbb46b4b5f88ad921e346c864f2e02b01285ef5dab20a6c53c9e58c523ebc4"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "a14a8f8b50e6e2392f609ab3f1b61a6af25cafdb6833690277fe8801f1dba573"
+        "sha256": "3435348849eace6ccec9e3b7c23a88259d616b0c24dad9ffa4beaf72c2560d96"
       }
     },
     {
-      "path": "plugins/itsolpowers/agents/itsol-repo-memory.md",
+      "path": "plugins/itsolpowers/agents/dotnet-web-api-debugging.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "31da5aea24089552cf0e82ab25f5f6206daee009f5334da3a05f828631959d6e"
+        "sha256": "f8d7c04886246dc4d7e76f1ceddf05211a31df03503303365d7a007466d84249"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "50f6435ed24794e4c885ece97765730d98e53ce5ca2890017c2680cb5d590c35"
+        "sha256": "e93ff5910a3ee116811d306683559cb28997fe53c14d403b41a84e76accf6552"
       }
     },
     {
-      "path": "plugins/itsolpowers/agents/itsol-self-review.md",
+      "path": "plugins/itsolpowers/agents/dotnet-web-api-implementation.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "96990e094386ce8d9aaf20ecb70abf29dcb16eefe3e52402448221228685de51"
+        "sha256": "1152b6a61f9747f9c5d29b750c2ba46558f879e18d0d0cd680aaa0da178d6e72"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "b7c64599b5b9e22e47ccd0b6afa10ed5db4eb2c6886ffc951c3d80c463be7825"
+        "sha256": "6fcfde69011397003fe50e088031a0301ac0e70ce45a4a324d686d1ec484c314"
       }
     },
     {
-      "path": "plugins/itsolpowers/agents/itsol-subagent-workflow.md",
+      "path": "plugins/itsolpowers/agents/dotnet-web-api-review.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7249a96a7bef1e20397db9e33bf1b14f973e2fe9ef5e759dbdc240038e1f58f6"
+        "sha256": "f0e5154c73fdd51a45e5b10865d2e50d5784feea8cf7d2fb924beef18dc54d94"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "2d29c439b17c08f07a0c26a05c0a58b0e7bdbfb2b1181ed2e4a3fd7ce0c4e19c"
+        "sha256": "070370d627b904c400793fe760c3407d160f72a946d7d619af5c4def610ef72a"
       }
     },
     {
-      "path": "plugins/itsolpowers/context/context-profiles.json",
+      "path": "plugins/itsolpowers/agents/effect-typescript-debugging.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fc3b7974d715f4fceaea47d8e00e607f101b83618d701a0b764c334a113c8475"
+        "sha256": "5677d32489b6c2aa18b7418b32fd816e921d09d179175b81ea1b0eda7014ce69"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "1e8680b56d43c3d2ce037ef4939886140e2241b281e110c9c35ef6679078ad52"
       }
     },
     {
-      "path": "plugins/itsolpowers/evals/canonical-reference-exceptions.json",
+      "path": "plugins/itsolpowers/agents/effect-typescript-implementation.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "6396210559f1820add051e2a3e174ee3d1e22154ede1efb40b7632b932f98763"
+        "sha256": "2680db0b0080c367a9e20cfb7b91ce7ada68f8bf14b66cc12ecaa333f857fe24"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "ab64ac9aeb3d5e92e9c36675adb8fe46ef035ce657af9a2f4498ea18fa7c7db9"
       }
     },
     {
-      "path": "plugins/itsolpowers/extensions/pi/index.ts",
+      "path": "plugins/itsolpowers/agents/effect-typescript-review.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c6002e73e808cdb430ee4d86d994b8e58e8d2ce500ac7d45e331e79f13c9b9c9"
+        "sha256": "69593dbe1a841c747d8fa3eda7da63c4113ea484158db3b5d951469b885c0450"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "1a83a35ac7a6142241dea966cde8147b81f8ecb436d8cc31e2393fe16da483ca"
+        "sha256": "6c2d697569bd2a5d3ad5ded8a3bb90c502f71ba77f1035e776e8d7dc0c642af4"
       }
     },
     {
-      "path": "plugins/itsolpowers/hooks/bootstrap-context-claude.md",
+      "path": "plugins/itsolpowers/agents/electron-desktop-debugging.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "718b5efaf70c616d6c69a8f70ad68763a3a415c7c3f1928724e4a7c00a0a218d"
+        "sha256": "551c74fe3a3645dcb206c21cd31ee1052cc515dfa30275a7adf23cd1090a6708"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "32904ef939fcf2282829cfcebfd48e67afb3db9a0c7704077982455cefad2124"
+        "sha256": "ccdb2b2f42af6ef4af3582208cc6e9b6d12dd469fa7fd6a89fc493030f063fd3"
       }
     },
     {
-      "path": "plugins/itsolpowers/hooks/bootstrap-context-codex.md",
+      "path": "plugins/itsolpowers/agents/electron-desktop-implementation.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e5d1e4fb4af4d92581419988082246061becb7c7311d938f396f1e094b9ee63a"
+        "sha256": "fcd286d964dc2a68d169dea8cc647fb1b5f7a006ffa5fa9c033dae6abed38b87"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "33e6dc3130f8fc57d31fd27c89f34b37442b531ce31ebdf668a69eab98c75018"
+        "sha256": "7222db6e90dc87dfa13cb90aad00540792cb762588544e37d5eba6377dcec0ec"
       }
     },
     {
-      "path": "plugins/itsolpowers/hooks/bootstrap-context-pi.md",
+      "path": "plugins/itsolpowers/agents/electron-desktop-review.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4871dbd0852b711aaef175146aaa7f782ff21eaf6f5b2f1e30872e6a25e60fff"
+        "sha256": "7cbc9cede24bfd1bab4da55433b3b9273941d6e1596f8b85bc329e428081cd28"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "6f34136667571eb3cc569b27e0de8ffbcb90b57e4dcb33ca5770ceda7518db11"
+        "sha256": "77171d22f70eafea28d221ced02928bef6c54f14c2a26e5b7cda28b97d6703ac"
       }
     },
     {
-      "path": "plugins/itsolpowers/hooks/bootstrap-context.md",
+      "path": "plugins/itsolpowers/agents/electron-release-distribution.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "b37501357a0ff81d3fa3f4c38c117f015a1af4a1c2f2c044758ad7b4591dac8c"
+        "sha256": "9cd46729144a4afb2efa444d7fb88f7105f3fa09a446b8d36c3efdfc09134a36"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "afe90ebaee5d4aedc2bdc7de4dbe9985062841b5aa86f54b8aab45e76a5cf815"
+        "sha256": "1eeb2670e63e3788cf891d2b0853f260a8385c15fdc137be5552ac432bd1e09f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/electron-security-hardening.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5766abbde8bec70605627536fb11ab6da4677ecc324cfa139b0a8760ea454e4b"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "1398d6f0db060ccee368e3531be8082ef2533f7e9c6ecfc273dba6f69b93c1d0"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/expo-eas-release-ota.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a88a7bff20ba4524be2484b75d2399c261cdc072a044afb45aad9a8f48d830fa"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "193ee1d54f2416724274bffff3b4800d5349153ffc32e0292468b80204b30eb2"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/expo-react-native-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4850acb5c69df347a6c13e0c8e2afdcb93eedff69357094babf3e4efd8ad415c"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "fb8cd3848650b44a1e5d34cea2d91e1a521cc5370ed94b55075ccba5e308189b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/expo-react-native-implementation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d46b02191b22f7a79af959ab2339879b46b4ea6d04b9c494de13eb1b066f4be5"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cee300eb98d7d28d659440cfc7c837e98a1139f75bf96bc9ecea85d2e1e2a78b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/expo-react-native-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f990469676503cf9f38c8c66caa18a5dcdee34b1fea6de638d4a8c5d9453a03c"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2b3894b48e72c4468163df20ea0ff9449c699dc9506c1faa39fe5dc4c711c959"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/expo-security-permissions.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d253333daa49a0255311585002e84fee66f783ed6be6c694fe63069ccbba1a87"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3f8a6e5e8d2f6c6dd64428a0d5190866063acf3eb144a608a66951669c7f88bd"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/hey-api-openapi-codegen.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d7fdda07c3c24aadad0dc33d76d1d1cbc9fd026a71964cc6254d7c4cfd9dbc4c"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "12d681c597d98260e941380b73fd2a7f21afaf8be2bdc1c344ca9f9110fcf103"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/hey-api-openapi-contract-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "753a264be20df21cf95a23f634c6701ffc3c852aa3fff88256b3cbc66d732c52"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "eb82ffeb452387cfbddb06145f0a56c4b91e8a5742ae341df20bcfa74ffc50ef"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/hey-api-openapi-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "71056c974077397e1f0a7f2e3b6ad3be1e20c7f06edf7f7aa2df3726fb51c671"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b0c3a23ec265de4a7b94aa50b2ba2f3d13e086de3d4d8f136f51a635cd3e168b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-backup-dr.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "bfa1983aad844cf06c1f9ea64c370ac19199c82e2977b98a9ca46800bcd8f3ea"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a30de71a2ce805200293df5c589b34f19358b15f7e8a799f61ecac0b51977195"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-capacity-testing.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f7d911dfff9b305b21db073152f4c28696bdd8d0f3ab688cc27f4cda6afd86cf"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "127567156142ab22eb914e5d4c21d658839aebf14b7fb73fd74b9d6f0cfc1be0"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-container-build-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e8c1a0560b420114613204aad3e73c9a823b9bb5a98029538daff57671eff7b3"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ba262d14dc81fdd9b960e14eb6992de5636f98633da9fc3a593bde742c037bf2"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-container-runtime-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2788468fd5d1fceccb4f932101e84bb2aee8c73085d97b6ad9cc562f296da619"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0960cfb691f309e900aff17ca820db4a439f9a32e35535d57f6ab4877e36938c"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-deployment-design.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "19e5e1672791b0620998e5bebc0500e5adb0ab6cec121999313ec9192932d37c"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "100a93e20cba24ae8b85104749727162434e315edc4a7540cb42d6e4d11690b2"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-edge-protection.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "532b5363da19af09b2fab17d54a7dbbe2c6490d9a8e58e7442fa5ddd0a511b0b"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "55cd22093a4e0adca05900226665ca19cf1df648df7cc11fc7a1a36ab7ab1b3e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-incident-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "dbf370033764202ae93880574e4f41dfba7c008c988732440b1d16830d58d321"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "03f68e929adc6bcea90f0bd6259b696c2e962434b4a15dcb0a0744daa09be95c"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-nomad-deployment.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0365d80857720c2f9717dec3209b0fbf2cc0fbb0b3c2931e5ab4a2fb232926af"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a3d2e00be221a006a75f22d27fcf4522eb5ecdaf7dbe32696ba52188d6253b75"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-observability.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "68112783c6853e6782dbb958529aa89974b64a4b6d25fdbf40454755f4546f43"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "af67c03b810d5db342bfe78cb8063ff0bb63494f9735dbb1341103acfd636c02"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-production-readiness-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "04d02ed650dfae2b15a87663abb82d7f60b0d25a9ff8c71ca510bfc8c4fc16a3"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d701c5450aef7be13345b6eeebd5fc052e5318ee9d7d2537027c0ee36b8c090f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-routing-proxy-tls.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "130abe5e1ea02117543168f5ba86ccb93ad1509151b32394f9fbf5ba30a5010b"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "17cef2b9679a2d1fe7fe968e48629c885979ee04667e227ea789d1a3e6077df0"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/infra-secrets-config.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f9544da0169eb5d1ca2f579012030652ac39196d56dbae4fe099a24972aad445"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f0b2a0afd846e867ed37b8b1c2a302b0c78d222ab96923af80df0d4d5f5ef682"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/itsol-code-review-workflow.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e5709917df22faccecc6f6e41ec763294b77e27b400641958e774c68180a8d08"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a7ff7f6d25a569e1ce58caf680cc44bdc240d4ae526d8803436938ec32fc587f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/itsol-qa-handoff.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "279c04fb600d469a0077c77405cddaa2f6c1cf0b4b3dc6ec1515f59e7ae804af"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b49e01df8d8e75f9a701aa34d9ac88e2937f009df9d32ada0f864b0342671609"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/itsol-tdd-workflow.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ab0cae1ad400f238f188bb6ba74589888de5dc09b24301f750f994e627e0332e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2480f674efaa45f3a003e9d84090fcea8ff0e76befe7979c3cfe5edc913a6b80"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ml-ai-project-planning.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "06c22c9305b3c94e56b69ab52f6c2251f4cfcb0922e542ab7b334941d79c01d0"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f35950ef8d863dc98f3492b109dd6423a456008040053f395fd90198298b4e7b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ml-data-evaluation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "13f194018e5031a807115d04042519ee4bf5961a4175090e4d375f7fd9d10b68"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cc934f87083f386b35c2a10815230591840e3c2d78c65a699c341ce6a019691a"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ml-llm-rag-engineering.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "88a0fbf28fbfb30f54844d7f8cef717d48ac04f4fb8e2709f1bfd054e850e2ae"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ec041b764243973da635aed0c28a60497c1162db26c807e9a06538d84cb481b9"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ml-serving-mlops-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6c97d6b55f9369deb0e14eeaefa89bc999a000df0ca4c9d8d028903f2d7ec6e0"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c56c8df0924512d5f621254264ba96b0c4a62f618d15fc187796c028e3cb6589"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ml-training-experiments.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2c13a43b23611e5061e1a887bf26284b1bad46dd41363d45f4000a2dc3be27dd"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3da6700b7beab60c1a74f2b8b48a375df1e21bee9420554d6d81bf589c82b240"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/mongodb-data-modeling.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f9c46b6bb04692fa731021649b38a36935d8634964c9ca1bd40a60ea5df90058"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7ed0ebf3def6c12e1cdfbba4df50587c985296f1dcb912b1d635e59d3c1d92cb"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/mongodb-operations-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ab81d4b153a52cd4b0f6cc22e979e4f4acbe0d7dd3dd00e20ada8e09c04743af"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d1b7a725e9f9fa7ea2b5c6fd45a77ea99b6079c30193e27d6aba5f430164593d"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/mongodb-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f9dabda469e957f3df423d3d22c6bc0727e003e7681aa31ce15dd2c71f89ba22"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5d234a64aa4a1966826ce43a3048886c7bf83378f40768169e8bbe05d253793f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/mssql-dotnet-data-access-design.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "769c6f9375de4d57ba160774b9127de462657b0c16ac5ec963bcc455b0d59934"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "659d9b9f2ccfda8fb1c18d11514c1ea8a90ea7a0a3750c86776d9f197216f601"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/mssql-operations-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "75995e1fad7699174ffe171184d1ca530dec25eaa044379f96686ba0205c0c8f"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "741f79037e53dda0ef189ecd1cba8280e0f55b108bad5ce81a63dfa479f85cf1"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/mssql-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b52e239a277b159c75fd39d40a9718b6cdd7d15403a887378d90e7af7f490a4e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a0c20d5a645c5198bc52635f42fd6be42d52e2613da76b8c49f86b49ad8642d2"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/postgres-operations-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b3bfb54be4952252dcdb0aa86df20f7bb189dd4403fd5136031489634ddef3a5"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5249b79aa04fbd65935dd260d6b5894f48fdd06f2e60579b7118374ad6955a01"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/postgres-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "bbe2a297efef97f1b23c3bb891e706754de2fc94c8a71c49ea2de3cff2b5aa22"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6099ab2e88ba6de0ba0b3ad42df30717836c0c76cfcb854279858f43d71e4c90"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/postgres-schema-query-design.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "23b2ea513a907de32c37e7afb59a3772d536cc66dcc15c901cb85101de0c2f6e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c8c96eadf8b2968f1376c5a702dce44979a76b7dfa1cc480c244872581377336"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/rust-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "620f7e850a095e05443182d7c6f860bf69dd644faab8879b99a9f71565b77d3d"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "08d828cfd7dccfbaa3a35009efcf65df519212ce312f3cdcc0190446a5c5532d"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/rust-implementation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "24538478d4689011005b4f8919c43623694d9899d5e8e320da2dc900c345ed10"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4970d3ffd2d408f2616a00333eaf2a0e06cd55da015d1d7b6008e7b37240bbf4"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/rust-ml-llm-architecture.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9c6efb3e668f7107cd44ba06de2ae34806edb4ddbe93c82f7fe0eea25102a2c6"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9108ede2e476a964aed73c9731b7e9f8c23cf7efd5a1eada17e84699617d6fbb"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/rust-ml-llm-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "410f692da2860f74c3bd759f84edbf6b79193383d7e2d81b43d8927617fbb529"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5e064e7cf2023d1692ebdca683544d3a2411f1bcf8f989332e3e3ffd2a3ff2f5"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/rust-ml-llm-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9c59f15e7b1e7ca5d648d8f40afc6cf7fa2602f749fd0541ec7d908171709fad"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "44af69a398cb8d526f283dbb191ae5ab39230d7268ccb653e9a021867e19ad03"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/rust-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5f539f2d360885b604d1daacea0564fbde15b11b7c90dd9992850079628276a4"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "337089a0a7760f2d5e3c2e455120c9b7d70531a3ce8fad30a470ce3e3357688f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-api-input-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "bea68d93d1a6c57e6c89c5d2f6b2381e5bdd59ffe65ffee95495fa942f44c9f9"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c77adf6b69ff02df08994044393360c087987afbe34ac43aa72eccdb1455fe95"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-auth-session-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "bb5ec536c5d6c1f9c20a918e628c53ddb194af391258aaa0dfb1a9bc7421d67a"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5eb2c811b66b6c02a15403fa2f0699827acc9c293f6a5a19578b453a4436e130"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-authz-tenant-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ebce53f1c0c68e4fb0d3f03c720d27e6f96970ca755a4062b174f76b34c019a9"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a196a3885dd2a1e05442e6ce12d0f7d134c643566ab99aedb37de1ee8744313a"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-files-integrations-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "81cf7356e33f215c6f856d837c0d3d5999d8c85cad7ff46563913481762401bd"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a11e629d7735d515809e7c2861c57218f1bff6e05d59405d139143949dde6493"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-frontend-browser-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ead84aefa3a62f205925bae320c639ca90ebdc5e02c38152ef42f1e20818b46a"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ea44352a681c5bcf7d3c1c4a72fe84e87048ff88df2ab5d28d10f9837b72ce59"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-qa-scenarios.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4bdc2fed45d4eecaf1cb44772885544c4d36a0485a99b2547d853ceb0a735344"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7014a3d66856dd6248996dea7b5a6a0687733e834a7ecf5e4ffa9cf2a58cc041"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-secrets-config-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3233cc46c15f13d8a47c9a27d6be843b3c846ac87ecbe864a8aa8517c597d2c2"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9f25a813a8bf9141a5d00225b0b53fc0a9aa4fb268ca473040aff640521b9f12"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-supply-chain-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9d3e40c518deb52dbcb151285f8ff4d83e04d39113351682cdb10842b89b5c73"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0cf38bd4c0d6b2fe82ed6cfebd91211a6270e393039a06451cdd95855b900585"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-threat-modeling.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "fb9189529fa4ef6fb991abebd97500cc77f8ce163d12ad4bcbc8e64e77cb3e1a"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c65bec0b82ce6c75855fd35c3915ce276f88e575bd7e44fd21917c338bca683b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/security-vulnerability-response.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3bc6208326e7d9c0117ba7d63beee6e5bd2e65d9f75c1e097cc2ed73b47a7be2"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8bc52bda8e1b33c7ec370ee78a01308bdadebffab1e0527e9280783e055c672e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/svelte-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a54d0d05655b8db71d8c32a2ab28aef45e758823de86610e024d297a02190fee"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a4aede7dc95f1adc89f93ca23f4bf189e39152ef4fc2fb52ff99f80fb0108fe5"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/svelte-implementation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "1f4f28136b6c25c213d73a86d449156c0cbe3e0e78189189ce45e32a402b55c5"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0b7e40ef782fc07be0f5fa80f59ec6231b15728f990ec2e7250605e1833e86eb"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/svelte-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0ad3d3fb3ebe6043bb17b028403e6f388aae708c1cc0c7d90f0f67e7a96b8183"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0270ea6f7ab36a229331b4a1cbdc6cf32f78bd8d993b6c0e9bcc4e57c532a16b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tanstack-query-svelte-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "76e881c14c01df65a0f8b8fff2394d0e067d2848b5d6a72d823af43d1e557ac1"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "28169f14ad9326bc5cc1768d5ce5485003bc9f206fda540cd23279f8cdbe8b92"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tanstack-query-svelte-implementation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "fad7b047b7f0e6a391609c83251160e2d68e81e5cc8c11a91fe4525f900e3cc9"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "bc9f3b732eeabd61cf7918973c875f44c7ada872d8ee0540cfbfb7755f1bb527"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tanstack-query-svelte-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4b5bd27cd3aef72fb575325eb368445acd8b132cea513dd4dc9d56a80707eb69"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9552ad12d81fba98bbe84652670e0d37c6ee2d08e4dc6f7b2d548272d65ed6b8"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tauri-desktop-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b96321aeaf702befcc96b6155c019fad7b3b314e209513a59cc33029591964b4"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "abd648028a0c9fb8f1ad7bb14a96c47a967969cd8a5c4946afe6898ba046d3e6"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tauri-desktop-implementation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c0f8b9cc854bc1c7c0f9bbde6ff0d65d3b8413ff084b48e917539f47e24071b5"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "252eecb569ee6e7057c0e6ccc0c07b0563b4a83eda2b0ea10e3b73896aa322b8"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tauri-desktop-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3ae5983a751c460e4687b0157cbfc50ad6f28b7243bf7609aac0cc3ffba7e80a"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7646899c2c287ed9c45ce9341d9c05d524e457378f08a4b03a2e7cc707c8d7b1"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tauri-release-distribution.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7c05ac3c5bc23c8221df5c66073799e618397c3f413dfc6a68ebbdb474593bf8"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f4abd78b9af5ee6ffd99c6c570fe08fc140a1e2f883c3d5570546dc84e48e69f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tauri-security-capabilities.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4768f7e0f2bf1efd034a92e186af4cf50198a43d7da8548ac0718ce5bcdc38b0"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "10dbfb6b92fae3caf2156016407272d0ab4073de9189a393e96fadf77c0a9612"
       }
     },
     {
@@ -234,7 +1070,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "cc57698df3d28b49a044879e5d9758b9ee9cf3d5632ce13830690b4f546bc737"
+        "sha256": "5f23748973242bf792548f5bf943e9d4c8b242e14b0aa3f7401632964e499cfb"
       },
       "baseline": {
         "state": "file",
@@ -247,7 +1083,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "0087b5616e2dfbdd2c0daffec84fea0179ba750bd668b3ac6ec740a8065bc327"
+        "sha256": "fc2628dadb9d762da2e73185c0a0aedfaf69d28fadd631fcf3ec9c501639a445"
       },
       "baseline": {
         "state": "absent"
@@ -258,7 +1094,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9f825485be43793453b21245691de144935b3b3dcd92980bb0228efe7bc39902"
+        "sha256": "03a6e80df527890f38518f44399f9374b49a927bb42175e061efcbe6513a590f"
       },
       "baseline": {
         "state": "absent"
@@ -269,18 +1105,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d57e952724f0732c09bdafda75031e85550f10df325befb15cdcde1c89a9a944"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/agent-browser-interaction-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "712e74198a2a5e8986d22726551b79d3a6479ee092bf77e0c274d121663e716c"
+        "sha256": "8f2946d26c4fde694fb795dc8ce9b39fbd7e27f863daaf50af66451974495aa4"
       },
       "baseline": {
         "state": "absent"
@@ -291,7 +1116,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e806bafbaed3351102ebd3d6a008b2acc4f246d90823d5b5a343f274b7baea76"
+        "sha256": "c4fe9f1e734d3f4d20fcb8d5db6df2c2325a314955cd3bd24b981e93e31a3fab"
       },
       "baseline": {
         "state": "absent"
@@ -302,7 +1127,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "97de7d8f1f34206e7375f166915d2e6afed6599e336574ea02acd28a10ae99af"
+        "sha256": "1c48bcd35365a75848b13f58393d3e2468043bf30dd02f8bf9b45f351f94213b"
       },
       "baseline": {
         "state": "absent"
@@ -313,73 +1138,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "2723ec7fbeacd06a4e148775b38ccbf051012f6fcf598f957741abd97ed82024"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/dotnet-web-api-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "af42f950e445f23ec16c9bc5cfb245e9a20e85edc41092132c73b8e61a11e5bf"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/dotnet-web-api-implementation.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "b7fd018cf65270a222b8a757af51cff76aa8e68f9b18aa378cc0d6346ab38899"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/dotnet-web-api-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "a9ee3d19f8a267e1f95fc2c1ada671b0c43f302ebcacc3f542175a7cfb1407d8"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/effect-typescript-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "671c9124129bdc1a79416168927758774af0366a21aaf12fad8261080b3757d9"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/effect-typescript-implementation.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "f30aab14e048a9287df0c1dc4d17c2df0971cbc12155c744f107d47e66395473"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/effect-typescript-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "b12dab64c8ee2bf488f5fb212f2bdba0a4d81815a7074743df4b4ea8bb6c5b64"
+        "sha256": "a67c3dfcaecfb6d19d65b6fa5fc8549584ca83a60ce8ae521a2334bb2564ce65"
       },
       "baseline": {
         "state": "absent"
@@ -390,7 +1149,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "ddc66f0a148fe33d3c9c76af331e1d24e6cfd8cd96bb24ed0d2e47b3ab3c0074"
+        "sha256": "501d9b0d82e2eee1324a80ace1d9bcabdabce379c0df08e644b914416a909317"
       },
       "baseline": {
         "state": "absent"
@@ -401,7 +1160,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "b6c6a3ff6e9dc2fadceae4258c3a8a5da8d272d333c759acb8e067deb62babcb"
+        "sha256": "d4841fa628d1b0fe10a4febbdb8acdea70c6d9a42edce9d79f0891530212278d"
       },
       "baseline": {
         "state": "absent"
@@ -412,7 +1171,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "98bcb3d0e62b5329005a21b85a283db046bfec9bf483c2a571b2977bacaf3337"
+        "sha256": "0484316fae9ce2da80e566737fd8cc06a544e0de299e59117af775171c2a4b4b"
       },
       "baseline": {
         "state": "absent"
@@ -423,7 +1182,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9c8162d908bce70f38ecfe6f6f8ec9ac08716f63052561c02e53d00b44a8a7c4"
+        "sha256": "5c5d6b75d6f74c3ddf1d313ec4b868a5db247c69024c261eee27878c49f55204"
       },
       "baseline": {
         "state": "absent"
@@ -434,7 +1193,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "749dcb840ed31082e28eca7b4a572c3c4c26836150fd65a4141d1c9e1a00a13e"
+        "sha256": "a1e609ee6e121080523bfc15f6e9941ca206fabecc1f7b24ad1857aeb7016132"
       },
       "baseline": {
         "state": "absent"
@@ -445,7 +1204,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "84184083bc728a057df969ccfba9d04302219e5586d9e007e2e78327bca25910"
+        "sha256": "9ec3c4ddf837b3c9760499331ff07e479877694846c12de721314a56cef65c8e"
       },
       "baseline": {
         "state": "absent"
@@ -456,7 +1215,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "69d98d7c879ef2b1814f868efc8b96f29cce309337207e6d0a617696b1b338df"
+        "sha256": "77995c6e7c7f21740d67736a0a13c147ada5aa37082d6a076518b64be63dc7b3"
       },
       "baseline": {
         "state": "absent"
@@ -467,7 +1226,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "3540dbd2815b9dc9438bb984dfa977c8451d28098b888b8e4c548fab47c43aa5"
+        "sha256": "5d31c8ca238ceed40d75ec5e43dcba4cadb15c7db61daf4e5e0263d61fe375a3"
       },
       "baseline": {
         "state": "absent"
@@ -478,7 +1237,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "18e46a5e1514b266f2c6d121b92c4edfc96bed352d97abd5a8cf44574bf7e888"
+        "sha256": "0dab8fc0b43d5ad14dd3e7b4c77e980c161adf7e418cfb37c79e4d43a5a38d1d"
       },
       "baseline": {
         "state": "absent"
@@ -489,183 +1248,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "aded812cb5cc4aac9aa9ee4282eec4b687ed55e27609a2f4650f2fe79c798454"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/hey-api-openapi-codegen.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "7899eee1a202b406f893194dfa6d6f1597b83f9cabf3e9133429602c9343b9c2"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/hey-api-openapi-contract-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "562e1ac340a91c76ca6ff24552a15085114cae9b91339c204ff0c47ef126382f"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/hey-api-openapi-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "512e506d5c9841eb3ffd13d28418ef858d4061748c27b9ff980aa51de8766287"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-backup-dr.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "9fe87d40482ffa460724d68d1175b917390f5d71ca3f5e2fb7ba48a8047bdec6"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-capacity-testing.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "2f03c4901e7dece38f8d0ed89b5dc13e66010a5df1b0e156f4f10b30e6acfe83"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-container-build-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "954c85fd53e784f72dba2ad63d85f16a81324f3ec8a2fa791f56202fb379d81b"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-container-runtime-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "b9e66905a20edd79436f0c1ff1be9e271d90e1646b9ff07d72c2f6bae2473cc6"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-deployment-design.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "0925c66a78dc6577819f8dc9315b60dff6d1d025cf8c2810f756f907ba3539bc"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-edge-protection.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "f4819addb293322babf96af904af2c675c822febcbf0938247d4497e58a7078d"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-incident-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "609b471cf55e4f65552bbea93c2e8fb2143b5911792b06a79c3ee5cf65da3fa1"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-nomad-deployment.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "8a7416dadab9dfd24bf4518c415f34d4f1308f335cf354b72397bc3243871ad3"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-observability.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "00e8b33ce1f01549d58d707f99a13674e157a6c3eabc3ece3f05a28eafc3e110"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-production-readiness-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "54bdb158f72ed71f70351cd301d48f7989c24f8fff38c097e9775bb481766905"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-routing-proxy-tls.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "8a5cde927d8330aabc8d543e8d962ff7c0da660ce27236d75909cd6c135d19e7"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/infra-secrets-config.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "3b5939a8e5af3c8b541174e51fe4dcbd930233c59859e17a74ca7edc243cf738"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-bug-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "619d56d4b0c546b7d90398af56aff18ef529f6f26c34ac9b2b183d341acc392c"
+        "sha256": "2569ace3c59f3235da994f9c68a582319562d594bf41e1bf4b2dbbb43d2724ac"
       },
       "baseline": {
         "state": "absent"
@@ -676,51 +1259,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4be650dab78dd8e8fd94b6183f45dc2ec1732594fbfc8f6e21577bb10f822efb"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-current-tech-context.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "b3838f1466528270816e6c7b01e0e41001d2dca3fb4f36c0c08d143113e1089d"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-execution-policy.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "23de475281759f4a032125159ddd32548bb88f84b92680794baae387bf143fed"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-feature-implementation.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "8a6eb75158b07103b1025e91b20bd5ff804b68915216d3af0a9291f723b7a503"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-functional-planning.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "784c0be1d1329a4dbd512adcecd845155703c12935e34a4fab7389780aef098c"
+        "sha256": "9ff46c596330ffb57b128fc142982ddec8af98f6a889e4f22b658cda919b21eb"
       },
       "baseline": {
         "state": "absent"
@@ -731,62 +1270,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9b272fd14ab287fa1aaebdcb108c65de0bbd8775cb31f2ef33eaaf7fa23e948c"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-repo-memory.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "bfa51c77954df95cf12d2d1e328454ac298ba9cccd901e35b07a03c348d9db39"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-requirements-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "997b047f1fe8dbda1c27e35f80d4ec43774f95ec94f56e660519863518e888b0"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-self-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "e376e787af50ee66455c77f0a120299f42e1075649392eb2eefa0550a6aed16a"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-subagent-workflow.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "1ff0f3df022a47caf0e4e8dd785379b4c3a66ef0f05d307f1acf84d3e5560927"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-task-intake.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "01de66c3f50bce414ed96c044d56aecf00d5157a5e659357a8e96679a2357bde"
+        "sha256": "050e2daa5bab18189d51fdc168f027baa490c578db24fff9152fe892e9d1004b"
       },
       "baseline": {
         "state": "absent"
@@ -797,29 +1281,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7ee14352a4ca1fe1b3e2b3c782f80d65a1fd83d6c78c10caa53fdd8ab5dd8afc"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-technical-planning.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "9cb8b90db5382fd9f86d4cd54c346458505ea656b278f4fc982e8d9c20be9cca"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/itsol-workflow-mode.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "266f5d89c4ddcfc43858e5ce1bd15a5d661959a87d2452e366a23abc80efd11d"
+        "sha256": "63b1b4015c98e52e5929eaac2e3b322b6692466b4c6ccd4142f6b73f198b43c6"
       },
       "baseline": {
         "state": "absent"
@@ -830,7 +1292,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d23151b6a6360ecc7b5df2adc826eecab26860cf80310638b647a07501de193d"
+        "sha256": "518c0e543e438fd9c746fcf86b94c7b7e4465945c7400a7fa2d94dfcb28535dd"
       },
       "baseline": {
         "state": "absent"
@@ -841,7 +1303,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "5a3d0c363e1197496e4bad480909cb9adf5915760a485e908f66206955f5714e"
+        "sha256": "f0659e9a5eba6999172a084c407e0996220ff4cfc845e43982488691d17aa7fe"
       },
       "baseline": {
         "state": "absent"
@@ -852,7 +1314,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "881f8395260f012af0a3616f198cb96178dff966dd572ccef44df812fe0423a8"
+        "sha256": "726bdbc2530460339e25cb634d535908b5ddc998f0c4e18b40971dc3d0cdfe68"
       },
       "baseline": {
         "state": "absent"
@@ -863,7 +1325,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "617374406c8fcf5159d96a1092c82440d8ba6f72572dc9a5f040121093b9ce29"
+        "sha256": "2fe0909eba96c6ff4124d1ca333569bfea91a5246b6b272b379638eb0969acdf"
       },
       "baseline": {
         "state": "absent"
@@ -874,40 +1336,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9528074c6320b90c8b98a78a41c155696c42416494b2c4dbf8d6e272a39b56ae"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/mongodb-data-modeling.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "d8396b275ab1c78f2cce83f08b912ea51523d7a4690d6d6f5a4ce89472b96424"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/mongodb-operations-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "03213466846daa1b66eaf251ae9bde4bc58798b633516df517bdddca91349245"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/mongodb-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "bc5d2606df3455f4013898437d03f66e3cab60a008a2f70fcd5b9acf32c29881"
+        "sha256": "e881975f19cfea9b6e912f1d81006efd84f7ed6045107fa96587418d79315e6e"
       },
       "baseline": {
         "state": "absent"
@@ -918,7 +1347,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "38a0cfc87a88980fd5a5254d32d45bbba55693c1358e101b0f6d4cca6838a6b1"
+        "sha256": "5a42bb34cb08099ae0d1e5e75d24d7fe59028ff60d1a7edd8818507bd6f9485d"
       },
       "baseline": {
         "state": "absent"
@@ -929,7 +1358,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "69e273a39da8104e8bab2ca3a05bc0b4f561f9a020e30c024a9525479a9316b0"
+        "sha256": "4e2c3073733292a7754590cebd604cc9566500818f3a9c0a2cd93601667f634a"
       },
       "baseline": {
         "state": "absent"
@@ -940,381 +1369,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9cfe9e02ee9227e09b7027d945c11c9d99c585d7cab22af118b086caac5c633e"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/postgres-operations-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "45764b7209ab345572e4a8a27a9a07e23bf18bf7f95d9a165ad8bb2cca103203"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/postgres-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "2c1cbb7fd0634a5eae88340cb4364fcd87dd09c486b9531d59bc9ff002c9a31e"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/postgres-schema-query-design.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "da34904cff84e2afbe7bccb3c8994bb3e769b208a270c9e838cc4930acb1fdfe"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/react-nextjs-api-cache-forms.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "463c77a542f4463a685fbee6fb31d559277f5bf7d3447eb3a91c0f303d6fcb29"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/react-nextjs-app-router-rendering.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "72c7c1ec6f22f42700dc494071c788ba3c373637a3c0738347106bb399e69a39"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/react-nextjs-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "c3c47d527f21ab2bd0d1fc4dcbab731983fc6d8c5b6d848e6f270613c8adde4b"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/react-nextjs-implementation.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "5dfb985d28e92f5352cd8378c13c733468dd438484c2ef5bfadd4bd8619fc874"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/react-nextjs-quality-security.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "d9e84218110cb57b901f1afd14207e4fd5f11344c6d5aa61f0e4738feec4223f"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/react-nextjs-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "9e50172049e7bb53a0baf538fe7b79e87f822df79e904040e3d0a90915de54f0"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/rust-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "ea65eee017d618b0fc50a2537a842893832aea20a13dded35488bbad7feedeb8"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/rust-implementation.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "6affbc2a66fbc97a3cfaf82b06f0af0d2ac971cbc132eaa6537e65da471acc6e"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/rust-ml-llm-architecture.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "9a23356eadd86f71ff70771f20ced974910e0e453bd822bc166e1ecf1c12df66"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/rust-ml-llm-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "f3fac6ba31b3a00079d81f2792f48f94ff393839a5d10ae8c1b91f059907fc94"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/rust-ml-llm-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "b8059448d99566fbcf3ba2eb5cf3656e51c1134accf165a66bdb7edbbc72db35"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/rust-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "b22b4afae08db5cf5c71f95d6d5b78edd4673418f6fd17bd068a1c47c3f727ac"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-api-input-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "f14a456f7f9bcac92da6c8de99c9f273c55d076ee777545e2b6de0eb17142e7e"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-auth-session-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "0d1abbb2dae0477991fdbd68e6f4ae10bd42cd4e19e8b9194dbe94112f4215df"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-authz-tenant-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "513c77b9f24b5613f002843f8abf5e04ee0ec0d9dbb267dddb7bfcebeb8e231f"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-files-integrations-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "97b2ff9d6764e71417ffede37c5f46bb395befeef017522b8e2439ade68cc569"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-frontend-browser-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "687c9ede9a1bfddd1619f8d6fa970e065c1cd170fe28035f096f73a6da4e2d69"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-qa-scenarios.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "86803cbf242dc88a304ca76119e617725c35917491e715d75eff6fbf2fb85811"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-secrets-config-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "b0b98a0f2334e4f9445c1ab775a1b80813f9272f64cd9ee067e6dba1007d6a24"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-supply-chain-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "ac2c009c4f6be3b9c778a61e29a48a501b3e38fe11af50d8e3671a631b24010d"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-threat-modeling.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "94c012318d6de33cd0786b782fd156ec8d1b51d4319a89391d9c9c5edfcd9c17"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/security-vulnerability-response.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "bca1c5cfc03cb686583fad6734130422139c99e4d9240c14c8df34ec73503134"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/svelte-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "9fd0c37d5909c864b6812ed84c65c666a4da4f2a7969cb3aabb4cd49165c8906"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/svelte-implementation.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "274f5e903cbc5bc2eb7f82b85c565c042f0c11a95bdb93f33a0bc045e42b25b8"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/svelte-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "e48858bd17fe511fb680639b17994f7e6173afa1517d343c0ee92e31c6d294c0"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/tanstack-query-react-nextjs-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "ce508279d0c5597f9d7314287bc1ce3255fd0facd140aa16bdddccf78a9cf4a8"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/tanstack-query-react-nextjs-implementation.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "dae1c30f2df0ff663f7302505604e98a4ef8a80826d53860f3a54ac5212c7386"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/tanstack-query-react-nextjs-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "d4c92e48ac91783f8751885eeb93009b2e73d833f0f9b3528087a9aa46cde6ff"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/tanstack-query-svelte-debugging.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "9efbf662464dbb495eb92b8ca5e7c3665125cb4958ba80344c15059db879c596"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/tanstack-query-svelte-implementation.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "6bdbadcc35986c668d648310766309bf5fe15b9c15f0942bff269a2e77d17eb4"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/tanstack-query-svelte-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "bddcac1ee473d32e15a88193458f9748b4a6398e02e1048b20fe4bf8a58c0c8d"
+        "sha256": "2c08ae6a4833ac4346af43f22efa4cba0747f011ce61ff899350b1c022af1e77"
       },
       "baseline": {
         "state": "absent"
@@ -1325,7 +1380,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "41cc958325ccf7f7e63a71c78418ec6a383eeea6489bf89d22eaba0e5727de71"
+        "sha256": "c9e3d1d7bae5dec82814b316101c54274f087526cd3456d105a4057d715b7e9d"
       },
       "baseline": {
         "state": "absent"
@@ -1336,7 +1391,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "2e306237b5ecb1736ae07f6935ea66209e5f25f84bb3824369d5ba0b0b3e7792"
+        "sha256": "7fd69c9e2e04b9c5e92cf4d1afa1e9826775b240d443d77149a93a0dcb905f61"
       },
       "baseline": {
         "state": "absent"
@@ -1347,7 +1402,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "dd976d8c590bf9e10571470b0ac9ea07e0bc0865f2a7ae3f637b5c0fd8bfe49b"
+        "sha256": "43cc60b053ebbc9d3e0371dadff4469abfe748b10609137ad280df2148d21c95"
       },
       "baseline": {
         "state": "absent"
@@ -1358,7 +1413,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "57228d081164da02c2a7163af2f68d7fd3607c747cab40860fb7fb454751c9a6"
+        "sha256": "c3db8e82c729a93b5e32ea3528154b4fadb127711a52d8b9676abaf2bba7830d"
       },
       "baseline": {
         "state": "absent"
@@ -1369,139 +1424,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fb7672c9ec48baa245fa06c4b3999402495e352b2b1ddb56340b3445b11733d6"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-accessibility-motion.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "fac9f84510cbc14636d64ed8038360cd5af41afb35b0aca90b28452743523ef1"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-code-review.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "99e4ffbef1d9ac0e206500a85207cb529d45292b8250bc0578e0b065f99494a8"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-component-architecture.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "61b92f9ee04ca62177d9d23c84557857c4acce815f2ae8118244f3e123e10400"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-design-system.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "be5a26e3a005993f037307b4f5b1c4b008d043d997bf16a3712aaaab39dca756"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-frontend-testing-qa.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "6ee4be9f39d6fbbd82b566f3ae51f76f646d45a34acd904ea41943a54310a4a4"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-performance-stability.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "689d182fbc7397cf9d7e3402da6f767f53d70c2e70814ed21719b0eb9acf4f3d"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-responsive-media.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "d436907243c3f41be37fe97de99958ade3e6379d397617a335390e3e618422a2"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-tailwind-tokens.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "a84c7105fb648ca68672398f0150d7827dcb39b2f0f22e453c72edf49d7943af"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-ux-workflow.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "63bfdcefcab25c4c9f55da44b108fbd116732a5846679d9e2f06f09e223fb0ea"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/ui-view-states-forms.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "0d9a1356127e1734d9b40a72822a7cc82352be1f1fefb15d09965eb346375fec"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/agent-sources/using-itsolpowers.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "a789f9ee5d7aae48800ca9b9482f7993a9a06f81f5d30531467c7a1eda594d9e"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/generate-agent-contracts.mjs",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "68ab3603a5e39b6ad68cbd340f2f8ebf7b9e66aac7599a11f523b84691672129"
+        "sha256": "5bdd7836f3761dd40c1f91d9000f1c6a2c893066d5e07813c9b27a3ef2d2d795"
       },
       "baseline": {
         "state": "absent"
@@ -1512,7 +1435,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9eb1c9d57e6502ad945692d64fc52cf6ef05544abb78bec3c200e965bf2d3710"
+        "sha256": "4830918f679c656726c5b5580011d877aa915db758092af136fb4140ec7016c0"
       },
       "baseline": {
         "state": "absent"
@@ -1523,7 +1446,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "eb3f69c09c94f182d133c8c6d60544241fabe2c3f87c16085ceb01a62247763f"
+        "sha256": "fc5880297ca7b1e231d546fa99c60aee5bd7f7667d902469bac7a5dc63b5a9e3"
       },
       "baseline": {
         "state": "absent"
@@ -1534,45 +1457,21 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "00e2189ad7ed22db8cc71db7f9cf45ea05088454f6670302748cf22ed57f654a"
+        "sha256": "71dc2b45c44eefff17d44f7fb2b34e9e0a329b5031e9db42c5c0889924ac3ac1"
       },
       "baseline": {
         "state": "absent"
       }
     },
     {
-      "path": "plugins/itsolpowers/scripts/test-canonical-references.mjs",
+      "path": "plugins/itsolpowers/scripts/test-skill-layout.mjs",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "6aa46d433a2f65e88147793ff0799af005d8bc11c38352486ee137577f146ea3"
+        "sha256": "afe3c91e7d19ed328ef00ca3d9080331e15f98e5c12523c11d26984af6edd618"
       },
       "baseline": {
         "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/test-context-package.mjs",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "fdf8edccefef95b35ef57652748dd1a7f33b5c022c33ba68ce3e780f4286d6a9"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/scripts/test-opencode-adapter.mjs",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "2ac4fbe0e3ce3ce92ca31437ca1c0ba6b168d0a11143d57cba5c3b622f266658"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "5476698e960a160dfa8eaa64d71d1d6bb6fcebe63f83c7c922f61d7a2028da28"
       }
     },
     {
@@ -1580,7 +1479,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c1349ac30039bc4b6b4165f0c3a5bc9993c5362eac25bb65e180338a5f8e518f"
+        "sha256": "c94e7fb4611b5b9ff1bb4cbae0710a373320a600d8502a795f3e48267ecd1558"
       },
       "baseline": {
         "state": "absent"
@@ -1591,7 +1490,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "42068dc4b60bcc8f6039747106bd62a0ab69116bc7d57abe7d6d9b4f46cab66e"
+        "sha256": "1ad48f3f17763e9f19842fd11e0e34298f0653f18168ba9eb612bdffec3beab8"
       },
       "baseline": {
         "state": "file",
@@ -1600,220 +1499,203 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/dotnet-web-api/api-design.md",
+      "path": "plugins/itsolpowers/scripts/workflow-mode-consumers.txt",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "8b39469fe4567666bd465d60afdf86ef6ab46897780edf2835f67d27441a2fbf"
+        "sha256": "b6b7d5c026eae7ad35d6e7ead96e7852291586f9cfc50fffb00966319d81d253"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "30f07ebbc0e6c34ef46dbc00835f114cf0f3ad3619987fbebfb31efbf66d9bb4"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/dotnet-web-api/program-composition.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-diagnostics-evidence/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c502b6a8cadcd3caa235c430daae215f7728fbbb60bf5f01697a94c64bb5e7c2"
+        "sha256": "0cf23c5a56f3947738dde7e6e49637664adc7a4355b19c5a4712ba7a0a600283"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "bb44c5eba72fb65652a3ca4f9db99ad40f598fa59bb830732c1b4640b84239e5"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/hey-api/fetch-client.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-diagnostics-evidence/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "edc5231da9e5cf5c88a426d9dd3e317dd216d42b628a1668ecb127084167037f"
+        "state": "absent"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "8d9708a754b2afa85c80f736714ad4d4188207c0f5c234224af91d45bc9aaaf1"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/infrastructure/container-review-checklist.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-dogfood-workflow/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "08f667c0bb4bcb7dbd49d313aec25f0e2557ae4a163f94523638039d2729ac41"
+        "sha256": "7a3d50b52b7cc816497bf5a785b5152865894779e2820e60914b2c008fabc480"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "0d6b04aaf20624f0194c6ecd185583f9afd4569b7c1fc2d3dde3de3f0c7fde5b"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/postgres/jsonb.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-dogfood-workflow/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "6d141ef12a73751d7b7a9207138ae491faec83f76bc315b48843243dcd5734c8"
+        "state": "absent"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "4286f8952bf80969d7301fead2583fd1a9e71ac6d408c7c23b101653bc1fad3d"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/postgres/minimum-application-settings.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-interaction-debugging/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "ba14b21408af4536105abfc6409ae0728ecc99ff403eae5bc7158397c48fe6aa"
+        "sha256": "063366ff539c762058c21753c4cadbdbd772779afeee015c01b144937f59f1dd"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "ae76dcc4096de22131449604afe12ad2e405803fe1aefac5c5f8e5fea36280a2"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/postgres/operational-procedures.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-interaction-debugging/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "36ab97e73b79379ca63c847b4a57a6feb12f8d7aa38b4a32c3cc2e63864e9458"
+        "state": "absent"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "3a9e60f561a7f9f9cd3c9548695e77861d98c18e7ec2fa2c83853ec313cfb002"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/postgres/planner-statistics.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-qa-reporting/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "98183abd4062bdbe037569832c0b0829a5fd33dad140af66d9d1673d90707b32"
+        "sha256": "a39818e75cd6c4b5a85687f2e7e2b88c2e6b50b1aad8677faf59149a3461649a"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "e572c7f0ad6b85ddfba37cd2226c9281e752592d7635d120f1299e3267c9bf8a"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/rust-ml-llm/candle-runtime-tensors.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-qa-reporting/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "eabfb9bb3a9cd74de601348c67bab6938a2f90db894bdd8b01deb89a56899988"
+        "state": "absent"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "e9f7701ec0fdc691ed3d4e37e4befda11c9f7c88b9cca1d89198c3db841d505a"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/rust-ml-llm/candle-training-inference-jobs.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-security-production-safety/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "0cb1a3d90197c3eaa89aedda25bdbe4f7f6e14d9be962f23e7ce10001ac26166"
+        "sha256": "d9950592ffbff404355f7d61a63f5b48ab6789f8d3d49d640dc512bf1ad744ac"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "dc1cf941b916d3b625b1e649d034714af118b5d464d246297453361dd9d58c59"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/rust-ml-llm/function-api.md",
+      "path": "plugins/itsolpowers/skills/agent-browser-security-production-safety/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "0e4fb23857a3d3dab4000ac49d390affd6aa3ba31d1eba690b4c17117ac1c0ab"
+        "state": "absent"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "be9cd6ff1e71136f3947148fbfac5bebf286866070e856197e12aed5324d2e4a"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/rust-ml-llm/model-configuration.md",
+      "path": "plugins/itsolpowers/skills/application-technology-migration/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "51f0cdc7e8c17c1d4cebf3ed3af9abe6b34edaec6d2ec8e3a528266bace0138d"
+        "sha256": "87663ec311969701544419d54496ed3057aeae0fb0681cf17af5de8a423f849e"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "aca4212355524fdd6b02cecdd57f7e64cbb6d66b4ebd8813a07ed13e229eefd8"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/rust-ml-llm/rig-providers-models-agents.md",
+      "path": "plugins/itsolpowers/skills/application-technology-migration/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "66012a7dc28b712673c3ff336e77879a3784befcd6076b58497e39a0e6c4591d"
+        "state": "absent"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "b53d32eef2ab094eb96a6afaabddd6470057311f0980dbab68b9b1d007b1bca5"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/rust/tooling-clippy-rustfmt-lints.md",
+      "path": "plugins/itsolpowers/skills/dotnet-web-api-debugging/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "aa4211d81768fb7d2c841574697e8c57e26bc6d06fed528703ee484b9f180bff"
+        "sha256": "d5ae44a5a8624c9663cc0b9b28f881e71c975fc0c1fc11075bded0d27103371f"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "b439c287e73b1c6151efeea4506c0b4bc3ef0118f443f010b53e9b14e69d2c32"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/tanstack-query-svelte/api-client-fetch.md",
+      "path": "plugins/itsolpowers/skills/dotnet-web-api-debugging/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "6eef192550058907ca96c5bdddf7482cfe57a4a3547712f10150c21cba072f10"
+        "state": "absent"
       },
       "baseline": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "e695a70ff23dcb0921b63178ad79385e47a94fc4739f6cceb119117d4a4020ba"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/_shared/references/tanstack-query-svelte/error-handling.md",
+      "path": "plugins/itsolpowers/skills/dotnet-web-api-implementation/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "ef37d9f72b60063bc2443878c23e9014fa27f05cd699778ee6ff7249c7de09af"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/_shared/references/tanstack-query-svelte/mutations.md",
-      "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "2657f5c09fdfe2736ae9a2d4a3426821b249774bf74045e2a83c1b1c11d29d6b"
-      },
-      "baseline": {
-        "state": "absent"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/dotnet-web-api-implementation/references/03-program-cs-i-skladanie-aplikacji.md",
-      "candidate": {
-        "state": "absent"
+        "sha256": "62712ee885283c85525adc9983851db18f6a81e8841fb7947e652befd397690d"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "16a0fb2d9bce96cd6b7c524ac013aab7484b93a6c4b1956afbd78bc09cd8b2f3"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/dotnet-web-api-implementation/references/04-api-design.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "8a3540bf37ca31fdf6b0011cb77d3240fff3dba1e4eeb52ada136609118fb927"
+        "sha256": "f5931b4a4f5d716866e315921bd7653152c44cd038ac62141daef453608a07bb"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/dotnet-web-api-implementation/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "47b2467073a817be030abd61bdc6c37ecb10a4198abd44dac68447cfd1e2704f"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -1822,33 +1704,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/dotnet-web-api-review/references/03-program-cs-i-skladanie-aplikacji.md",
+      "path": "plugins/itsolpowers/skills/dotnet-web-api-review/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "becbc2dad8d6a1919a89b31b77fe5f89386313730cec4dd03566e553e8a50fc0"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "855dfef4b4b926a02501d64db677bc2429af163d2c40fe2b1756dc1fc89385c3"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/dotnet-web-api-review/references/04-api-design.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "3a46778e4d59c9081af1a5904489f322035d5be35f23c656a889e35b4118a637"
+        "sha256": "003ec827ce58a9c6ff3d259f609cc367e7fa35a9ff42edb9b25aa34b3fd20ecd"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/dotnet-web-api-review/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "8c8b05f81fbe291aec30a9bc32ee256a7d94d2d277b0e6930609362776682554"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -1857,22 +1728,334 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/hey-api-openapi-codegen/references/03-klient-fetch.md",
+      "path": "plugins/itsolpowers/skills/effect-typescript-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2f6fd1d757c84aa4ec1939a4efa915c6ebb5148ba92e1ae97d4658597df1bb65"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f20691a56ce7122c15257513ebff054586985f1ceafa8c22a61b86feac14fc3e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/effect-typescript-debugging/references/guide.md",
       "candidate": {
         "state": "absent"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "f93c6f7f5d293f25cb15dc00aad0dcc09324f7e2f2f9065f475e63136885f211"
+        "sha256": "90ded1aab88339b5c03252b11a129c69dabf6e0b4944153b7f5e0b32e47e476e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/effect-typescript-implementation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "618ff0d2009a0bac460042ca7e6ae7a5bb353e423e673bbcc413d8c7966e635f"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5b6d8201fecd88f61f92a1f16777b92f37381e38abc3b5fa96bd36c2dd7eef61"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/effect-typescript-implementation/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8f3b6a477278115b7a4b00c68d7054e941235c611306421701d3fc7cc23f9720"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/effect-typescript-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "db8bb5291f5488392c578d2cfd067f2e25e7ca0c761967b64b985e7b460bca2c"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "02519c870af7fa73d7663ee3af5ebfba4f1c4ba280481dab5f1ee7647ad999c8"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/effect-typescript-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "14c710fd7bec6c03e52a4d700073150031c603f7856737dbe2f48f8f942ed67e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-desktop-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6a02f643d98a845455ba00da343c134455016dbb3679fa9ba9b0b97343baaae7"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7a87e11f6187ece8f6f0d32df892e49f29a21490bce728c28f63a1a9218ef449"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-desktop-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f6b4b0a0ac6afdf8d1282bc0e0986823b8a84a6a15f344e94cc3b9e79511328f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-desktop-implementation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f109959e59194bfc134dd2811d0d7982b04c61ff223b764d6028295695ebe4f6"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "32669235402768c6541d4df67cabb548d9ce90da099956bd00a8a7f41341cbe2"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-desktop-implementation/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "107fb31d992cdf7ed2d6fba3c725bc8410a3b60a1ab2db8c2b141b854d152836"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-desktop-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "92f1f81ac5481168bdf701c7a31e2c34bcc232952c538425be2f346788c545cf"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3625fd73c164e9d15442b74310b73826189d3bbf73ec140e4f092870a3897807"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-desktop-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "73b9db4c06be8e42a97369350cb737821221e55756193f37d705549f24af2219"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-release-distribution/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "36138cee8e860b32d91f9702c33dba6654b526edae54a91cfd4da648d8464252"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2df89adc246fc741fe1834230aaf9cef25e8ceef51fbe67ba2341b0c6443d8e5"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-release-distribution/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7fd928ca168c688508b421e35c1bcc2042a252b9449cb3ef2c547266e3a77974"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-security-hardening/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "1b7c9c66375e623c1ddd65cf62212b0941f7a63afe205f4949e02de7bd9ed9d4"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cb91c1dd634d8fe468afbe099a332e00aca414f51943f322ff5502b910b78fa7"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/electron-security-hardening/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "93cd1b7397114a1b4300bebbd3a8cac9c98103cbea8775ff98fffce172f0f06e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-eas-release-ota/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7d68007f4a6daea0d39fa1937f20774348a9d8d771f71c4f778cef72c4460ea7"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "177cf7f44fb83e5ab37151fb8f10594baf8ce6923092dc6b84665c685e0624e3"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-eas-release-ota/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "15d7fd9d58f9069104191a0580b81af88b7bee6570bc21a5b0d83df44c2ee398"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-react-native-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4c388529e7864dd4c51df009196bc30a266b1959734a8ff7fc6dbb24e0810ac7"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e85ff9c3e6097f171dff647db9e46328ce3590d9d7620a9c0a0cd8aef0656706"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-react-native-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5c148e4e346dba6b6dac0f10275b1a2371e06b9e9bcba1b131c0ec15f593e60b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-react-native-implementation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d7fac66c3dcb321334ea3b93476739969d735f31c097af5ae53b23f7464a7f9a"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6696a2cf3ae44216a7b128eee5effa9fe0c2b04459237564f7e0409339a060b6"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-react-native-implementation/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "29bd2bfc7645e0a0a18b50a500fbbeb3c1c21b431cc43e452602c631d761497d"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-react-native-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d871bc8ceaa0bd1f6e65661cce19a7b5c2ec1c3965323951203a953608576ad8"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e787b9d91a523e6a369b197845542f729e8655a50b2c0b85a10ff8708f7472b1"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-react-native-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f7b9ab03ae892218ffa7e48afdf9c8609b9510c994180790528eb20b2be445df"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-security-permissions/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "36fdd6f238e1f2c37baa1e0c436da9d13cbcac4828ef74c0655425b89bd06237"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4032814471a4a3f1d29ec3dd6cb5fa6bf1a2d8ed5035aecdd61333d821567ea5"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-security-permissions/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "78ab841380578b877af9a59c3348440bd054174aafb4137b4a1698482c07b052"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/hey-api-openapi-codegen/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8de4c1ccfc789acd17d4832a2ec4455a598cc47cd0cea17cac2cecf3a1c6daba"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c0decd2a0de9a39c7f68c4bf62f17af1dc14d4a88c8594d93ec3eab3cb491541"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/hey-api-openapi-codegen/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "911bd07b0f8a48272d7dde5ca34a6efcf7973cad7041bf6d94882a0ee0cc46d3"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -1881,22 +2064,46 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/hey-api-openapi-review/references/03-klient-fetch.md",
+      "path": "plugins/itsolpowers/skills/hey-api-openapi-contract-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "257be0573dde5336dbfc0182e2bd2d054b93f28d0e9000451e7b57f166768b84"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c56e8629b2688167ac5e87997bce7078cce437ceb4d6f05489766f4312b140cc"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/hey-api-openapi-contract-debugging/references/guide.md",
       "candidate": {
         "state": "absent"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "9ce9e0f63344fd2e7db556b61c3a7306d1099d7fdc80580be2be32979cb4d2e7"
+        "sha256": "683cd2ea9ce7e151b904d2f0602f6b20a85528f645803ffd428b1378589db6e2"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/hey-api-openapi-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4cb9c7916ff2d0133fe0273b653ba75f83b36cae14690c5b8795b9bdf15510d7"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "fbe8ba4052322023014ba757c8ed094ae27ae37f43ebf9638a0d1d77ebb34c45"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/hey-api-openapi-review/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "a5ecf9c051654876a7fdd4355ce7d0a33d781ee66f533c0c1e56fb32d41ec049"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -1905,22 +2112,70 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/infra-container-build-review/references/02-checklist-do-review-infrastruktury.md",
+      "path": "plugins/itsolpowers/skills/infra-backup-dr/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3145ec0ce4198b85472092d2c0f7c952a295ea01501cd47a12e0e911a3217358"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "55009499a10bba0247898a1f46d5995f5e02daf75005876242de9cab839640b9"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-backup-dr/references/guide.md",
       "candidate": {
         "state": "absent"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "c543fd08cf35b92977db3b86fc4766ce568116f1ebbd72a8b7ef06c74d54a8d2"
+        "sha256": "16cc6491c3dc9116b03d0436039bb18cfc7b4834c0375366d44f4480e7a53589"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-capacity-testing/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "64050d259d427f508d64d854508dc777a4590a1dee4a210721555fcc1d2e15a0"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b563e0e0316e80b55c9c7aceb4ee1a81886bdc2043199452e7476a392411a7bb"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-capacity-testing/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d2e8ab51f6ef7e806f75d260e23542f6679fa97ebb4029434731ab50adf15a2a"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-container-build-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9d032abe4dc52457139d648519fb8641f4c416c45f0f621f700bd8f5241dac02"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c514c82145cef97a01d0683dfadc49a11450b228b30dcc73a5fc8f6e3a54d4c1"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/infra-container-build-review/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "e4905a9a76b3fb2bc26afe1ee5b41f9af628574e46234153dfce0d43e865d2af"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -1929,22 +2184,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/infra-container-runtime-review/references/02-checklist-do-review-infrastruktury.md",
+      "path": "plugins/itsolpowers/skills/infra-container-runtime-review/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "b59f60eeeee3b983aa5cbda3e16f1bc480a5903f874b291917df1e32eacff05b"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "6385c8a261e539b0dfff1ebf5e02992d90e977a89b8f2121b07b9bf163187a87"
+        "sha256": "161521cccd7d59f09d51a4f0a7e496ec4c6b4c57dc31b328321d9bd7a09b7bc4"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/infra-container-runtime-review/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "41d9b6676b9ac715e22b6f64698f8f77965481caa4635e243c591bb5c65dae79"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -1953,22 +2208,94 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/infra-nomad-deployment/references/04-checklist-do-review-infrastruktury.md",
+      "path": "plugins/itsolpowers/skills/infra-deployment-design/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b230eb768e64bed3520dc6acc8d6fb3c674fffeab20396c11d9895bf8eeb7d79"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3606bc0dc48071915a4f92fa28964144a77b47fb846a72f7460d40e790e48627"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-deployment-design/references/guide.md",
       "candidate": {
         "state": "absent"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "b0e7a7a68b0e8c8e6965016d6e7591d3734f8922bb7eb9b67fd83efe635fb404"
+        "sha256": "f0caf3db6bef98f2c3c61570c020ce6c185f9333eb65554d3dcc0d82fb488b9e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-edge-protection/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2c6b4839351559746fbd196e3c5e1ba942658a0b50ea19f123f84db279ca716b"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "1e1566a7457535c665ca0ce9d4892c3c37eed652111a256a133b2728f89424cc"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-edge-protection/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3cac8a865b23c3f7db5268edf8fd84f7d2114a910590879c83b1cf8ecca6149e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-incident-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7ad7ecfcd8af2361be8bade1d16d85817517f998b21f72c5acc524c1e6fd7914"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ef8d66ff6ca8abe5315af983a23e3bef9914b46eb19b28a574f6858ad9edcbfd"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-incident-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "293a21145ed6371a9f7171b033fd3a6bec81723c7f161f2bc5f3b67a454e75c3"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-nomad-deployment/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7022170faef0273749dd11afd819ce2932532d7a7679a7e417528649f2758dac"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d1d2665542d69ff953f43f8f7069ed651dcb28d3576f8d25c1470a8481a41769"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/infra-nomad-deployment/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "fe32126012ecc08d33761e7b10e2957b5dab734b197ea4bba9797ad082ce3da4"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -1977,22 +2304,46 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/infra-production-readiness-review/references/02-checklist-do-review-infrastruktury.md",
+      "path": "plugins/itsolpowers/skills/infra-observability/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d0ca98c5960ac8ad87b60f0ea0735ad690b6612ac18deeaeda238497db39c4d7"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f34cc98a896a8a94096585282d2cc923bd5dd257cd0617940b96fb8fb61718b7"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-observability/references/guide.md",
       "candidate": {
         "state": "absent"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "6f1caa7f8f349802b89ded29933bbb248edda03725d892037e938183db90f3b2"
+        "sha256": "65ff21ba7a4e638155eb9e6a5b5cba19676d72bcf6b982dc66e0ea3204c4613f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/infra-production-readiness-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "676ea6f3a437102a9b888649962cb236f17650b26ab88f1a7aceaf3352c8dfdd"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d83a6f59a937c517d0d361535a250a43a75e79005c2663fcd4faeab9bc564e71"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/infra-production-readiness-review/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "c479d8bfad8cec1b98b87c83d85a6c9979b0a7f6ac1f6c13b86b7223ad7f2b24"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2001,22 +2352,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/infra-routing-proxy-tls/references/02-checklist-do-review-infrastruktury.md",
+      "path": "plugins/itsolpowers/skills/infra-routing-proxy-tls/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "540039d2ca25500b22366c2521f55d4459da9ddebe65a3ecbd65a41cf604d273"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "73d66e8820b1c062aae0381180b4eab623469a945a5821c049544a32a0282f24"
+        "sha256": "b89498ef5517f13c94b5f86cf14176e2dcc6761325b446d247f0d75144229639"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/infra-routing-proxy-tls/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "66b66c254dd79da8fab291083018b8278dfa8a69986a0a19a2bdc9026978792d"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2025,22 +2376,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/infra-secrets-config/references/02-checklist-do-review-infrastruktury.md",
+      "path": "plugins/itsolpowers/skills/infra-secrets-config/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "ddb1da73a519ebc4088184be36814d5d9d6c14351141fd3fff55d5b4eec832b6"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "cbfd438c9ee1ea6cdd0a641aa3e84fc0fd464c2f825ece36da28c4a220609189"
+        "sha256": "284dbb89cba810ee8af2377b45f9a5ecfb03a2f1802add2f5d5115ba9f12fd14"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/infra-secrets-config/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "8bbecb10a34aaac23bb5665e1ae2fcc090bd4b7f6624453175d6492d0f047100"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2049,33 +2400,646 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/postgres-operations-debugging/references/07-procedury-operacyjne.md",
+      "path": "plugins/itsolpowers/skills/itsol-bug-debugging/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "c113d3888a675f28f5b7b3cae44297a86f96a176471cd5fac7f364794d4f692e"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "e25166ecc6392f7546ee3e48981dd702bbf84d02125334589bcea3fe96143094"
+        "sha256": "6e227c907b8dafef4498f2fc58908b041c99b486ea38ecb9f24f32c0a8936a7f"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/postgres-operations-debugging/references/08-minimalny-zestaw-ustawien-dla-aplikacji.md",
+      "path": "plugins/itsolpowers/skills/itsol-bug-debugging/references/guide.md",
       "candidate": {
         "state": "absent"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "83f17d6784a251ee2b248d8a95073165c4d38a58e3ee03e3abd6031b2427b04c"
+        "sha256": "9ededfd81286693501be1d7b111e91d4555787133cca0d504c056d575eba75de"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-code-review-workflow/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "69a30e950d0dc16fc73ef09a3fcec2b15b6b7bb532e2beb4b3729f07ad3b1880"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "344e553837d543e19534a2210418aee3634c05449d9c86c87870fa7cc2a64d06"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-code-review-workflow/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cca42fe4eb1fbe34a359043bc4768f594847c342ceb1f5828003f752c00526bb"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-current-tech-context/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "03ddd43ce98ecb6a69fd1e32ad3b7190c8653c480164cfcb0dcab50e8e063c04"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cd4fe7f4f068199833131e7a1ee7b6a892eed5c96cace4cccf3121a31afcae8d"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-current-tech-context/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d450738e8fae9356df759c572384a4654f972cb0c7480a952adf5b82bbb93a40"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-feature-implementation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3f38bcc23af108cbf502ed5daa14fdd6e8d28b2aaa0c3a978dcc2d449ed6d462"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2cd141a8d4b7058b3626348dc2cbb66349f77b52167b65b5c1f38eb0e45566ad"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-feature-implementation/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "de37822a159df008cde801197bd355006422cca2652dcfb754739c3afd4ab0ab"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-functional-planning/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "44609d5cf26f71d674a50a839bdada10b401cc92f157588423040ce505066a22"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5540551504507c973b9f15fc796424db124b3cb8d99b018755aac3443020d8cf"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-functional-planning/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "dc3155dadf893a6fb07305faea7b5d83329bd6e530788183ae939a4f9f1e0dd1"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-initiative-delivery/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b3232f0771ad3733f55627e7e1840d23fd5e3676a9dbc260481ad6159cdc16b2"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "66f5f04fc4c92778b7db61d164204654b5ae40f90072e45291253423d6bf17dc"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-initiative-delivery/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ec504f3ee69efec2a21a8c4fa3a0febdf55c3c54037bd63b340a2442f485acb9"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-qa-handoff/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "58d476dca31bb38279a57bba14cc0d659d7d1e23c5b89f1261ac3ef240bb23df"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "45bc9f8b5d28a7ff3da4d071ed174381a356bd99c8cd8c5d5ae05979b9ea4532"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-qa-handoff/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f2794c53157850c6f44e5b9c0b75eb3e3aa94007dd5d8a63facd75bde2ea642c"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-repo-memory/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "accaad9b0a3c5cf473a9fc2529d78be4e1d45b0d57443d6ebae5371e39a68d1c"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ac60e151181a2c7a78cdca7ff4fb8cd09376eef240ff18225caf093959a1f909"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-repo-memory/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e045dcf9378be15e4af8f1108e326a97441be165b3ec7c4593df762423f59890"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-requirements-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "130942b7b43b0f05bf0797063f3505309dacbb7914f0ed365c086f64773a0406"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8ea07bd9f776dca9042d0108c8f237e5b8d8a632192d1252d0df31ecca334201"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-requirements-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ad9db09e3e88256114f39615879baab5614f9ca105af27a4991301ef2e2d99cf"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-self-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c14fa2b02f2002d4bc0b318a3e66982abddffee4bb1f6bafcac411192bee8d36"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0c346ea8731068c89f2e260326fb63cd72af1a7949755bf4b2c2c213437ae6d1"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-self-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5f5480532680b66fd406469f146aced2970e36a9e34f3b8883c9846bc85d24d5"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-subagent-workflow/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e8c36537015cf9248526d1062f17c3ed286654c7304affd31918aed1379940c3"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "417d616e9a11da7f662a91dcecd641dd1785369a20041f8e2e99d3241c13b6a7"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-subagent-workflow/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0bcfa67ac2e157294f372bb537ca69dd150f4ad1fed9478096ef4a6c52933dde"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-task-intake/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ad26c8793cf4cf67a3a8bb868ebb5bdebc32aae9ab654e2565b4364db41d65a4"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6247e427ca74611d76d2276f04607b746a0481d03b267122200ab5806479bd4e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-task-intake/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ff6d488c671080329a8b02ea7529c05a2bf0bb91e8d78f1e921cf5539848284a"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-tdd-workflow/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d7bd07deedc8accaa124578f34bd1381b96654a9e6ef0c7f24101b8a66a9cf99"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "de6a7c90835ef0b8aa9657c28913444166d34b40cdcdd577e6dc9da98f4e6fe8"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-tdd-workflow/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f623b1e3f87ca6ae2b006bfffb40037859c75f316816abe85ec4b946de9bb284"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-technical-planning/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "69a44ee58617d72fa7d35c73091ee3bfe7b9db950536cdb1f665d4d4d5860f7f"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "832c74d8b9655b2de8d446044f2a2e5a3843d5b495fb40635eca63ff4753a1a3"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-technical-planning/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ddd25d90a2b6b2c806e0a1303e4dbcffa9739c670df35949ef75bc7da48ab206"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-workflow-mode/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "efb2879e17c0e0123b125a42485aa3d3afb7f701b5adda1e8a03c9a70ed0b5fb"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4898b2700fab054e8315a4e3eed5f4ab0583b8a4156f6a0e084ef9533b0f1214"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-workflow-mode/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a30c225dccf56dca4c720f1a15f273afb2bfd7f238f34654c36aafaa83a6e98e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-ai-project-planning/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "20d3a42284469d8962048145ce50b0e989b73d146f17204e8c30d316a2230988"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "04c4072b3d343c4f2d9930cfb1d143004066fb568b2d950fcd348ce51c7646e9"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-ai-project-planning/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b35c8dfc9e3e46c59729a26f4756e12311ce5a437a1aa128a36f3159e2b37ebb"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-data-evaluation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "76b21d5a8e4e79a7c51ef96cb43cfd8956778cd9dd96bb607a5728f10b463dcf"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "22b59f887219538a86723d8edda162b8f91383dee190d0cf7f47abca5b44d862"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-data-evaluation/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "378c3438a5d515902b1ea254e8047c10c53bb7a142be7f0a402b00e4fd50bfbc"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-llm-rag-engineering/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2ec1d2627c24b00415cc710139056298fec297507a47dba6b8a29e0cb20850c6"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c20157b55bf5d4c39d7039746c331c1fd7a2f522e88718051b719b33cb383529"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-llm-rag-engineering/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "77c1b41761c1bf7fafe7e223c2acb9909856dc0c54d9d611b3d78e13dbec1d86"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-serving-mlops-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6aac7b110b6ae4e27dfeb55cde186a4bbc3834891cbe9c51487c67ad0df2f25c"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4b6bdc8771df470a42ebdeb346f24a472dd77db9efa8410f13eb112f42679c4f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-serving-mlops-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4db5d569a9ea0c1daf652b7194374cdbdfe8d416da5b219546b46d92f19901e2"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-training-experiments/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4b16a2c8ed0404eef0fd3e42fe1704e52d031b3bcfcde914b0ab0bf20157d6e7"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "813262a65189f8e55302218502ca74abefc621ff3cf2dc3b9ae8ef3a54666132"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ml-training-experiments/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "facc3933d3658f3f597adaf30e73ad6ae791645159b5afc004ac0408defe417b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mongodb-data-modeling/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6da857a4b2e5638ea6c298301cd347b6cdd4785c79a3a4339ea7005319e267f9"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "21e1b222f282b39ed438275120d02a53b46eb3b8d4bbb84e4815921fd41e5a48"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mongodb-data-modeling/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2a70c3bfbd73e50ed2f1a79634aaf0fb0b6897f9fc3396e59392c54cf3267b61"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mongodb-operations-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7d02058eda4587553a68af9f1135d4609d77a9e051f48ad616eee57c3cb96f11"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "1d043aa234b44e8e2cff88f23cc15cbe458000f68dd0180daae94e7fe2ec142c"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mongodb-operations-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "73a4a2836429cf6f1a06ffc02daf4c79aa75d9170c17d37e684557ddd6ce1fa7"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mongodb-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5d269538d04a5a1841913a6b4e4744fe363c678492a08cbb47c6c70027b71246"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f9fdb603359d9482ee0583ef7ba940dfb1add622e77eb10e6e93fe6a1c4a973f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mongodb-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "eb779bd1acdcbe32b6033329c12c988e83eef2a74b2a42c0516ec43222ac04f3"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mssql-dotnet-data-access-design/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9034b6bf82ff1639df322451a9a63356b871d2e9fb8b7f0d6b2fd598a25d266f"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "91df349efbb69465ed4babb7d8bfdb7369f4f6d07940c81662a4dc4ed59095d0"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mssql-dotnet-data-access-design/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "723f884022ba2183d0038bb15649d96216afd5e4d5d3c6637661edbda618d67a"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mssql-operations-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7a76445f84d9ff65de879bf24d616e1f381524a957ef68934698a54466ae5fe6"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "19618b327bdab39e87533d86ed60e611d63cffb9e3334a88f3ece5ce3eabcf3b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mssql-operations-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ba8d14a22cc7a931d2e9badc3f135202bf625be7e508143a3f03ff6aa65f0c8b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mssql-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c0904dff1bb4dd8e8098578b281f81e79a833ccb648ff7fbf360a1c94df0605d"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a0b07c01d305707b26f1ed8cc96c954d401a99ef4003c5d587a5b2cb4b57550d"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/mssql-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5a353531cec822050fc118acc67d3ecde85ffcd4437144c7d21c1a650cc631a4"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/postgres-operations-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c40ebbf72a2035c8b040a5962e02e2d781e61add73878bec3f41910848396610"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c9873d5af0ab6abbf3668a38c682d278df36df4bc2eeb70cd4fcb97b5475a9b7"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/postgres-operations-debugging/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "97a2de98efd9157af54ba0f59b5e8d2d7e1e04c08677e77f6380acfc26e8ed52"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2084,55 +3048,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/postgres-review/references/02-jsonb.md",
+      "path": "plugins/itsolpowers/skills/postgres-review/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "ca81d3543cf3e7b923808f536f4d91872828c02f4156d384156109dd81734a9a"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "9fb231a5f479d6628f32be3ac3487dd4399f1a22b940da8c93f6d2dcac683c0f"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/postgres-review/references/03-statystyki-plannerowe.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "e7e6817778a12f626eb0dc6cf9e3e6b6fe646472a63440e0d95b397189f840f0"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/postgres-review/references/08-procedury-operacyjne.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "5c0fa0c98c67a6db9bc3e8b078b834d9e24a0744711115e6578ae937f07e0046"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/postgres-review/references/09-minimalny-zestaw-ustawien-dla-aplikacji.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "caa538918560e92208506117fa976c35fb15cc5b721799c7c5f51b2677aa48d9"
+        "sha256": "ae1d5b4a26b84992357425e6025b59dfe20db4da9e2e0f170c2f2e32cf4b0e8b"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/postgres-review/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "132961eff608b4b45564c4a7dd170b70aa751e65ead4b2eefed6b4adbdc18b64"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2141,33 +3072,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/postgres-schema-query-design/references/02-jsonb.md",
+      "path": "plugins/itsolpowers/skills/postgres-schema-query-design/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "8abc2fee876e24d7e11437d4248608310e32f08f304125165b959722eb98dee4"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "7aec225a03cc0965294c6b359d8a968af2597c966466ade25d743b977d7af062"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/postgres-schema-query-design/references/03-statystyki-plannerowe.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "9c447913a82396e7d3bfb9c99347aa7c80999639f36499aaa13bcf1242d13b17"
+        "sha256": "6fc15a197e70db9e7769ca8a5532dcfa4d009e20bcab38cf38faedf895185f71"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/postgres-schema-query-design/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "4ca38e499653e53d5f2be4ace47d0f17821bf8c7a16775262249136612c7f26a"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2176,22 +3096,190 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/rust-implementation/references/03-clippy-rustfmt-i-lints.md",
+      "path": "plugins/itsolpowers/skills/react-nextjs-api-cache-forms/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "08acb2f3e0d28bd39afde44b158d676d6be9e42f2023a596d5f2b6ec0ca1131e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a9468fc56d860a63f2482ecfe09822c2faf91d22c84403963ab2680f35d61be7"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-api-cache-forms/references/guide.md",
       "candidate": {
         "state": "absent"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "07d1ff3bd0238871ca5d94cf54754977c7259089267906797dcd5dac641a4b2b"
+        "sha256": "51862dfbb1bfecbabd2955e23f58880740f0b0983bee827bcdb562c9de2b8245"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-app-router-rendering/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "13415f4d1f141e2c0894122c7fc98eebcbb427a1ecc66ab5c03ec3b9840082a1"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f4adcd19ac6df2c21f9b5b9e27164f188d1caa0102d4a14eb6b6fbab485a8430"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-app-router-rendering/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "51e2094db4f8ae8c34097561878794eeb056d1c89504bb541cbfa9e3fcf9d40b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "078921959e39d8daa8998357fef58848fdb749ecf034be65a6be69a5d7de1a2e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5991723f526fd61ecd33e71c7b120bf84875e1b945a552758c42e034e9583224"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "275c79f0ca2ca169f0d12f1afe843176ab9c0b9b0fc24a8407145980db567ba7"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-implementation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "486b5cdf15d74fdb0fc734eb6deb0a4b362d56c55b417418a7686617cc53d428"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "59cae7f5d5b88ceba2282a618994cec6529d3666d8a8049f9b17208fc35f7bb9"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-implementation/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b24d84750a37e482a1933ee5d4cdf25523528eba8d194a448eb9c0680d1dfc9a"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-quality-security/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f21b85d5501d3c2ca65758deaec903eccc67cf4d45bec6aba150cff45309b366"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "92fbf1d8b525851b3779c7a2890a198f3c9bec6fcac35de5f2b885af92ba373e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-quality-security/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b378a8eb1e1737e3bc70699bfb4562dc728a33b13cf7a208cbc8742d70f9719f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d30e23a732bc2554b40ad67bb9a2214c41d17045a1ce150b84f98d5f7c4e1699"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b91e5c1c6975b0b6a06d14e18330717bfaf9723ca279b54cd5f185f62af35559"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/react-nextjs-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0bc7e5ec083a31c98c92e9703b880f9bca038422f412ea22752a4f53e9d0f554"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/rust-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "27d6d804b3314de4a0c093043a9250f9e3df1f055cd84fb5dc5415a3bc9f3da5"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "98febe688fafb72a9900f12b79aef051b9726a5e7fdad3caf7575d28a91728c5"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/rust-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e668e5ca59d2b41a1014e98f431a3ecf1b3c12c934775bdf90b4ddb31a0c48ce"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/rust-implementation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9ab038691014552627f8d59081067e4d2a414a922e117d9170b253b521ea1e93"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a12fcf906d3b9c0ade0c4b0b5fba88a50dc2d2d91b6da419b1b4dec1918d403d"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/rust-implementation/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "c402173566462d4093fdfab41fe1bd992fc6529cc8d0167d490961fa5326af54"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2200,66 +3288,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-architecture/references/02-konfiguracja-modeli.md",
+      "path": "plugins/itsolpowers/skills/rust-ml-llm-architecture/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "42a23a47c43032d42d4da48dc758f5d9bb87733653fa5be102944492b1b681e9"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "fab64ec0dd436fd253bad07a48d652366bd6589be291001b0fd0f40c91af5985"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-architecture/references/03-rig-providerzy-modele-i-agenci.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "954a0a20494ce1875c98d1204740c5fc4272ca9746d6b4fcec7ba810a525ae2e"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-architecture/references/04-candle-runtime-modele-i-tensory.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "e66ef59584ad5d0eb19f1ad5947f9bb050b71bfaa3e650158d172f36f9c53343"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-architecture/references/05-api-dla-funkcji-ml-llm.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "cdd414dd01e1086cc3fe955f392fde390aa1f755d53902dafac4d77e3046b30f"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-architecture/references/06-candle-trening-inference-service-i-joby.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "195ee113da66f46285c0022fd5be9398a558d5f11ceb9a5be1022bbcc798e74e"
+        "sha256": "1ea264a6816957998089366d37d0edd819fbc95624a46f358a76b4182746f959"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/rust-ml-llm-architecture/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "b06628dd18c1096b5a1b33586ad9186bd431998c10c5388ebdf7f8a9caeef9d9"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2268,46 +3312,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-debugging/references/01-overview.md",
+      "path": "plugins/itsolpowers/skills/rust-ml-llm-debugging/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f1865b630651592374a110430f95c0733bc3b2036bfaec867d8664f5fb77e695"
+        "sha256": "9f81e070291d40de0280b99e17bff7a6e111f32f908567777d06a4ff77531a06"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "a0c978c9968dfa832ebcf65c37c73a54af0f9e4f9a1ed1b245c90ce3b6728683"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-debugging/references/02-candle-runtime-modele-i-tensory.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "aa36acd9b29e723b400f2b07b59988af5a3448729d91db29dbef37c4fb499fd3"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-debugging/references/03-api-dla-funkcji-ml-llm.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "ef771fbd726b539713c80a0fdf5147c469068b307157e460e34bc3dea5f6a778"
+        "sha256": "e0658e2e191b5ae111f7a1c2508fe3e5ed8fb8fa18f7b511cd04862eeeef1352"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/rust-ml-llm-debugging/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "01afebe9017f0cdce9791cec23332e28b2acf2b33c00d130038181a26a7f0f91"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2316,66 +3336,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-review/references/02-konfiguracja-modeli.md",
+      "path": "plugins/itsolpowers/skills/rust-ml-llm-review/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "4b49e39ff7806473a5afbe809ee964b0751ee89dbc62369a61bcdf3df6edad56"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "1ca4f8d5eb1baa9621129d93eeac1a8fe11a730e587eb9595838935fcaf6da45"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-review/references/03-rig-providerzy-modele-i-agenci.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "6c0ce79ea161db352d4bfd681c717414a6f6390b998de27281e1ffd2e3cc74e0"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-review/references/04-candle-runtime-modele-i-tensory.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "c9f8f43e3374a996c7710d653928178f067c435ce2a4975dffba9756ecb33456"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-review/references/05-api-dla-funkcji-ml-llm.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "d16cab7c5872270049403602b9a26458a7459cb2167efd0f46e43107e0852b0f"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/rust-ml-llm-review/references/06-candle-trening-inference-service-i-joby.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "7e4f237abbc295a0aa3eece468110d2420c8bd744dc45180a0d0f3427c4c64a4"
+        "sha256": "259f448f02802d9d1250c5e895ec20bb8328abdc49ec60287b769935fa485101"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/rust-ml-llm-review/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "85e06e2c19c8e37aca16120fb9844327a3d335ce9a4b41df18874668d673ca18"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2384,22 +3360,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/rust-review/references/03-clippy-rustfmt-i-lints.md",
+      "path": "plugins/itsolpowers/skills/rust-review/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "9a53cd3e64c600edb4376b3cc55b209c2bbdf8a0ed91ecb3c8c8981f31a173c3"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "51a28ea1187a3e884114d62d79acfe3425d9676c546bdc6f82775256a746eb83"
+        "sha256": "5984689e2ae81e42e6a84051a38da154a8ba55adcf30ed85bbd456e81c52059c"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/rust-review/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "32648ccfa0430182e07e1a9c48d53d9e4814454d0e864ffd8dfba10567896f16"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2408,33 +3384,406 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-debugging/references/04-api-client-i-fetch.md",
+      "path": "plugins/itsolpowers/skills/security-api-input-review/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "d1b11e7f26018c24afc5b62e149f10fc9eab8ca2ec1370eac1df6b3054ad5fcc"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "e9a367ce073a168756802a03152c0225e245786716857e5f6ecd452af8c78fd1"
+        "sha256": "188a8a3a5bb46dba819a7bc20fa28c648110a3403c0177f9f6585d85485cde5d"
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-debugging/references/05-mutacje.md",
+      "path": "plugins/itsolpowers/skills/security-api-input-review/references/guide.md",
       "candidate": {
         "state": "absent"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "b8a552534cc1f5302502d67779d42dea58a3a6fa0d4ae19954d839bb2f1b9d6c"
+        "sha256": "e0ab39ed6455612496838fef5ee8fabeac4cdca29ecdad75ae887f9b023c2451"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-auth-session-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5482d4e9c3374f20cd29460ce252cef70d746aaeb38019704452e148222c46cb"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a793918effa4d462527648a3d3e485dbf2710e345b353ba67f8b0288012e94d7"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-auth-session-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "12d099b3dc6dd92890b0c85136272d4803fe98d2b39fe124f8fde1335b4eb570"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-authz-tenant-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "091a99f03ed7f227cbbeeee9be75d5f8b8ea069921681bf1466bd5c6adf6770e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c3770f2a1236133dbe0f18c592b94856358f6a2e6895101ad1548c718fa85d61"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-authz-tenant-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e82aa1b4ce16a599e1fa77d107d7e3292ea577f3783a20a433a7ea9d46b06f2d"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-files-integrations-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b1342b93d9e1bcfd432fe7fc0817f20540f2ab83e384840e3c87ce9376e96d7f"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "58360a1de27aa3babb156719b3620fb7b3258fa68882bcf0b90302138580d5fc"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-files-integrations-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6b9b396ba2b3e752bf37a4a0879adc4f4b6f445bc1fee8b7220e45088a2da22f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-frontend-browser-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3372446a92e2d780a3a520703b82ace973594e27143275832a4ad21b017142de"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d384075d566d27a3c6dfe2feb8b1f0339e632749ed7a5883bca8e1dc83e897f0"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-frontend-browser-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8643bffac5246ed86beaa88d341e02d506f9cb9912acb3b60028aa28102c151e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-qa-scenarios/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "46cb4b6804b0663cdc1a3d04db7b59a8077201e10cc59195a79403c6740216ec"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "297a887b2513a16a26515bbdf66a490feedc36ebacf11acfa1ece72e55bd7dd3"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-qa-scenarios/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "336428ee9a8d1c6bc80bf369b62102f77fc01d2ee66cf983912a3e66b9c81eec"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-secrets-config-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0fdc2fa45b5fe38e0a2d77a93096aa237c40fceaf27e73a09316c07666048a30"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ef944463e2ed38297f9962a601c804e35ebf797eaf0012773f25d052e817dd3b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-secrets-config-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ff681496323a48ae98b4103602dea2ef623ce13b0b124359853694b0900ae5f4"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-supply-chain-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ac41c97106391e809bf4e2895c9b6fe218c55e5ccc6a0fe649237ab26e011fdb"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ee510ad5070f3c42bcc2e60056a1da24ee1ecbc51c3c43ed240888de7a685305"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-supply-chain-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "398495d047fe0afc9b48fbb062429deb2969a2a9a105f7d6c81b04965b92ab63"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-threat-modeling/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8a1d548fdac05235fbd05b7b86656d6e1c0f82693ef91f76f89cc172b8145a64"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c8ec25e3ebf4b103f45f2196da9e32b67821def4a743eacd9c3a6c6da6e1449c"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-threat-modeling/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f0b6ac5c20b25d6b19fd43f2788f4cdd08453ee3aacf8e49cbf4ad9fd1c58bd5"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-vulnerability-response/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "1cf46c80356c62b499f4cd5ffbb1a7c20b6b0c5227613c5b1fdd3dcbd28f7b5f"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "298b2706cd97d190244190e5f55315f90a765a1b2d8bd7261d7e9fa5024bdc72"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/security-vulnerability-response/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f1002cda49f578054057e2916cf74321584ed7bef48afad28dbea07a9788df01"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/svelte-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "22e26b5fd0b687b6cbfa6d690a2fcbf085f45980da547eb8c28b8f06ce73bd07"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a3af8ca546314e31d467a1cc591e14a94636e270a776d78de5748944d6a6215c"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/svelte-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c235635849c928ce3e5465f17c15945478fd85b2850652a010e72434219c4df0"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/svelte-implementation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7a1663325581f8ab1558a9e1860cd5a2a6910689e06e7ebbb5d5c9752d4ccac8"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "aae58134a85e521806954512de63a25f6a906ea911c3756ce5a406f07b731927"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/svelte-implementation/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a7c9917ba6bae46e2308eb83855f8e6a2282f7cf628c3117b04078eea36e46ea"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/svelte-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "1bf9027bd2decae12263d9b64ef32f9cb1ca742d1ab455bbf4696d42d89e236b"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "63698dbe803b8308b97138328aef0e586518dcbba4c88d6a6fab3119508cf604"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/svelte-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b2754679d96d253a7e10c3970e309afde76f9778001984713f83c552db31df21"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tanstack-query-react-nextjs-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "45e3072e3505b32d6cfc2befdcb7c38536aff1da560ba84bf1211591a79c3d52"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "428c62bd5fbd7b41a925941efd5ab8fad9486413391df768d6c058b7c253e15c"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tanstack-query-react-nextjs-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9d23ab6eebd13b2775a5acd49a40948bf868d380e198069a71de6ddd8ca9a6c6"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tanstack-query-react-nextjs-implementation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ecd50c6b5ff1110c67bcd0bbfd5c289106652100ebe23f7f8883116b4284a874"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ddc9c15727c29d40b35de8492f99dcf41229df3f1070d0df4638cd8a2d96d1dc"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tanstack-query-react-nextjs-implementation/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "96d950689a4c3202148529b1f8fc25272a203af2f29f61ae463271971b27d12f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tanstack-query-react-nextjs-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cdef56202a5afa88ea106f5b3f94ea424c0d00e118a4d687042de9ad99b6e4a0"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6068b60ee222a85da1d919e518768afd8f4302da081ad843245eb1c634640317"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tanstack-query-react-nextjs-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d9821500071b4f3b010be2cdd918f38c2905665a1e4168f272e1e43c3b7719b0"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "60d7cf5969bbee784932990bee3cb4cbfd8876b24773a0e4362d3be1ce310a48"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "145e92c4150fababc4963e50cbcbfdb56f3cf8e5715ef5944558c12a13c7675a"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/tanstack-query-svelte-debugging/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "6fe133a60785040871991e6011eb57628a309c43166cf39ac86614251d90b1b3"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2443,44 +3792,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-implementation/references/05-api-client-i-fetch.md",
+      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-implementation/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "13a88f62ee407eebcc9dc990e88322add59e6cdc16319010b217c0145d5470c9"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "f508d2d21bb6e4c0faeeff49f2a2d8cc938207808967147eaf78f42d21ac5f59"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-implementation/references/06-mutacje.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "79ed01e6507b7fad0fa0922e7a8be0a5a64c1f2376068c89457865546f39bbb4"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-implementation/references/08-obsluga-bledow.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "87a25703f695b31980f9fd66e9cda287054aaacd88095db16e694166c91f0eaf"
+        "sha256": "e262c9be9317e4772e9a8b45b38558b8892bebba1f6027f40c1e1fc9b54fb823"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/tanstack-query-svelte-implementation/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "c2d582a2485065df12b199fa7c0d5b812b3ace90a0b449e2463d6bd17538508f"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2489,44 +3816,22 @@
       }
     },
     {
-      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-review/references/05-api-client-i-fetch.md",
+      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-review/SKILL.md",
       "candidate": {
-        "state": "absent"
+        "state": "file",
+        "type": "regular",
+        "sha256": "8ccfa4102091af3699ac0532e5314992ee6ecfd1534fbce6d4ff4446207ed2bb"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
-        "sha256": "c62cc548e930ef161c70826f69f89edd4fb1c9c664b8c8d38a68716b5710481b"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-review/references/06-mutacje.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "6006040756c6d7f1de851196db0fa228a32a78a4c9fbe351865f2f84ea90b8e3"
-      }
-    },
-    {
-      "path": "plugins/itsolpowers/skills/tanstack-query-svelte-review/references/08-obsluga-bledow.md",
-      "candidate": {
-        "state": "absent"
-      },
-      "baseline": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "cc14bbbecd2efaba3cdceb30e3c199681d5165f8664cfb5d94201ae51969e8ed"
+        "sha256": "b50c4d77eac6c54f4fcc1c8c8719cd27e5ca85cd5dff4255a95750462f708fff"
       }
     },
     {
       "path": "plugins/itsolpowers/skills/tanstack-query-svelte-review/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "2dc8387baa36768ef8869107aa68ff44800840aa89a520877e20af89e8e44122"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
@@ -2535,11 +3840,371 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/skills/tauri-desktop-debugging/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "09949ff205cbd028f213e04da87aa6db6910559adec29780819991ee78892761"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "539d1e3ae0d17c8f45e8ac1990ddff50dfbb6fe35ff3cb7531889aa9ffcdd31e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tauri-desktop-debugging/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "87884ba4f0dd85aba59a5d5d8a7ddfd0459ede5294c2c74b5dacf66a77897908"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tauri-desktop-implementation/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "345e8a9ea5300d65d328411c1477b3afb197a9123b8911202794c90520f0e675"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a2828a72f147560b923467d79d9c296b88efd45dca681c9c0d21b5f32de4a8ac"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tauri-desktop-implementation/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "22ff3d3d9cf0c5a7e6995dc433649c9ce504ed9745a8c46ec9b76965ac4aaf77"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tauri-desktop-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "436f977ad50d9979f996ad4eea221fb73b1ad5f15770b459594bdf45df399204"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b64f2150c8af0e126bfdd2fc12e5f82d03ddd646b8b120f7b0700c961440231e"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tauri-desktop-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8a2001d4ad680fa0131ad76294b61153947e7c919dbf174dd755786fbecaa17c"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tauri-release-distribution/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ff8f1932df6e7f2c8ba8219c1e256fcb25d98e7bbe0ba3808d32eecf623ded37"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "17de2e8f0ae307e9eb7ef7af04b486777b00346612768c59968837274520a39c"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tauri-release-distribution/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d28e690370daa436df051fb51f7e700d5aeafab90c1a278b60015831f6ca9ceb"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tauri-security-capabilities/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2d5855e99ac61db823651c82319aa4c1aba75fc221da8f581d603129c0b9f2cd"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ccd07d0101cb4b0a4cecddfdd7931b60d3154ac914088c2480428372c759aeb7"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/tauri-security-capabilities/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0dd5872a14e3731b5a6b51035ac5644ec91054aa90a1f7c9f164545567679800"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-accessibility-motion/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "07e0bfcd8b3eea729b450e83783e9a108e7de840822d7b20d81e402dd784faff"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "324c6881e7ce69ab29ad6808e7e03df2a9eabbe77339f1c43738ebcfff852dcd"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-accessibility-motion/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0bad537fd62a3d4e732bed2a52bd1bac34dae1e3c17e856ff92a6cf0b6185003"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-code-review/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8f4ec9c73d1e095017c298c6bf95a21c0def415306744418d623a5a7ac9b52ba"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b877960b610cced38e8f6b4cfc8312a99c911ac6ddd6b5ca787735ef3faf9145"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-code-review/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c7ec61a20605744665a04ce6bd0ac7223f635e95b07b802e166104cdb101f0b4"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-component-architecture/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c7909f1e83e199fdc18053d9ef149a7a23f70dcd36d02d35e52c9f6683066711"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "38c182a969ec9b3f3461247e14c343e932be2f151a64c928ddd3256b14fb8bb3"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-component-architecture/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "fcc4155d44d418c1155e4b424488dd9f418fd6867dbb91b268562525b10eedfe"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-design-system/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "866ec1ed349f71770f11a9acaf4a374f0c72c9dd54ba548acab139525c7f5799"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cc1040d2701b2dc58c6299f7acdd0cf418422d01a27b70255c3473673dc6ea43"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-design-system/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "549865a9c71e777220831938dcd4e5b4f66c7218cb2aaac9b772ec63f0fee149"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-frontend-testing-qa/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "89918d1789c43764202cde54fffba1102f3f0abc3c29dd3433fc77fd0d5298a7"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f9aef101bb8e8354c42d2eb7a550d373d0a512ad3c3a3b6ad0fb1bd2b0ced6f5"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-frontend-testing-qa/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "62f87be1856747a6dc56297ccf23c2a4e0d0e7748eec96462e8ff479359c5a41"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-performance-stability/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ba420a3878761cc9fce79efeba88026368d0081b15c4c4fcbcaad4add5905ef9"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "c03ab3ed75647671000f6b1f558881fb007c96dbdf69672259029aab42ef1431"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-performance-stability/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "feac8882ba28454e62cb9686cb295f2036902e24a6f4c585ae54e0688884c354"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-responsive-media/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e83d0a43efbb3a97d9fe1eb5b9a4700b34f3820ca6cc8bc70698fa65b1969feb"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "311702b3e736a20ce5790d0af26564d950036d70e5f616118c4beda15310222a"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-responsive-media/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "09603c4dcdcd1432975bab982e447a68a87b8abee799899f12aadaa599b3a8cd"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-tailwind-tokens/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d6e0dabaf1ec235ae7112d57bc1cd34d2f652d251e8c476beeea55aaffae4f2d"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "20019aa123b20bcba54509f8a9a5f2e9d03e321974e400f87c94c32cd78a5007"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-tailwind-tokens/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d91a6b698967c5cb55f6e95de4a34b7ee35f9766d1986ce638de68b17fd22fe6"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-ux-workflow/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8299fd91ab46e88bbfbd4728410f105fb58e404d7400ce52dcb3edc1a425e666"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "df32b3cd911b44589cfa9c2c4c17ee8364b6a0b322d9e8d808b5049e081d0810"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-ux-workflow/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0ce7dd8ee489ecfc0559abdf0e44d3933bb4d1735ce92ff891a6996f530893ae"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-view-states-forms/SKILL.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "09eaf74f56e0b7bf731cc48b92c472866b9bf4282a7b1a923106bdd52a1021d3"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "511cf8be409605c70096182f7f57dbfd3272276da4b2a4d3dabb779543d6e3ca"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/ui-view-states-forms/references/guide.md",
+      "candidate": {
+        "state": "absent"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "512b82468aafbb1f491bfd2148c14647d0e4f0432ecf77ba5070b9f0eebcb05d"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/skills/using-itsolpowers/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "2de72e2edf4acea861aead938782c9acfa68c5c2f321d70757a3b4444ddfa8da"
+        "sha256": "40f841488e0825a124690a0df574bc0f13934be54b09c45bb2a925c44243c641"
       },
       "baseline": {
         "state": "file",
@@ -2550,9 +4215,7 @@
     {
       "path": "plugins/itsolpowers/skills/using-itsolpowers/references/guide.md",
       "candidate": {
-        "state": "file",
-        "type": "regular",
-        "sha256": "5dd18c62d3b7d1cf6fe3c5a5fdc3b4c231bf828f349bf445387bcdc89fa59362"
+        "state": "absent"
       },
       "baseline": {
         "state": "file",
