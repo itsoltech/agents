@@ -40,4 +40,4 @@ Projektowanie i review Nomad jobów: task groups, allocations, update/canary/rol
 - `01-overview.md` (189 linii) - Overview; Nomad - rola w architekturze; Nomad - podstawowy model pojęć; Nomad - standard job speca; +1 więcej
 - `02-nomad-update-rollback-i-canary.md` (182 linii) - Nomad - update, rollback i canary; Nomad - restart, reschedule i awarie alokacji; Nomad - migrate i node drain; Nomad - sieć, porty i service discovery; +3 więcej
 - `03-nomad-template-vault-i-workload-identity.md` (153 linii) - Nomad - template, Vault i workload identity; Nomad - lifecycle tasks i sidecary; Nomad - storage i stateful workloads; Nomad - namespaces, ACL i dostęp operatorski; +2 więcej
-- `04-checklist-do-review-infrastruktury.md` (107 linii) - Checklist do review infrastruktury
+- [Shared infrastructure review checklist](../../_shared/references/infrastructure/container-review-checklist.md) (107 linii) - wspólne fakty i bramka review; zastosuj je do deploymentu Nomad opisanego wyżej

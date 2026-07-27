@@ -1,0 +1,272 @@
+{
+  "schema_version": "1.0.0",
+  "corpus_version": "1.0.0",
+  "set": "acceptance",
+  "frozen": true,
+  "cases": [
+    {
+      "case_id": "acc-admin-commit-claude",
+      "prompt": "Commit the already verified intended slice only; do not push.",
+      "adapter": "claude",
+      "context_profile": "frontier",
+      "category": "administration",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": null,
+        "domain_skills": [],
+        "forbidden_skills": ["itsol-feature-implementation", "itsol-functional-planning", "itsol-execution-policy"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "none",
+        "protected_constraints": ["Do not push, tag, publish, or amend."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 1
+      }
+    },
+    {
+      "case_id": "acc-governed-plan-codex",
+      "prompt": "Create the governed business artifact for a new tenant export feature. Do not implement it.",
+      "adapter": "codex",
+      "context_profile": "compatibility",
+      "category": "governed",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "itsol-functional-planning",
+        "domain_skills": [],
+        "forbidden_skills": ["itsol-feature-implementation"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": ["A draft plan is not user approval."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 4
+      }
+    },
+    {
+      "case_id": "acc-autonomous-implementation-opencode",
+      "prompt": "Use autonomous-planned mode: review the prepared plans, mark them ready for execution if sound, then implement the bounded React change.",
+      "adapter": "opencode",
+      "context_profile": "frontier",
+      "category": "autonomous",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "itsol-feature-implementation",
+        "domain_skills": ["react-nextjs-implementation"],
+        "forbidden_skills": ["itsol-functional-planning"],
+        "workflow_requirement": "autonomous-planned",
+        "execution_policy_requirement": "required",
+        "delegation": "auto",
+        "protected_constraints": ["Ready for execution must not be represented as user approval."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 5
+      }
+    },
+    {
+      "case_id": "acc-direct-mongodb-bug-pi",
+      "prompt": "Direct mode. Diagnose why MongoDB exists but is absent from Compose state; preserve volumes and fix only after evidence identifies the cause.",
+      "adapter": "pi",
+      "context_profile": "compatibility",
+      "category": "direct",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "itsol-bug-debugging",
+        "domain_skills": ["mongodb-operations-debugging"],
+        "forbidden_skills": ["mongodb-data-modeling"],
+        "workflow_requirement": "direct",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": ["Preserve database volumes and avoid destructive cleanup."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 4
+      }
+    },
+    {
+      "case_id": "acc-feature-expo-claude",
+      "prompt": "Implement the approved Expo offline state feature and validate the mobile behavior.",
+      "adapter": "claude",
+      "context_profile": "compatibility",
+      "category": "implementation",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "itsol-feature-implementation",
+        "domain_skills": ["expo-react-native-implementation"],
+        "forbidden_skills": ["electron-desktop-implementation"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 4
+      }
+    },
+    {
+      "case_id": "acc-bug-tauri-codex",
+      "prompt": "Reproduce a Tauri sidecar failure, explain the root cause, and implement the approved fix with a regression test.",
+      "adapter": "codex",
+      "context_profile": "frontier",
+      "category": "bug",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "itsol-bug-debugging",
+        "domain_skills": ["tauri-desktop-debugging", "itsol-tdd-workflow"],
+        "forbidden_skills": ["electron-desktop-debugging"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 5
+      }
+    },
+    {
+      "case_id": "acc-review-next-opencode",
+      "prompt": "Review the Next.js App Router pull request for rendering, caching, auth, and missing tests.",
+      "adapter": "opencode",
+      "context_profile": "frontier",
+      "category": "review",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "itsol-code-review-workflow",
+        "domain_skills": ["react-nextjs-review", "react-nextjs-app-router-rendering"],
+        "forbidden_skills": ["react-nextjs-implementation"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "required",
+        "delegation": "subagents",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 6
+      }
+    },
+    {
+      "case_id": "acc-migration-electron-pi",
+      "prompt": "Plan an Electron to Tauri desktop migration with behavioral inventory, signing parity, staged cutover, and rollback.",
+      "adapter": "pi",
+      "context_profile": "compatibility",
+      "category": "migration",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "application-technology-migration",
+        "domain_skills": ["electron-desktop-review", "tauri-desktop-implementation"],
+        "forbidden_skills": ["itsol-bug-debugging"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "required",
+        "delegation": "subagents",
+        "protected_constraints": ["Do not sign, publish, or release binaries."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 6
+      }
+    },
+    {
+      "case_id": "acc-browser-security-claude",
+      "prompt": "Dogfood the local login flow, capture UI plus console/network evidence, and avoid submitting destructive production actions.",
+      "adapter": "claude",
+      "context_profile": "frontier",
+      "category": "browser-qa",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "agent-browser-dogfood-workflow",
+        "domain_skills": ["agent-browser-diagnostics-evidence", "agent-browser-security-production-safety"],
+        "forbidden_skills": ["itsol-feature-implementation"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "required",
+        "delegation": "auto",
+        "protected_constraints": ["Use non-production targets and do not submit destructive actions."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 6
+      }
+    },
+    {
+      "case_id": "acc-security-authz-codex",
+      "prompt": "Threat-model tenant authorization and review cross-tenant access risks. Do not weaken security controls.",
+      "adapter": "codex",
+      "context_profile": "compatibility",
+      "category": "security",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "security-threat-modeling",
+        "domain_skills": ["security-authz-tenant-review"],
+        "forbidden_skills": ["infra-edge-protection"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": ["Security weakening requires explicit authority."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 4
+      }
+    },
+    {
+      "case_id": "acc-data-eval-opencode",
+      "prompt": "Design a frozen LLM routing evaluation corpus with leakage checks, manifest hashes, segment metrics, and public result records.",
+      "adapter": "opencode",
+      "context_profile": "frontier",
+      "category": "data",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "ml-data-evaluation",
+        "domain_skills": [],
+        "forbidden_skills": ["ml-training-experiments"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": ["Do not include secrets, customer data, or hidden reasoning."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 4
+      }
+    },
+    {
+      "case_id": "acc-infra-incident-pi",
+      "prompt": "Investigate a production proxy and TLS incident read-only, correlate evidence, and produce safe remediation options.",
+      "adapter": "pi",
+      "context_profile": "compatibility",
+      "category": "infra",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "infra-incident-debugging",
+        "domain_skills": ["infra-routing-proxy-tls", "infra-observability"],
+        "forbidden_skills": ["infra-deployment-design"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "required",
+        "delegation": "subagents",
+        "protected_constraints": ["Production mutations require explicit authority."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 6
+      }
+    }
+  ]
+}

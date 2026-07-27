@@ -48,4 +48,4 @@ Używaj przy implementacji kodu Rust: projektowanie typów i API, ownership, str
 
 - `01-overview.md` (195 linii) - Overview; Cel dokumentu; Zasady ogólne; Ownership i borrowing; +9 więcej
 - `02-obsluga-bledow.md` (187 linii) - Obsługa błędów; Paniki i unsafe; SQLx i baza danych; Serde, JSON i DTO; +5 więcej
-- `03-clippy-rustfmt-i-lints.md` (132 linii) - Clippy, rustfmt i lints; Konfiguracja i sekrety; HTTP, API i warstwa zewnętrzna; Kolejki, joby i retry; +2 więcej
+- [Shared Rust tooling and boundary guidance](../../_shared/references/rust/tooling-clippy-rustfmt-lints.md) (132 linii) - wspólne fakty dla implementacji: Clippy, rustfmt, lints, config, HTTP, jobs, macros i CI

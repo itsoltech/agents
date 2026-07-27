@@ -50,8 +50,8 @@ PostgreSQL schema and query design
 ## Pliki referencyjne
 
 - `01-overview.md` (180 linii) - Overview; Cel dokumentu; Zasady ogólne; Warstwy odpowiedzialności; +5 więcej
-- `02-jsonb.md` (176 linii) - JSONB; Partycjonowanie; Indeksy; Zapytania; +1 więcej
-- `03-statystyki-plannerowe.md` (174 linii) - Statystyki plannerowe; Transakcje; Blokady i współbieżność; Persistence aplikacji; +1 więcej
+- [Shared JSONB and query design](../../_shared/references/postgres/jsonb.md) (176 linii) - wspólne fakty dla projektowania JSONB, partycjonowania, indeksów, zapytań i EXPLAIN
+- [Shared planner statistics and concurrency](../../_shared/references/postgres/planner-statistics.md) (174 linii) - wspólne fakty dla projektowania statystyk, transakcji, blokad, persistence i capacity
 - `04-connection-pooling.md` (185 linii) - Connection pooling; PgBouncer vs direct connection; PgBouncer i prepared statements; PgBouncer i search_path; +1 więcej
 - `05-migracje-danych.md` (165 linii) - Migracje danych; Bezpieczeństwo; Schematy i uprawnienia; Testy i QA; +1 więcej
 - `06-procedury-operacyjne.md` (98 linii) - Procedury operacyjne; Minimalny zestaw ustawień dla aplikacji

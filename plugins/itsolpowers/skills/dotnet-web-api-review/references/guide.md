@@ -68,8 +68,8 @@ ASP.NET Core Web API review
 
 - `01-overview.md` (151 linii) - Overview; Główna zasada; Dobór architektury do rozmiaru aplikacji; Vertical slice; +2 więcej
 - `02-ddd.md` (144 linii) - DDD; CQRS; MediatR i pipeline handlers; Minimal APIs czy kontrolery
-- `03-program-cs-i-skladanie-aplikacji.md` (183 linii) - Program.cs i składanie aplikacji; Middleware; Dependency injection; Konfiguracja i options pattern; +3 więcej
-- `04-api-design.md` (188 linii) - API design; OpenAPI; Autoryzacja i uwierzytelnianie; CORS, CSRF i przeglądarka; +5 więcej
+- [Shared Program.cs and application composition](../../_shared/references/dotnet-web-api/program-composition.md) (183 linii) - wspólne fakty; oceń diff według review flow i zakresu tego skilla
+- [Shared API design](../../_shared/references/dotnet-web-api/api-design.md) (188 linii) - wspólne fakty; użyj ich jako rubryku kontraktu, bezpieczeństwa, danych i transakcji
 - `05-background-jobs.md` (193 linii) - Background jobs; Cache; Rate limiting i abuse protection; Health checks; +5 więcej
 - `06-deployment-i-kontenery-z-perspektywy-aplikacji.md` (188 linii) - Deployment i kontenery z perspektywy aplikacji; Migracje bazy; Kiedy przemyśleć refactor; Minimalny standard nowego API; +1 więcej
 - `07-przykladowy-szablon-pr.md` (58 linii) - Przykładowy szablon PR

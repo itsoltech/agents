@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.0.0",
+  "corpus_version": "1.0.0",
+  "set": "development",
+  "frozen": false,
+  "cases": [
+    {
+      "case_id": "dev-admin-status-codex",
+      "prompt": "Inspect git status and report the current branch. Do not change files.",
+      "adapter": "codex",
+      "context_profile": "frontier",
+      "category": "administration",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": null,
+        "domain_skills": [],
+        "forbidden_skills": ["itsol-functional-planning", "itsol-feature-implementation", "itsol-execution-policy"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "none",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 1
+      }
+    },
+    {
+      "case_id": "dev-governed-svelte-feature-claude",
+      "prompt": "Implement the approved governed Svelte form plan with inline execution.",
+      "adapter": "claude",
+      "context_profile": "compatibility",
+      "category": "implementation",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "itsol-feature-implementation",
+        "domain_skills": ["svelte-implementation"],
+        "forbidden_skills": ["itsol-bug-debugging", "react-nextjs-implementation"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "required",
+        "delegation": "inline",
+        "protected_constraints": ["Require authorized governed artifacts before edits."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 5
+      }
+    },
+    {
+      "case_id": "dev-direct-bug-opencode",
+      "prompt": "In direct mode, reproduce and fix the Effect TypeScript retry bug using TDD.",
+      "adapter": "opencode",
+      "context_profile": "frontier",
+      "category": "bug",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "itsol-bug-debugging",
+        "domain_skills": ["effect-typescript-debugging", "itsol-tdd-workflow"],
+        "forbidden_skills": ["itsol-functional-planning"],
+        "workflow_requirement": "direct",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 5
+      }
+    },
+    {
+      "case_id": "dev-rust-review-pi",
+      "prompt": "Review this Rust change for ownership, error handling, and missing tests.",
+      "adapter": "pi",
+      "context_profile": "compatibility",
+      "category": "review",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "itsol-code-review-workflow",
+        "domain_skills": ["rust-review"],
+        "forbidden_skills": ["rust-implementation"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 4
+      }
+    },
+    {
+      "case_id": "dev-browser-qa-codex",
+      "prompt": "Run black-box local browser QA and correlate screenshots with console and network evidence.",
+      "adapter": "codex",
+      "context_profile": "frontier",
+      "category": "browser-qa",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "agent-browser-dogfood-workflow",
+        "domain_skills": ["agent-browser-diagnostics-evidence", "agent-browser-qa-reporting"],
+        "forbidden_skills": ["itsol-feature-implementation"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "required",
+        "delegation": "auto",
+        "protected_constraints": ["Do not interact with production or submit destructive forms."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 6
+      }
+    },
+    {
+      "case_id": "dev-migration-claude",
+      "prompt": "Plan a pnpm to Bun migration with parity checks and a proved rollback.",
+      "adapter": "claude",
+      "context_profile": "compatibility",
+      "category": "migration",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "application-technology-migration",
+        "domain_skills": ["itsol-current-tech-context"],
+        "forbidden_skills": ["itsol-bug-debugging"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "required",
+        "delegation": "subagents",
+        "protected_constraints": ["Do not publish or release packages."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 5
+      }
+    }
+  ]
+}

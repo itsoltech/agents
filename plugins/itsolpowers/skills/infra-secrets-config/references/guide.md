@@ -29,4 +29,4 @@ Review sekretów i konfiguracji infrastruktury: env/runtime config, Vault, Nomad
 ## Pliki referencyjne
 
 - `01-overview.md` (187 linii) - Overview; Konfiguracja środowisk; Nomad - konfiguracja i sekrety; Nomad - template, Vault i workload identity; +5 więcej
-- `02-checklist-do-review-infrastruktury.md` (107 linii) - Checklist do review infrastruktury
+- [Shared infrastructure review checklist](../../_shared/references/infrastructure/container-review-checklist.md) (107 linii) - wspólne fakty i bramka review; zastosuj je do sekretów i konfiguracji

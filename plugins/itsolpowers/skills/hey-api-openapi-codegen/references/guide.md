@@ -52,6 +52,6 @@ Hey API OpenAPI codegen
 
 - `01-overview.md` (164 linii) - Overview; Cel dokumentu; Założenia; Instalacja i wersjonowanie; +3 więcej
 - `02-output-i-wygenerowane-pliki.md` (187 linii) - Output i wygenerowane pliki; OpenAPI jako kontrakt; Jakość schematów danych; Parser, patch, filters i transforms; +2 więcej
-- `03-klient-fetch.md` (183 linii) - Klient Fetch; Auth i sesja; Komunikacja z API; Runtime validation i Zod; +1 więcej
+- [Shared Fetch client](../../_shared/references/hey-api/fetch-client.md) (183 linii) - wspólne fakty dla codegen: auth, komunikacja, runtime validation, Zod i TanStack Query
 - `04-svelte-i-sveltekit.md` (181 linii) - Svelte i SvelteKit; Vite plugin; Multi API, monorepo i wiele outputów; Bezpieczeństwo generowanego klienta; +4 więcej
 - `05-testy.md` (160 linii) - Testy; CI i kontrola kontraktu; Migracje kontraktu API; Publikacja wygenerowanego klienta jako paczki; +2 więcej

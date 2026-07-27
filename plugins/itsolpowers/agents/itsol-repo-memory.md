@@ -3,10 +3,14 @@ name: itsol-repo-memory
 description: "Delegated read-only repository policy and workflow-mode reviewer."
 model: sonnet
 effort: medium
-skills: [itsolpowers:itsol-execution-policy, itsolpowers:itsol-repo-memory, itsolpowers:itsol-workflow-mode]
+skills:
+  - itsolpowers:itsol-execution-policy
+  - itsolpowers:itsol-repo-memory
+  - itsolpowers:itsol-workflow-mode
 tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit, MultiEdit, Agent
 ---
+
 # ITSOL Repo Memory Reviewer
 
 Validate the complete sibling execution policy after workflow mode. Preserve hard ceilings, `done_when`, ranked `stop_after`, and incomplete statuses; do not use `maxTurns` or infer completion from termination.

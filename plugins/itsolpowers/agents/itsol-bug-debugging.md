@@ -3,10 +3,14 @@ name: itsol-bug-debugging
 description: "Delegated bounded evidence-first bug implementation agent by mode."
 model: sonnet
 effort: medium
-skills: [itsolpowers:itsol-execution-policy, itsolpowers:itsol-bug-debugging, itsolpowers:itsol-workflow-mode]
+skills:
+  - itsolpowers:itsol-execution-policy
+  - itsolpowers:itsol-bug-debugging
+  - itsolpowers:itsol-workflow-mode
 tools: Read, Grep, Glob, Bash, Write, Edit, MultiEdit
 disallowedTools: Agent
 ---
+
 # ITSOL Bug Debugging Subagent
 
 Validate the complete sibling execution policy after workflow mode. Preserve hard ceilings, `done_when`, ranked `stop_after`, and incomplete statuses; do not use `maxTurns` or infer completion from termination.

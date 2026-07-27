@@ -49,6 +49,6 @@ Hey API OpenAPI review
 
 - `01-overview.md` (191 linii) - Overview; Założenia; Instalacja i wersjonowanie; Struktura katalogów; +3 więcej
 - `02-openapi-jako-kontrakt.md` (154 linii) - OpenAPI jako kontrakt; Jakość schematów danych; Parser, patch, filters i transforms; Plugin TypeScript; +1 więcej
-- `03-klient-fetch.md` (183 linii) - Klient Fetch; Auth i sesja; Komunikacja z API; Runtime validation i Zod; +1 więcej
+- [Shared Fetch client](../../_shared/references/hey-api/fetch-client.md) (183 linii) - wspólne fakty; oceń klienta zgodnie z review flow i publicznym kontraktem
 - `04-svelte-i-sveltekit.md` (179 linii) - Svelte i SvelteKit; Multi API, monorepo i wiele outputów; Bezpieczeństwo generowanego klienta; Error handling; +4 więcej
 - `05-ci-i-kontrola-kontraktu.md` (171 linii) - CI i kontrola kontraktu; Migracje kontraktu API; Checklist do code review; Minimalny standard projektu

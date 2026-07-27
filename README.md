@@ -42,6 +42,47 @@ Rekomendowany plugin ITSOL. Zawiera skille ITSOL do routingu zadań, konfigurowa
 /plugin install itsolpowers@itsoltech-agents
 ```
 
+### Architektura kontekstu
+
+ITSOL Powers używa małego, hierarchicznego routera i progressive disclosure.
+Bootstrap identyfikuje produkt, granice chronionych działań oraz sposób znalezienia
+routera i pamięci repozytorium. Router wybiera jeden główny proces, a następnie
+tylko potrzebne skille domenowe. Szczegółowe workflow nie są ładowane do każdego
+zadania.
+
+Dostępne są dwa provider-neutral profile:
+
+- `frontier` — proporcjonalna weryfikacja i delegacja tylko wtedy, gdy daje
+  materialną wartość;
+- `compatibility` — bardziej jawne kroki weryfikacji i handoff dla środowisk,
+  które potrzebują dodatkowego scaffolding.
+
+Profil można wybrać jawnie dla zadania albo przez
+`ITSOLPOWERS_CONTEXT_PROFILE`. Zweryfikowany sygnał runtime może również wybrać
+profil; sama nazwa providera nie wystarcza. Brak, błędna wartość lub nieznana
+zdolność zawsze przechodzi bezpiecznie do `compatibility`. Profile nie mogą
+osłabiać workflow authority, zasad repozytorium, chronionych działań, hooków ani
+uczciwych statusów niepełnego wykonania.
+
+Powtarzana wiedza domenowa znajduje się w
+`skills/_shared/references/`, natomiast procedury implementacji, debugowania i
+review pozostają lokalne dla odpowiednich skilli. Definicje 113 agentów są
+generowane z czytelnych źródeł w `scripts/agent-sources/`; wygenerowany drift
+sprawdza `npm run check:agent-contracts`.
+
+Zmiany kontekstu można mierzyć i weryfikować lokalnie:
+
+```bash
+npm --prefix plugins/itsolpowers run audit:context -- --plugin-root . --revision working-tree --format human
+npm --prefix plugins/itsolpowers run validate:context-evals
+npm --prefix plugins/itsolpowers run validate:context-engineering
+```
+
+Korpus ewaluacyjny i baseline pozostają zamrożone. Wynik modelowy jest
+raportowany oddzielnie od deterministycznych kontraktów, dzięki czemu alternatywny
+bezpieczny routing nie ukrywa regresji, ale też nie jest automatycznie
+interpretowany jako naruszenie bezpieczeństwa.
+
 ### Tryby pracy `itsol-workflow-mode`
 
 Centralny skill `itsol-workflow-mode` rozstrzyga poziom ceremonii przed planowaniem lub implementacją:

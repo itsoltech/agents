@@ -16,7 +16,7 @@
     },
     {
       "name": "itsolpowers",
-      "description": "ITSOL engineering skills and subagents with itsol-workflow-mode for governed, autonomous-planned, or direct execution, plus repo memory, current technology research, UI/UX, application migration, data access, TDD, security, infrastructure, review, debugging, OpenCode, and Pi",
+      "description": "ITSOL engineering skills and subagents with compact progressive-disclosure routing, capability profiles, governed/autonomous-planned/direct workflows, repo memory, current technology research, TDD, security, infrastructure, review, OpenCode, and Pi",
       "source": "./plugins/itsolpowers",
       "category": "productivity"
     }

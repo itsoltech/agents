@@ -65,9 +65,9 @@ TanStack Query Svelte review dla v5 i v6. Najpierw ustal wersje `@tanstack/svelt
 - `02-prefetch-w-sveltekit-przez-prefetchquery.md` (135 linii) - Prefetch w SvelteKit przez `prefetchQuery`; Domyślne zachowania v5
 - `03-query-keys.md` (158 linii) - Query keys; Query options factory; `createQuery`
 - `04-reaktywnosc-w-svelte.md` (115 linii) - Reaktywność w Svelte; Statusy query w v5/v6; `enabled` i queries zależne
-- `05-api-client-i-fetch.md` (169 linii) - API client i `fetch`; Cancellation; Transformacja danych przez `select`
-- `06-mutacje.md` (189 linii) - Mutacje; Statusy mutacji w v5; Invalidacje po mutacjach; Aktualizacja cache przez `setQueryData`; +1 więcej
+- [Shared API client and fetch](../../_shared/references/tanstack-query-svelte/api-client-fetch.md) (169 linii) - wspólne fakty; użyj ich jako review rubryku requestów, cancellation i `select`
+- [Shared mutations](../../_shared/references/tanstack-query-svelte/mutations.md) (189 linii) - wspólne fakty; użyj ich jako review rubryku statusów, invalidacji i optimistic rollback
 - `07-paginacja.md` (165 linii) - Paginacja; Infinite queries; Polling, refetch i realtime; Cache a auth, logout i tenant; +1 więcej
-- `08-obsluga-bledow.md` (184 linii) - Obsługa błędów; Formularze i mutacje; URL params, search params i filtry; Typowanie TypeScript; +2 więcej
+- [Shared error handling](../../_shared/references/tanstack-query-svelte/error-handling.md) (184 linii) - wspólne fakty; użyj ich jako review rubryku błędów, formularzy, filters, typing, performance i offline cache
 - `09-devtools.md` (121 linii) - Devtools; ESLint plugin query; Testy; CI; +1 więcej
 - `10-checklist-do-code-review.md` (96 linii) - Checklist do code review

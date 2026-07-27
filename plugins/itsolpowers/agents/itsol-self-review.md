@@ -3,10 +3,14 @@ name: itsol-self-review
 description: "Delegated read-only mode-aware plan and implementation reviewer."
 model: sonnet
 effort: medium
-skills: [itsolpowers:itsol-execution-policy, itsolpowers:itsol-self-review, itsolpowers:itsol-workflow-mode]
+skills:
+  - itsolpowers:itsol-execution-policy
+  - itsolpowers:itsol-self-review
+  - itsolpowers:itsol-workflow-mode
 tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit, MultiEdit, Agent
 ---
+
 # ITSOL Self Review Subagent
 
 Validate the complete sibling execution policy after workflow mode. Preserve hard ceilings, `done_when`, ranked `stop_after`, and incomplete statuses; do not use `maxTurns` or infer completion from termination.

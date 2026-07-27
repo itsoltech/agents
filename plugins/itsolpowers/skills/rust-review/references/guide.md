@@ -47,5 +47,5 @@ Używaj przy review kodu Rust: znajdowanie ryzyk poprawności, pamięci, wydajno
 
 - `01-overview.md` (182 linii) - Overview; Cel dokumentu; Zasady ogólne; Ownership i borrowing; +8 więcej
 - `02-sqlx-i-baza-danych.md` (173 linii) - SQLx i baza danych; Serde, JSON i DTO; Logowanie, tracing i diagnostyka; Organizacja kodu; +4 więcej
-- `03-clippy-rustfmt-i-lints.md` (132 linii) - Clippy, rustfmt i lints; Konfiguracja i sekrety; HTTP, API i warstwa zewnętrzna; Kolejki, joby i retry; +2 więcej
+- [Shared Rust tooling and boundary guidance](../../_shared/references/rust/tooling-clippy-rustfmt-lints.md) (132 linii) - wspólne fakty; użyj ich jako review rubryku dla lints, config, HTTP, jobs, macros i CI
 - `04-checklist-skrocony-do-code-review.md` (70 linii) - Checklist skrócony do code review

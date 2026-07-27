@@ -25,4 +25,4 @@ Review zachowania kontenera po uruchomieniu: runtime, health checki, restart, SI
 ## Pliki referencyjne
 
 - `01-overview.md` (141 linii) - Overview; Runtime kontenerów; Health checks; Docker Compose na produkcji; +1 więcej
-- `02-checklist-do-review-infrastruktury.md` (107 linii) - Checklist do review infrastruktury
+- [Shared infrastructure review checklist](../../_shared/references/infrastructure/container-review-checklist.md) (107 linii) - wspólne fakty i bramka review; zastosuj je do zachowania runtime opisanego wyżej

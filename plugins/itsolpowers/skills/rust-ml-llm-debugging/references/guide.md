@@ -31,8 +31,8 @@ Rust ML LLM debugging
 
 ## Pliki referencyjne
 
-- `01-overview.md` (172 linii) - Overview; Rig: providerzy, modele i agenci
-- `02-candle-runtime-modele-i-tensory.md` (123 linii) - Candle: runtime, modele i tensory
-- `03-api-dla-funkcji-ml-llm.md` (182 linii) - API dla funkcji ML / LLM; Bezpieczeństwo aplikacji LLM; RAG: ingestion, indexing i retrieval
+- [Shared Rig providers, models, and agents](../../_shared/references/rust-ml-llm/rig-providers-models-agents.md) (170 linii) - wspólne fakty; rozpocznij od lokalnego [debugging wrapper](01-overview.md)
+- [Shared Candle runtime and tensors](../../_shared/references/rust-ml-llm/candle-runtime-tensors.md) (123 linii) - wspólne fakty; w debugowaniu izoluj device, dtype, tokenizację, artefakt i inferencję
+- [Shared ML/LLM function API](../../_shared/references/rust-ml-llm/function-api.md) (182 linii) - wspólne fakty; w debugowaniu rozdziel kontrakt, provider, safety, retrieval i output
 - `04-candle-trening-inference-service-i-joby.md` (140 linii) - Candle: trening, inference service i joby; Integracja z frontendem; Observability, koszty i audyt; Testy i ewaluacje; +1 więcej
 - `05-edge-case-y.md` (103 linii) - Edge case'y; Minimalny zestaw CI

@@ -1,6 +1,6 @@
 {
   "name": "itsolpowers",
-  "description": "ITSOL engineering skills and bounded subagents with configurable workflow modes, cost-aware execution policy, evidence-based completion without maxTurns, repo memory, current technology research, TDD, review, security, infrastructure, and application engineering",
+  "description": "ITSOL engineering skills and bounded subagents with compact progressive-disclosure routing, capability profiles, configurable workflow modes, cost-aware execution policy, evidence-based completion, TDD, review, security, infrastructure, and application engineering",
   "version": "0.23.0",
   "author": {
     "name": "ITSOL Tech",

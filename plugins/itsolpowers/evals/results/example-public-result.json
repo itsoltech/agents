@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "result_id": "offline-contract-example",
+  "repo_revision": "7c0e5bc9f24c9b393998c2dfdd1e7abb6e2de824",
+  "corpus": {
+    "version": "1.0.0",
+    "manifest_sha256": "ce2da26e482a84f2001cbe8049cab6038c7937e3b2a44b1b3b4297d5a20236e2"
+  },
+  "model": {
+    "identifier": "offline-no-provider-call",
+    "profile": "compatibility"
+  },
+  "public_routing_output": "Selected the administrative fast path.",
+  "selections": {
+    "primary_process_skill": null,
+    "domain_skills": [],
+    "tools": []
+  },
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "total_tokens": 0
+  },
+  "segment_results": [
+    {
+      "segment": "overall",
+      "cases": 2,
+      "passed": 2,
+      "failed": 0,
+      "pass_rate": 1
+    }
+  ],
+  "case_results": [
+    {
+      "case_id": "acc-admin-commit-claude",
+      "repetition": 1,
+      "passed": true,
+      "public_routing_output": "Selected the administrative fast path.",
+      "selections": {
+        "primary_process_skill": null,
+        "domain_skills": [],
+        "tools": []
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "pass_fail_reasons": ["Schema-only example; no provider call was made."]
+    },
+    {
+      "case_id": "acc-admin-commit-claude",
+      "repetition": 2,
+      "passed": true,
+      "public_routing_output": "Selected the administrative fast path.",
+      "selections": {
+        "primary_process_skill": null,
+        "domain_skills": [],
+        "tools": []
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "pass_fail_reasons": ["Schema-only example; no provider call was made."]
+    }
+  ],
+  "repetitions": {
+    "planned": 2,
+    "completed": 2,
+    "third_on_disagreement": false
+  },
+  "pass_fail_reasons": ["This fixture validates the public result contract only."]
+}

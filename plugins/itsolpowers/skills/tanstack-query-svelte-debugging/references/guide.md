@@ -55,7 +55,7 @@ TanStack Query Svelte debugging dla v5 i v6. Najpierw ustal wersje `@tanstack/sv
 - `01-overview.md` (184 linii) - Overview; Konfiguracja dla SvelteKit SSR; Prefetch w SvelteKit przez `initialData`; Prefetch w SvelteKit przez `prefetchQuery`
 - `02-domyslne-zachowania-v5.md` (163 linii) - Domyślne zachowania v5/v6; Query keys; `createQuery`
 - `03-reaktywnosc-w-svelte.md` (115 linii) - Reaktywność w Svelte; Statusy query w v5/v6; `enabled` i queries zależne
-- `04-api-client-i-fetch.md` (169 linii) - API client i `fetch`; Cancellation; Transformacja danych przez `select`
-- `05-mutacje.md` (189 linii) - Mutacje; Statusy mutacji w v5; Invalidacje po mutacjach; Aktualizacja cache przez `setQueryData`; +1 więcej
+- [Shared API client and fetch](../../_shared/references/tanstack-query-svelte/api-client-fetch.md) (169 linii) - wspólne fakty; w debugowaniu prześledź request, cancellation i `select`
+- [Shared mutations](../../_shared/references/tanstack-query-svelte/mutations.md) (189 linii) - wspólne fakty; w debugowaniu prześledź status, invalidation, cache update i rollback
 - `06-paginacja.md` (175 linii) - Paginacja; Infinite queries; Polling, refetch i realtime; Cache a auth, logout i tenant; +1 więcej
 - `07-url-params-search-params-i-filtry.md` (163 linii) - URL params, search params i filtry; Performance; Persist cache i offline; Devtools; +3 więcej

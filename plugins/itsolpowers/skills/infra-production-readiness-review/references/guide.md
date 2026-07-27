@@ -27,4 +27,4 @@ Bramka produkcyjna: minimalne standardy single-host i Nomad, strategia deploymen
 ## Pliki referencyjne
 
 - `01-overview.md` (145 linii) - Overview; Deployment strategie; Bezpieczeństwo hosta; IaC, GitOps i drift; +3 więcej
-- `02-checklist-do-review-infrastruktury.md` (107 linii) - Checklist do review infrastruktury
+- [Shared infrastructure review checklist](../../_shared/references/infrastructure/container-review-checklist.md) (107 linii) - wspólne fakty i bramka review; użyj ich jako końcowego przekrojowego rubryku readiness

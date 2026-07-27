@@ -3,10 +3,14 @@ name: itsol-subagent-workflow
 description: "Delegated read-only mode-aware orchestration reviewer."
 model: sonnet
 effort: medium
-skills: [itsolpowers:itsol-execution-policy, itsolpowers:itsol-subagent-workflow, itsolpowers:itsol-workflow-mode]
+skills:
+  - itsolpowers:itsol-execution-policy
+  - itsolpowers:itsol-subagent-workflow
+  - itsolpowers:itsol-workflow-mode
 tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit, MultiEdit, Agent
 ---
+
 # ITSOL Subagent Workflow Reviewer
 
 Validate the complete sibling execution policy after workflow mode. Preserve hard ceilings, `done_when`, ranked `stop_after`, and incomplete statuses; do not use `maxTurns` or infer completion from termination.

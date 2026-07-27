@@ -1,78 +1,15 @@
-# ITSOL Powers Routing Reference
+# Router Reference
 
-Ten plik jest wewnętrzną referencją routera. Nie zawiera checklist domenowych; pełna wiedza znajduje się w referencjach konkretnych skillów.
+Use this file only after the router selects work that needs delegation or a durable handoff.
 
-## Tryb Pracy
+## Delegated packet
 
-- Po załadowaniu routera użyj `itsol-workflow-mode` i rozstrzygnij tryb przed bramkami funkcjonalnymi, bugfixowymi, planistycznymi, implementacyjnymi lub delegowaniem. Jawny wybór użytkownika ma pierwszeństwo przed domyślnym trybem repo, ale nie przed regułami platformy ani pasującymi ograniczeniami `.itsol.md`. Bez wyboru użyj dozwolonego defaultu repo lub `governed`; samo `continue`, `do it`, milczenie albo niekwalifikowane `accept everything` nie deleguje decyzji.
-- Na początku każdego istotnego zadania krótko raportuj wybrane `workflow_mode`, `mode_source` i `decision_authority`. Zachowuj pełny stan `itsol-workflow-mode` w kontekście, kompaktowaniu, handoffie, planach gdy istnieją i packetach subagentów: `workflow_mode`, `mode_source`, `decision_authority`, `scope`, `artifact_state`, `execution_mode`, `protected_constraints`. Brak lub konflikt stanu u subagenta oznacza `blocked`.
-- W `governed` używaj `artifact_state: draft` podczas przygotowania/review i do konkretnej akceptacji, a dopiero potem `artifact_state: approved`; wykonuj pełne Discovery/Decision Gates, review planów, jawne akceptacje konkretnych artefaktów i wybór trybu wykonania. W `autonomous-planned` utrzymuj `artifact_state: draft` do zakończenia review, potem wybierz udokumentowaną rekomendację, oznacz plan `Ready for execution` i ustaw `artifact_state: ready-for-execution` bez approval pause. W `direct` używaj `artifact_state: not-required` i pomijaj trwałe Business/Technical/Technical Fix Plany, ich review i bramki akceptacji, ale zachowuj evidence, TDD/replacement verification, domenowe review i self-review.
-- Nie myl autonomii workflow z authority dla protected actions. Osobnej zgody wymagaj tylko dla destrukcyjnych operacji danych, niezleconego deploy/publish na produkcję, sekretów poza zakresem, zewnętrznych wiadomości/zakupów albo osłabienia security; zwykła implementacja w zakresie nie tworzy approval pause.
+Carry a stable work-item ID; all seven `itsol-workflow-mode` fields; approved/ready/not-required artifact evidence appropriate to the mode; execution policy and `done_when`; dependency state; narrow read/write/forbidden scope; one semantic owner; selected skills; RED/GREEN or an explicit replacement check; allowed terminal statuses; and stop/escalation conditions.
 
-- Wymagania, story, refinement albo gotowość zadania: użyj `itsol-task-intake`, potem `itsol-requirements-review`.
-- Tworzenie, inicjalizacja, odczyt lub aktualizacja repo policy, monorepo map, TDD support, verification commands albo stable workflow notes w `.itsol.md`: użyj `itsol-repo-memory` przed planowaniem, implementacją, review albo QA. W monorepo dobierz najbliższą sekcję `Project: <path>` dla dotykanych plików.
-- Aktualność technologii, dokumentacji, wersji frameworków, SDK, runtime, paczek, generated clients, API zewnętrznych albo start nowego projektu: użyj `itsol-current-tech-context`. W istniejącym repo najpierw wykryj lokalnie przypięte wersje, a dopiero potem sprawdzaj aktualną dokumentację. W nowym projekcie wybieraj latest stable, chyba że user jawnie przypiął wersje albo wymaga LTS/kompatybilności.
-- Machine learning / AI engineering, decyzja czy ML ma sens, dane i ewaluacja, trening, eksperymenty, LLM/RAG, model serving, MLOps, monitoring, drift, retraining, model card albo ML review: użyj najwęższego `ml-*` skilla. Jeśli główny diff dotyczy Rust/Rig/Candle/provider/runtime code, użyj najpierw `rust-ml-llm-*`, a `ml-*` tylko dla przekrojowych kwestii projektu, danych, ewaluacji, serving albo review.
-- Rewrite aplikacji, migracja technologii, modernizacja, Strangler Fig, Branch by Abstraction, parallel run, cutover danych, kontrakty kompatybilności albo decommissioning legacy: użyj `application-technology-migration`, a dopiero dla zatwierdzonych slice'ów dobierz `itsol-functional-planning`, `itsol-tdd-workflow`, review/security/infra/database i skille technologiczne.
-- UI/UX, nowy widok, komponent, design system, responsive, accessibility, Tailwind, performance frontendu, testy UI albo QA frontendu: użyj `ui-ux-workflow`, a potem dobierz najwęższe skille UI dla dotkniętego obszaru.
-- Electron desktop app, main process, preload, renderer, IPC, BrowserWindow, session permissions, desktop storage, OS integrations, auto-update, packaging, code signing, notarization, packaged app debugging albo Electron security hardening: użyj najwęższego `electron-*` skilla. Dla widocznego renderer UI dodaj właściwe `ui-*`, React/Next albo Svelte skille.
-- Tauri desktop app, `src-tauri`, Rust commands, `invoke`, events/channels, capabilities, permissions, WebView, sidecars, updater, code signing, bundling, platform debugging albo Tauri security hardening: użyj najwęższego `tauri-*` skilla. Dla Rust core dodaj właściwe `rust-*`, a dla widocznego frontend UI dodaj właściwe `ui-*`, React/Next albo Svelte skille.
-- Expo / React Native mobile app, Expo SDK, Expo Router, development builds, Expo Go limitations, CNG/prebuild, app config, config plugins, native modules, mobile permissions, SecureStore/storage, offline/API sync, push/background/lifecycle, EAS Build, EAS Submit, EAS Update/OTA, store release albo mobile debugging/review: użyj najwęższego `expo-*` skilla. Dla widocznego UI dodaj właściwe `ui-*`, dla generated clients `hey-api-openapi-*`, a dla TanStack Query/cache właściwy skill query.
-- Agent-browser, lokalne browser dogfood, pre-QA frontend validation, browser-based reproduction, evidence capture, console/network/HAR/trace/Web Vitals, regresja UI w przeglądarce albo production-safe browser smoke checks: użyj najwęższego `agent-browser-*` skilla. Dla poleceń CLI sprawdź `agent-browser --version` i `agent-browser --help`; jeśli zainstalowana wersja wspiera lokalne instrukcje typu `agent-browser skills get core` i `agent-browser skills get dogfood`, załaduj je, bo komendy zależą od wersji CLI.
-- Feature albo behavior change: użyj `itsol-task-intake`, potem `itsol-functional-planning`; warunki przejścia do `itsol-subagent-workflow` albo `itsol-feature-implementation` z `itsol-tdd-workflow` zależą od `itsol-workflow-mode`: `Approved` i wybór usera w `governed`, `Ready for execution` w `autonomous-planned`, albo `artifact_state: not-required` w `direct`.
-- Endpoint, UI flow, integracja albo logika produktowa: traktuj jako zadanie funkcjonalne i przejdź przez `itsol-functional-planning`.
-- Bug, regresja albo failing test: użyj `itsol-bug-debugging` i zbierz dowody w każdym trybie. W `governed` utwórz i uzyskaj akceptację Technical Fix Planu; w `autonomous-planned` reviewuj go i ustaw `Ready for execution`; w `direct` pomiń plik planu. Następnie użyj `itsol-tdd-workflow` i najwęższego skilla debuggingowego, np. `svelte-debugging`, `postgres-operations-debugging`, `dotnet-web-api-debugging`.
-- Refactor kodu produkcyjnego: użyj `itsol-tdd-workflow` przed zmianą, żeby zabezpieczyć zachowanie testem. Jeśli `.itsol.md` mówi, że TDD dla dotkniętego projektu jest `limited` albo `not-supported`, nie scaffoldź nowego test frameworka; zapisz wyjątek TDD i wykonaj replacement verification.
-- Plan techniczny, tech notes, spike, rollout albo rollback: użyj `itsol-technical-planning`, `itsol-current-tech-context` oraz domenowych skillów dla dotkniętych obszarów.
-- Review PR: użyj `itsol-code-review-workflow`, zbuduj mapę obszarów review i dobierz skille review dla dotkniętych technologii. Jeśli finding albo ocena zależy od frameworka, SDK, runtime, paczki, generatora lub API, użyj `itsol-current-tech-context`. Jeśli PR dotyka UI/UX, użyj `ui-code-review` oraz właściwych skilli UI. Dla dużego, wieloobszarowego albo ryzykownego PR użyj osobnych sub-agentów według obszarów, np. current tech context, UI/UX, security, infra, frontend, backend, database, generated clients/API contracts, migration/rewrite, QA/release, performance i test strategy. Inline-only review dopuszczaj tylko dla małego jednoobszarowego diffu i jawnie uzasadnij, dlaczego sub-agenci nie byli potrzebni.
-- Handoff do QA albo release readiness: użyj `itsol-self-review`, potem `itsol-qa-handoff` i tylko tych domenowych skillów, które odpowiadają faktycznie zmienionym powierzchniom.
+Only the main agent delegates. Keep writers disjoint. A different read-only reviewer checks each implementation slice; concrete material findings return to the same writer for a bounded fix and targeted verification. A stopped child is not automatically complete.
 
-## Routing Sub-agentów
+## Handoff
 
-- Przed delegowaniem zastosuj `itsol-workflow-mode`. W `governed` zapytaj użytkownika o subagent-driven albo inline dopiero po wymaganych akceptacjach; w `autonomous-planned` użyj zatwierdzonego w planie lub rozsądnie dobranego wykonania po stanie `Ready for execution`; w `direct` dobierz wykonanie do rozmiaru i niezależnych powierzchni bez osobnej bramki. Każdy packet zawiera siedem pól stanu trybu.
-- Jeśli wykonanie jest subagent-driven, załaduj `itsol-subagent-workflow`: podziel pracę na taski, ustal limit równoległości, uruchamiaj implementację i osobny review subagent dla każdego zakończonego taska, powtarzaj pętlę fix-review do wyczyszczenia uwag, a zaakceptowane taski commituj w Angular commit convention, jeśli repo policy i authority na to pozwalają.
-- Użyj sub-agentów, gdy zadanie ma niezależne powierzchnie pracy: UI/API/database/infra, osobne hipotezy debuggingowe, równoległe ścieżki review, security plus implementacja albo zbieranie dowodów z kilku miejsc.
-- W Codex nie używaj nazw skilli ITSOL jako `agent_type`. Role Codexa to platformowe typy typu `default`, `explorer`, `worker`. Jeżeli forkujesz kontekst rozmowy dla subagenta, nie ustawiaj jednocześnie jawnego `agent_type`; przekaż skill ITSOL w treści zadania albo structured skill item. Jeżeli potrzebujesz roli `explorer` albo `worker`, nie używaj forked context i przekaż minimalny kontekst ręcznie.
-- Tylko główny agent orkiestruje sub-agentów. Delegowany sub-agent nie może uruchamiać kolejnego sub-agenta, odpalać `codex exec`, `claude` ani innych agentowych CLI. Jeśli zakres jest za szeroki, ma zwrócić proponowany podział pracy do głównego agenta.
-- Przy code review każdy PR wymaga mapy obszarów review. Duży, wieloobszarowy, security/data/infra-sensitive, migration-related albo generated-contract-related PR musi być sprawdzony przez sub-agentów w niezależnych obszarach. Nie wykonuj inline-only review jednego sektora, jeśli diff dotyka wielu obszarów.
-- Przy planowaniu i review zależnym od wersji technologii uruchom osobny sub-agent `itsolpowers:itsol-current-tech-context`, jeśli narzędzia na to pozwalają. Ma zwrócić wykryte wersje, źródła dokumentacji, politykę wersji i ryzyka kompatybilności.
-- Przy dużym review UI/UX rozdziel sub-agentów według obszarów: design system, architektura komponentów, stany/formularze/listy, responsywność, Tailwind/tokeny, accessibility/motion, performance/stability, testy/QA i security frontend.
-- Przy dużym browser dogfood, pre-QA validation albo browser reproduction rozdziel sub-agentów według obszarów: workflow/user flows, interaction debugging, diagnostics/evidence, QA reporting oraz security/production safety. Dodaj framework/UI/security/data/infra sub-agentów dopiero wtedy, gdy dowody z przeglądarki wskazują na te powierzchnie.
-- Przy dużym review ML/AI rozdziel sub-agentów według obszarów: data/evaluation, training/experiments, LLM/RAG, serving/MLOps, security/privacy, infra/serving, QA/release oraz `rust-ml-llm-review`, jeśli główny kod jest Rust/Rig/Candle-specific.
-- Każdy sub-agent powinien dostać wąski zakres, właścicielstwo plików lub obszaru systemu, ograniczenia i oczekiwany rezultat.
-- Główny agent nie deleguje bieżącego blokera ani decyzji integracyjnych. Odpowiada za scalenie wyników, spójność zmian, brak konfliktów edycyjnych i końcową weryfikację.
-- Przy edycji kodu rozdziel zapis na rozłączne pliki lub moduły. Jeśli to niemożliwe, sub-agenci powinni tylko analizować i raportować.
+Report changed and inspected files, commands and observed results, assumptions, unverified items, coverage gaps, risks, blockers, integration dependencies, and the next review target. Preserve `completed`, `partial`, `blocked`, or `failed` exactly.
 
-## Commity
-
-- Wszystkie commity dla pracy ITSOL twórz w Angular commit convention, np. `feat(scope): ...`, `fix(scope): ...`, `test(scope): ...`, `refactor(scope): ...`, `docs(scope): ...`.
-- Commit powinien obejmować jeden spójny, zweryfikowany zakres pracy.
-- Nie stage'uj zmian użytkownika ani plików spoza aktualnego zakresu. Jeśli nie da się bezpiecznie oddzielić zmian, zatrzymaj się i zapytaj użytkownika.
-
-## Powierzchnie Ryzyka
-
-- UI, browser, forms, accessibility: `ui-*` plus the relevant framework or mobile family (`svelte-*`, `react-nextjs-*`, or `expo-react-native-*`) when framework-specific behavior matters.
-- Agent-browser dogfood, browser reproduction, frontend pre-QA validation, console/network/HAR/trace/Web Vitals evidence, QA reports, and production-safe smoke checks: `agent-browser-*`.
-- Electron desktop apps: `electron-desktop-implementation`, `electron-desktop-review`, `electron-desktop-debugging`, `electron-security-hardening`, `electron-release-distribution`.
-- Tauri desktop apps: `tauri-desktop-implementation`, `tauri-desktop-review`, `tauri-desktop-debugging`, `tauri-security-capabilities`, `tauri-release-distribution`.
-- Expo / React Native mobile apps: `expo-react-native-implementation`, `expo-react-native-review`, `expo-react-native-debugging`, `expo-security-permissions`, `expo-eas-release-ota`.
-- Machine learning / AI engineering: `ml-ai-project-planning`, `ml-data-evaluation`, `ml-training-experiments`, `ml-llm-rag-engineering`, `ml-serving-mlops-review`; for Rust/Rig/Candle-specific code prefer `rust-ml-llm-*` first.
-- Creating, initializing, reading, or updating repo policy, monorepo project map, TDD support, verification commands and stable agent notes: `itsol-repo-memory`.
-- Current official documentation, SDK/runtime/package versions, latest stable defaults, and repo pins: `itsol-current-tech-context`.
-- UI/UX workflow, design system, components, states/forms, responsive, Tailwind, accessibility, performance, tests and UI review: `ui-*`.
-- Server state, cache, invalidation, SSR prefetch: `tanstack-query-svelte-*`.
-- Generated OpenAPI clients and contract drift: `hey-api-openapi-*`.
-- ASP.NET Core APIs: `dotnet-web-api-*`.
-- Effect TypeScript runtime, layers, errors, concurrency: `effect-typescript-*`.
-- Rust application code: `rust-*`.
-- Application rewrite and technology migration: `application-technology-migration`.
-- Rust LLM, Rig, Candle, RAG, model runtime: `rust-ml-llm-*`.
-- PostgreSQL schema, queries, PgBouncer, HA, operations: `postgres-*`.
-- MongoDB data modeling, indexes, replica/sharding, operations: `mongodb-*`.
-- SQL Server, EF Core, Dapper, stored procedures, Query Store, HA, operations: `mssql-*`.
-- App security: use the narrowest `security-*` skill.
-- Infrastructure: use the narrowest `infra-*` skill.
-
-## Selection Rule
-
-Load the process skill first, then load only the smallest domain skill set that can prove the answer. Prefer two focused skills over one broad mental checklist.
+For a separately authorized commit, inspect the exact diff, stage only the verified coherent slice, use Angular convention, and never imply authority to push, publish, release, or deploy.

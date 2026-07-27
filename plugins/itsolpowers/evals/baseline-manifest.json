@@ -1,0 +1,9 @@
+{
+  "baseline_path": "baselines/0.23.0.json",
+  "baseline_sha256": "4f09f4fbdc7f14000159f84e9187938c5822a26e494a082f305a943a8025fda6",
+  "manifest_version": "1.0.0",
+  "package_version": "0.23.0",
+  "repository_revision": "7c0e5bc9f24c9b393998c2dfdd1e7abb6e2de824",
+  "target_red_path": "baselines/0.23.0-target-red.json",
+  "target_red_sha256": "428e7cd27fca725fbd5a8d51db3237360b339aed2db90162dd26531486bb924b"
+}

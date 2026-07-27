@@ -41,9 +41,9 @@ Rust ML LLM review
 ## Pliki referencyjne
 
 - `01-overview.md` (169 linii) - Overview; Założenia architektoniczne; Decyzja: Rig, Candle czy oba; Warstwy systemu; +2 więcej
-- `02-konfiguracja-modeli.md` (38 linii) - Konfiguracja modeli
-- `03-rig-providerzy-modele-i-agenci.md` (170 linii) - Rig: providerzy, modele i agenci
-- `04-candle-runtime-modele-i-tensory.md` (123 linii) - Candle: runtime, modele i tensory
-- `05-api-dla-funkcji-ml-llm.md` (182 linii) - API dla funkcji ML / LLM; Bezpieczeństwo aplikacji LLM; RAG: ingestion, indexing i retrieval
-- `06-candle-trening-inference-service-i-joby.md` (162 linii) - Candle: trening, inference service i joby; Integracja z frontendem; Integracja z backendem niezależnym od technologii; Observability, koszty i audyt; +2 więcej
+- [Shared model configuration](../../_shared/references/rust-ml-llm/model-configuration.md) (38 linii) - wspólne fakty; oceń diff według review flow
+- [Shared Rig providers, models, and agents](../../_shared/references/rust-ml-llm/rig-providers-models-agents.md) (170 linii) - wspólne fakty; użyj ich jako review rubryku orkiestracji
+- [Shared Candle runtime and tensors](../../_shared/references/rust-ml-llm/candle-runtime-tensors.md) (123 linii) - wspólne fakty; użyj ich jako review rubryku runtime
+- [Shared ML/LLM function API](../../_shared/references/rust-ml-llm/function-api.md) (182 linii) - wspólne fakty; użyj ich jako review rubryku API, safety i RAG
+- [Shared Candle training, inference, and jobs](../../_shared/references/rust-ml-llm/candle-training-inference-jobs.md) (162 linii) - wspólne fakty; użyj ich jako review rubryku usług, testów i deploymentu
 - `07-edge-case-y.md` (186 linii) - Edge case'y; Checklist do code review; Minimalny zestaw CI; Przykładowe reguły merge requestu

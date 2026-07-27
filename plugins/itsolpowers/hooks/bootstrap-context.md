@@ -1,18 +1,21 @@
 <EXTREMELY_IMPORTANT>
-You have ITSOL Powers.
+## Product identity
 
-For every ITSOL engineering request:
+You have ITSOL Powers. It is a progressive-disclosure system for engineering work.
 
-1. Load and follow `itsolpowers:using-itsolpowers` as the top-level router.
-2. Treat commit-only, repository inspection, and `.itsol.md` initialization as bounded administration: no new engineering state, plans, delegation, code-review/QA cycle, or completion gate. Repo init creates only `.itsol.md` and validates it inline. Commits reuse prior evidence; external actions remain separate.
-3. If root `.itsol.md` exists, or the user asks to create, inspect, or update it, load `itsolpowers:itsol-repo-memory` before routing and apply root plus most-specific project policy.
-4. Load `itsolpowers:itsol-workflow-mode` before functional, bugfix, planning, implementation, or delegation gates. Resolve `governed`, `autonomous-planned`, or `direct` from platform rules, repository restrictions, explicit task choice, repository default, then `governed`. Preserve all seven workflow fields.
-   Required keys: `workflow_mode`, `mode_source`, `decision_authority`, `scope`, `artifact_state`, `execution_mode`, `protected_constraints`. Valid artifact states include `draft`, `approved`, `ready-for-execution`, and `not-required`; execution may be `pending`, `inline`, `subagents`, or `auto`.
-5. For broad multi-phase work, load `itsolpowers:itsol-initiative-delivery`, record `delivery_scope: initiative`, and maintain complete scope under `.itsol/initiatives/<id>/`. Use a roadmap review panel only when required by policy or proportionate to material risk, then application-aware phase/system QA. QA failure loops through the smallest applicable fix/replan/review path and fresh QA until PASS.
-6. Load `itsolpowers:itsol-execution-policy` after workflow mode. Resolve and preserve the separate preset, policy sources, model/reasoning intent and control, agent/parallel/review ceilings, `done_when`, ranked `stop_after`, and escalation behavior. Standard and deep default to unlimited agent types with parallelism bounded to 3; one type may run multiple independent work-item packets. Numeric type limits and enforced model/reasoning ceilings require explicit user or repository authority; configured harness role reasoning overrides advisory preset fallback. Never set `maxTurns` or treat agent termination as completion.
-7. Select the smallest relevant process and domain skills. Use current official documentation for version-sensitive decisions.
-8. Use `itsolpowers:itsol-tdd-workflow` before behavior-changing production work, or record a repository-policy exception and replacement verification.
-9. Only the main agent delegates. Respect execution ceilings, use one writer per file or semantic contract, prohibit nested delegation, validate every response and evidence item, and preserve `partial`, `blocked`, and `failed` results. In planned modes, self-review proportionately and follow the effective review trigger. With `adaptive`, the main agent decides whether isolated plan/code review adds value from scale, uncertainty, novelty, blast radius, and verification strength; skip ceremony for small conventional work. Use the concrete capability supplied by the current harness adapter and never assume another harness's tool names. Only concrete material defects block; preferences and optional improvements do not.
-10. Keep protected-action authority separate: destructive data operations, unrequested production publication/deployment, secrets outside scope, external communications or purchases, and security weakening require explicit authority.
-11. Use Angular commit convention for separately authorized commits and one coherent verified slice per commit.
+## Router discovery
+
+For ITSOL engineering requests, load `itsolpowers:using-itsolpowers`; let its skill descriptions select the smallest sufficient process and domain set.
+
+## Repository memory
+
+If root `.itsol.md` exists—or the user asks to create, inspect, or update it—load `itsolpowers:itsol-repo-memory` and apply the root plus most-specific project policy.
+
+## Protected actions
+
+Destructive data changes, unrequested production publication/deployment, secrets outside scope, external communications or purchases, and security weakening require explicit authority.
+
+## Enforcement boundary
+
+Canonical skills, repository policy, schemas, tools, hooks, and tests—not a context profile—enforce authority and safety. When relevant, `itsol-workflow-mode` owns `governed`, `autonomous-planned`, `direct` and the fields `workflow_mode`, `mode_source`, `decision_authority`, `scope`, `artifact_state`, `execution_mode`, `protected_constraints`; its values include `draft`, `approved`, `ready-for-execution`, `not-required`, `pending`, `inline`, `subagents`, and `auto`. `itsol-execution-policy` owns resource and stop limits. Adapters may map native capabilities but must not invent them or weaken these contracts.
 </EXTREMELY_IMPORTANT>

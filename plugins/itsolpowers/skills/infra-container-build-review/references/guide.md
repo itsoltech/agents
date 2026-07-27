@@ -26,4 +26,4 @@ Review artefaktów i obrazów: wersjonowanie, Dockerfile, cache, base image, non
 ## Pliki referencyjne
 
 - `01-overview.md` (161 linii) - Overview; Artefakty i wersjonowanie; Budowanie obrazów Dockerowych; Rozmiar obrazu i cache builda; +2 więcej
-- `02-checklist-do-review-infrastruktury.md` (107 linii) - Checklist do review infrastruktury
+- [Shared infrastructure review checklist](../../_shared/references/infrastructure/container-review-checklist.md) (107 linii) - wspólne fakty i bramka review; zastosuj je do zakresu builda opisanego wyżej

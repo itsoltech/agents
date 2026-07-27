@@ -29,4 +29,4 @@ Review ingressu, proxy i TLS: Traefik/NGINX, routing, certyfikaty, LB, long-live
 ## Pliki referencyjne
 
 - `01-overview.md` (194 linii) - Overview; Nomad - Traefik jako ingress; Nomad - NGINX jako reverse proxy; Routing i reverse proxy; +5 więcej
-- `02-checklist-do-review-infrastruktury.md` (107 linii) - Checklist do review infrastruktury
+- [Shared infrastructure review checklist](../../_shared/references/infrastructure/container-review-checklist.md) (107 linii) - wspólne fakty i bramka review; zastosuj je do ingressu, proxy i TLS

@@ -1,0 +1,85 @@
+{
+  "checks": [
+    {
+      "actual": 461,
+      "evidence": {
+        "paths": [
+          "hooks/bootstrap-context.md"
+        ]
+      },
+      "expectation": "<= 180 words",
+      "id": "bootstrap-budget",
+      "status": "unmet"
+    },
+    {
+      "actual": 2891,
+      "evidence": {
+        "paths": [
+          "skills/using-itsolpowers/SKILL.md"
+        ]
+      },
+      "expectation": "<= 800 words",
+      "id": "router-budget",
+      "status": "unmet"
+    },
+    {
+      "actual": 1674,
+      "evidence": {
+        "paths": [
+          "skills/using-itsolpowers/references/guide.md"
+        ]
+      },
+      "expectation": "absent or <= 300 words",
+      "id": "router-guide-budget",
+      "status": "unmet"
+    },
+    {
+      "actual": 22,
+      "evidence": {
+        "path": ".codex-plugin/plugin.json#/interface/defaultPrompt"
+      },
+      "expectation": "<= 5 instructions",
+      "id": "codex-default-prompt-budget",
+      "status": "unmet"
+    },
+    {
+      "actual": "context/context-profiles.json is absent",
+      "evidence": {},
+      "expectation": "frontier and compatibility profiles exist",
+      "id": "capability-profiles",
+      "status": "unmet"
+    },
+    {
+      "actual": {
+        "missing": [
+          "scripts/lib/agent-contract.mjs",
+          "scripts/generate-agent-contracts.mjs",
+          "scripts/agent-sources/*.md"
+        ]
+      },
+      "evidence": {},
+      "expectation": "one generator contract plus agent-specific sources exist",
+      "id": "canonical-agent-contract",
+      "status": "unmet"
+    },
+    {
+      "actual": {
+        "exception_manifest": false,
+        "shared_references": false
+      },
+      "evidence": {},
+      "expectation": "shared canonical references and an exception manifest exist",
+      "id": "canonical-reference-architecture",
+      "status": "unmet"
+    }
+  ],
+  "report_schema_version": "1.0.0",
+  "revision": "7c0e5bc9f24c9b393998c2dfdd1e7abb6e2de824",
+  "status": "expected-red",
+  "summary": {
+    "met": 0,
+    "tooling_failures": 0,
+    "total": 7,
+    "unmet": 7
+  }
+}

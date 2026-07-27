@@ -69,8 +69,8 @@ TanStack Query Svelte implementation dla v5 i v6. Najpierw ustal wersje `@tansta
 - `02-prefetch-w-sveltekit-przez-initialdata.md` (145 linii) - Prefetch w SvelteKit przez `initialData`; Prefetch w SvelteKit przez `prefetchQuery`
 - `03-domyslne-zachowania-v5.md` (167 linii) - Domyślne zachowania v5/v6; Query keys; Query options factory
 - `04-createquery.md` (157 linii) - `createQuery`; Reaktywność w Svelte; Statusy query w v5/v6; `enabled` i queries zależne
-- `05-api-client-i-fetch.md` (169 linii) - API client i `fetch`; Cancellation; Transformacja danych przez `select`
-- `06-mutacje.md` (189 linii) - Mutacje; Statusy mutacji w v5; Invalidacje po mutacjach; Aktualizacja cache przez `setQueryData`; +1 więcej
+- [Shared API client and fetch](../../_shared/references/tanstack-query-svelte/api-client-fetch.md) (169 linii) - wspólne fakty dla implementacji requestów, cancellation i `select`
+- [Shared mutations](../../_shared/references/tanstack-query-svelte/mutations.md) (189 linii) - wspólne fakty dla implementacji statusów, invalidacji, cache update i optimistic rollback
 - `07-usemutationstate.md` (183 linii) - `useMutationState`; Paginacja; Infinite queries; Polling, refetch i realtime; +2 więcej
-- `08-obsluga-bledow.md` (184 linii) - Obsługa błędów; Formularze i mutacje; URL params, search params i filtry; Typowanie TypeScript; +2 więcej
+- [Shared error handling](../../_shared/references/tanstack-query-svelte/error-handling.md) (184 linii) - wspólne fakty dla błędów, formularzy, URL params, TypeScript, performance i offline cache
 - `09-devtools.md` (164 linii) - Devtools; ESLint plugin query; Testy; CI; +2 więcej

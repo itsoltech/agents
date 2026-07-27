@@ -39,9 +39,9 @@ Rust ML LLM architecture
 ## Pliki referencyjne
 
 - `01-overview.md` (177 linii) - Overview; Cel dokumentu; Założenia architektoniczne; Decyzja: Rig, Candle czy oba; +3 więcej
-- `02-konfiguracja-modeli.md` (38 linii) - Konfiguracja modeli
-- `03-rig-providerzy-modele-i-agenci.md` (170 linii) - Rig: providerzy, modele i agenci
-- `04-candle-runtime-modele-i-tensory.md` (123 linii) - Candle: runtime, modele i tensory
-- `05-api-dla-funkcji-ml-llm.md` (182 linii) - API dla funkcji ML / LLM; Bezpieczeństwo aplikacji LLM; RAG: ingestion, indexing i retrieval
-- `06-candle-trening-inference-service-i-joby.md` (162 linii) - Candle: trening, inference service i joby; Integracja z frontendem; Integracja z backendem niezależnym od technologii; Observability, koszty i audyt; +2 więcej
+- [Shared model configuration](../../_shared/references/rust-ml-llm/model-configuration.md) (38 linii) - wspólne fakty dla decyzji architektonicznych
+- [Shared Rig providers, models, and agents](../../_shared/references/rust-ml-llm/rig-providers-models-agents.md) (170 linii) - wspólne fakty dla projektowania orkiestracji
+- [Shared Candle runtime and tensors](../../_shared/references/rust-ml-llm/candle-runtime-tensors.md) (123 linii) - wspólne fakty dla projektowania runtime
+- [Shared ML/LLM function API](../../_shared/references/rust-ml-llm/function-api.md) (182 linii) - wspólne fakty dla API, bezpieczeństwa i RAG
+- [Shared Candle training, inference, and jobs](../../_shared/references/rust-ml-llm/candle-training-inference-jobs.md) (162 linii) - wspólne fakty dla usług, integracji, observability, testów i deploymentu
 - `07-edge-case-y.md` (60 linii) - Edge case'y

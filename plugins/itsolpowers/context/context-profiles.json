@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "selection": {
+    "precedence": [
+      "explicit-task",
+      "explicit-environment",
+      "validated-runtime-capability",
+      "compatibility-fallback"
+    ],
+    "environment_variable": "ITSOLPOWERS_CONTEXT_PROFILE",
+    "provider_name_is_capability": false,
+    "invalid_input": {
+      "profile": "compatibility",
+      "surface_warning": true
+    }
+  },
+  "invariants": [
+    "workflow-authority",
+    "repository-restrictions",
+    "protected-actions",
+    "deterministic-contracts",
+    "tool-hook-contracts",
+    "honest-incomplete-status",
+    "nested-delegation-prohibition"
+  ],
+  "profiles": {
+    "frontier": {
+      "description": "Judgment-first guidance for a validated capable runtime or explicit selection.",
+      "verification": "risk-proportionate",
+      "review": "material-risk-or-uncertainty",
+      "delegation": "independent-work-with-material-value",
+      "default_small_task_execution": "inline",
+      "default_verifier_fanout": false,
+      "explicit_scaffolding": false,
+      "guidance": [
+        "Choose verification proportional to blast radius, reversibility, novelty, and evidence strength.",
+        "Keep small or sequential work inline unless delegation adds material independent value.",
+        "Do not add unconditional self-rechecks or verifier-only agents."
+      ]
+    },
+    "compatibility": {
+      "description": "Explicit scaffolding when runtime capability is unknown or invalid.",
+      "verification": "explicit-focused-and-wider",
+      "review": "explicit-trigger-and-response",
+      "delegation": "explicit-bounded-packets",
+      "default_small_task_execution": "inline",
+      "default_verifier_fanout": false,
+      "explicit_scaffolding": true,
+      "guidance": [
+        "State RED or replacement evidence before behavior changes, then report focused and wider GREEN checks.",
+        "Use explicit task packets, response fields, review triggers, and completion evidence.",
+        "Do not default small tasks to fan-out or spawn a verifier without a selected review need."
+      ]
+    }
+  }
+}

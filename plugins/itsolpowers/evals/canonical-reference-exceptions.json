@@ -1,0 +1,11 @@
+{
+  "exceptions": [],
+  "normalization": {
+    "case": "lowercase",
+    "link_destinations": "excluded",
+    "shingle_size_tokens": 5,
+    "whitespace": "collapsed"
+  },
+  "schema_version": "1.0.0",
+  "similarity_threshold": 0.95
+}

@@ -119,28 +119,11 @@
       "Debugging"
     ],
     "defaultPrompt": [
-      "Use ITSOL Powers to classify this task and choose the right skills.",
-      "Use itsol-workflow-mode before planning or implementation to resolve governed, autonomous-planned, or direct mode from platform rules, repository restrictions, an explicit task-level choice, repository default, then governed fallback.",
-      "Use itsol-execution-policy after workflow mode to resolve separate model/reasoning intent, distinct-agent and parallel ceilings, review cycles, done_when, ranked stop_after, and escalation behavior; never use maxTurns or infer completion from agent termination.",
-      "Use $itsol-codex-setup to preview and install managed economy, balanced, or quality Codex roles, and $itsol-codex-doctor to diagnose them without changing files.",
-      "Preserve the selected workflow mode for the current task and use honest artifact states: Draft then Approved in governed, Draft then Ready for execution in autonomous-planned, and not-required in direct.",
-      "If .itsol.md exists, read its repo memory before choosing project-specific TDD, verification, workflow-mode, or monorepo policy; create, initialize, or update it only when explicitly requested or otherwise authorized by the selected workflow scope.",
-      "When planning or reviewing framework, SDK, runtime, package, generated client, or API-dependent work, verify current official documentation and repo-pinned versions first.",
-      "For machine learning and AI engineering work, route through ML project planning, data/evaluation, training/experiments, LLM/RAG, or serving/MLOps/review skills; prefer rust-ml-llm skills first for Rust/Rig/Candle-specific code.",
-      "For React 19 and Next.js work, route through React/Next implementation, review, debugging, App Router/rendering, API/cache/forms, or quality/security skills as appropriate.",
-      "For TanStack Query v5 in React/Next.js, use focused implementation, review, or debugging skills for query keys, SSR hydration, mutations, invalidation, optimistic updates, auth cache, tenant isolation, and tests.",
-      "For agent-browser local dogfood, browser-based reproduction, evidence capture, or pre-QA validation, route through agent-browser workflow, interaction debugging, diagnostics/evidence, QA reporting, or security/production safety skills; check the installed CLI version/help and load local core/dogfood guidance when the CLI supports it.",
-      "For Expo React Native mobile app work, route through Expo implementation, review, debugging, security/permissions, or EAS release/OTA skills for Expo SDK, Expo Router, development builds, CNG/prebuild, app config, permissions, storage/offline, native modules, EAS Build, EAS Submit, EAS Update, runtime versions/channels, OTA rollout/rollback, CI, store release, and mobile diagnostics.",
-      "For Electron desktop app work, route through Electron implementation, review, debugging, security hardening, or release/distribution skills for main/preload/renderer boundaries, IPC, BrowserWindow, storage, auto-update, packaging, signing, and packaged-app diagnostics.",
-      "For Tauri desktop app work, route through Tauri implementation, review, debugging, security/capabilities, or release/distribution skills for Rust/frontend boundaries, commands, invoke/events, capabilities, permissions, WebView differences, sidecars, updater, bundling, signing, and platform diagnostics.",
-      "For visible frontend work, use UI/UX skills for design-system consistency, component architecture, view states, responsiveness, accessibility, performance, tests, and UI review.",
-      "For application rewrites or technology migrations, inventory behavior, choose a safe migration strategy, and plan incremental slices before implementation.",
-      "In governed mode, require reviewed Business and Technical Plans plus explicit approval of each specific artifact; in autonomous-planned mode, review plans and continue with Ready for execution; in direct mode, do not require persistent planning artifacts.",
-      "When execution policy permits subagents, split only independent work, stay within distinct-agent/concurrency/review ceilings, and validate each response; if required review does not fit, return partial or blocked instead of weakening it.",
-      "For bugfixes, always gather evidence; apply the mode-specific Technical Fix Plan state from itsol-workflow-mode instead of an unconditional approval gate.",
-      "Use ITSOL TDD workflow before changing production code.",
-      "Review this change against ITSOL security and infrastructure practices.",
-      "Debug this issue using ITSOL task and incident workflows."
+      "Use ITSOL Powers to classify the task, load the using-itsolpowers router, and select the smallest sufficient process and domain skill set.",
+      "Apply root and project .itsol.md through itsol-repo-memory when it exists or when repository memory is explicitly requested.",
+      "Resolve authority through itsol-workflow-mode only when the task changes planning, implementation, bugfix, delegation, or mode state; preserve honest artifact and completion status.",
+      "Use the explicit context profile or validated runtime capability when available; otherwise fail closed to compatibility, and never infer frontier capability from a provider name.",
+      "Keep protected-action authority, repository restrictions, deterministic tool and hook contracts, and external publication or communication boundaries intact."
     ]
   }
 }

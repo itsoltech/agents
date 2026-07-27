@@ -1,0 +1,262 @@
+{
+  "baseline_schema_version": "1.0.0",
+  "immutable": true,
+  "package_version": "0.23.0",
+  "repository_revision": "7c0e5bc9f24c9b393998c2dfdd1e7abb6e2de824",
+  "source": {
+    "materialization": "git archive 7c0e5bc9f24c9b393998c2dfdd1e7abb6e2de824",
+    "plugin_path": "plugins/itsolpowers"
+  },
+  "runtime": {
+    "node": "v25.6.1",
+    "repository_node_pin": null
+  },
+  "inventory": {
+    "agent_markdown_files": 113,
+    "reference_markdown_files": 514,
+    "skill_directories": 116
+  },
+  "context_audit": {
+    "audit_schema_version": "1.0.0",
+    "totals": {
+      "measured_files": 885,
+      "measured_words": 333927
+    },
+    "metrics": {
+      "adapters": {
+        "file_count": 3,
+        "word_count": 651
+      },
+      "agents": {
+        "file_count": 113,
+        "word_count": 40008
+      },
+      "bootstrap": {
+        "file_count": 1,
+        "word_count": 461
+      },
+      "codex_default_prompt": {
+        "file_count": 22,
+        "instruction_count": 22,
+        "word_count": 584
+      },
+      "references": {
+        "file_count": 514,
+        "word_count": 261397
+      },
+      "router": {
+        "file_count": 1,
+        "word_count": 2891
+      },
+      "router_guide": {
+        "file_count": 1,
+        "word_count": 1674
+      },
+      "skill_bodies": {
+        "file_count": 116,
+        "word_count": 29024
+      },
+      "skill_descriptions": {
+        "file_count": 116,
+        "word_count": 1802
+      }
+    },
+    "duplicates": {
+      "exact": [],
+      "near": [
+        {
+          "paths": [
+            "skills/dotnet-web-api-implementation/references/03-program-cs-i-skladanie-aplikacji.md",
+            "skills/dotnet-web-api-review/references/03-program-cs-i-skladanie-aplikacji.md"
+          ],
+          "similarity": 0.99773
+        },
+        {
+          "paths": [
+            "skills/dotnet-web-api-implementation/references/04-api-design.md",
+            "skills/dotnet-web-api-review/references/04-api-design.md"
+          ],
+          "similarity": 0.998344
+        },
+        {
+          "paths": [
+            "skills/hey-api-openapi-codegen/references/03-klient-fetch.md",
+            "skills/hey-api-openapi-review/references/03-klient-fetch.md"
+          ],
+          "similarity": 0.997824
+        },
+        {
+          "paths": [
+            "skills/infra-container-build-review/references/02-checklist-do-review-infrastruktury.md",
+            "skills/infra-container-runtime-review/references/02-checklist-do-review-infrastruktury.md",
+            "skills/infra-nomad-deployment/references/04-checklist-do-review-infrastruktury.md",
+            "skills/infra-production-readiness-review/references/02-checklist-do-review-infrastruktury.md",
+            "skills/infra-routing-proxy-tls/references/02-checklist-do-review-infrastruktury.md",
+            "skills/infra-secrets-config/references/02-checklist-do-review-infrastruktury.md"
+          ],
+          "similarity": 0.995671
+        },
+        {
+          "paths": [
+            "skills/postgres-operations-debugging/references/07-procedury-operacyjne.md",
+            "skills/postgres-review/references/08-procedury-operacyjne.md"
+          ],
+          "similarity": 0.994382
+        },
+        {
+          "paths": [
+            "skills/postgres-operations-debugging/references/08-minimalny-zestaw-ustawien-dla-aplikacji.md",
+            "skills/postgres-review/references/09-minimalny-zestaw-ustawien-dla-aplikacji.md"
+          ],
+          "similarity": 0.992095
+        },
+        {
+          "paths": [
+            "skills/postgres-review/references/02-jsonb.md",
+            "skills/postgres-schema-query-design/references/02-jsonb.md"
+          ],
+          "similarity": 0.997932
+        },
+        {
+          "paths": [
+            "skills/postgres-review/references/03-statystyki-plannerowe.md",
+            "skills/postgres-schema-query-design/references/03-statystyki-plannerowe.md"
+          ],
+          "similarity": 0.998158
+        },
+        {
+          "paths": [
+            "skills/rust-implementation/references/03-clippy-rustfmt-i-lints.md",
+            "skills/rust-review/references/03-clippy-rustfmt-i-lints.md"
+          ],
+          "similarity": 0.996616
+        },
+        {
+          "paths": [
+            "skills/rust-ml-llm-architecture/references/02-konfiguracja-modeli.md",
+            "skills/rust-ml-llm-review/references/02-konfiguracja-modeli.md"
+          ],
+          "similarity": 0.988235
+        },
+        {
+          "paths": [
+            "skills/rust-ml-llm-architecture/references/03-rig-providerzy-modele-i-agenci.md",
+            "skills/rust-ml-llm-debugging/references/01-overview.md",
+            "skills/rust-ml-llm-review/references/03-rig-providerzy-modele-i-agenci.md"
+          ],
+          "similarity": 0.988655
+        },
+        {
+          "paths": [
+            "skills/rust-ml-llm-architecture/references/04-candle-runtime-modele-i-tensory.md",
+            "skills/rust-ml-llm-debugging/references/02-candle-runtime-modele-i-tensory.md",
+            "skills/rust-ml-llm-review/references/04-candle-runtime-modele-i-tensory.md"
+          ],
+          "similarity": 0.997696
+        },
+        {
+          "paths": [
+            "skills/rust-ml-llm-architecture/references/05-api-dla-funkcji-ml-llm.md",
+            "skills/rust-ml-llm-debugging/references/03-api-dla-funkcji-ml-llm.md",
+            "skills/rust-ml-llm-review/references/05-api-dla-funkcji-ml-llm.md"
+          ],
+          "similarity": 0.998002
+        },
+        {
+          "paths": [
+            "skills/rust-ml-llm-architecture/references/06-candle-trening-inference-service-i-joby.md",
+            "skills/rust-ml-llm-review/references/06-candle-trening-inference-service-i-joby.md"
+          ],
+          "similarity": 0.997895
+        },
+        {
+          "paths": [
+            "skills/tanstack-query-svelte-debugging/references/04-api-client-i-fetch.md",
+            "skills/tanstack-query-svelte-implementation/references/05-api-client-i-fetch.md",
+            "skills/tanstack-query-svelte-review/references/05-api-client-i-fetch.md"
+          ],
+          "similarity": 0.996743
+        },
+        {
+          "paths": [
+            "skills/tanstack-query-svelte-debugging/references/05-mutacje.md",
+            "skills/tanstack-query-svelte-implementation/references/06-mutacje.md",
+            "skills/tanstack-query-svelte-review/references/06-mutacje.md"
+          ],
+          "similarity": 0.997114
+        },
+        {
+          "paths": [
+            "skills/tanstack-query-svelte-implementation/references/08-obsluga-bledow.md",
+            "skills/tanstack-query-svelte-review/references/08-obsluga-bledow.md"
+          ],
+          "similarity": 0.997525
+        }
+      ],
+      "normalization": {
+        "case": "lowercase",
+        "link_destinations": "excluded",
+        "shingle_size_tokens": 5,
+        "similarity_threshold": 0.95,
+        "whitespace": "collapsed"
+      }
+    },
+    "links": {
+      "finding_count": 0,
+      "findings": []
+    }
+  },
+  "original_validation_evidence": [
+    {
+      "command": "npm --prefix <materialized-revision>/plugins/itsolpowers run validate:workflow-modes",
+      "exit_code": 0,
+      "status": "PASS",
+      "evidence": "workflow-mode validation: PASS (93 classified files)"
+    },
+    {
+      "command": "npm --prefix <materialized-revision>/plugins/itsolpowers run validate:execution-policy",
+      "exit_code": 0,
+      "status": "PASS",
+      "evidence": "execution-policy validation: PASS (113 Claude agents)"
+    },
+    {
+      "command": "npm --prefix <materialized-revision>/plugins/itsolpowers run test:subagent-stop",
+      "exit_code": 0,
+      "status": "PASS",
+      "evidence": "subagent-stop fixtures: PASS"
+    },
+    {
+      "command": "npm --prefix <materialized-revision>/plugins/itsolpowers run test:opencode-adapter",
+      "exit_code": 0,
+      "status": "PASS",
+      "evidence": "opencode adapter fixtures: PASS"
+    },
+    {
+      "command": "npm --prefix <materialized-revision>/plugins/itsolpowers run test:pi-adapter",
+      "exit_code": 0,
+      "status": "PASS",
+      "evidence": "pi adapter fixtures: PASS"
+    },
+    {
+      "command": "npm --prefix <materialized-revision>/plugins/itsolpowers run test:execution-policy",
+      "exit_code": 0,
+      "status": "PASS",
+      "evidence": "execution-policy schema fixtures: PASS"
+    },
+    {
+      "command": "npm --prefix <materialized-revision>/plugins/itsolpowers run test:codex-agent-setup",
+      "exit_code": 0,
+      "status": "PASS",
+      "evidence": "codex agent setup fixtures: PASS"
+    },
+    {
+      "command": "npm --prefix <materialized-revision>/plugins/itsolpowers run test:pi-runtime",
+      "exit_code": 0,
+      "status": "PASS",
+      "evidence": "pi runtime fixtures: PASS"
+    }
+  ],
+  "unverified": [
+    "Node 22 and Node 24 compatibility were not run; this baseline was measured with local Node v25.6.1."
+  ]
+}

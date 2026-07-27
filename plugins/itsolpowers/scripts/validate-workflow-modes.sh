@@ -57,6 +57,7 @@ gate_pattern='Business Plan|Technical Plan|Technical Fix Plan|Decision Gate|appr
 set +e
 rg -l --hidden -i -S "${gate_pattern}" \
   README.md plugins/itsolpowers .claude-plugin/marketplace.json \
+  --glob '!plugins/itsolpowers/scripts/agent-sources/**' \
   --glob '!**/scripts/workflow-mode-consumers.txt' \
   --glob '!**/scripts/validate-workflow-modes.sh' \
   > "${tmp_dir}/scanned-paths-raw"

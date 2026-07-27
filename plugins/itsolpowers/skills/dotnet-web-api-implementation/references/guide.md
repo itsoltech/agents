@@ -62,7 +62,7 @@ ASP.NET Core Web API implementation
 
 - `01-overview.md` (176 linii) - Overview; Cel dokumentu; Główna zasada; Dobór architektury do rozmiaru aplikacji; +3 więcej
 - `02-clean-architecture.md` (188 linii) - Clean architecture; DDD; CQRS; MediatR i pipeline handlers; +1 więcej
-- `03-program-cs-i-skladanie-aplikacji.md` (183 linii) - Program.cs i składanie aplikacji; Middleware; Dependency injection; Konfiguracja i options pattern; +3 więcej
-- `04-api-design.md` (188 linii) - API design; OpenAPI; Autoryzacja i uwierzytelnianie; CORS, CSRF i przeglądarka; +5 więcej
+- [Shared Program.cs and application composition](../../_shared/references/dotnet-web-api/program-composition.md) (183 linii) - wspólne fakty dla implementacji: middleware, DI, options, DTO, validation i ProblemDetails
+- [Shared API design](../../_shared/references/dotnet-web-api/api-design.md) (188 linii) - wspólne fakty dla implementacji: OpenAPI, auth, browser security, secrets, HTTP, EF Core i transakcje
 - `05-background-jobs.md` (173 linii) - Background jobs; Cache; Rate limiting i abuse protection; Health checks; +3 więcej
 - `06-bezpieczenstwo-code-review.md` (190 linii) - Bezpieczeństwo code review; Analizatory, warningi i jakość kodu; CI; Deployment i kontenery z perspektywy aplikacji; +3 więcej

@@ -57,5 +57,5 @@ PostgreSQL operations debugging
 - `04-patroni-i-automatyczny-failover.md` (145 linii) - Patroni i automatyczny failover; Load balancing; Replikacja logiczna; Sharding i rozproszenie danych; +4 więcej
 - `05-monitoring.md` (99 linii) - Monitoring; Logowanie
 - `06-rozwiazywanie-problemow.md` (175 linii) - Rozwiązywanie problemów; Upgrade'y; Kontenery i Nomad
-- `07-procedury-operacyjne.md` (161 linii) - Procedury operacyjne; Minimalny zestaw SQL dla diagnostyki
-- `08-minimalny-zestaw-ustawien-dla-aplikacji.md` (88 linii) - Minimalny zestaw ustawień dla aplikacji; Minimalny zestaw komend PgBouncer dla diagnostyki
+- [Shared operational procedures](../../_shared/references/postgres/operational-procedures.md) (161 linii) - wspólne procedury i SQL; w debugowaniu zaczynaj od symptomów i aktualnego stanu
+- [Shared minimum application settings](../../_shared/references/postgres/minimum-application-settings.md) (88 linii) - wspólne ustawienia i komendy PgBouncer; nie zmieniaj konfiguracji bez dowodu z diagnostyki
