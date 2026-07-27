@@ -52,13 +52,26 @@ function retained(relativePath) {
   return false;
 }
 
-const changedPaths = git([
+const trackedChangedPaths = git([
+  "diff",
+  "--name-only",
+  "--no-renames",
+  "-z",
+  revision,
+  "--",
+]).stdout
+  .split("\0")
+  .filter(Boolean);
+const workingTreePaths = git([
   "status",
   "--porcelain=v1",
   "-z",
   "--untracked-files=all",
 ]).stdout;
-const classifiedPaths = parsePorcelainV1ZPaths(changedPaths)
+const classifiedPaths = [...new Set([
+  ...trackedChangedPaths,
+  ...parsePorcelainV1ZPaths(workingTreePaths),
+])]
   .filter((entry) => !entry.startsWith(".itsol/"))
   .sort();
 
