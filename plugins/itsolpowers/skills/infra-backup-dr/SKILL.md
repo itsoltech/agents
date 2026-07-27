@@ -1,6 +1,6 @@
 ---
 name: infra-backup-dr
-description: "Backup/DR: restore, RPO/RTO, retention, recovery tests, production recovery."
+description: "Design backup and disaster recovery with RPO/RTO, retention, restore tests, and recovery."
 ---
 
 # Infra Backup DR

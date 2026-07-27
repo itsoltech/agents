@@ -1,6 +1,6 @@
 ---
 name: mongodb-review
-description: "MongoDB review: schemas, queries, indexes, aggregation, transactions, security, tests."
+description: "Review MongoDB schemas, queries, indexes, transactions, security, and migrations."
 ---
 
 # MongoDB Review

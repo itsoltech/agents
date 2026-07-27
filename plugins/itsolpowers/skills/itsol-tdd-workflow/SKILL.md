@@ -1,6 +1,6 @@
 ---
 name: itsol-tdd-workflow
-description: "TDD workflow: RED-GREEN-REFACTOR for features, bugfixes, refactors, migrations."
+description: "Apply RED-GREEN-REFACTOR to features, bugfixes, refactors, or migrations."
 ---
 
 # ITSOL TDD Workflow

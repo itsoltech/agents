@@ -1,6 +1,6 @@
 ---
 name: dotnet-web-api-review
-description: ".NET API review: architecture, validation, auth, EF Core, jobs, deployment, tests."
+description: "Review .NET API contracts, validation, auth, EF Core, jobs, deployment, and tests."
 ---
 
 # Dotnet Web API Review

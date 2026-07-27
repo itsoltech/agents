@@ -1,6 +1,6 @@
 ---
 name: security-threat-modeling
-description: "Threat modeling: assets, actors, trust boundaries, threats, controls, residual risk."
+description: "Threat-model assets, actors, trust boundaries, abuse paths, controls, and residual risk."
 ---
 
 # Security Threat Modeling

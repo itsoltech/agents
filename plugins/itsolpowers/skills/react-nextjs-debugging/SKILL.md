@@ -1,6 +1,6 @@
 ---
 name: react-nextjs-debugging
-description: "React 19 and Next.js debugging: hydration, Server/Client Components, App Router, cache, TanStack Query, auth, API, env, bundle, performance, tests."
+description: "Debug React/Next rendering, hydration, App Router, cache, auth, bundles, and performance."
 ---
 
 # React Next.js Debugging

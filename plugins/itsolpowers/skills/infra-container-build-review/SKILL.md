@@ -1,6 +1,6 @@
 ---
 name: infra-container-build-review
-description: "Container build review: Dockerfiles, image size, layers, SBOM, CVEs, reproducibility."
+description: "Review Dockerfiles for image size, layers, SBOMs, CVEs, and reproducible builds."
 ---
 
 # Infra Container Build Review

@@ -1,6 +1,6 @@
 ---
 name: ml-ai-project-planning
-description: "ML/AI project planning: problem fit, business decision, baselines, metrics, guardrails, phases, project cards."
+description: "Plan ML/AI projects around decision fit, baselines, data, metrics, guardrails, and phases."
 ---
 
 # ML AI Project Planning

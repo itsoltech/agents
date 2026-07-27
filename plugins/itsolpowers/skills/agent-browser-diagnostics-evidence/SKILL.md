@@ -1,6 +1,6 @@
 ---
 name: agent-browser-diagnostics-evidence
-description: "Agent-browser diagnostics and evidence: console, network, HAR, trace, profiler, vitals, screenshots, videos, redaction."
+description: "Correlate browser console, network, trace, performance, and visual evidence."
 ---
 
 # Agent Browser Diagnostics Evidence

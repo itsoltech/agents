@@ -1,6 +1,6 @@
 ---
 name: security-authz-tenant-review
-description: "Security authz/tenant review: roles, permissions, ownership, cross-tenant access."
+description: "Review authorization, tenant isolation, roles, ownership, and cross-tenant access."
 ---
 
 # Security Authz Tenant Review

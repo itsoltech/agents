@@ -1,6 +1,6 @@
 ---
 name: agent-browser-dogfood-workflow
-description: "Agent-browser dogfood workflow: session charter, black-box loops, frontend flows, responsive, accessibility, cache, and live events."
+description: "Run scoped black-box browser dogfood across user flows, responsive states, and accessibility."
 ---
 
 # Agent Browser Dogfood Workflow

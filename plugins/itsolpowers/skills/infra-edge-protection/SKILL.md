@@ -1,6 +1,6 @@
 ---
 name: infra-edge-protection
-description: "Edge protection: WAF, rate limits, bots, DDoS, CDN, headers, exposure."
+description: "Design edge protection with WAF, rate limits, bot and DDoS controls, and CDN."
 ---
 
 # Infra Edge Protection

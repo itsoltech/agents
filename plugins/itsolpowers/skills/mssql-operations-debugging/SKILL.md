@@ -1,6 +1,6 @@
 ---
 name: mssql-operations-debugging
-description: "SQL Server operations debugging: MSSQL slow queries, Query Store, execution plans, wait stats, blocking, deadlocks, timeouts, transaction log growth, backups, restore, and HA."
+description: "Debug SQL Server plans, Query Store, waits, deadlocks, backups, restore, and HA."
 ---
 
 # MSSQL Operations Debugging

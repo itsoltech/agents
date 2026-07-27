@@ -1,6 +1,6 @@
 ---
 name: tauri-desktop-implementation
-description: "Tauri implementation: architecture, frontend/Rust boundaries, commands, events, state, storage, sidecars, tests, release."
+description: "Implement Tauri frontend/Rust boundaries, commands, state, storage, sidecars, and tests."
 ---
 
 # Tauri Desktop Implementation

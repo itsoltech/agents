@@ -1,6 +1,6 @@
 ---
 name: tanstack-query-react-nextjs-review
-description: "TanStack Query v5 React/Next.js review: query keys, query functions, Hey API generated options, SSR hydration, mutations, invalidation, optimistic updates, auth cache, tenant isolation, errors, tests."
+description: "Review React/Next TanStack Query v5 keys, hydration, mutations, cache isolation, and tests."
 ---
 
 # TanStack Query React Next.js Review

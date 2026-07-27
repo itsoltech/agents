@@ -1,6 +1,6 @@
 ---
 name: electron-desktop-implementation
-description: "Electron desktop app implementation: architecture, main/preload/renderer boundaries, typed IPC contracts, BrowserWindow/session setup, storage, offline/API behavior, OS integrations, performance, packaging, and tests."
+description: "Implement Electron boundaries, typed IPC, windows, sessions, storage, packaging, and tests."
 ---
 
 # Electron Desktop Implementation

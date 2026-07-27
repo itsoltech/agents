@@ -1,6 +1,6 @@
 ---
 name: svelte-implementation
-description: "Svelte implementation: UI, routes, load, forms, API, accessibility, async states, tests."
+description: "Implement Svelte UI, routes, loads, forms, APIs, accessibility, states, and tests."
 ---
 
 # Svelte Implementation

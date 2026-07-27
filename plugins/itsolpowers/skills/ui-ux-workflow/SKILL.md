@@ -1,6 +1,6 @@
 ---
 name: ui-ux-workflow
-description: "UI/UX workflow: plan, implement, route, self-review views, flows, a11y, perf, tests."
+description: "Deliver UI/UX flows with explicit states, accessibility, responsiveness, and tests."
 ---
 
 # UI/UX Workflow

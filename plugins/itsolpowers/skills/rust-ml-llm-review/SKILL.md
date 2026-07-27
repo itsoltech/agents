@@ -1,6 +1,6 @@
 ---
 name: rust-ml-llm-review
-description: "Rust ML/LLM review: Rig, Candle, agents, RAG, embeddings, streaming, evals, security."
+description: "Review Rust ML/LLM code using Rig, Candle, agents, RAG, streaming, and evals."
 ---
 
 # Rust ML LLM Review

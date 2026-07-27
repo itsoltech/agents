@@ -1,6 +1,6 @@
 ---
 name: application-technology-migration
-description: "App rewrite/migration: parity, contracts, data, rollout, rollback, security, decommissioning."
+description: "Migrate applications or toolchains with parity, staged rollout, rollback, and decommissioning."
 ---
 
 # Application Technology Migration

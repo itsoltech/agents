@@ -1,6 +1,6 @@
 ---
 name: ui-responsive-media
-description: "Responsive UI/media: mobile, tablet, desktop, breakpoints, touch, zoom, images, iframes."
+description: "Implement responsive UI/media across breakpoints, touch, zoom, images, video, and iframes."
 ---
 
 # UI Responsive Media

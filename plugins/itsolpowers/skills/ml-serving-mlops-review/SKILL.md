@@ -1,6 +1,6 @@
 ---
 name: ml-serving-mlops-review
-description: "ML serving/MLOps review: model contracts, parity, rollout, monitoring, lineage, CI, security, debugging."
+description: "Review ML serving/MLOps contracts, parity, rollout, monitoring, lineage, and operations."
 ---
 
 # ML Serving MLOps Review

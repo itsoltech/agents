@@ -1,6 +1,6 @@
 ---
 name: itsol-self-review
-description: "Self-review before handoff: plans, tests, edge cases, security, UX, risks."
+description: "Self-review plans or code for correctness, tests, edge cases, security, UX, and risk."
 ---
 
 # ITSOL Self Review

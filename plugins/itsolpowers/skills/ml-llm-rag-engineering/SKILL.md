@@ -1,6 +1,6 @@
 ---
 name: ml-llm-rag-engineering
-description: "LLM/RAG engineering: prompting, structured output, retrieval, fine-tuning, evals, guardrails, tool-calling safety."
+description: "Engineer LLM/RAG systems with retrieval, structured output, evals, guardrails, and safe tools."
 ---
 
 # ML LLM RAG Engineering

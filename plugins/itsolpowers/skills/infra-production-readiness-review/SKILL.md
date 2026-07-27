@@ -1,6 +1,6 @@
 ---
 name: infra-production-readiness-review
-description: "Production readiness review: deploy, rollback, monitoring, capacity, backups, runbooks."
+description: "Review production readiness: deploy, rollback, monitoring, capacity, backups, and runbooks."
 ---
 
 # Infra Production Readiness Review

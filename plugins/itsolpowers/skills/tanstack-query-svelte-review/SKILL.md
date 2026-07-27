@@ -1,6 +1,6 @@
 ---
 name: tanstack-query-svelte-review
-description: "TanStack Query Svelte review for v5 and v6: version detection, runes migration, keys, cache, SSR, invalidation, mutations, errors."
+description: "Review Svelte TanStack Query v5/v6 runes, keys, cache, SSR, and mutations."
 ---
 
 # TanStack Query Svelte Review

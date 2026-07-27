@@ -1,6 +1,6 @@
 ---
 name: ui-design-system
-description: "UI design system: tokens, base components, variants, consistency, states, patterns."
+description: "Design UI tokens, primitives, variants, states, composition, and consistency rules."
 ---
 
 # UI Design System

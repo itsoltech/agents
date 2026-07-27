@@ -1,6 +1,6 @@
 ---
 name: react-nextjs-review
-description: "React 19 and Next.js code review: App Router, RSC, Client Components, cache, TanStack Query, API contracts, forms, security, a11y, performance, tests."
+description: "Review React/Next rendering, App Router, cache, forms, security, accessibility, and tests."
 ---
 
 # React Next.js Review

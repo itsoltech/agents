@@ -1,6 +1,6 @@
 ---
 name: itsol-bug-debugging
-description: "Evidence-first bugfix workflow by workflow mode."
+description: "Fix bugs evidence-first with root cause, regression coverage, and mode-aware authority."
 ---
 # ITSOL Bug Debugging
 

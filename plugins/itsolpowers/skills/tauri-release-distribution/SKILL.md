@@ -1,6 +1,6 @@
 ---
 name: tauri-release-distribution
-description: "Tauri release: bundling, signing, notarization, updater signatures, CI/CD, artifacts, channels, smoke tests, rollback."
+description: "Release Tauri apps with bundling, signing, updater signatures, channels, CI, and rollback."
 ---
 
 # Tauri Release Distribution

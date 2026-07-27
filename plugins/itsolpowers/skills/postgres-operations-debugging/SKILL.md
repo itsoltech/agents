@@ -1,6 +1,6 @@
 ---
 name: postgres-operations-debugging
-description: "PostgreSQL debugging: slow queries, locks, CPU/RAM/disk, PgBouncer, replication, HA."
+description: "Debug PostgreSQL queries, locks, PgBouncer, replication, HA, and recovery."
 ---
 
 # Postgres Operations Debugging

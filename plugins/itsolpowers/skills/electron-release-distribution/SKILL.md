@@ -1,6 +1,6 @@
 ---
 name: electron-release-distribution
-description: "Plan or review Electron release and distribution: packaging, electron-vite, Electron Forge, electron-builder, code signing, macOS notarization, update channels, auto-update metadata, CI release gates, platform smoke tests, rollback, and installer QA. Use when implementing, debugging, or reviewing Electron build and release pipelines."
+description: "Release Electron apps with packaging, signing, notarization, update channels, CI, and rollback."
 ---
 
 # Electron Release Distribution

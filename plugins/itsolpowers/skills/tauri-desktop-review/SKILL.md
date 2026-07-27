@@ -1,6 +1,6 @@
 ---
 name: tauri-desktop-review
-description: "Tauri review: architecture, Rust/frontend contracts, commands, capabilities, security, updater, platform behavior, tests."
+description: "Review Tauri contracts, commands, capabilities, updater, platform behavior, and tests."
 ---
 
 # Tauri Desktop Review

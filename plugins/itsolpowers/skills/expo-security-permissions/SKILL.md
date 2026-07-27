@@ -1,6 +1,6 @@
 ---
 name: expo-security-permissions
-description: "Expo mobile security: permissions, secrets, auth/session, SecureStore, privacy, deep links, WebView, network, OTA integrity."
+description: "Secure Expo permissions, auth, SecureStore, privacy, deep links, WebViews, and OTA."
 ---
 
 # Expo Security Permissions

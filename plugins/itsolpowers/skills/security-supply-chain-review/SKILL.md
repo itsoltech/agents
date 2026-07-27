@@ -1,6 +1,6 @@
 ---
 name: security-supply-chain-review
-description: "Security supply chain review: dependencies, lockfiles, scripts, SBOM, licenses, CVEs."
+description: "Review supply-chain risk in dependencies, lockfiles, scripts, SBOMs, licenses, and CVEs."
 ---
 
 # Security Supply Chain Review

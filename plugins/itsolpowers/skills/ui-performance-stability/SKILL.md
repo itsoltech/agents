@@ -1,6 +1,6 @@
 ---
 name: ui-performance-stability
-description: "UI performance/stability: Web Vitals, LCP, INP, CLS, layout shift, bundles, large lists."
+description: "Diagnose UI Web Vitals, layout shifts, bundles, rendering, and large-list performance."
 ---
 
 # UI Performance Stability

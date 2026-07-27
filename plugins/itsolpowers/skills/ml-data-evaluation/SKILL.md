@@ -1,6 +1,6 @@
 ---
 name: ml-data-evaluation
-description: "ML data and evaluation: data contracts, validation, splits, leakage, metrics, calibration, error analysis, evals."
+description: "Evaluate ML data and models for leakage, splits, metrics, calibration, and errors."
 ---
 
 # ML Data Evaluation

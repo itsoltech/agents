@@ -1,6 +1,6 @@
 ---
 name: hey-api-openapi-review
-description: "Hey API review: OpenAPI specs, generated clients, SDKs, auth, validation, CI."
+description: "Review OpenAPI and Hey API clients for contract, auth, validation, and CI safety."
 ---
 
 # Hey API OpenAPI Review

@@ -1,6 +1,6 @@
 ---
 name: expo-react-native-implementation
-description: "Expo React Native implementation: architecture, Expo Router, dev builds, CNG, app config, native modules, state, storage, tests."
+description: "Implement Expo apps with Router, dev builds, CNG, native modules, state, storage, and tests."
 ---
 
 # Expo React Native Implementation

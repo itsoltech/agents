@@ -1,6 +1,6 @@
 ---
 name: infra-secrets-config
-description: "Secrets/config: env vars, Vault, rotation, exposure, CI/CD secrets, runtime config."
+description: "Design secrets and runtime config across env, Vault, rotation, exposure, and CI/CD."
 ---
 
 # Infra Secrets Config

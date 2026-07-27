@@ -1,6 +1,6 @@
 ---
 name: ui-frontend-testing-qa
-description: "UI testing/QA: component, integration, E2E, a11y, visual, responsive, edge cases."
+description: "Plan UI component, integration, E2E, accessibility, visual, and responsive tests."
 ---
 
 # UI Frontend Testing QA

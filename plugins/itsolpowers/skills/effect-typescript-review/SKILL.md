@@ -1,6 +1,6 @@
 ---
 name: effect-typescript-review
-description: "Effect TS review: services, layers, errors, Schema, concurrency, resources, tests."
+description: "Review Effect TS services, layers, typed errors, schemas, concurrency, and resources."
 ---
 
 # Effect TypeScript Review

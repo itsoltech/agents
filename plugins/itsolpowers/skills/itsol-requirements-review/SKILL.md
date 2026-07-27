@@ -1,6 +1,6 @@
 ---
 name: itsol-requirements-review
-description: "Requirements review: stories, DoR, scope, roles, edge cases, MVP readiness by workflow mode."
+description: "Review requirements for scope, roles, edge cases, acceptance criteria, and readiness."
 ---
 
 # ITSOL Requirements Review

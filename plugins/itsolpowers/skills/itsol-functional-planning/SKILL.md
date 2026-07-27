@@ -1,6 +1,6 @@
 ---
 name: itsol-functional-planning
-description: "Functional planning by workflow mode: governed approvals, autonomous reviewed plans, or direct execution."
+description: "Define user-visible scope, behavior, and acceptance criteria under the resolved mode."
 ---
 
 # ITSOL Functional Planning

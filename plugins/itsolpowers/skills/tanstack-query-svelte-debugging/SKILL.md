@@ -1,6 +1,6 @@
 ---
 name: tanstack-query-svelte-debugging
-description: "TanStack Query Svelte debugging for v5 and v6: stale data, keys, invalidation, optimistic UI, SSR, stores/runes migration bugs."
+description: "Debug Svelte TanStack Query v5/v6 stale data, SSR, stores, runes, and invalidation."
 ---
 
 # TanStack Query Svelte Debugging

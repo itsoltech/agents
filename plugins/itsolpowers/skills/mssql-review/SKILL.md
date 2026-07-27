@@ -1,6 +1,6 @@
 ---
 name: mssql-review
-description: "SQL Server review: MSSQL schema, migrations, queries, indexes, EF Core, Dapper, stored procedures, transactions, security, backup, and operational risk."
+description: "Review SQL Server schema, migrations, queries, indexes, .NET access, and transactions."
 ---
 
 # MSSQL Review

@@ -1,6 +1,6 @@
 ---
 name: itsol-code-review-workflow
-description: "ITSOL PR review workflow: coverage map, subagents, severity, risk, final verdict."
+description: "Run ITSOL code or PR review with scoped coverage, ranked findings, risk, and verdict."
 ---
 
 # ITSOL Code Review Workflow

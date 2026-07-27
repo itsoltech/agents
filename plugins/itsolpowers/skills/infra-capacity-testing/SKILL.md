@@ -1,6 +1,6 @@
 ---
 name: infra-capacity-testing
-description: "Capacity testing: load, stress, soak, sizing, bottlenecks, autoscaling readiness."
+description: "Plan load, stress, and soak tests for capacity, bottlenecks, and autoscaling."
 ---
 
 # Infra Capacity Testing

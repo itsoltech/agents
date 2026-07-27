@@ -1,6 +1,6 @@
 ---
 name: itsol-workflow-mode
-description: "Select and preserve the ITSOL engineering workflow mode. Use at task intake and before functional planning, technical planning, bugfix planning, implementation, or subagent delegation when the user may require governed approvals, delegate plan decisions, request work without Business/Technical/Fix Plans, change modes, or rely on .itsol.md workflow defaults or restrictions."
+description: "Resolve governed, autonomous-planned, or direct authority before ITSOL work or delegation."
 ---
 
 # ITSOL Workflow Mode

@@ -1,6 +1,6 @@
 ---
 name: itsol-execution-policy
-description: "Resolve and preserve cost-aware model, reasoning, delegation, parallelism, review, completion, and stop boundaries for ITSOL engineering work. Use after itsol-workflow-mode at task intake, before delegation, for long-running agent work, and whenever the user sets agent, budget, model, reasoning, review-round, or stop-point limits."
+description: "Resolve model, reasoning, agents, parallelism, review, and stop limits—not workflow authority."
 ---
 
 # ITSOL Execution Policy

@@ -1,6 +1,6 @@
 ---
 name: tanstack-query-svelte-implementation
-description: "TanStack Query Svelte implementation for v5 and v6: version detection, runes migration, keys, SSR, mutations, invalidation, errors."
+description: "Implement Svelte TanStack Query v5/v6 with runes, keys, SSR, mutations, and invalidation."
 ---
 
 # TanStack Query Svelte Implementation

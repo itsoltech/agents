@@ -1,6 +1,6 @@
 ---
 name: itsol-codex-setup
-description: "Configure, update, preview, or safely uninstall ITSOLPowers custom Codex subagent roles and global/project agent limits. Use when a user asks to set up cost-aware Codex agents, select economy/balanced/quality models, configure ~/.codex/agents or .codex/agents, restrict agent depth or parallelism, update an existing ITSOLPowers-managed setup, or remove that setup."
+description: "Preview or change ITSOL Codex roles, model presets, and global or project agent limits."
 ---
 
 # ITSOL Codex Setup

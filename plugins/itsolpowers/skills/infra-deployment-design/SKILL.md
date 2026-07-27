@@ -1,6 +1,6 @@
 ---
 name: infra-deployment-design
-description: "Deployment design: topology, environments, rollout, rollback, config, ownership."
+description: "Design deployment topology, environments, ownership, rollout, and rollback."
 ---
 
 # Infra Deployment Design

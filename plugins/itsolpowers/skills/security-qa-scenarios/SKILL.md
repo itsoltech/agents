@@ -1,6 +1,6 @@
 ---
 name: security-qa-scenarios
-description: "Security QA scenarios: abuse cases, negative tests, permissions, tenants, repros."
+description: "Design security QA for abuse, negative paths, permissions, tenant isolation, and evidence."
 ---
 
 # Security QA Scenarios

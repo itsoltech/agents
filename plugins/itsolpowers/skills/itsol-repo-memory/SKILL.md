@@ -1,6 +1,6 @@
 ---
 name: itsol-repo-memory
-description: "Repository memory: initialize, read, and maintain .itsol.md repo policy, monorepo project map, testing/TDD support, verification commands, and stable agent workflow notes."
+description: "Read or maintain .itsol.md policy, project map, stable constraints, and verification."
 ---
 
 # ITSOL Repo Memory

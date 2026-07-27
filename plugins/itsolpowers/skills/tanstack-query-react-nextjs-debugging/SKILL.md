@@ -1,6 +1,6 @@
 ---
 name: tanstack-query-react-nextjs-debugging
-description: "TanStack Query v5 React/Next.js debugging: stale data, duplicate requests, query keys, disabled queries, invalidation, optimistic bugs, hydration mismatch, logout cache leaks, tenant cache, realtime, performance."
+description: "Debug React/Next TanStack Query v5 stale data, hydration, invalidation, and cache isolation."
 ---
 
 # TanStack Query React Next.js Debugging

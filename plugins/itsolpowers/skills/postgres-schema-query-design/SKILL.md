@@ -1,6 +1,6 @@
 ---
 name: postgres-schema-query-design
-description: "PostgreSQL design: schemas, queries, migrations, indexes, JSONB, pooling, data access."
+description: "Design PostgreSQL schemas, queries, migrations, indexes, JSONB, pooling, and data access."
 ---
 
 # Postgres Schema Query Design

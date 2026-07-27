@@ -1,6 +1,6 @@
 ---
 name: security-secrets-config-review
-description: "Security secrets/config review: env, logs, CI/CD secrets, public vars, rotation."
+description: "Review secret exposure across environment, logs, CI/CD, public variables, and rotation."
 ---
 
 # Security Secrets Config Review

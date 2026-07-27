@@ -1,6 +1,6 @@
 ---
 name: itsol-subagent-workflow
-description: "Mode-authorized subagent execution: task split, ownership, reviews, verification, optional commits."
+description: "Delegate authorized work with bounded packets, ownership, verification, and independent review."
 ---
 # ITSOL Subagent Workflow
 

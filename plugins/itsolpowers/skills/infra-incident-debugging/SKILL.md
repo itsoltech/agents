@@ -1,6 +1,6 @@
 ---
 name: infra-incident-debugging
-description: "Infra incident debugging: logs, metrics, routing, containers, Nomad, TLS, capacity."
+description: "Diagnose infra incidents across logs, metrics, routing, containers, Nomad, and TLS."
 ---
 
 # Infra Incident Debugging

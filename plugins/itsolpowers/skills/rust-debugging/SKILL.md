@@ -1,6 +1,6 @@
 ---
 name: rust-debugging
-description: "Rust debugging: compiler, borrow/lifetime, async, locks, panics, SQLx, Serde, perf."
+description: "Debug Rust ownership, lifetimes, async, locks, panics, SQLx, Serde, and performance."
 ---
 
 # Rust Debugging

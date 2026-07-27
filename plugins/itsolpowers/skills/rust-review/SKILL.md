@@ -1,6 +1,6 @@
 ---
 name: rust-review
-description: "Rust review: ownership, APIs, async, locks, errors, unsafe, SQLx, Serde, tests."
+description: "Review Rust ownership, APIs, async, locks, errors, unsafe code, SQLx, and tests."
 ---
 
 # Rust Review

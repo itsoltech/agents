@@ -1,6 +1,6 @@
 ---
 name: rust-implementation
-description: "Rust implementation: ownership, errors, modules, async, SQLx, Serde, tracing, tests."
+description: "Implement Rust with sound ownership, errors, async, SQLx, Serde, tracing, and tests."
 ---
 
 # Rust Implementation

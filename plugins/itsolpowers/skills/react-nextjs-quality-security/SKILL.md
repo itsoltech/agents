@@ -1,6 +1,6 @@
 ---
 name: react-nextjs-quality-security
-description: "React 19 and Next.js quality/security: CSP, auth, permissions, env, runtime config, accessibility, performance, bundle, tests, CI, QA, production readiness."
+description: "Harden React/Next apps across CSP, auth, runtime config, accessibility, performance, and CI."
 ---
 
 # React Next.js Quality Security

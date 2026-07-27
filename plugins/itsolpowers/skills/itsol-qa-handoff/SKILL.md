@@ -1,6 +1,6 @@
 ---
 name: itsol-qa-handoff
-description: "QA handoff: test notes, acceptance evidence, bug reports, release readiness."
+description: "Prepare QA handoff with coverage, evidence, defects, gaps, risks, and release readiness."
 ---
 
 # ITSOL QA Handoff

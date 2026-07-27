@@ -1,6 +1,6 @@
 ---
 name: rust-ml-llm-debugging
-description: "Rust ML/LLM debugging: providers, tools, RAG, Candle, GPU, tokens, latency, evals."
+description: "Debug Rust ML/LLM providers, tools, RAG, Candle, GPU, latency, and evals."
 ---
 
 # Rust ML LLM Debugging

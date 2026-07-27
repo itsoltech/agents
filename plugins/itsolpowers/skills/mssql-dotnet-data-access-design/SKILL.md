@@ -1,6 +1,6 @@
 ---
 name: mssql-dotnet-data-access-design
-description: "SQL Server .NET design: MSSQL schema, queries, EF Core, Dapper, stored procedures, transactions, migrations, indexes, and data access implementation."
+description: "Design SQL Server .NET access with EF Core, Dapper, procedures, transactions, and migrations."
 ---
 
 # MSSQL Dotnet Data Access Design

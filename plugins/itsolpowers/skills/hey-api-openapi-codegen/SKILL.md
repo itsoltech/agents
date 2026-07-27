@@ -1,6 +1,6 @@
 ---
 name: hey-api-openapi-codegen
-description: "Hey API codegen: OpenAPI TS clients, SDK, fetch, Zod, TanStack Query, SvelteKit, CI."
+description: "Generate Hey API TypeScript clients, SDKs, Zod schemas, and query integrations."
 ---
 
 # Hey API OpenAPI Codegen

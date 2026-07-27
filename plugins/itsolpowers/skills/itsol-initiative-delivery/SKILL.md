@@ -1,6 +1,6 @@
 ---
 name: itsol-initiative-delivery
-description: "Autonomous, durable, multi-phase delivery from a large business document: complete-scope intake, requirements traceability, initiative roadmap, decisions, phase orchestration, continuous replanning, QA feedback, progress, resume, and completion. Use when a module, application, migration, or broad capability cannot honestly fit one Business and Technical Plan."
+description: "Deliver multi-phase initiatives beyond one plan with traceability and resumable state."
 ---
 
 # ITSOL Initiative Delivery

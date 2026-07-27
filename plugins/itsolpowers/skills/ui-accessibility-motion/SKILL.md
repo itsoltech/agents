@@ -1,6 +1,6 @@
 ---
 name: ui-accessibility-motion
-description: "UI accessibility/motion: semantic HTML, keyboard, focus, ARIA, labels, reduced motion."
+description: "Implement UI semantics, keyboard, focus, ARIA, contrast, and reduced-motion access."
 ---
 
 # UI Accessibility Motion

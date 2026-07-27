@@ -1,6 +1,6 @@
 ---
 name: effect-typescript-implementation
-description: "Effect TS implementation: services, layers, Schema, resources, config, concurrency, tests."
+description: "Implement Effect TS services, layers, schemas, resources, concurrency, and tests."
 ---
 
 # Effect TypeScript Implementation

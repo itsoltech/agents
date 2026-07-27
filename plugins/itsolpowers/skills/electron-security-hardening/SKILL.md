@@ -1,6 +1,6 @@
 ---
 name: electron-security-hardening
-description: "Harden Electron desktop apps: BrowserWindow webPreferences, contextIsolation, sandbox, CSP, permission handlers, navigation and new-window controls, IPC sender and payload validation, custom protocols, file access, secret storage, fuses, ASAR integrity, and update integrity. Use when implementing or reviewing Electron security controls."
+description: "Harden Electron isolation, sandbox, CSP, permissions, IPC, files, and update integrity."
 ---
 
 # Electron Security Hardening

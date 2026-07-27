@@ -1,6 +1,6 @@
 ---
 name: agent-browser-security-production-safety
-description: "Agent-browser security and production safety: safe browser dogfood with auth state, cookies, tokens, secrets, PII, prompt-injection boundaries, redacted artifacts, production consent, destructive-action controls, and security smoke scenarios."
+description: "Protect auth, PII, consent, and destructive-action boundaries in browser QA or production."
 ---
 
 # Agent Browser Security Production Safety

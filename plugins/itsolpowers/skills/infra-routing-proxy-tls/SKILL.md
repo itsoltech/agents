@@ -1,6 +1,6 @@
 ---
 name: infra-routing-proxy-tls
-description: "Routing/proxy/TLS: certs, headers, redirects, CORS, ingress, service discovery."
+description: "Design or debug proxies, routing, TLS, redirects, CORS, ingress, and discovery."
 ---
 
 # Infra Routing Proxy TLS

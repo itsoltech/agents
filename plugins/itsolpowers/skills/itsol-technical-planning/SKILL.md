@@ -1,6 +1,6 @@
 ---
 name: itsol-technical-planning
-description: "Technical planning by workflow mode: architecture, decisions, rollout, rollback, monitoring, and verification."
+description: "Plan architecture, implementation, rollout, rollback, monitoring, and verification."
 ---
 
 # ITSOL Technical Planning

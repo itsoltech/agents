@@ -1,6 +1,6 @@
 ---
 name: react-nextjs-api-cache-forms
-description: "React 19 and Next.js API/cache/forms: TanStack Query v5, Hey API OpenAPI client, data fetching, SSR hydration, mutations, invalidation, forms, validation."
+description: "Implement React/Next API state and forms with TanStack Query, Hey API, and validation."
 ---
 
 # React Next.js API Cache Forms

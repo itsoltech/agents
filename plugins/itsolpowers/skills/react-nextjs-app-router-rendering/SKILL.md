@@ -1,6 +1,6 @@
 ---
 name: react-nextjs-app-router-rendering
-description: "Next.js App Router and React 19 rendering: Server Components, Client Components, Server Functions, Route Handlers, routing, layouts, cache, SSR, hydration."
+description: "Design Next.js App Router rendering, Server/Client boundaries, cache, SSR, and hydration."
 ---
 
 # React Next.js App Router Rendering

@@ -1,6 +1,6 @@
 ---
 name: hey-api-openapi-contract-debugging
-description: "Hey API debugging: generation, contract drift, stale clients, wrong types, auth, CI."
+description: "Debug Hey API generation, OpenAPI drift, stale clients, wrong types, auth, and CI."
 ---
 
 # Hey API OpenAPI Contract Debugging

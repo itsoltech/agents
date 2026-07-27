@@ -1,6 +1,6 @@
 ---
 name: expo-eas-release-ota
-description: "Expo EAS release: build profiles, credentials, submit, app versions, OTA runtime/channels, rollout, rollback, CI/CD."
+description: "Release Expo apps with EAS builds, submission, OTA channels, staged rollout, and rollback."
 ---
 
 # Expo EAS Release OTA

@@ -1,6 +1,6 @@
 ---
 name: itsol-current-tech-context
-description: "Current tech context: repo pins, latest stable docs, SDKs, packages, Rust/.NET/Node."
+description: "Verify repo-pinned and current framework, SDK, package, runtime, and API behavior."
 ---
 
 # ITSOL Current Tech Context

@@ -1,6 +1,6 @@
 ---
 name: ui-view-states-forms
-description: "UI states/forms: hierarchy, loading, empty, errors, permissions, tables, cache, optimistic UI."
+description: "Design UI hierarchy, forms, loading, empty, error, permission, and optimistic states."
 ---
 
 # UI View States And Forms

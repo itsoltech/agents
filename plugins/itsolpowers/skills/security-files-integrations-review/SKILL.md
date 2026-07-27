@@ -1,6 +1,6 @@
 ---
 name: security-files-integrations-review
-description: "Security files/integrations review: uploads, untrusted content, webhooks, SSRF, secrets."
+description: "Review upload and integration security: untrusted content, webhooks, SSRF, and credentials."
 ---
 
 # Security Files Integrations Review

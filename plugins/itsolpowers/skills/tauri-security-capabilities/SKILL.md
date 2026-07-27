@@ -1,6 +1,6 @@
 ---
 name: tauri-security-capabilities
-description: "Tauri security: v2 capabilities, permissions, command validation, filesystem/shell scopes, secrets, CSP, updater integrity."
+description: "Harden Tauri v2 capabilities, command validation, scopes, secrets, CSP, and updater integrity."
 ---
 
 # Tauri Security Capabilities

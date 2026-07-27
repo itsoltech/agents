@@ -1,6 +1,6 @@
 ---
 name: postgres-review
-description: "PostgreSQL review: schema, migrations, queries, indexes, RLS, pooling, backups."
+description: "Review PostgreSQL schemas, migrations, queries, indexes, RLS, pooling, and backups."
 ---
 
 # Postgres Review

@@ -1,6 +1,6 @@
 ---
 name: using-itsolpowers
-description: "Route ITSOL engineering work by task stage, authority, process, domain, and execution risk."
+description: "Route ITSOL work to the smallest skills by stage, authority, domain, and risk."
 ---
 # Using ITSOL Powers
 

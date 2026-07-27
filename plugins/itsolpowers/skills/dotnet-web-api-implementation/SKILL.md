@@ -1,6 +1,6 @@
 ---
 name: dotnet-web-api-implementation
-description: ".NET API implementation: DTOs, validation, OpenAPI, auth, EF Core, jobs, tests."
+description: "Implement .NET APIs with contracts, validation, OpenAPI, auth, EF Core, jobs, and tests."
 ---
 
 # Dotnet Web API Implementation

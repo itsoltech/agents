@@ -1,6 +1,6 @@
 ---
 name: security-frontend-browser-review
-description: "Frontend browser security: XSS, storage, CSP, CORS, CSRF, cache, visible data."
+description: "Review browser security: XSS, storage, CSP, CORS, CSRF, caching, and exposed data."
 ---
 
 # Security Frontend Browser Review

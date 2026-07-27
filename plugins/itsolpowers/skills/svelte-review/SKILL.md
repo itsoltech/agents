@@ -1,6 +1,6 @@
 ---
 name: svelte-review
-description: "Svelte review: components, routes, stores, forms, API, security, a11y, perf, tests."
+description: "Review Svelte components, routes, stores, forms, security, accessibility, and tests."
 ---
 
 # Svelte Review

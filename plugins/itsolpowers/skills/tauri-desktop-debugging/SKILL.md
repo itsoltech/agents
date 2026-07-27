@@ -1,6 +1,6 @@
 ---
 name: tauri-desktop-debugging
-description: "Tauri debugging: WebView, Rust commands, IPC, capabilities, filesystem/shell, sidecars, updater, bundling, logs."
+description: "Debug Tauri WebView, Rust commands, IPC, capabilities, sidecars, updater, and bundling."
 ---
 
 # Tauri Desktop Debugging

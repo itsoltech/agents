@@ -135,6 +135,226 @@
         "max_router_words": 800,
         "max_initial_skills": 5
       }
+    },
+    {
+      "case_id": "dev-codex-doctor-read-only",
+      "prompt": "Inspect why ITSOL Codex agent discovery and limits drifted. Do not change configuration.",
+      "adapter": "codex",
+      "context_profile": "frontier",
+      "category": "administration",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "itsol-codex-doctor",
+        "domain_skills": [],
+        "forbidden_skills": ["itsol-codex-setup"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "none",
+        "protected_constraints": ["Do not change Codex configuration or managed state."]
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 2
+      }
+    },
+    {
+      "case_id": "dev-codex-setup-change",
+      "prompt": "Install the updated ITSOL Codex roles and change the project agent limit.",
+      "adapter": "codex",
+      "context_profile": "frontier",
+      "category": "administration",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "itsol-codex-setup",
+        "domain_skills": [],
+        "forbidden_skills": ["itsol-codex-doctor"],
+        "workflow_requirement": "direct",
+        "execution_policy_requirement": "none",
+        "delegation": "none",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 2
+      }
+    },
+    {
+      "case_id": "dev-workflow-authority-selection",
+      "prompt": "Decide whether this task should use governed, autonomous-planned, or direct authority.",
+      "adapter": "claude",
+      "context_profile": "compatibility",
+      "category": "governed",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "itsol-workflow-mode",
+        "domain_skills": [],
+        "forbidden_skills": ["itsol-execution-policy"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "none",
+        "delegation": "none",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 2
+      }
+    },
+    {
+      "case_id": "dev-execution-resource-selection",
+      "prompt": "Choose model, reasoning effort, parallel agents, review rounds, and stop limits for this authorized task.",
+      "adapter": "codex",
+      "context_profile": "frontier",
+      "category": "delegation-safety",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "itsol-execution-policy",
+        "domain_skills": [],
+        "forbidden_skills": ["itsol-workflow-mode"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "required",
+        "delegation": "auto",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 2
+      }
+    },
+    {
+      "case_id": "dev-multiphase-initiative",
+      "prompt": "Coordinate a resumable multi-phase initiative spanning several delivery plans.",
+      "adapter": "pi",
+      "context_profile": "compatibility",
+      "category": "autonomous",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "itsol-initiative-delivery",
+        "domain_skills": [],
+        "forbidden_skills": ["itsol-functional-planning"],
+        "workflow_requirement": "autonomous-planned",
+        "execution_policy_requirement": "required",
+        "delegation": "subagents",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 2
+      }
+    },
+    {
+      "case_id": "dev-browser-stale-ref-debug",
+      "prompt": "Debug flaky browser actions caused by stale refs, overlays, waits, and a session boundary.",
+      "adapter": "codex",
+      "context_profile": "frontier",
+      "category": "browser-qa",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "agent-browser-interaction-debugging",
+        "domain_skills": [],
+        "forbidden_skills": ["agent-browser-qa-reporting"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 2
+      }
+    },
+    {
+      "case_id": "dev-electron-security-hardening",
+      "prompt": "Harden Electron isolation, sandbox, CSP, IPC permissions, and updater integrity.",
+      "adapter": "opencode",
+      "context_profile": "frontier",
+      "category": "security",
+      "critical": true,
+      "expected": {
+        "primary_process_skill": "itsol-feature-implementation",
+        "domain_skills": ["electron-security-hardening"],
+        "forbidden_skills": ["electron-desktop-review"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 2
+      }
+    },
+    {
+      "case_id": "dev-container-runtime-review",
+      "prompt": "Review container health checks, resource limits, volumes, secrets, and graceful shutdown.",
+      "adapter": "claude",
+      "context_profile": "compatibility",
+      "category": "infra",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "itsol-code-review-workflow",
+        "domain_skills": ["infra-container-runtime-review"],
+        "forbidden_skills": ["infra-container-build-review"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 2
+      }
+    },
+    {
+      "case_id": "dev-tanstack-react-cache-debug",
+      "prompt": "Debug stale TanStack Query v5 data and tenant cache isolation in a React Next.js app.",
+      "adapter": "codex",
+      "context_profile": "frontier",
+      "category": "bug",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "itsol-bug-debugging",
+        "domain_skills": ["tanstack-query-react-nextjs-debugging"],
+        "forbidden_skills": ["react-nextjs-debugging", "tanstack-query-svelte-debugging"],
+        "workflow_requirement": "governed",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 3
+      }
+    },
+    {
+      "case_id": "dev-tanstack-svelte-review",
+      "prompt": "Review TanStack Query Svelte runes, SSR cache keys, invalidation, and mutations.",
+      "adapter": "pi",
+      "context_profile": "compatibility",
+      "category": "review",
+      "critical": false,
+      "expected": {
+        "primary_process_skill": "itsol-code-review-workflow",
+        "domain_skills": ["tanstack-query-svelte-review"],
+        "forbidden_skills": ["svelte-review", "tanstack-query-react-nextjs-review"],
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "inline",
+        "protected_constraints": []
+      },
+      "budget": {
+        "max_bootstrap_words": 180,
+        "max_router_words": 800,
+        "max_initial_skills": 3
+      }
     }
   ]
 }

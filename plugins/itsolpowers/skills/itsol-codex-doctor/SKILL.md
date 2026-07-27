@@ -1,6 +1,6 @@
 ---
 name: itsol-codex-doctor
-description: "Diagnose an ITSOLPowers Codex subagent setup without changing files. Use when custom Codex roles are missing, not discovered, use unexpected models or reasoning, agent limits appear wrong, setup was partial, managed files may have drifted, or a user wants to verify ~/.codex/agents, .codex/agents, config.toml, and ITSOLPowers managed state."
+description: "Inspect ITSOL Codex roles, limits, discovery, and drift without changing configuration."
 ---
 
 # ITSOL Codex Doctor

@@ -1,6 +1,6 @@
 ---
 name: infra-observability
-description: "Observability: logs, metrics, traces, dashboards, alerts, SLOs, cardinality."
+description: "Design logs, metrics, traces, dashboards, alerts, SLOs, and cardinality controls."
 ---
 
 # Infra Observability

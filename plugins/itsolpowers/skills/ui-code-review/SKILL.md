@@ -1,6 +1,6 @@
 ---
 name: ui-code-review
-description: "UI code review: design system, states, a11y, responsive, Tailwind, perf, tests, QA."
+description: "Review UI design-system fit, states, accessibility, responsiveness, performance, and tests."
 ---
 
 # UI Code Review

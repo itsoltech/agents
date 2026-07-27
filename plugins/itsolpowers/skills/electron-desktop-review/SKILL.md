@@ -1,6 +1,6 @@
 ---
 name: electron-desktop-review
-description: "PR review Electron apps: architecture, process boundaries, preload and IPC contracts, security posture, storage, API/networking, auto-update, tests, QA, and release risk. Use when reviewing Electron desktop application changes, Electron app architecture, desktop-specific security-sensitive code, or packaged-app behavior."
+description: "Review Electron process and IPC boundaries, storage, updates, packaging, and release risk."
 ---
 
 # Electron Desktop Review

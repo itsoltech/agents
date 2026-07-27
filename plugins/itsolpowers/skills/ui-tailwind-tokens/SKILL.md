@@ -1,6 +1,6 @@
 ---
 name: ui-tailwind-tokens
-description: "Tailwind/tokens: theme vars, semantic colors, variants, arbitrary values, @apply, cva."
+description: "Design Tailwind tokens, semantic colors, variants, arbitrary values, @apply, and cva."
 ---
 
 # UI Tailwind Tokens

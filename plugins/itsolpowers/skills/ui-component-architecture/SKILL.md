@@ -1,6 +1,6 @@
 ---
 name: ui-component-architecture
-description: "UI component architecture: decomposition, container/presentational split, refactor safety."
+description: "Design UI component boundaries, composition, state ownership, APIs, and decomposition."
 ---
 
 # UI Component Architecture

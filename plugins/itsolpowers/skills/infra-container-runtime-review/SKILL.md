@@ -1,6 +1,6 @@
 ---
 name: infra-container-runtime-review
-description: "Container runtime review: env, secrets, health checks, resources, volumes, shutdown."
+description: "Review container runtime secrets, health checks, resources, volumes, and shutdown."
 ---
 
 # Infra Container Runtime Review

@@ -1,6 +1,6 @@
 ---
 name: electron-desktop-debugging
-description: "Electron desktop app debugging: main/preload/renderer evidence, IPC failures, BrowserWindow/session issues, packaged app bugs, auto-update symptoms, logs, crashes, performance, and memory leaks."
+description: "Debug Electron processes, IPC, sessions, packaged builds, updates, crashes, and memory."
 ---
 
 # Electron Desktop Debugging

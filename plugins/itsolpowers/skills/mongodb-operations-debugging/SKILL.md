@@ -1,6 +1,6 @@
 ---
 name: mongodb-operations-debugging
-description: "MongoDB debugging: slow queries, indexes, aggregation, replication, sharding, backups."
+description: "Debug MongoDB queries, indexes, replication, sharding, backups, and hidden Compose state."
 ---
 
 # MongoDB Operations Debugging

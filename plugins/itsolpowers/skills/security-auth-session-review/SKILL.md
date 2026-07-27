@@ -1,6 +1,6 @@
 ---
 name: security-auth-session-review
-description: "Security auth/session review: cookies, tokens, logout, MFA, CSRF, browser storage."
+description: "Review auth sessions, cookies, tokens, logout, MFA, CSRF, expiry, and browser storage."
 ---
 
 # Security Auth Session Review

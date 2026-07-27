@@ -1,6 +1,6 @@
 ---
 name: expo-react-native-debugging
-description: "Expo React Native debugging: Metro, dev builds, native builds, EAS, OTA/runtime, API, storage, platform, observability."
+description: "Debug Expo across Metro, dev/native builds, EAS, OTA runtime, APIs, and storage."
 ---
 
 # Expo React Native Debugging

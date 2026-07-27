@@ -70,16 +70,16 @@ export async function runPiRuntimeFixtures(_pi: ExtensionAPI): Promise<void> {
       persistedEntries.push({ customType, data });
     },
   } as unknown as ExtensionAPI;
-  const store = new TaskStateStore(fakePi, agents.length, "0.24.0");
+  const store = new TaskStateStore(fakePi, agents.length, "0.25.0");
   store.startSession({ hasUI: false, sessionManager: { getBranch: () => [] } } as any);
-  assert.match(store.formatStatus(), /ITSOL Powers v0\.24\.0/);
+  assert.match(store.formatStatus(), /ITSOL Powers v0\.25\.0/);
   store.setDefinition(definition);
   assert.match(store.formatStatus(), /direct · standard · stop implementation-reviewed/);
   assert.doesNotMatch(store.formatDetails(), /Delegations|children|Cost:/);
   assert.match(store.formatPromptContext() ?? "", /informational/);
 
   const persisted = persistedEntries.at(-1)!;
-  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.24.0");
+  const restoredStore = new TaskStateStore(fakePi, agents.length, "0.25.0");
   restoredStore.startSession({
     hasUI: false,
     sessionManager: {

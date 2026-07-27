@@ -1,6 +1,6 @@
 ---
 name: security-api-input-review
-description: "Security API input review: validation, parsing, injection, mass assignment, rate limits."
+description: "Review API input validation, parsing, injection, mass assignment, limits, and errors."
 ---
 
 # Security API Input Review

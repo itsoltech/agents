@@ -1,6 +1,6 @@
 ---
 name: agent-browser-qa-reporting
-description: "Agent-browser QA reporting: coverage matrices, finding taxonomy, severity, evidence-based handoffs, release verdicts, and regression follow-up after browser dogfood or pre-QA validation."
+description: "Report browser QA coverage, evidence, severity, release verdicts, and gaps."
 ---
 
 # Agent Browser QA Reporting

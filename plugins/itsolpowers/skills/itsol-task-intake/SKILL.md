@@ -1,6 +1,6 @@
 ---
 name: itsol-task-intake
-description: "Task intake: classify work, resolve workflow mode, identify risks, route skills."
+description: "Classify task mode and risk, then route the smallest ITSOL process and domain skill set."
 ---
 
 # ITSOL Task Intake

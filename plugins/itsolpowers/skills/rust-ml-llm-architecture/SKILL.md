@@ -1,6 +1,6 @@
 ---
 name: rust-ml-llm-architecture
-description: "Rust ML/LLM architecture: Rig, Candle, agents, RAG, embeddings, inference, evals."
+description: "Design Rust ML/LLM systems with Rig, Candle, agents, RAG, embeddings, and evals."
 ---
 
 # Rust ML LLM Architecture

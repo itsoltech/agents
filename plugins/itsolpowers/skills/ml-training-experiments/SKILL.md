@@ -1,6 +1,6 @@
 ---
 name: ml-training-experiments
-description: "ML training/experiments: Python repo structure, frameworks, tracking, configs, checkpoints, performance, distributed training."
+description: "Design reproducible ML training experiments with tracking, checkpoints, and performance."
 ---
 
 # ML Training Experiments

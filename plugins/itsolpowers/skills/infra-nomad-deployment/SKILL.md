@@ -1,6 +1,6 @@
 ---
 name: infra-nomad-deployment
-description: "Nomad deployment: jobs, canaries, rollback, templates, Vault, constraints, runtime."
+description: "Implement Nomad jobs, canaries, rollback, templates, Vault, and constraints."
 ---
 
 # Infra Nomad Deployment

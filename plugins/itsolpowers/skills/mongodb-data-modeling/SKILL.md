@@ -1,6 +1,6 @@
 ---
 name: mongodb-data-modeling
-description: "MongoDB design: collections, validation, indexes, queries, transactions, TTL, outbox."
+description: "Design MongoDB collections, validation, indexes, transactions, TTL, and outbox."
 ---
 
 # MongoDB Data Modeling

@@ -1,6 +1,6 @@
 ---
 name: react-nextjs-implementation
-description: "React 19 and Next.js implementation: App Router, Server/Client Components, TypeScript, architecture, UI, API, forms, cache, security, performance, tests."
+description: "Implement React 19/Next.js apps with App Router, typed UI, APIs, forms, cache, and tests."
 ---
 
 # React Next.js Implementation

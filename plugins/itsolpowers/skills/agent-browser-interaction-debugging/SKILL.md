@@ -1,6 +1,6 @@
 ---
 name: agent-browser-interaction-debugging
-description: "Agent-browser interaction debugging: snapshots, short-lived element refs, semantic locators, waits, forms, scroll, modals, tabs, iframes, stale refs, blocked clicks, loading, session expiry, flaky behavior, and product-vs-tooling classification."
+description: "Debug stale refs, waits, forms, overlays, frames, sessions, and flaky browser actions."
 ---
 
 # Agent Browser Interaction Debugging

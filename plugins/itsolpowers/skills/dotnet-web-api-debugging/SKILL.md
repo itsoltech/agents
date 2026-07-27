@@ -1,6 +1,6 @@
 ---
 name: dotnet-web-api-debugging
-description: ".NET API debugging: auth, EF Core, jobs, cache, health, observability, incidents."
+description: "Debug .NET APIs across auth, EF Core, jobs, caching, health, and incidents."
 ---
 
 # Dotnet Web API Debugging

@@ -1,6 +1,6 @@
 ---
 name: tanstack-query-react-nextjs-implementation
-description: "TanStack Query v5 React/Next.js implementation: QueryClient, query keys, query options, Hey API, SSR hydration, mutations, invalidation, optimistic updates, polling, realtime, auth cache, tests."
+description: "Implement React/Next TanStack Query v5 keys, hydration, mutations, and cache isolation."
 ---
 
 # TanStack Query React Next.js Implementation

@@ -1,6 +1,6 @@
 ---
 name: svelte-debugging
-description: "Svelte debugging: routes, load, stores, reactivity, forms, auth, hydration, SSR, tests."
+description: "Debug Svelte routes, loads, stores, reactivity, forms, auth, hydration, and SSR."
 ---
 
 # Svelte Debugging

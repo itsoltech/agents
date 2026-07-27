@@ -1,6 +1,6 @@
 ---
 name: expo-react-native-review
-description: "Expo/React Native review: architecture, dependencies, API/storage, security, release/OTA, platform QA, tests."
+description: "Review Expo architecture, dependencies, APIs, storage, OTA releases, platform QA, and tests."
 ---
 
 # Expo React Native Review

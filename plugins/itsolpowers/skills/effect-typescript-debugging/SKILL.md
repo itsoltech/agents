@@ -1,6 +1,6 @@
 ---
 name: effect-typescript-debugging
-description: "Effect TS debugging: Schema, Layer, fibers, typed errors, retries, streams, resources."
+description: "Debug Effect TS schemas, layers, fibers, typed errors, retries, streams, and resources."
 ---
 
 # Effect TypeScript Debugging

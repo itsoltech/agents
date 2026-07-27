@@ -1,6 +1,6 @@
 ---
 name: itsol-feature-implementation
-description: "Mode-authorized ITSOL feature implementation: scoped changes, TDD, verification, handoff."
+description: "Implement authorized ITSOL features or refactors with TDD, verification, and review."
 ---
 # ITSOL Feature Implementation
 
