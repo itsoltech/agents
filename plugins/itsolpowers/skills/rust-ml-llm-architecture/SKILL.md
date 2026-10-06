@@ -1,18 +1,17 @@
 ---
 name: rust-ml-llm-architecture
-description: "Design Rust ML/LLM systems with Rig, Candle, agents, RAG, embeddings, and evals."
+description: "Design Rust ML/LLM boundaries across Rig/Candle, data, RAG, agents, evals, or deployment."
 ---
 
 # Rust ML LLM Architecture
 
 Separate orchestration, ML runtime, data, API, evals, and deployment concerns; treat model output and retrieved documents as untrusted inputs.
 
-## Process
+## Trigger boundary
 
-1. Identify access patterns, trust boundaries, runtime constraints, ownership, and operational requirements before choosing structure.
-2. Prefer the simplest design that satisfies current requirements and leaves clear extension points for known near-term changes.
-3. Make data flow, failure handling, observability, and rollout constraints explicit.
-4. Translate the design into concrete implementation and review checks before coding.
+Use this skill when designing Rust ML/LLM boundaries across Rig/Candle orchestration, model runtime, data/API, RAG, agents, evals, or deployment, especially where model output or retrieved documents cross trust boundaries.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no architecture, trust-boundary, runtime, data, or deployment impact; follow the repository's established convention directly.
 
 ## Coordination
 

@@ -1,11 +1,17 @@
 ---
 name: tanstack-query-react-nextjs-review
-description: "Review React/Next TanStack Query v5 keys, hydration, mutations, cache isolation, and tests."
+description: "Review React/Next TanStack Query changes to keys, hydration, mutations, cache scope, or behavior tests."
 ---
 
 # TanStack Query React Next.js Review
 
 Review React 19 and Next.js TanStack Query changes for stable keys, correct query functions, generated API usage, SSR/hydration safety, mutation side effects, cache invalidation, optimistic rollback, auth/tenant cache safety, errors, performance, and tests.
+
+## Trigger boundary
+
+Use this skill when a React/Next.js TanStack Query diff changes query keys/options, generated API usage, SSR/hydration, mutations/invalidation, optimistic updates, auth/tenant cache scope, performance, or tests. Detect repo-pinned React/Next/TanStack versions before judging patterns.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit outside query/server-state behavior; follow the repository's established convention directly.
 
 ## Process
 
@@ -14,10 +20,6 @@ Review React 19 and Next.js TanStack Query changes for stable keys, correct quer
 3. Build a coverage map: ownership, QueryClient, query keys/options, API client/errors, SSR/hydration, mutations, invalidation, optimistic updates, realtime, auth/logout/tenant, security, performance, tests, and CI.
 4. Lead with concrete findings by severity, with file reference, affected behavior, and required fix or verification.
 5. Treat missing query-key scope, missing invalidation, stale auth cache, and unsafe hydration as correctness or security risks, not style issues.
-
-## Large PR Subagent Review
-
-For large React/Next PRs touching TanStack Query, use focused subagents before the final verdict. Split review by query keys/options, API/generated client, SSR/hydration, mutations/invalidation, security/auth/tenant, UI states, performance/realtime, and tests/QA as relevant.
 
 ## Coordination
 

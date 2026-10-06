@@ -52,6 +52,15 @@ function retained(relativePath) {
   return false;
 }
 
+const trackedPaths = new Set(
+  git(["ls-files", "-z"]).stdout.split("\0").filter(Boolean),
+);
+const inRollbackScope = (relativePath) =>
+  relativePath === "README.md"
+  || relativePath === "package.json"
+  || relativePath === ".claude-plugin/marketplace.json"
+  || relativePath.startsWith("plugins/itsolpowers/");
+
 const trackedChangedPaths = git([
   "diff",
   "--name-only",
@@ -73,6 +82,7 @@ const classifiedPaths = [...new Set([
   ...parsePorcelainV1ZPaths(workingTreePaths),
 ])]
   .filter((entry) => !entry.startsWith(".itsol/"))
+  .filter((entry) => trackedPaths.has(entry) || inRollbackScope(entry))
   .sort();
 
 const behaviorPaths = classifiedPaths.filter((relativePath) => !retained(relativePath));

@@ -2,7 +2,7 @@
 
 ## Phase 8: Testing And QA
 
-Use more than normal feature tests:
+Select checks for actual migration contracts, data integrity, and rollback risk, starting with meaningful existing coverage. These are options, not a mandatory suite; run only permitted checks relevant to the slice:
 
 - unit, integration, contract, characterization, regression, E2E
 - snapshot tests for exports and reports
@@ -26,14 +26,14 @@ QA should verify:
 - Understand old behavior first.
 - Do not improve product behavior during migration without approval.
 - Start with a small slice.
-- Add tests before or with implementation.
+- Use relevant existing checks; add tests only where material behavior or migration contracts lack useful coverage.
 - Keep PRs small and reviewable.
 - Separate refactor, behavior change, data migration, compatibility adapter, and new logic.
 - Add telemetry and feature flags from the start.
 - Document accepted differences.
 - Keep old implementation until rollout and observation are complete.
 
-Use `itsol-tdd-workflow` for migration slices. Prefer characterization tests and contract tests as RED gates.
+Verify migration slices through relevant existing behavior and contract checks. Add characterization or regression tests only for material gaps, without freezing incidental legacy implementation details. Use `itsol-tdd-workflow` only on explicit user request; RED is not an implementation gate.
 
 ## Phase 10: Rollout And Cutover
 

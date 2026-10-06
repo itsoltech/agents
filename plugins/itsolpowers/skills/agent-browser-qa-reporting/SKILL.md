@@ -1,11 +1,17 @@
 ---
 name: agent-browser-qa-reporting
-description: "Report browser QA coverage, evidence, severity, release verdicts, and gaps."
+description: "Create browser QA handoffs with coverage, evidence, severity, verdicts, and retest gaps."
 ---
 
 # Agent Browser QA Reporting
 
 Use this skill to turn `agent-browser` dogfood, pre-QA validation, focused reproduction, or fix-verification output into a clear QA report and tester handoff.
+
+## Trigger boundary
+
+Use it when browser evidence must become a QA handoff with coverage, findings, severity, release verdict, or retest gaps.
+
+Do not load it for a small local check that needs only an immediate pass/fail note and no coverage matrix, evidence index, or handoff; report the result directly.
 
 ## Process
 

@@ -5,7 +5,7 @@ description: "Debug SQL Server plans, Query Store, waits, deadlocks, backups, re
 
 # MSSQL Operations Debugging
 
-For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, proportionate verification, and final review in every mode.
 
 Use this skill when diagnosing SQL Server production or pre-production issues in .NET systems: slow endpoints, timeouts, high CPU, blocking, deadlocks, log growth, failed migrations, backup/restore risk, failover issues, or connection pool pressure.
 

@@ -24,7 +24,7 @@ Check that:
 - required ITSOL skills map to tasks/reviews;
 - Repo Memory and Current Tech Context appear when applicable;
 - logical branches cover validation, authorization, tenancy, errors, idempotency, retries, concurrency, and compatibility;
-- TDD has executable RED/GREEN/REFACTOR or a policy-backed exception with replacement verification;
+- verification protects material behavior/contracts using supported checks; RED/GREEN appears only for an explicitly requested TDD task;
 - tasks have files, skills, steps, verification, and Angular commit labels;
 - subagent graph, ownership, response evidence, review split, and concurrency are executable without guessing;
 - commands, QA, rollout, rollback, monitoring, and migration are concrete or explicitly not applicable;
@@ -52,7 +52,7 @@ Follow the effective review trigger after self-review. With `adaptive`, the main
 - Which file, module, endpoint, component, schema, migration, client, job, cache, event, config, or deployment surface is missing?
 - Which branch, validation, authorization, tenant, idempotency, retry, compatibility, or error rule is vague?
 - Which focused skill, Current Tech Context check, or review area is missing?
-- Which RED/GREEN step or replacement verification is not executable?
+- Which material behavior or contract lacks an executable, proportionate verification method?
 - Which command, QA scenario, migration check, rollback, monitoring, or release-order step is absent?
 - What could fail in production even if every task is implemented?
 

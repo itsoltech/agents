@@ -1,18 +1,17 @@
 ---
 name: hey-api-openapi-codegen
-description: "Generate Hey API TypeScript clients, SDKs, Zod schemas, and query integrations."
+description: "Generate Hey API clients when OpenAPI contracts, generator config, or client integrations change."
 ---
 
 # Hey API OpenAPI Codegen
 
 Treat OpenAPI as the contract and generated code as an artifact; keep config versioned, output isolated, and contract checks in CI.
 
-## Process
+## Trigger boundary
 
-1. Inspect existing project conventions before introducing new structure.
-2. Define the contract, data flow, error behavior, permissions, observability, and tests before editing.
-3. Make the smallest coherent change that satisfies the behavior.
-4. Run focused verification and use `itsol-self-review` before handoff.
+Use this skill when an OpenAPI document, Hey API generator configuration, generated client/schema output, runtime validation, query integration, or contract CI changes.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit outside the contract and generated-artifact boundary; follow the repository's established convention directly.
 
 ## Coordination
 

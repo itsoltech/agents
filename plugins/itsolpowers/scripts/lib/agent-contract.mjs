@@ -8,18 +8,18 @@ export const DEFAULT_EFFORT = "medium";
 
 const STANDARD_RESPONSE_ENVELOPE = `## Required Response Envelope
 
-End with exactly one ordered, column-one envelope without a code fence. Use \`completed\` only when the delegated acceptance criteria and verification are satisfied.
+End with one ordered, column-one envelope; use \`completed\` only after acceptance and verification.
 
 Status: completed|partial|blocked|failed
-Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
-Unverified: <non-empty gap summary or "none">
+Verification: <non-empty command or evidence; \"not run: <reason>\" only when not completed>
+Unverified: <non-empty gap summary or \"none\">
 `;
 
-const COMPACT_RESPONSE_ENVELOPE = `End with exactly one envelope:
+const COMPACT_RESPONSE_ENVELOPE = `End with one envelope; \`completed\` requires acceptance and verification.
 
 Status: completed|partial|blocked|failed
-Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
-Unverified: <non-empty gap summary or "none">
+Verification: <non-empty command or evidence; \"not run: <reason>\" only when not completed>
+Unverified: <non-empty gap summary or \"none\">
 `;
 
 const RESPONSE_ENVELOPES = Object.freeze({
@@ -227,39 +227,26 @@ const validateBody = (body, relativePath) => {
 
 export const buildSpecialistBody = ({ name, title, scope, writable }) => {
   const resultKind = writable
-    ? "a focused implementation or investigation result"
+    ? "an implementation or investigation result"
     : "a read-only specialist report";
   const permissionRule = writable
-    ? "You may edit only when the delegation explicitly gives you ownership of a narrow file set. Do not touch unrelated files, and do not revert changes made by the user or other agents."
-    : "Do not modify files. Use read/search commands and safe inspection commands only; return findings and verification gaps.";
+    ? "Edit only explicitly owned files; do not touch unrelated or user/other-agent changes."
+    : "Do not edit files; use read/search/safe inspection and report verification gaps.";
   return `# ${title} Subagent
 
-You are the delegated ITSOL specialist for \`${name}\`. Produce ${resultKind} in a separate context so the main agent can keep the conversation focused.
+Act as the delegated ITSOL specialist for \`${name}\`. Produce ${resultKind} only within this scope: ${scope}
 
-## Required Context
+## Rules
 
-1. Treat \`itsolpowers:${name}\` as preloaded. Follow that skill before applying generic engineering judgment.
-2. If the preloaded skill is missing, read and follow \`\${CLAUDE_PLUGIN_ROOT}/skills/${name}/SKILL.md\`.
-3. Load only the reference files relevant to the delegated scope. Do not load the entire ITSOL knowledge base unless the task explicitly requires it.
-
-## Working Rules
-
-- Work only on the delegated area: ${scope}
+- Treat \`itsolpowers:${name}\` as preloaded; if unavailable, read \`\${CLAUDE_PLUGIN_ROOT}/skills/${name}/SKILL.md\`.
+- Load only references needed for this scope.
 - ${permissionRule}
-- Prefer concrete evidence from code, tests, configs, logs, schemas, API contracts, or diffs over assumptions.
-- When the task is broad, narrow it into independent checks and run them systematically.
-- Do not spawn nested subagents or invoke external agent CLIs such as \`codex exec\` or \`claude\`. If this task splits further, return the recommended split and let the main agent orchestrate it.
-- Call out uncertainty explicitly when evidence is incomplete.
+- Use concrete repository evidence; narrow broad work and state uncertainty.
+- Never spawn agents or invoke agent CLIs; return a recommended split to the main agent instead.
 
-## Output Contract
+## Return
 
-Return a compact report for the main agent with:
-
-1. Scope inspected
-2. Key findings or implementation/debugging result
-3. File references and affected behavior
-4. Verification performed
-5. Residual risks, missing tests, or follow-up agents needed
+Report scope/result, affected files and behavior, verification, and residual risks or gaps.
 `;
 };
 

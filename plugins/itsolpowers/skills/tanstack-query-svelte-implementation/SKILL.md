@@ -1,19 +1,17 @@
 ---
 name: tanstack-query-svelte-implementation
-description: "Implement Svelte TanStack Query v5/v6 with runes, keys, SSR, mutations, and invalidation."
+description: "Implement Svelte TanStack Query changes to keys, cache, mutations, SSR, or version-specific reactivity."
 ---
 
 # TanStack Query Svelte Implementation
 
 Model server state explicitly: stable keys, version-aware Svelte reactivity, safe cache invalidation, cancellation, typed API errors, and SSR-aware hydration.
 
-## Process
+## Trigger boundary
 
-1. Inspect existing project conventions before introducing new structure.
-2. Detect `@tanstack/svelte-query` and `svelte` versions from `package.json` and lockfiles before choosing v5 or v6 patterns.
-3. Define the contract, data flow, error behavior, permissions, observability, and tests before editing.
-4. Make the smallest coherent change that satisfies the behavior.
-5. Run focused verification and use `itsol-self-review` before handoff.
+Use this skill when a Svelte TanStack Query change alters query keys/functions, cache invalidation, mutations, cancellation, SSR hydration, or v5/v6 reactivity. Detect `@tanstack/svelte-query` and `svelte` versions from `package.json` and lockfiles before choosing patterns.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit outside query/server-state behavior; follow the repository's established convention directly.
 
 ## Coordination
 

@@ -1,18 +1,17 @@
 ---
 name: rust-ml-llm-debugging
-description: "Debug Rust ML/LLM providers, tools, RAG, Candle, GPU, latency, and evals."
+description: "Diagnose Rust ML/LLM failures across providers, prompts, tools, retrieval, runtime, or validation."
 ---
 
 # Rust ML LLM Debugging
 
 Debug ML/LLM behavior by separating provider, prompt, tool, retrieval, model runtime, validation, budget, observability, and deployment layers.
 
-## Process
+## Trigger boundary
 
-1. State expected behavior, actual behavior, impact, and the smallest reproducible symptom.
-2. Gather evidence from code, logs, traces, metrics, generated output, database plans, config, or failing tests before proposing a fix.
-3. Isolate the boundary that fails and compare it with a known working path.
-4. Implement one root-cause fix with focused verification or a regression test where feasible.
+Use this skill when a Rust ML/LLM symptom may cross provider/model, prompt, tool, retrieval, Candle/GPU runtime, output validation, budget, observability, or deployment layers.
+
+Do not load it for a small local edit with a deterministic cause and no model, prompt, retrieval, runtime, safety, budget, or deployment behavior change; follow the repository's established convention directly.
 
 ## Coordination
 

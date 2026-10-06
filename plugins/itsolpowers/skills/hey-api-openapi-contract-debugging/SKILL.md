@@ -1,18 +1,17 @@
 ---
 name: hey-api-openapi-contract-debugging
-description: "Debug Hey API generation, OpenAPI drift, stale clients, wrong types, auth, and CI."
+description: "Diagnose divergence between OpenAPI, Hey API generation, client types, validation, or contract CI."
 ---
 
 # Hey API OpenAPI Contract Debugging
 
 Trace failures from OpenAPI input through generator config, output directory, generated types, runtime validation, API usage, and CI diff checks.
 
-## Process
+## Trigger boundary
 
-1. State expected behavior, actual behavior, impact, and the smallest reproducible symptom.
-2. Gather evidence from code, logs, traces, metrics, generated output, database plans, config, or failing tests before proposing a fix.
-3. Isolate the boundary that fails and compare it with a known working path.
-4. Implement one root-cause fix with focused verification or a regression test where feasible.
+Use this skill when OpenAPI input, generator configuration, generated output, runtime validation, API usage, or contract CI diverges and the failing boundary needs evidence.
+
+Do not load it for a small local edit with a deterministic cause and no contract, generated-artifact, validation, or CI behavior change; follow the repository's established convention directly.
 
 ## Coordination
 

@@ -31,9 +31,9 @@ For planned modes under `itsol-workflow-mode`, the Technical Plan must be implem
 ## Repo Memory Context
 Use `itsol-repo-memory` before completing this section when `.itsol.md` exists or when repository testing/verification policy is unclear.
 
-| Path/Project | Policy Source | TDD Mode | Required Verification | Constraints |
+| Path/Project | Policy Source | Maintained Test Support | Required Verification | Constraints |
 | --- | --- | --- | --- | --- |
-| `<path>` | `.itsol.md` or `not present` | `full/limited/not-supported/not-applicable/unknown` | `<commands/manual checks>` | `<constraint or None>` |
+| `<path>` | `.itsol.md` or `not present` | `available/limited/unavailable/not-applicable/unknown` | `<permitted checks/evidence>` | `<constraint or None>` |
 
 ## Selected Technical Approach
 <Governed user choice or autonomous documented recommendation. Include rejected alternatives and why they were not selected.>
@@ -59,12 +59,11 @@ List the exact skills that must be loaded while implementing this plan. Include 
 | Skill | Use During | Reason |
 | --- | --- | --- |
 | `itsol-feature-implementation` | whole implementation | primary feature workflow |
-| `itsol-repo-memory` | planning, implementation, review | apply `.itsol.md` repo/monorepo policy, TDD mode, and verification commands |
+| `itsol-repo-memory` | planning, implementation, review | apply `.itsol.md` repo/monorepo constraints and supported verification commands |
 | `itsol-current-tech-context` | planning and review where technology versions matter | verify repo-pinned or latest stable docs and package context |
-| `itsol-tdd-workflow` | before production code changes | RED-GREEN-REFACTOR gate |
 | `<domain-skill>` | specific task or review | technology, security, data, infra, or review coverage |
 
-At minimum include the process skills for implementation and TDD. Add focused domain skills for every touched surface: frontend, backend, database, generated clients, security, infrastructure, observability, or QA. Prefer narrow skills such as `security-authz-tenant-review` over broad generic security language.
+Include the implementation process and only materially relevant domain skills. Add `itsol-tdd-workflow` only when the user explicitly requested test-first development. Prefer narrow skills such as `security-authz-tenant-review` over broad generic security language.
 
 For visible frontend work, include `ui-ux-workflow` and focused UI skills in the Technical Plan. Examples: `ui-design-system` for component/token changes, `ui-view-states-forms` for forms and data states, `ui-responsive-media` for viewport behavior, `ui-accessibility-motion` for keyboard/focus/reduced motion, `ui-performance-stability` for layout shift or large lists, and `ui-frontend-testing-qa` for UI verification.
 
@@ -75,21 +74,14 @@ For visible frontend work, include `ui-ux-workflow` and focused UI skills in the
 - `if <condition>` then <behavior>; else <behavior>
 - validation, authorization, tenant isolation, feature flags, error paths, retries, idempotency, concurrency, and compatibility rules
 
-## TDD Plan
-**TDD Mode:** `<full | limited | not-supported | not-applicable | unknown>`
-**Policy Source:** `<.itsol.md project section | repo default | none>`
+## Verification Plan
+- observable behavior/contracts and material regression risks to verify
+- relevant existing checks, permitted commands, and expected evidence
+- new or changed tests only where useful coverage is missing
+- permitted integration, contract, lint/typecheck, or manual checks when relevant
+- unverified gaps and final diff/self-review
 
-### RED
-- Test or diagnostic to add first
-- Expected failing output
-
-If TDD mode is `limited`, `not-supported`, or `not-applicable`, do not scaffold a new test framework only to satisfy TDD. Instead document why RED/GREEN TDD is skipped, supported verification commands, manual or diagnostic replacement verification, and residual risk from missing automated coverage.
-
-### GREEN
-- Minimal implementation to pass
-
-### REFACTOR
-- Cleanup allowed only after tests pass
+Follow the router's proportionate verification contract. Avoid tests of private structure, mock-call counts, duplicate coverage, and test files per function. No failing-test prerequisite or TDD exception is required. Only if the user explicitly requested TDD, describe the meaningful RED/GREEN proof here.
 
 ## Task Breakdown
 ### Task 1: <name>
@@ -111,7 +103,7 @@ If `Execution Mode` is `Subagent-driven` or subagents are likely, complete this 
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `T1` | `<short name>` | `implementation/review/research/verification/integration` | `<none or task ids>` | `<exact files/areas or read-only>` | `<skill or area>` | `<command/evidence>` | `planned` |
 
-**Task Packet Requirements:** each delegated task must receive mode-valid plan paths and artifact state (`Approved`, `Ready for execution`, or `not-required`), all seven workflow-state fields, goal and acceptance criteria, source of truth, read scope, write scope or `read-only`, forbidden scope, required ITSOL skills, RED/GREEN or documented TDD exception, verification or replacement evidence, expected artifacts, allowed statuses, budget when useful, stop conditions, and escalation triggers.
+**Task Packet Requirements:** each delegated task must receive mode-valid plan paths and artifact state (`Approved`, `Ready for execution`, or `not-required`), all seven workflow-state fields, goal and acceptance criteria, source of truth, read scope, write scope or `read-only`, forbidden scope, required ITSOL skills, proportionate verification and evidence, expected artifacts, allowed statuses, budget when useful, stop conditions, and escalation triggers. Carry an explicit test-first instruction only when the user requested it.
 
 Also include the complete `itsol-execution-policy` state, observable `done_when`, remaining distinct-child and review-cycle capacity, and a ranked child stop no later than the parent. Never use `maxTurns`.
 
@@ -120,13 +112,6 @@ Also include the complete `itsol-execution-policy` state, observable `done_when`
 **Conflict Handling:** state which files or shared semantic contracts require one writer at a time, how write scope conflicts will be serialized, and how semantic conflicts between subagent results will be checked during integration.
 
 If inline execution is better, explain why subagents would add coordination overhead or risk for this plan.
-
-## Verification Plan
-- focused tests
-- integration or contract tests
-- lint/typecheck/build
-- manual QA or smoke checks
-- final diff/self-review
 
 ## Rollout And Rollback
 <Migration order, flags, deployment notes, rollback plan, monitoring, compatibility. Use "Not applicable" only with reason.>

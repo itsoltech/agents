@@ -17,11 +17,11 @@ Reject, repair, or mark unverified any response that lacks:
 - changed files for write tasks, or inspected scope for read-only tasks
 - evidence for key claims
 - verification command output summary or replacement evidence
-- RED/GREEN evidence for code changes, or documented TDD exception and replacement verification
+- meaningful verification of changed behavior; RED/GREEN evidence only when TDD was explicitly requested
 - unverified items and coverage gaps
 - assumptions and risks
 - blockers or next decisions when status is `partial`, `blocked`, or `failed`
-- recommended next review target when implementation changed files
+- recommended next review target when further review is required or selected
 
 Status handling:
 
@@ -36,9 +36,9 @@ Unsupported claims must be checked against source files, command output, tests, 
 
 ## Review Loop
 
-After each implementation subagent reports completion, run review before accepting the task slice.
+After an implementation subagent returns, validate its packet evidence. Apply the effective `itsol-code-review-workflow` policy: independent review runs only when required by policy, explicitly requested, or justified by material risk. With an adaptive trigger, the main agent may review inline or skip formal review with a brief reason. Do not create a reviewer solely because the implementer was a subagent.
 
-Choose a different review subagent from the implementer. Pick review coverage based on changed area:
+When independent review is selected, choose a different review subagent from the implementer. Pick only relevant coverage based on changed area:
 
 - workflow or scope: `itsol-code-review-workflow`
 - self-review/readiness: `itsol-self-review`
@@ -54,14 +54,14 @@ Choose a different review subagent from the implementer. Pick review coverage ba
 - PostgreSQL: `postgres-review`
 - MongoDB: `mongodb-review`
 
-The review subagent returns findings by severity with file references, affected behavior, required fixes, missing verification, unverified areas, and coverage gaps. The main agent decides whether findings are valid, assigns fixes, and repeats implementation plus review until:
+The selected reviewer returns findings by severity with file references, affected behavior, required fixes, missing verification, unverified areas, and coverage gaps. The main agent validates findings and assigns concrete material fixes to the original writer. Automatic rereview requires a prior material `changes-requested` verdict, a changed diff fingerprint, and remaining capacity under both review and execution policy. Suggestions and nits do not start another round. Accept the slice when:
 
 - no blocking or high-severity findings remain
 - all agreed medium/low findings are fixed, deferred with reason, or converted into follow-up tasks
 - verification evidence is sufficient for the task slice
 - `partial` or `blocked` review results are resolved, narrowed, or explicitly carried as risk
 
-Do not let the same subagent both implement and approve its own work.
+Do not let the same subagent both implement and provide independent approval of its own work. If a required review cannot run within the resolved policy, preserve an incomplete status instead of adding rounds or weakening the requirement.
 
 ## Semantic Conflict Checks
 
@@ -80,14 +80,14 @@ If two subagents disagree, or two slices make incompatible assumptions, resolve 
 
 ## Per-Task Commit
 
-After a task slice is implemented, independently reviewed, verified, and integrated, create a focused commit when repository policy and user approval allow committing.
+After a task slice is implemented, verified, integrated, and any required or selected review is satisfied, create a focused commit only when separately authorized.
 
 Before committing:
 
 - inspect `git status --short`
 - stage only files belonging to the completed task slice
 - exclude unrelated user changes and untracked files outside the slice
-- run the task's focused verification, or document why it cannot run
+- confirm current focused verification evidence; rerun only if the slice changed, a failure or unresolved concern remains, or policy requires it
 
 Use Angular commit convention:
 
@@ -102,7 +102,7 @@ If the working tree contains unrelated changes that make a focused commit unsafe
 
 After all task slices are done:
 
-1. Run the full planned verification or the closest feasible subset.
+1. Check the required verification evidence and run only missing, stale, or unresolved permitted checks. Report required checks that cannot run.
 2. Compare implemented behavior against the mode-valid source of truth: `Approved`, `Ready for execution`, or the direct user request when artifacts are `not-required`.
 3. Compare touched files, branches, tests, and verification against the same mode-valid source of truth.
 4. Confirm every task is `completed`, or that every `partial`, `blocked`, `failed`, or `deferred` item is documented with owner, reason, risk, and next step.
@@ -115,7 +115,7 @@ The main agent owns final validation. A subagent's `completed` status is input e
 
 ## User Summary
 
-Finish with:
+Follow the router's user communication defaults. Include relevant outcomes and evidence:
 
 - what was implemented
 - which subagents or review areas were used
@@ -124,4 +124,4 @@ Finish with:
 - task statuses, including any `partial`, `blocked`, `failed`, or `deferred` items
 - any deferred findings, risks, missing tests, unverified items, or coverage gaps
 - semantic conflicts checked or resolved
-- a direct question about the next step
+- a targeted question only when a material decision or missing authority blocks the remaining work

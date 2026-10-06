@@ -17,7 +17,7 @@ Treat a rewrite as a product, technical, and operational migration. Do not start
 6. Choose a migration strategy: refactor, upgrade, Strangler Fig, Branch by Abstraction, parallel run, or big bang only when risk is low and rollback is proven.
 7. Write or update a migration plan file in the repo, including current tech context, feature parity, slice plan, data plan, rollout, rollback, observability, security, risks, success criteria, stop criteria, and decommissioning.
 8. Self-review the migration plan for hidden scope, missing contracts, missing data strategy, weak rollback, missing current tech context, missing skills, untested behavior, and unresolved operational risk.
-9. For implementation, route each approved slice through `itsol-functional-planning` or `itsol-bug-debugging` as appropriate, then `itsol-tdd-workflow`, focused domain skills, review skills, and `itsol-subagent-workflow` when the slice is subagent-driven.
+9. For implementation, route each approved slice through `itsol-functional-planning` or `itsol-bug-debugging` as appropriate, proportionate verification, focused domain skills, review skills, and `itsol-subagent-workflow` when subagent-driven. Add `itsol-tdd-workflow` only on explicit user request.
 
 If the task is only a small feature or bug in an existing migration, route to the narrower skill after checking migration constraints.
 

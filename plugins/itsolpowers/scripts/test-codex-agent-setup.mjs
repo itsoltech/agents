@@ -30,31 +30,32 @@ try {
     economy: {
       maxThreads: 1,
       roles: {
-        itsol_explorer: ['gpt-5.6-terra', 'low', 'read-only'],
-        itsol_mechanical: ['gpt-5.6-terra', 'low', null],
-        itsol_worker: ['gpt-5.6-terra', 'medium', null],
-        itsol_reviewer: ['gpt-5.6', 'medium', 'read-only']
+        itsol_explorer: ['gpt-6-luna', 'low', 'read-only'],
+        itsol_mechanical: ['gpt-6-luna', 'low', null],
+        itsol_worker: ['gpt-6.1-sol', 'medium', null],
+        itsol_reviewer: ['gpt-6.1-sol', 'medium', 'read-only']
       }
     },
     balanced: {
       maxThreads: 2,
       roles: {
-        itsol_explorer: ['gpt-5.6-terra', 'medium', 'read-only'],
-        itsol_mechanical: ['gpt-5.6-terra', 'low', null],
-        itsol_worker: ['gpt-5.6', 'medium', null],
-        itsol_reviewer: ['gpt-5.6', 'high', 'read-only']
+        itsol_explorer: ['gpt-6-luna', 'medium', 'read-only'],
+        itsol_mechanical: ['gpt-6-luna', 'low', null],
+        itsol_worker: ['gpt-6.1-sol', 'medium', null],
+        itsol_reviewer: ['gpt-6.1-sol', 'high', 'read-only']
       }
     },
     quality: {
       maxThreads: 2,
       roles: {
-        itsol_explorer: ['gpt-5.6-terra', 'medium', 'read-only'],
-        itsol_mechanical: ['gpt-5.6', 'medium', null],
-        itsol_worker: ['gpt-5.6', 'high', null],
-        itsol_reviewer: ['gpt-5.6', 'high', 'read-only']
+        itsol_explorer: ['gpt-6-luna', 'medium', 'read-only'],
+        itsol_mechanical: ['gpt-6-luna', 'medium', null],
+        itsol_worker: ['gpt-6-astra', 'high', null],
+        itsol_reviewer: ['gpt-6-astra', 'high', 'read-only']
       }
     }
   });
+  assert.doesNotMatch(JSON.stringify(PRESETS), /gpt-5\.6|gpt-5/i);
 
   const dryRoot = makeRoot();
   const dry = installSetup(options(dryRoot, { dryRun: true }));
@@ -76,6 +77,16 @@ try {
   assert.match(config, /^max_depth = 1$/m);
   for (const role of ROLE_NAMES) {
     const content = fs.readFileSync(path.join(freshRoot, 'agents', `${role}.toml`), 'utf8');
+    const [model, reasoning, sandbox] = PRESETS.balanced.roles[role];
+    assert.match(content, new RegExp(`^model = "${model}"$`, 'm'));
+    assert.match(content, new RegExp(`^model_reasoning_effort = "${reasoning}"$`, 'm'));
+    if (sandbox) assert.match(content, new RegExp(`^sandbox_mode = "${sandbox}"$`, 'm'));
+    else assert.doesNotMatch(content, /^sandbox_mode\s*=/m);
+    assert.doesNotMatch(content, /gpt-5\.6|gpt-5/i);
+    assert.match(content, /done_when/);
+    assert.match(content, /evidence/);
+    assert.match(content, /completed, partial, or blocked/);
+    assert.match(content, /do not delegate further/i);
     assert.match(content, new RegExp(`^name = "${role}"$`, 'm'));
     assert.doesNotMatch(content, /^maxTurns\s*=/m);
   }

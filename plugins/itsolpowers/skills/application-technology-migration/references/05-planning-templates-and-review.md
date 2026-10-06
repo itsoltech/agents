@@ -6,7 +6,7 @@ Migration plans should list exact skills needed. Typical choices:
 
 - `application-technology-migration` for migration strategy and slice governance
 - `itsol-functional-planning` for each behavior-changing slice
-- `itsol-tdd-workflow` for characterization, contract, regression, and implementation tests
+- proportionate existing behavior/contract checks; `itsol-tdd-workflow` only for an explicitly requested test-first task
 - `itsol-subagent-workflow` for independent slice execution
 - `itsol-code-review-workflow` and `itsol-self-review` for review gates
 - technology implementation/review/debugging skills for old and new stacks

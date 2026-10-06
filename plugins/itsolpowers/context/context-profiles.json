@@ -47,7 +47,7 @@
       "default_verifier_fanout": false,
       "explicit_scaffolding": true,
       "guidance": [
-        "State RED or replacement evidence before behavior changes, then report focused and wider GREEN checks.",
+        "State the changed behavior and proportionate verification evidence. TDD is opt-in; add broader checks only for material risk or required policy.",
         "Use explicit task packets, response fields, review triggers, and completion evidence.",
         "Do not default small tasks to fan-out or spawn a verifier without a selected review need."
       ]

@@ -73,8 +73,26 @@ const status = run(
   ["status", "--porcelain=v1", "-z", "--untracked-files=all"],
   repositoryRoot,
 ).stdout;
-const changedPaths = parsePorcelainV1ZPaths(status)
-  .filter((entry) => !entry.startsWith(".itsol/"));
+const baselineDiff = run(
+  "git",
+  ["diff", "--name-only", "-z", manifest.baseline_revision, "--"],
+  repositoryRoot,
+).stdout;
+const trackedPaths = new Set(
+  run("git", ["ls-files", "-z"], repositoryRoot).stdout.split("\0").filter(Boolean),
+);
+const inRollbackScope = (relativePath) =>
+  trackedPaths.has(relativePath)
+  || relativePath === "README.md"
+  || relativePath === "package.json"
+  || relativePath === ".claude-plugin/marketplace.json"
+  || relativePath.startsWith("plugins/itsolpowers/");
+const changedPaths = [...new Set([
+  ...baselineDiff.split("\0").filter(Boolean),
+  ...parsePorcelainV1ZPaths(status),
+])]
+  .filter((entry) => !entry.startsWith(".itsol/"))
+  .filter(inRollbackScope);
 assert(changedPaths.length > 0, "rollback proof expects a cutover diff");
 for (const changedPath of changedPaths) {
   assert(
@@ -223,6 +241,11 @@ try {
   assert.match(
     `${refusedUnknown.stdout}\n${refusedUnknown.stderr}`,
     /rollback manifest does not classify/,
+  );
+  assert.doesNotMatch(
+    `${refusedUnknown.stdout}\n${refusedUnknown.stderr}`,
+    /UNRELATED_USER_NOTE\.txt/,
+    "outside plugin untracked path must not cause rollback preflight refusal",
   );
   assert.deepEqual(readFileSync(unrelatedTracked), unrelatedTrackedChanged);
   assert.deepEqual(readFileSync(unrelatedUntracked), unrelatedUntrackedBytes);

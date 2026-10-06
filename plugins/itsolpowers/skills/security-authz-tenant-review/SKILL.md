@@ -1,24 +1,17 @@
 ---
 name: security-authz-tenant-review
-description: "Review authorization, tenant isolation, roles, ownership, and cross-tenant access."
+description: "Review changes to object authorization, tenant isolation, roles, ownership, or workflow permissions."
 ---
 
 # Security Authz Tenant Review
 
 Check object-level authorization, tenant context, role assumptions, workflow state, negative tests, and bypass paths.
 
-## Process
+## Trigger boundary
 
-1. Inspect the changed behavior and data flow before listing risks.
-2. Check negative paths, bypasses, tenant/object boundaries, logs, cache, async jobs, and release impact where relevant.
-3. For review, report findings by severity with file references and concrete exploit or failure scenarios.
-4. For implementation, add controls and tests in the backend or trusted boundary; do not rely on frontend-only enforcement.
+Use this skill when a change resolves identity to an object, tenant, role, ownership, or workflow permission, or could expose cross-tenant data or actions.
 
-## Large PR Subagent Review
-
-For broad or materially risky pull requests, recommend focused additional review only when independent expertise is likely to improve the verdict. Judge this from concrete risk, novelty, blast radius, reversibility, and context size—not file count or category matching alone. Small and conventional changes should remain one pragmatic pass.
-
-When additional reviewers add value, split only by independent material surfaces. Each returns concrete evidence-based findings; the main agent removes duplicates and false positives and owns the proportional final verdict.
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no authorization, tenant, object, role, ownership, or workflow behavior impact; follow the repository's established convention directly.
 
 ## Evidence
 

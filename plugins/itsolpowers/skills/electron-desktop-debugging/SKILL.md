@@ -5,7 +5,7 @@ description: "Debug Electron processes, IPC, sessions, packaged builds, updates,
 
 # Electron Desktop Debugging
 
-For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, proportionate verification, and final review in every mode.
 
 Debug Electron failures by first locating the failing boundary: main process, preload bridge, renderer UI, IPC contract, session/window setup, storage/API layer, packaged artifact, updater, OS integration, or performance/memory behavior.
 
@@ -20,7 +20,7 @@ Debug Electron failures by first locating the failing boundary: main process, pr
 
 ## Coordination
 
-Use with `itsol-current-tech-context`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `security-frontend-browser-review`, `security-files-integrations-review`, `infra-observability`, `ui-performance-stability`, and the frontend framework debugging skill used by the renderer.
+Use with `itsol-current-tech-context`, `itsol-bug-debugging`, `security-frontend-browser-review`, `security-files-integrations-review`, `infra-observability`, `ui-performance-stability`, and the frontend framework debugging skill used by the renderer.
 
 ## Reference Routing
 

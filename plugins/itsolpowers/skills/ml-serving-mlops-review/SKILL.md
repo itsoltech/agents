@@ -1,11 +1,17 @@
 ---
 name: ml-serving-mlops-review
-description: "Review ML serving/MLOps contracts, parity, rollout, monitoring, lineage, and operations."
+description: "Review ML serving changes to contracts, parity, artifacts, rollout, monitoring, or lineage."
 ---
 
 # ML Serving MLOps Review
 
 Use this skill for production ML serving, MLOps, deployment review, monitoring, retraining, model cards, release gates, and ML debugging triage.
+
+## Trigger boundary
+
+Use this skill when a production ML serving or MLOps change affects serving mode, model/input/output contracts, train-serving parity, artifacts/registry, rollout or rollback, monitoring/drift, retraining, lineage, model cards, or release gates.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no serving, model artifact, deployment, monitoring, lineage, retraining, or release impact; follow the repository's established convention directly.
 
 ## Process
 
@@ -13,8 +19,7 @@ Use this skill for production ML serving, MLOps, deployment review, monitoring, 
 2. Inspect model contracts, input/output validation, feature manifests, preprocessing versions, artifact formats, fallback behavior, and train-serving parity tests.
 3. For real project work, detect repo-pinned model/runtime/framework versions first. Use `itsol-current-tech-context` for current official docs before judging fast-moving model-serving APIs, registries, providers, or security defaults.
 4. If Rust/Rig/Candle/provider runtime code is the primary surface, route first to `rust-ml-llm-architecture`, `rust-ml-llm-debugging`, or `rust-ml-llm-review`; use this skill for cross-cutting serving, MLOps, rollout, monitoring, and review concerns.
-5. For large, multi-surface, production-impacting, security/privacy-sensitive, or release-sensitive ML PR reviews, use focused subagents before the final verdict. Split review by risk area: data/evaluation, training/experiments, LLM/RAG, serving/MLOps, security/privacy, QA/release, and `rust-ml-llm-review` when Rust/Rig/Candle code is primary.
-6. Lead review output with concrete findings, severity, affected behavior, missing verification, rollback risk, and file references.
+5. Lead review output with concrete findings, severity, affected behavior, missing verification, rollback risk, and file references.
 
 ## Evidence
 

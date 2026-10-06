@@ -35,7 +35,7 @@ For functional tasks in `direct`:
 - do not run plan self-review, Rubber Duck Plan Review, Technical Decision Gate, plan approval, plan-path, or execution-mode approval gates;
 - record `artifact_state: not-required`;
 - inspect the request and repo, ask only about unresolved material ambiguity, and route implementation;
-- retain focused skills, TDD or replacement verification, implementation review, final self-review, and protected-action authority.
+- retain focused skills, proportionate verification, implementation review, final self-review, and protected-action authority; TDD is explicitly opt-in.
 
 If the user explicitly asks to skip planning, honor `direct` when repository policy allows it; never create shortened substitute plans.
 

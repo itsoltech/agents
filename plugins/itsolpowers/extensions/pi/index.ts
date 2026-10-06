@@ -303,7 +303,7 @@ export function loadContextProfiles(
         profiles: {
           compatibility: {
             guidance: [
-              "Use explicit RED or replacement evidence, focused and wider verification, bounded task packets, and honest completion status.",
+              "Use explicit risk-proportionate verification, bounded task packets, and honest completion status. TDD is opt-in only on explicit user request.",
             ],
           },
         },

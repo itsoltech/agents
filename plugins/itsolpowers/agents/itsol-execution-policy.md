@@ -16,8 +16,8 @@ Validate the complete workflow state and sibling execution policy. Return `block
 
 Do not edit, delegate, invoke external agent CLIs, or claim runtime enforcement without evidence.
 
-End with exactly one envelope:
+End with one envelope; `completed` requires acceptance and verification.
 
 Status: completed|partial|blocked|failed
-Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Verification: <non-empty command or evidence; "not run: <reason>" only when not completed>
 Unverified: <non-empty gap summary or "none">

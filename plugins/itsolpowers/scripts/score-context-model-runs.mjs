@@ -9,8 +9,9 @@ const scalarFields = [
   "workflow_requirement",
   "execution_policy_requirement",
   "delegation",
+  "effective_profile",
 ];
-const setFields = ["domain_skills", "supporting_process_skills"];
+const setFields = ["domain_skills", "supporting_process_skills", "protected_constraints"];
 const decisionFields = [...scalarFields, ...setFields];
 
 function parseArguments(args) {
@@ -46,6 +47,35 @@ async function readJsonWithHash(filePath) {
   const bytes = await readFile(filePath);
   return { document: JSON.parse(bytes), sha256: sha256(bytes) };
 }
+const statusValues = new Set(["complete", "partial", "unavailable", "blocked", "failed"]);
+const profileNames = new Set(["frontier", "compatibility"]);
+const provenanceSources = new Set(["explicit-task", "explicit-environment", "validated-runtime-capability", "compatibility-fallback"]);
+const measurementKeys = ["tokenizer", "harness", "model", "loaded_surfaces", "input_tokens", "output_tokens", "total_tokens"];
+
+function validateMeasurement(measurement, label) {
+  if (!measurement || typeof measurement !== "object" || Array.isArray(measurement)) throw new Error(`${label} has missing measurement metadata`);
+  const unknown = Object.keys(measurement).filter((key) => !measurementKeys.includes(key));
+  const missing = measurementKeys.filter((key) => !(key in measurement));
+  if (unknown.length || missing.length) throw new Error(`${label} has incomplete measurement metadata`);
+  for (const key of ["tokenizer", "harness", "model"]) {
+    if (typeof measurement[key] !== "string" || measurement[key].length === 0) throw new Error(`${label}.${key} is invalid`);
+  }
+  if (!Array.isArray(measurement.loaded_surfaces) || measurement.loaded_surfaces.length > 64 || measurement.loaded_surfaces.some((item) => typeof item !== "string" || item.length === 0)) throw new Error(`${label}.loaded_surfaces is invalid`);
+  for (const key of ["input_tokens", "output_tokens", "total_tokens"]) {
+    if (!Number.isInteger(measurement[key]) || measurement[key] < 0) throw new Error(`${label}.${key} is invalid`);
+  }
+  if (measurement.total_tokens !== measurement.input_tokens + measurement.output_tokens) throw new Error(`${label}.total_tokens does not equal input + output tokens`);
+}
+
+function validateEvidence(evidence, label) {
+  if (!Array.isArray(evidence) || evidence.length === 0 || evidence.length > 8) throw new Error(`${label} must contain bounded evidence records`);
+  const kinds = new Set(["command", "test", "artifact", "observation", "measurement", "contract", "routing", "protected-constraint", "status"]);
+  const statuses = new Set(["verified", "unavailable", "partial", "failed"]);
+  for (const record of evidence) {
+    if (!record || JSON.stringify(Object.keys(record).sort()) !== JSON.stringify(["artifact", "command", "kind", "relates_to", "source", "status"])) throw new Error(`${label} contains malformed evidence`);
+    if (!kinds.has(record.kind) || !statuses.has(record.status) || ["source", "command", "artifact", "relates_to"].some((key) => typeof record[key] !== "string" || record[key].length === 0 || record[key].length > (key === "command" || key === "artifact" ? 320 : 160))) throw new Error(`${label} contains malformed evidence`);
+  }
+}
 
 function validateRun(run, {
   variant,
@@ -68,6 +98,8 @@ function validateRun(run, {
   ) {
     throw new Error(`${variant} repetition ${repetition} has invalid harness/model metadata`);
   }
+  validateMeasurement(run.run.measurement, `${variant} repetition ${repetition}.run`);
+  if (run.run.measurement.harness !== run.run.harness || run.run.measurement.model !== run.run.model_identifier) throw new Error(`${variant} repetition ${repetition} measurement harness/model mismatch`);
   if (
     variant === "baseline"
       ? run.run.revision !== baselineRevision
@@ -86,6 +118,13 @@ function validateRun(run, {
     for (const field of decisionFields) {
       if (!(field in item)) throw new Error(`${variant} ${item.case_id} missing ${field}`);
     }
+    if (!statusValues.has(item.status) || !profileNames.has(item.effective_profile)) throw new Error(`${variant} ${item.case_id} has invalid status/profile metadata`);
+    if (!item.profile_provenance || JSON.stringify(Object.keys(item.profile_provenance).sort()) !== JSON.stringify(["fallback", "requested_profile", "source"]) || !provenanceSources.has(item.profile_provenance.source) || (item.profile_provenance.requested_profile !== null && !profileNames.has(item.profile_provenance.requested_profile)) || typeof item.profile_provenance.fallback !== "boolean") throw new Error(`${variant} ${item.case_id} has invalid profile provenance`);
+    if (!item.contract_decision || !item.contract_decision.routing || typeof item.contract_decision.routing !== "object") throw new Error(`${variant} ${item.case_id} has missing contract decision`);
+    if (item.contract_decision.routing.primary_process_skill !== item.primary_process_skill || JSON.stringify(stableSet(item.contract_decision.routing.domain_skills)) !== JSON.stringify(stableSet(item.domain_skills)) || item.contract_decision.workflow_requirement !== item.workflow_requirement || item.contract_decision.execution_policy_requirement !== item.execution_policy_requirement || item.contract_decision.delegation !== item.delegation || JSON.stringify(item.contract_decision.protected_constraints) !== JSON.stringify(item.protected_constraints)) throw new Error(`${variant} ${item.case_id} contract decision mismatch`);
+    validateEvidence(item.evidence, `${variant} ${item.case_id}.evidence`);
+    validateMeasurement(item.measurement, `${variant} ${item.case_id}.measurement`);
+    if (item.measurement.tokenizer !== run.run.measurement.tokenizer || item.measurement.harness !== run.run.measurement.harness || item.measurement.model !== run.run.measurement.model || JSON.stringify(stableSet(item.measurement.loaded_surfaces)) !== JSON.stringify(stableSet(run.run.measurement.loaded_surfaces))) throw new Error(`${variant} ${item.case_id} has incomparable measurement metadata`);
     if (
       !Array.isArray(item.protected_constraints)
       || typeof item.public_routing_output !== "string"
@@ -172,6 +211,10 @@ function scoreVariant({ cases, expectedById, runs, variant }) {
     if (decision.delegation !== expected.delegation) {
       reasons.push("delegation mismatch");
     }
+    if (decision.effective_profile !== caseDefinition.context_profile) reasons.push("effective_profile mismatch");
+    if (JSON.stringify(stableSet(decision.protected_constraints)) !== JSON.stringify(stableSet(expected.protected_constraints))) reasons.push("protected_constraints mismatch");
+    if (attempts.some((attempt) => attempt.status !== "complete")) reasons.push("attempt status is not complete");
+    if (attempts.some((attempt) => !attempt.evidence.some((record) => record.status === "verified"))) reasons.push("verified evidence is missing");
     const initialSkills = new Set(
       [
         decision.primary_process_skill,
@@ -313,6 +356,18 @@ const models = new Set(allRuns.map((run) => run.run.model_identifier));
 if (harnesses.size !== 1 || models.size !== 1) {
   throw new Error("all baseline/candidate repetitions must use the same harness and model");
 }
+const measurementSignatures = allRuns.map((run) => JSON.stringify({
+  tokenizer: run.run.measurement.tokenizer,
+  harness: run.run.measurement.harness,
+  model: run.run.measurement.model,
+}));
+if (new Set(measurementSignatures).size !== 1) {
+  throw new Error("baseline/candidate runs have incomparable measurement metadata");
+}
+for (const variant of ["baseline", "candidate"]) {
+  const signatures = runsByVariant[variant].map((run) => JSON.stringify(stableSet(run.run.measurement.loaded_surfaces)));
+  if (new Set(signatures).size !== 1) throw new Error(`${variant} repetitions have incomparable loaded surfaces`);
+}
 for (const variant of ["baseline", "candidate"]) {
   if (new Set(runsByVariant[variant].map((run) => run.run.revision)).size !== 1) {
     throw new Error(`${variant} repetitions must use one revision identifier`);
@@ -367,6 +422,13 @@ const report = {
     model_identifier: [...models][0],
     repetitions: 2,
     third_on_decision_disagreement: true,
+    measurement: {
+      tokenizer: allRuns[0].run.measurement.tokenizer,
+      loaded_surfaces: allRuns.map((run) => ({ variant: run.run.variant, repetition: run.run.repetition, surfaces: run.run.measurement.loaded_surfaces })),
+      input_tokens: allRuns.reduce((total, run) => total + run.run.measurement.input_tokens, 0),
+      output_tokens: allRuns.reduce((total, run) => total + run.run.measurement.output_tokens, 0),
+      total_tokens: allRuns.reduce((total, run) => total + run.run.measurement.total_tokens, 0),
+    },
     usage: "host token usage unavailable",
   },
   raw_files: rawFiles,

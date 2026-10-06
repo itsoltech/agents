@@ -24,7 +24,7 @@ Statuses:
 - `planned`: defined but not ready;
 - `queued`: ready, waiting for capacity;
 - `active`: assigned and running;
-- `reviewing`: ready for independent review;
+- `reviewing`: ready for required or selected review;
 - `changes-requested`: actionable review findings exist;
 - `completed`: packet, evidence, and verification satisfied;
 - `partial`: useful result but packet incomplete;
@@ -45,8 +45,8 @@ Every packet includes:
 - relevant constraints, assumptions, and dependency state;
 - read scope, exclusive write scope or `read-only`, and forbidden scope;
 - required process/domain/review skills;
-- RED/GREEN expectation or documented TDD exception;
-- focused and wider verification/evidence expected;
+- verification/evidence appropriate to changed behavior and material risk;
+- explicit test-first instruction only when the user requested TDD;
 - expected artifacts;
 - response contract and allowed statuses;
 - budget where useful;
@@ -54,7 +54,7 @@ Every packet includes:
 
 Never use `maxTurns`. A fixed agent-loop limit is not a completion criterion.
 
-Documentation/config packets state the TDD exception before editing. Code packets name expected tests, focused RED/GREEN command, and wider handoff command.
+Packets name permitted checks, expected evidence, and material verification gaps. Code, documentation, and configuration work need no TDD exception. Do not demand a new test or a failing check before editing; add tests only where they protect meaningful behavior not already covered.
 
 ## Write Ownership
 
@@ -74,12 +74,12 @@ Every response includes:
 - changed files or inspected scope;
 - work summary and key evidence;
 - verification commands/results or reason absent;
-- RED/GREEN or TDD exception/replacement evidence;
+- evidence for the changed behavior and required checks; RED/GREEN only for explicit test-first tasks;
 - assumptions and whether within authorized scope;
 - unverified items and coverage gaps;
 - risks, follow-ups, deferred findings;
 - blockers/decisions required;
-- next independent review target when files changed.
+- next review target when policy, explicit request, or material risk selects further review.
 
 Text alone is not completion. The main agent validates evidence and packet fulfillment.
 
@@ -91,7 +91,7 @@ Use one concurrent implementation for high-conflict migrations/shared/auth/secur
 
 ## Implementation Delegation
 
-Use the narrowest matching skill; provide bounded ownership and forbidden areas; require TDD/replacement verification, preservation of user changes, and response contract; prohibit speculative refactors. Do not delegate the current blocker, approval decisions, or final integration responsibility.
+Use the narrowest matching skill; provide bounded ownership and forbidden areas; require proportionate verification, preservation of user changes, and response contract; prohibit speculative refactors and low-value test proliferation. Do not delegate the current blocker, approval decisions, or final integration responsibility.
 
 ## Delegation Depth
 

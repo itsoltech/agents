@@ -1,24 +1,17 @@
 ---
 name: security-files-integrations-review
-description: "Review upload and integration security: untrusted content, webhooks, SSRF, and credentials."
+description: "Review changes to untrusted files, storage access, webhooks, outbound requests, or credentials."
 ---
 
 # Security Files Integrations Review
 
 Check file trust, storage access, scanning, webhook authenticity, outbound request limits, live event authorization, and integration failure modes.
 
-## Process
+## Trigger boundary
 
-1. Inspect the changed behavior and data flow before listing risks.
-2. Check negative paths, bypasses, tenant/object boundaries, logs, cache, async jobs, and release impact where relevant.
-3. For review, report findings by severity with file references and concrete exploit or failure scenarios.
-4. For implementation, add controls and tests in the backend or trusted boundary; do not rely on frontend-only enforcement.
+Use this skill when a change handles uploads/downloads, untrusted files or content, webhooks/live events, outbound requests or SSRF, integration credentials, scanning, or storage access.
 
-## Large PR Subagent Review
-
-For broad or materially risky pull requests, recommend focused additional review only when independent expertise is likely to improve the verdict. Judge this from concrete risk, novelty, blast radius, reversibility, and context size—not file count or category matching alone. Small and conventional changes should remain one pragmatic pass.
-
-When additional reviewers add value, split only by independent material surfaces. Each returns concrete evidence-based findings; the main agent removes duplicates and false positives and owns the proportional final verdict.
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no file, webhook, outbound-request, credential, storage, or integration behavior impact; follow the repository's established convention directly.
 
 ## Evidence
 

@@ -3,12 +3,12 @@
   "result_id": "offline-contract-example",
   "repo_revision": "7c0e5bc9f24c9b393998c2dfdd1e7abb6e2de824",
   "corpus": {
-    "version": "1.0.0",
-    "manifest_sha256": "ce2da26e482a84f2001cbe8049cab6038c7937e3b2a44b1b3b4297d5a20236e2"
+    "version": "1.1.0",
+    "manifest_sha256": "fdb55e7adf0ffcaf4de0dae7c2c7e1105c408c02c95f6c4b861734e45d946d4b"
   },
   "model": {
     "identifier": "offline-no-provider-call",
-    "profile": "compatibility"
+    "profile": "frontier"
   },
   "public_routing_output": "Selected the administrative fast path.",
   "selections": {
@@ -25,16 +25,45 @@
     {
       "segment": "overall",
       "cases": 2,
-      "passed": 2,
-      "failed": 0,
-      "pass_rate": 1
+      "passed": 0,
+      "failed": 2,
+      "pass_rate": 0
     }
   ],
   "case_results": [
     {
       "case_id": "acc-admin-commit-claude",
       "repetition": 1,
-      "passed": true,
+      "status": "unavailable",
+      "effective_profile": "frontier",
+      "profile_provenance": {
+        "source": "explicit-task",
+        "requested_profile": "frontier",
+        "fallback": false
+      },
+      "contract_decision": {
+        "routing": {
+          "primary_process_skill": null,
+          "domain_skills": []
+        },
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "none",
+        "protected_constraints": [
+          "Do not push, tag, publish, or amend."
+        ]
+      },
+      "evidence": [
+        {
+          "kind": "status",
+          "status": "unavailable",
+          "source": "offline-fixture",
+          "command": "not run: provider call unavailable",
+          "artifact": "none",
+          "relates_to": "contract/protected_constraints"
+        }
+      ],
+      "passed": false,
       "public_routing_output": "Selected the administrative fast path.",
       "selections": {
         "primary_process_skill": null,
@@ -46,12 +75,52 @@
         "output_tokens": 0,
         "total_tokens": 0
       },
-      "pass_fail_reasons": ["Schema-only example; no provider call was made."]
+      "measurement": {
+        "tokenizer": "unavailable",
+        "harness": "offline-fixture",
+        "model": "offline-no-provider-call",
+        "loaded_surfaces": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "pass_fail_reasons": [
+        "Provider call unavailable; routing contract is unverified."
+      ]
     },
     {
       "case_id": "acc-admin-commit-claude",
       "repetition": 2,
-      "passed": true,
+      "status": "unavailable",
+      "effective_profile": "frontier",
+      "profile_provenance": {
+        "source": "explicit-task",
+        "requested_profile": "frontier",
+        "fallback": false
+      },
+      "contract_decision": {
+        "routing": {
+          "primary_process_skill": null,
+          "domain_skills": []
+        },
+        "workflow_requirement": "none",
+        "execution_policy_requirement": "none",
+        "delegation": "none",
+        "protected_constraints": [
+          "Do not push, tag, publish, or amend."
+        ]
+      },
+      "evidence": [
+        {
+          "kind": "status",
+          "status": "unavailable",
+          "source": "offline-fixture",
+          "command": "not run: provider call unavailable",
+          "artifact": "none",
+          "relates_to": "contract/protected_constraints"
+        }
+      ],
+      "passed": false,
       "public_routing_output": "Selected the administrative fast path.",
       "selections": {
         "primary_process_skill": null,
@@ -63,7 +132,18 @@
         "output_tokens": 0,
         "total_tokens": 0
       },
-      "pass_fail_reasons": ["Schema-only example; no provider call was made."]
+      "measurement": {
+        "tokenizer": "unavailable",
+        "harness": "offline-fixture",
+        "model": "offline-no-provider-call",
+        "loaded_surfaces": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "pass_fail_reasons": [
+        "Provider call unavailable; routing contract is unverified."
+      ]
     }
   ],
   "repetitions": {
@@ -71,5 +151,7 @@
     "completed": 2,
     "third_on_disagreement": false
   },
-  "pass_fail_reasons": ["This fixture validates the public result contract only."]
+  "pass_fail_reasons": [
+    "Offline provider call unavailable; this fixture is intentionally partial and does not claim a pass."
+  ]
 }

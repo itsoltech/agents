@@ -7,6 +7,42 @@ import { compileJsonSchema } from "./context-json-schema.mjs";
 
 const ADAPTERS = new Set(["claude", "codex", "opencode", "pi"]);
 const PROFILES = new Set(["frontier", "compatibility"]);
+const PROFILE_NAMES = ["frontier", "compatibility"];
+const PROFILE_SELECTION_KEYS = [
+  "precedence",
+  "environment_variable",
+  "provider_name_is_capability",
+  "invalid_input",
+];
+const PROFILE_KEYS = [
+  "description",
+  "verification",
+  "review",
+  "delegation",
+  "default_small_task_execution",
+  "default_verifier_fanout",
+  "explicit_scaffolding",
+  "guidance",
+];
+const PROFILE_PRECEDENCE = [
+  "explicit-task",
+  "explicit-environment",
+  "validated-runtime-capability",
+  "compatibility-fallback",
+];
+const PROFILE_SEMANTICS = {
+  frontier: {
+    verification: "risk-proportionate",
+    review: "material-risk-or-uncertainty",
+    delegation: "independent-work-with-material-value",
+  },
+  compatibility: {
+    verification: "explicit-focused-and-wider",
+    review: "explicit-trigger-and-response",
+    delegation: "explicit-bounded-packets",
+  },
+};
+const PROVIDER_NAME_PATTERN = /(?:^|[-_.])(claude|codex|opencode|pi)(?:$|[-_.])/i;
 const SETS = new Set(["development", "acceptance", "challenge"]);
 const CATEGORIES = new Set([
   "administration",
@@ -134,6 +170,84 @@ function assertInteger(value, label, minimum, maximum = Infinity) {
     value >= minimum && value <= maximum,
     `${label} must be between ${minimum} and ${maximum}`,
   );
+}
+function assertProviderNeutralProfileValue(value, label) {
+  if (typeof value === "string") {
+    invariant(
+      !PROVIDER_NAME_PATTERN.test(value),
+      `${label} must not encode a provider-name capability`,
+    );
+    return;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) =>
+      assertProviderNeutralProfileValue(item, `${label}[${index}]`),
+    );
+    return;
+  }
+  if (isObject(value)) {
+    for (const [key, child] of Object.entries(value)) {
+      invariant(
+        !["provider", "provider_name", "model", "model_identifier"].includes(key)
+          || key === "provider_name_is_capability",
+        `${label} contains provider-specific capability field: ${key}`,
+      );
+      assertProviderNeutralProfileValue(child, `${label}.${key}`);
+    }
+  }
+}
+
+export function validateContextProfiles(document) {
+  assertExactKeys(
+    document,
+    ["schema_version", "selection", "invariants", "profiles"],
+    "context profiles",
+  );
+  invariant(document.schema_version === "1.0.0", "context profiles schema_version must be 1.0.0");
+  assertExactKeys(document.selection, PROFILE_SELECTION_KEYS, "context profiles.selection");
+  invariant(
+    JSON.stringify(document.selection.precedence) === JSON.stringify(PROFILE_PRECEDENCE),
+    "context profiles.selection.precedence must use the canonical provider-neutral order",
+  );
+  assertString(document.selection.environment_variable, "context profiles.selection.environment_variable", { max: 80 });
+  invariant(document.selection.environment_variable === "ITSOLPOWERS_CONTEXT_PROFILE", "context profiles.selection.environment_variable must remain ITSOLPOWERS_CONTEXT_PROFILE");
+  invariant(document.selection.provider_name_is_capability === false, "context profiles must not treat provider name as capability");
+  assertExactKeys(document.selection.invalid_input, ["profile", "surface_warning"], "context profiles.selection.invalid_input");
+  invariant(PROFILES.has(document.selection.invalid_input.profile), "context profiles invalid_input profile is unknown");
+  invariant(typeof document.selection.invalid_input.surface_warning === "boolean", "context profiles.invalid_input.surface_warning must be boolean");
+  invariant(document.selection.invalid_input.profile === "compatibility" && document.selection.invalid_input.surface_warning === true, "context profiles invalid input must warn and fall back to compatibility");
+  assertStringArray(document.invariants, "context profiles.invariants", { max: 32, allowEmpty: false });
+  for (const invariantText of document.invariants) {
+    assertString(invariantText, "context profiles.invariants item", { max: 180 });
+  }
+  for (const required of ["workflow-authority", "repository-restrictions", "protected-actions", "deterministic-contracts", "tool-hook-contracts", "honest-incomplete-status", "nested-delegation-prohibition"]) {
+    invariant(document.invariants.includes(required), `context profiles missing safety invariant: ${required}`);
+  }
+  assertExactKeys(document.profiles, PROFILE_NAMES, "context profiles.profiles");
+  for (const profileName of PROFILE_NAMES) {
+    const profile = document.profiles[profileName];
+    const label = `context profiles.profiles.${profileName}`;
+    assertExactKeys(profile, PROFILE_KEYS, label);
+    assertString(profile.description, `${label}.description`, { max: 320 });
+    for (const key of ["verification", "review", "delegation", "default_small_task_execution"]) {
+      assertString(profile[key], `${label}.${key}`, { max: 100 });
+    }
+    for (const [key, expected] of Object.entries(PROFILE_SEMANTICS[profileName])) {
+      invariant(profile[key] === expected, `${label}.${key} must retain ${expected}`);
+    }
+    invariant(typeof profile.default_verifier_fanout === "boolean", `${label}.default_verifier_fanout must be boolean`);
+    invariant(typeof profile.explicit_scaffolding === "boolean", `${label}.explicit_scaffolding must be boolean`);
+    invariant(profile.default_small_task_execution === "inline", `${label}.default_small_task_execution must be inline`);
+    invariant(profile.default_verifier_fanout === false, `${label}.default_verifier_fanout must be false`);
+    invariant(profile.explicit_scaffolding === (profileName === "compatibility"), `${label}.explicit_scaffolding is inconsistent with profile`);
+    assertStringArray(profile.guidance, `${label}.guidance`, { max: 8, allowEmpty: false });
+    for (const guidance of profile.guidance) {
+      assertString(guidance, `${label}.guidance item`, { max: 240 });
+    }
+    assertProviderNeutralProfileValue(profile, label);
+  }
+  assertProviderNeutralProfileValue(document, "context profiles");
+  return true;
 }
 
 async function readJson(filePath) {
@@ -474,6 +588,13 @@ export async function validateBaselineManifest(evalRoot) {
 
 export async function validateContextCorpus({ evalRoot, pluginRoot }) {
   const knownSkills = await discoverSkills(pluginRoot);
+  try {
+    const profiles = await readJson(path.join(pluginRoot, "context", "context-profiles.json"));
+    validateContextProfiles(profiles);
+  } catch (error) {
+    if (!error.message.includes("ENOENT")) throw error;
+    // The immutable pre-profile baseline is validated against its original tree.
+  }
   const { validateCaseSchema } = await loadSchemaValidators(evalRoot);
   const fileNames = ["development.json", "acceptance.json", "challenge.json"];
   const documents = [];
@@ -576,6 +697,55 @@ function validateUsage(usage, label) {
     `${label}.total_tokens must equal input_tokens + output_tokens`,
   );
 }
+const RESULT_STATUSES = new Set(["complete", "partial", "unavailable", "blocked", "failed"]);
+const EVIDENCE_KINDS = new Set(["command", "test", "artifact", "observation", "measurement", "contract", "routing", "protected-constraint", "status"]);
+const EVIDENCE_STATUSES = new Set(["verified", "unavailable", "partial", "failed"]);
+
+function validateEvidence(evidence, label) {
+  invariant(Array.isArray(evidence), `${label} must be an array`);
+  invariant(evidence.length <= 8, `${label} exceeds maximum length 8`);
+  for (const [index, record] of evidence.entries()) {
+    const recordLabel = `${label}[${index}]`;
+    assertExactKeys(record, ["kind", "status", "source", "command", "artifact", "relates_to"], recordLabel);
+    invariant(EVIDENCE_KINDS.has(record.kind), `${recordLabel}.kind is invalid`);
+    invariant(EVIDENCE_STATUSES.has(record.status), `${recordLabel}.status is invalid`);
+    assertString(record.source, `${recordLabel}.source`, { max: 160 });
+    assertString(record.command, `${recordLabel}.command`, { max: 320 });
+    assertString(record.artifact, `${recordLabel}.artifact`, { max: 320 });
+    assertString(record.relates_to, `${recordLabel}.relates_to`, { max: 160 });
+  }
+}
+
+function validateMeasurement(measurement, label) {
+  assertExactKeys(measurement, ["tokenizer", "harness", "model", "loaded_surfaces", "input_tokens", "output_tokens", "total_tokens"], label);
+  for (const key of ["tokenizer", "harness", "model"]) assertString(measurement[key], `${label}.${key}`, { max: 160 });
+  assertStringArray(measurement.loaded_surfaces, `${label}.loaded_surfaces`, { max: 64 });
+  for (const key of ["input_tokens", "output_tokens", "total_tokens"]) assertInteger(measurement[key], `${label}.${key}`, 0);
+  invariant(measurement.total_tokens === measurement.input_tokens + measurement.output_tokens, `${label}.total_tokens must equal input_tokens + output_tokens`);
+}
+
+function stableSet(values) {
+  return [...new Set(values)].sort();
+}
+
+function validateContractDecision(decision, label, expected) {
+  assertExactKeys(decision, ["routing", "workflow_requirement", "execution_policy_requirement", "delegation", "protected_constraints"], label);
+  assertExactKeys(decision.routing, ["primary_process_skill", "domain_skills"], `${label}.routing`);
+  invariant(decision.routing.primary_process_skill === null || typeof decision.routing.primary_process_skill === "string", `${label}.routing.primary_process_skill must be string or null`);
+  assertStringArray(decision.routing.domain_skills, `${label}.routing.domain_skills`, { max: 12 });
+  assertStringArray(decision.protected_constraints, `${label}.protected_constraints`, { max: 6 });
+  invariant(WORKFLOW_REQUIREMENTS.has(decision.workflow_requirement), `${label}.workflow_requirement is invalid`);
+  invariant(["none", "required"].includes(decision.execution_policy_requirement), `${label}.execution_policy_requirement is invalid`);
+  invariant(DELEGATION_VALUES.has(decision.delegation), `${label}.delegation is invalid`);
+  if (expected) {
+    invariant(decision.routing.primary_process_skill === expected.primary_process_skill, `${label} primary process contract mismatch`);
+    invariant(JSON.stringify(stableSet(decision.routing.domain_skills)) === JSON.stringify(stableSet(expected.domain_skills)), `${label} domain skill contract mismatch`);
+    invariant(decision.workflow_requirement === expected.workflow_requirement, `${label} workflow contract mismatch`);
+    invariant(decision.execution_policy_requirement === expected.execution_policy_requirement, `${label} execution policy contract mismatch`);
+    invariant(decision.delegation === expected.delegation, `${label} delegation contract mismatch`);
+    invariant(JSON.stringify(decision.protected_constraints) === JSON.stringify(expected.protected_constraints), `${label} protected constraint contract mismatch`);
+  }
+}
 
 export async function validateModelResult({
   evalRoot,
@@ -659,6 +829,7 @@ export async function validateModelResult({
     ),
   );
   const resultKeys = new Set();
+  const measurementContract = { tokenizer: null, harness: null, model: null, loaded_surfaces: null };
   const caseResultsById = new Map();
   for (const [index, caseResult] of result.case_results.entries()) {
     const label = `model result.case_results[${index}]`;
@@ -667,10 +838,16 @@ export async function validateModelResult({
       [
         "case_id",
         "repetition",
+        "status",
+        "effective_profile",
+        "profile_provenance",
+        "contract_decision",
+        "evidence",
         "passed",
         "public_routing_output",
         "selections",
         "usage",
+        "measurement",
         "pass_fail_reasons",
       ],
       label,
@@ -679,14 +856,47 @@ export async function validateModelResult({
       frozenCases.has(caseResult.case_id),
       `${label} case_id is not a frozen acceptance/challenge case: ${caseResult.case_id}`,
     );
+    const evaluationCase = frozenCases.get(caseResult.case_id);
     assertInteger(caseResult.repetition, `${label}.repetition`, 1);
+    invariant(RESULT_STATUSES.has(caseResult.status), `${label}.status is invalid`);
+    invariant(PROFILES.has(caseResult.effective_profile), `${label}.effective_profile is invalid`);
+    assertExactKeys(caseResult.profile_provenance, ["source", "requested_profile", "fallback"], `${label}.profile_provenance`);
+    invariant(["explicit-task", "explicit-environment", "validated-runtime-capability", "compatibility-fallback"].includes(caseResult.profile_provenance.source), `${label}.profile_provenance.source is invalid`);
+    invariant(caseResult.profile_provenance.requested_profile === null || PROFILES.has(caseResult.profile_provenance.requested_profile), `${label}.profile_provenance.requested_profile is invalid`);
+    invariant(typeof caseResult.profile_provenance.fallback === "boolean", `${label}.profile_provenance.fallback must be boolean`);
+    if (caseResult.profile_provenance.source === "compatibility-fallback") {
+      invariant(caseResult.effective_profile === "compatibility", `${label} compatibility fallback must use compatibility profile`);
+      invariant(caseResult.profile_provenance.fallback === true, `${label} compatibility fallback must mark fallback=true`);
+    }
+    if (caseResult.profile_provenance.fallback) {
+      invariant(caseResult.profile_provenance.source === "compatibility-fallback", `${label} fallback provenance source is invalid`);
+    }
+    if (caseResult.profile_provenance.requested_profile !== null && caseResult.profile_provenance.source !== "compatibility-fallback") {
+      invariant(caseResult.effective_profile === caseResult.profile_provenance.requested_profile, `${label} effective profile does not match requested profile`);
+    }
     invariant(typeof caseResult.passed === "boolean", `${label}.passed must be boolean`);
+    invariant(caseResult.status === "complete" || !caseResult.passed, `${label} non-complete status cannot pass`);
     assertString(caseResult.public_routing_output, `${label}.public_routing_output`, {
       min: 0,
       max: 10000,
     });
     validateSelections(caseResult.selections, `${label}.selections`, knownSkills);
+    validateContractDecision(caseResult.contract_decision, `${label}.contract_decision`, evaluationCase.expected);
+    invariant(caseResult.selections.primary_process_skill === caseResult.contract_decision.routing.primary_process_skill, `${label} selections and routing contract disagree`);
+    invariant(JSON.stringify(stableSet(caseResult.selections.domain_skills)) === JSON.stringify(stableSet(caseResult.contract_decision.routing.domain_skills)), `${label} selections and routing domain skills disagree`);
     validateUsage(caseResult.usage, `${label}.usage`);
+    validateMeasurement(caseResult.measurement, `${label}.measurement`);
+    invariant(caseResult.measurement.model === result.model.identifier, `${label}.measurement.model does not match result model`);
+    for (const key of ["tokenizer", "harness", "model"]) {
+      measurementContract[key] ??= caseResult.measurement[key];
+      invariant(measurementContract[key] === caseResult.measurement[key], `${label}.measurement.${key} is incomparable across attempts`);
+    }
+    const loadedSurfaces = JSON.stringify(caseResult.measurement.loaded_surfaces);
+    measurementContract.loaded_surfaces ??= loadedSurfaces;
+    invariant(measurementContract.loaded_surfaces === loadedSurfaces, `${label}.measurement.loaded_surfaces is incomparable across attempts`);
+    validateEvidence(caseResult.evidence, `${label}.evidence`);
+    invariant(caseResult.status !== "complete" || caseResult.evidence.some((record) => record.status === "verified"), `${label} complete status requires verified evidence`);
+    invariant(caseResult.status === "complete" || caseResult.evidence.length > 0, `${label} non-complete status requires an evidence record`);
     assertStringArray(caseResult.pass_fail_reasons, `${label}.pass_fail_reasons`, {
       max: 20,
     });
@@ -860,6 +1070,21 @@ export async function runSelfTests({ evalRoot, pluginRoot }) {
   );
   const baseCase = development.cases[0];
   const checks = [];
+  try {
+    const profileDocument = await readJson(path.join(pluginRoot, "context", "context-profiles.json"));
+    const malformedProfile = clone(profileDocument);
+    malformedProfile.profiles.frontier.description = "claude";
+    checks.push(
+      expectFailure(
+        () => validateContextProfiles(malformedProfile),
+        /provider-specific capability|provider-name capability/,
+        "malformed profile",
+      ),
+    );
+  } catch (error) {
+    if (!error.message.includes("ENOENT")) throw error;
+    // The immutable pre-profile baseline has no profile fixture to mutate.
+  }
   validateCaseSchema(baseCase, "valid case fixture");
 
   const unknownSkill = clone(baseCase);
@@ -1020,6 +1245,39 @@ export async function runSelfTests({ evalRoot, pluginRoot }) {
   exampleResult.corpus.manifest_sha256 = manifest.manifest_sha256;
   validateResultSchema(exampleResult, "valid result fixture");
   await validateModelResult({ evalRoot, pluginRoot, result: exampleResult });
+  const contractMismatch = clone(exampleResult);
+  contractMismatch.case_results[0].contract_decision.workflow_requirement = "governed";
+  await expectFailure(
+    () => validateModelResult({ evalRoot, pluginRoot, result: contractMismatch }),
+    /workflow contract mismatch/,
+    "contract mismatch",
+  );
+
+  const missingEvidence = clone(exampleResult);
+  delete missingEvidence.case_results[0].evidence;
+  await expectFailure(
+    () => validateModelResult({ evalRoot, pluginRoot, result: missingEvidence }),
+    /missing required property: evidence/,
+    "missing evidence",
+  );
+
+  const falseEvidence = clone(exampleResult);
+  falseEvidence.case_results[0].status = "complete";
+  falseEvidence.case_results[0].passed = true;
+  falseEvidence.case_results[0].evidence[0].status = "unavailable";
+  await expectFailure(
+    () => validateModelResult({ evalRoot, pluginRoot, result: falseEvidence }),
+    /verified evidence/,
+    "false evidence",
+  );
+
+  const incomparableMeasurement = clone(exampleResult);
+  incomparableMeasurement.case_results[1].measurement.tokenizer = "different-tokenizer";
+  await expectFailure(
+    () => validateModelResult({ evalRoot, pluginRoot, result: incomparableMeasurement }),
+    /incomparable across attempts/,
+    "incomparable measurement metadata",
+  );
 
   const malformedResult = clone(exampleResult);
   delete malformedResult.repo_revision;
@@ -1135,7 +1393,8 @@ export async function runSelfTests({ evalRoot, pluginRoot }) {
   illegalThird.repetitions.completed = 3;
   illegalThird.repetitions.third_on_disagreement = true;
   illegalThird.segment_results[0].cases = 3;
-  illegalThird.segment_results[0].passed = 3;
+  illegalThird.segment_results[0].passed = 0;
+  illegalThird.segment_results[0].failed = 3;
   await expectFailure(
     () => validateModelResult({ evalRoot, pluginRoot, result: illegalThird }),
     /illegal repetition 3/,
@@ -1143,8 +1402,10 @@ export async function runSelfTests({ evalRoot, pluginRoot }) {
   );
 
   const omittedThird = clone(exampleResult);
-  omittedThird.case_results[1].passed = false;
-  omittedThird.case_results[1].pass_fail_reasons = ["Deliberate disagreement fixture."];
+  omittedThird.case_results[1].passed = true;
+  omittedThird.case_results[1].status = "complete";
+  omittedThird.case_results[1].evidence[0].status = "verified";
+  omittedThird.case_results[1].pass_fail_reasons = [];
   omittedThird.segment_results[0] = {
     segment: "overall",
     cases: 2,
@@ -1173,6 +1434,9 @@ export async function runSelfTests({ evalRoot, pluginRoot }) {
   );
 
   const failedWithoutReasons = clone(omittedThird);
+  failedWithoutReasons.case_results[1].passed = false;
+  failedWithoutReasons.case_results[1].status = "unavailable";
+  failedWithoutReasons.case_results[1].evidence[0].status = "unavailable";
   failedWithoutReasons.case_results[1].pass_fail_reasons = [];
   await expectFailure(
     () =>
@@ -1189,6 +1453,10 @@ export async function runSelfTests({ evalRoot, pluginRoot }) {
   const disagreementResolution = clone(
     failedWithoutResultReasons.case_results[1],
   );
+  disagreementResolution.passed = false;
+  disagreementResolution.status = "unavailable";
+  disagreementResolution.evidence[0].status = "unavailable";
+  disagreementResolution.pass_fail_reasons = ["Third attempt unavailable."];
   disagreementResolution.repetition = 3;
   failedWithoutResultReasons.case_results.push(disagreementResolution);
   failedWithoutResultReasons.repetitions.completed = 3;
@@ -1217,8 +1485,27 @@ export async function runSelfTests({ evalRoot, pluginRoot }) {
     .flatMap((document) => document.cases)
     .find((evaluationCase) => evaluationCase.critical);
   const criticalWithoutSegment = clone(exampleResult);
+  const criticalContract = {
+    routing: {
+      primary_process_skill: criticalCase.expected.primary_process_skill,
+      domain_skills: [...criticalCase.expected.domain_skills],
+    },
+    workflow_requirement: criticalCase.expected.workflow_requirement,
+    execution_policy_requirement: criticalCase.expected.execution_policy_requirement,
+    delegation: criticalCase.expected.delegation,
+    protected_constraints: [...criticalCase.expected.protected_constraints],
+  };
   for (const caseResult of criticalWithoutSegment.case_results) {
     caseResult.case_id = criticalCase.case_id;
+    caseResult.effective_profile = criticalCase.context_profile;
+    caseResult.profile_provenance = {
+      source: "explicit-task",
+      requested_profile: criticalCase.context_profile,
+      fallback: false,
+    };
+    caseResult.contract_decision = structuredClone(criticalContract);
+    caseResult.selections.primary_process_skill = criticalCase.expected.primary_process_skill;
+    caseResult.selections.domain_skills = [...criticalCase.expected.domain_skills];
   }
   await expectFailure(
     () =>
@@ -1231,7 +1518,7 @@ export async function runSelfTests({ evalRoot, pluginRoot }) {
     "critical segment cannot be hidden",
   );
 
-  return { checks: checks.length + 22 };
+  return { checks: checks.length + 26 };
 }
 
 function parseArguments(argumentsList, defaults) {

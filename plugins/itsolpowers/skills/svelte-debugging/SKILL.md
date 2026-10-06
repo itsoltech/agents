@@ -1,18 +1,17 @@
 ---
 name: svelte-debugging
-description: "Debug Svelte routes, loads, stores, reactivity, forms, auth, hydration, and SSR."
+description: "Diagnose Svelte/SvelteKit failures across data flow, reactivity, forms, auth, hydration, or SSR."
 ---
 
 # Svelte Debugging
 
 Debug Svelte problems by isolating whether the failure is data loading, reactivity, component state, browser behavior, API integration, or deployment mode.
 
-## Process
+## Trigger boundary
 
-1. State expected behavior, actual behavior, impact, and the smallest reproducible symptom.
-2. Gather evidence from code, logs, traces, metrics, generated output, database plans, config, or failing tests before proposing a fix.
-3. Isolate the boundary that fails and compare it with a known working path.
-4. Implement one root-cause fix with focused verification or a regression test where feasible.
+Use this skill when a Svelte/SvelteKit symptom crosses load/data flow, reactivity, component state, forms, auth/session, hydration/SSR, browser behavior, API integration, or deployment mode.
+
+Do not load it for a small local edit with a deterministic cause and no user-visible, server/browser, or deployment behavior change; follow the repository's established convention directly.
 
 ## Coordination
 

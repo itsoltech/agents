@@ -1,11 +1,17 @@
 ---
 name: agent-browser-interaction-debugging
-description: "Debug stale refs, waits, forms, overlays, frames, sessions, and flaky browser actions."
+description: "Diagnose failed browser actions involving stale refs, waits, forms, overlays, frames, or sessions."
 ---
 
 # Agent Browser Interaction Debugging
 
 Debug local browser interactions by treating `agent-browser` as a user-facing inspection tool first and a command surface second. Use fresh evidence, current local CLI docs, and UI-visible behavior before classifying a failure.
+
+## Trigger boundary
+
+Use this skill when a browser interaction may fail because of stale refs, waits, rerenders, forms, overlays, frames, tabs, sessions, or flaky user-visible state.
+
+Do not load it for a small local interaction with a stable target and deterministic visible result; use the browser directly without interaction-diagnosis ceremony.
 
 ## Process
 

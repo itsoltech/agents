@@ -1,18 +1,17 @@
 ---
 name: rust-debugging
-description: "Debug Rust ownership, lifetimes, async, locks, panics, SQLx, Serde, and performance."
+description: "Diagnose Rust failures involving ownership, async, locks, panics, errors, SQLx, Serde, or performance."
 ---
 
 # Rust Debugging
 
 Debug Rust issues by isolating ownership, concurrency, data mapping, error propagation, and measured hot paths before refactoring.
 
-## Process
+## Trigger boundary
 
-1. State expected behavior, actual behavior, impact, and the smallest reproducible symptom.
-2. Gather evidence from code, logs, traces, metrics, generated output, database plans, config, or failing tests before proposing a fix.
-3. Isolate the boundary that fails and compare it with a known working path.
-4. Implement one root-cause fix with focused verification or a regression test where feasible.
+Use this skill when a Rust symptom may involve ownership/lifetimes, async or locks, panics, error propagation, SQLx/Serde boundaries, unsafe code, or measured performance.
+
+Do not load it for a small local edit with a deterministic cause and no runtime, data, concurrency, or performance behavior change; follow the repository's established convention directly.
 
 ## Coordination
 

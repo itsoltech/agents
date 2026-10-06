@@ -19,28 +19,28 @@ export const PRESETS = Object.freeze({
   economy: Object.freeze({
     maxThreads: 1,
     roles: Object.freeze({
-      itsol_explorer: Object.freeze(['gpt-5.6-terra', 'low', 'read-only']),
-      itsol_mechanical: Object.freeze(['gpt-5.6-terra', 'low', null]),
-      itsol_worker: Object.freeze(['gpt-5.6-terra', 'medium', null]),
-      itsol_reviewer: Object.freeze(['gpt-5.6', 'medium', 'read-only'])
+      itsol_explorer: Object.freeze(['gpt-6-luna', 'low', 'read-only']),
+      itsol_mechanical: Object.freeze(['gpt-6-luna', 'low', null]),
+      itsol_worker: Object.freeze(['gpt-6.1-sol', 'medium', null]),
+      itsol_reviewer: Object.freeze(['gpt-6.1-sol', 'medium', 'read-only'])
     })
   }),
   balanced: Object.freeze({
     maxThreads: 2,
     roles: Object.freeze({
-      itsol_explorer: Object.freeze(['gpt-5.6-terra', 'medium', 'read-only']),
-      itsol_mechanical: Object.freeze(['gpt-5.6-terra', 'low', null]),
-      itsol_worker: Object.freeze(['gpt-5.6', 'medium', null]),
-      itsol_reviewer: Object.freeze(['gpt-5.6', 'high', 'read-only'])
+      itsol_explorer: Object.freeze(['gpt-6-luna', 'medium', 'read-only']),
+      itsol_mechanical: Object.freeze(['gpt-6-luna', 'low', null]),
+      itsol_worker: Object.freeze(['gpt-6.1-sol', 'medium', null]),
+      itsol_reviewer: Object.freeze(['gpt-6.1-sol', 'high', 'read-only'])
     })
   }),
   quality: Object.freeze({
     maxThreads: 2,
     roles: Object.freeze({
-      itsol_explorer: Object.freeze(['gpt-5.6-terra', 'medium', 'read-only']),
-      itsol_mechanical: Object.freeze(['gpt-5.6', 'medium', null]),
-      itsol_worker: Object.freeze(['gpt-5.6', 'high', null]),
-      itsol_reviewer: Object.freeze(['gpt-5.6', 'high', 'read-only'])
+      itsol_explorer: Object.freeze(['gpt-6-luna', 'medium', 'read-only']),
+      itsol_mechanical: Object.freeze(['gpt-6-luna', 'medium', null]),
+      itsol_worker: Object.freeze(['gpt-6-astra', 'high', null]),
+      itsol_reviewer: Object.freeze(['gpt-6-astra', 'high', 'read-only'])
     })
   })
 });
@@ -54,19 +54,19 @@ export const EXECUTION_PROFILE_ROUTING = Object.freeze({
 const ROLE_DETAILS = Object.freeze({
   itsol_explorer: {
     description: 'Read-only repository explorer for evidence gathering and code-path mapping.',
-    instructions: 'Stay read-only. Gather concrete evidence, cite files and symbols, return a concise result, and do not delegate further.'
+    instructions: 'Stay read-only. Gather concrete evidence, cite files and symbols, and map the requested code paths. Report completed, partial, or blocked honestly, include done_when coverage, and do not delegate further.'
   },
   itsol_mechanical: {
     description: 'Cost-focused worker for deterministic, narrow, low-risk changes.',
-    instructions: 'Perform only the narrow deterministic task packet. Preserve unrelated files, verify the requested result, and do not delegate further.'
+    instructions: 'Perform only the narrow deterministic task packet. Preserve unrelated files, verify the requested result, and report completed, partial, or blocked honestly with evidence for each done_when criterion. Do not delegate further.'
   },
   itsol_worker: {
     description: 'Implementation worker for scoped features, fixes, and verification.',
-    instructions: 'Implement only the assigned task packet. Follow named ITSOL skills, validate every done_when criterion with evidence, and do not delegate further.'
+    instructions: 'Implement only the assigned task packet. Follow named ITSOL skills, validate every done_when criterion with evidence, report completed, partial, or blocked honestly, and do not delegate further.'
   },
   itsol_reviewer: {
-    description: 'Independent read-only reviewer for correctness, security, and missing tests.',
-    instructions: 'Stay read-only. Lead with concrete findings and evidence, report coverage gaps, and do not delegate further.'
+    description: 'Read-only reviewer for correctness, security, and missing tests within the assigned scope.',
+    instructions: 'Stay read-only and review only the assigned scope. Lead with concrete findings and evidence, report done_when coverage and completed, partial, or blocked status honestly, and do not delegate further.'
   }
 });
 

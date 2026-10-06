@@ -1,11 +1,17 @@
 ---
 name: agent-browser-diagnostics-evidence
-description: "Correlate browser console, network, trace, performance, and visual evidence."
+description: "Collect browser diagnostics or shareable evidence when a visible result alone is insufficient."
 ---
 
 # Agent Browser Diagnostics Evidence
 
 Use this skill when an `agent-browser` task needs console, JavaScript error, network, HAR, trace, profiler, Web Vitals, screenshot, video, or artifact evidence for frontend dogfood, reproduction, or QA handoff.
+
+## Trigger boundary
+
+Use it when a focused browser reproduction needs diagnostics or shareable evidence beyond visible UI behavior.
+
+Do not load it for a small local interaction check that needs only a fresh snapshot and visible result; use the browser directly without heavy recordings or artifact collection.
 
 ## Process
 

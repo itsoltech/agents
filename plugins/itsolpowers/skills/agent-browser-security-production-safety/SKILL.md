@@ -1,11 +1,17 @@
 ---
 name: agent-browser-security-production-safety
-description: "Protect auth, PII, consent, and destructive-action boundaries in browser QA or production."
+description: "Protect browser work involving production, auth, sensitive data, or destructive actions."
 ---
 
 # Agent Browser Security Production Safety
 
 Use this skill when `agent-browser` work touches production-like environments, authenticated sessions, tenant data, secrets, billing, payments, emails, admin actions, file transfer, security smoke checks, or evidence that may contain sensitive browser data.
+
+## Trigger boundary
+
+Use it for production-like or authenticated browser sessions, tenant/PII or secret handling, destructive actions, billing/admin flows, file transfer, or security smoke checks.
+
+Do not load it for a small local, unauthenticated, read-only interaction with synthetic data and no sensitive artifact; use the browser directly while retaining ordinary scope discipline.
 
 ## Process
 
@@ -49,7 +55,7 @@ Use with `agent-browser-dogfood-workflow` for session chartering and black-box f
 - Before command work, inspect the installed CLI surface with `agent-browser --version` and `agent-browser --help`.
 - If the installed version supports versioned or local guidance such as `agent-browser skills get core` and `agent-browser skills get dogfood`, load it and treat it as the source of truth.
 - Older CLI versions may not support local skill guidance. In that case, rely on `--help`, keep commands conservative, and document the limitation.
-- Treat command snippets here as safe patterns only. The installed CLI guidance wins when syntax, flags, artifact paths, or behavior differ.
+- Treat command snippets here as safe patterns only. The installed CLI guidance wins when syntax, artifact paths, or behavior differ.
 - Record the `agent-browser` version in session metadata when evidence is collected.
 
 ## Evidence Boundary

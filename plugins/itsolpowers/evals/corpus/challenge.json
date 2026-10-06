@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "corpus_version": "1.0.0",
+  "corpus_version": "1.1.0",
   "set": "challenge",
   "frozen": true,
   "cases": [
@@ -57,8 +57,8 @@
       "critical": false,
       "expected": {
         "primary_process_skill": "itsol-bug-debugging",
-        "domain_skills": ["rust-debugging", "itsol-tdd-workflow"],
-        "forbidden_skills": ["itsol-subagent-workflow", "itsol-code-review-workflow"],
+        "domain_skills": ["rust-debugging"],
+        "forbidden_skills": ["itsol-subagent-workflow", "itsol-code-review-workflow", "itsol-tdd-workflow"],
         "workflow_requirement": "direct",
         "execution_policy_requirement": "none",
         "delegation": "inline",
@@ -79,8 +79,8 @@
       "critical": false,
       "expected": {
         "primary_process_skill": "itsol-feature-implementation",
-        "domain_skills": ["mssql-dotnet-data-access-design", "itsol-tdd-workflow"],
-        "forbidden_skills": ["postgres-schema-query-design"],
+        "domain_skills": ["mssql-dotnet-data-access-design"],
+        "forbidden_skills": ["postgres-schema-query-design", "itsol-tdd-workflow"],
         "workflow_requirement": "governed",
         "execution_policy_requirement": "none",
         "delegation": "inline",

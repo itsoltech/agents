@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { auditContext, stableJson } from "./context-audit.mjs";
+import { validateContextProfiles } from "./context-eval-validation.mjs";
 
 async function exists(target) {
   try {
@@ -141,21 +142,13 @@ async function profileCheck(pluginRoot) {
   }
   try {
     const document = JSON.parse(await readFile(profilePath, "utf8"));
-    const profiles = document.profiles ?? document;
-    const profileNames = Object.keys(profiles).sort();
-    const validProfiles = ["frontier", "compatibility"].every(
-      (name) =>
-        profiles[name] &&
-        typeof profiles[name] === "object" &&
-        !Array.isArray(profiles[name]) &&
-        Object.keys(profiles[name]).length > 0,
-    );
+    validateContextProfiles(document);
     return check(
       "capability-profiles",
-      "frontier and compatibility profiles exist",
-      profileNames,
-      validProfiles,
-      { path: "context/context-profiles.json" },
+      "provider-neutral frontier and compatibility profiles use the exact bounded semantic contract",
+      Object.keys(document.profiles).sort(),
+      true,
+      { path: "context/context-profiles.json", bounded_guidance: true, provider_name_is_capability: false },
     );
   } catch (error) {
     throw new Error(`invalid context/context-profiles.json: ${error.message}`);

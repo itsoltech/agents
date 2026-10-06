@@ -4,19 +4,19 @@ description: "Fix bugs evidence-first with root cause, regression coverage, and 
 ---
 # ITSOL Bug Debugging
 
-Resolve all seven task-state fields through `itsol-workflow-mode`. In every mode gather evidence, isolate the failing boundary, establish root cause, use `itsol-tdd-workflow` or documented replacement verification, implement the smallest fix, and self-review.
+Resolve all seven task-state fields through `itsol-workflow-mode`. In every mode gather evidence, isolate the failing boundary, establish root cause, implement the smallest fix, verify the changed behavior proportionately, and self-review. A failing automated test and TDD exception are not prerequisites; use `itsol-tdd-workflow` only on explicit user request.
 
 ## Mode Branches
 
 - `governed`: run the Fix Decision Gate, wait for the user's choice, create a `Draft` Technical Fix Plan, self-review it proportionately, use isolated review only when policy or material risk warrants it, resolve concrete material findings, present the file, obtain explicit approval, mark it `Approved`, then implement.
 - `autonomous-planned`: record options and choose the documented recommendation, create the plan as `Draft`, self-review it proportionately, decide whether isolated review adds value, resolve concrete material findings, mark it `Ready for execution` with delegated authorization, and continue without approval pauses.
-- `direct`: do not create or require a Fix Plan, Fix Decision Gate, plan review, approval, or plan path. Record `artifact_state: not-required` and proceed from evidence/root cause to TDD or replacement verification and implementation.
+- `direct`: do not create or require a Fix Plan, Fix Decision Gate, plan review, approval, or plan path. Record `artifact_state: not-required` and proceed from evidence/root cause to implementation and proportionate verification.
 
 Never call an autonomous plan user-approved. Ask only for unresolved material ambiguity or independent protected-action authority. Apply `.itsol.md` through `itsol-repo-memory` when present and propagate all seven fields to artifacts and handoffs.
 
 ## Execution Policy
 
-After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+After resolving `itsol-workflow-mode`, load `itsol-execution-policy` whenever resource, stop, or completion state matters; it owns the full execution state and evidence validation. Never use `maxTurns` or termination as completion; preserve `partial`, `blocked`, and `failed` outcomes.
 
 Only relevant evidence references.
 

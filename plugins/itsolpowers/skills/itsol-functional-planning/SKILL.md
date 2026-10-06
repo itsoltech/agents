@@ -5,47 +5,35 @@ description: "Define user-visible scope, behavior, and acceptance criteria under
 
 # ITSOL Functional Planning
 
-Resolve and preserve the task state through `itsol-workflow-mode` before applying discovery or planning gates. Do not duplicate the canonical mode contract here.
+Resolve and preserve `itsol-workflow-mode` before discovery or planning. Do not redefine its authority contract here.
 
-## Proportionate Plan Review
+## Scope
 
-After self-review, follow the effective review trigger. With `adaptive`, the main agent decides whether isolated review is worth its cost from the plan's scale, uncertainty, novelty, blast radius, and verification strength. Skip it for small, conventional plans; use it for broad or materially risky plans. When selected, the read-only reviewer is pre-authorized. Resolve only concrete material findings and never rerun for suggestions, wording, optional detail, or speculative edge cases.
+If the source describes a whole application, module, migration, or multi-phase capability, load `itsol-initiative-delivery` first and build full traceability/roadmap. Otherwise:
 
-## Shared Process
+1. Inspect request, repository evidence, and `.itsol.md`; propagate all seven state fields.
+2. Load `itsol-requirements-review` and inspect enough code, contracts, tests, and conventions to avoid asking repository-answerable questions.
+3. Ask only about material ambiguity that cannot be resolved safely; do not invent product scope from internet defaults.
+4. Keep current-tech research, proportionate verification, implementation review, and protected-action authority independent from planning ceremony. Include TDD only on explicit user request.
 
-If the source describes a whole application, module, migration, or multi-phase capability, load `itsol-initiative-delivery` first. Build complete initiative traceability and a reviewed roadmap; then apply this Business/Technical planning process within outcome-oriented phases. Do not reduce the source to one phase and hand off as though the full request were complete.
+## Modes
 
-1. Inspect the request, repo context, and applicable `.itsol.md` policy; record and propagate all seven workflow-state fields.
-2. Load `itsol-requirements-review` and inspect enough code, contracts, tests, and conventions to avoid asking questions the repository answers.
-3. Ask one targeted question only when an unresolved material ambiguity cannot be resolved safely. Never invent product scope from internet defaults.
-4. Keep applicable current-tech research, TDD/replacement verification, implementation review, and protected-action authority independent of planning ceremony.
+**governed:** full Discovery Gate when incomplete; write and proportionately self-review `Draft` Business and Technical Plans; apply the effective review trigger; present each specific file for explicit user approval; run Technical Decision and execution-mode gates. Only genuine user approval becomes `Approved`.
 
-## Governed
+**autonomous-planned:** create the same plans as `Draft`; self-review proportionately, use isolated review only when policy/material risk warrants it, resolve concrete findings, choose the documented recommendation, mark plans `Ready for execution`, and continue without approval pauses. Never call this user approval.
 
-In `governed`, retain the existing workflow: run the full Discovery Gate for incomplete requests; write and proportionately self-review a `Draft` Business Plan; perform isolated review when policy or material risk warrants it; present the specific file and get explicit user approval. Then run the Technical Decision Gate and wait for the user's approach choice, write and proportionately review a `Draft` Technical Plan, get explicit approval of that specific file, and ask for subagent-driven or inline execution. Only user-approved governed plans use `Approved`.
+**direct:** create no persistent Business/Technical Plans, plan reviews, approvals, Decision Gates, plan paths, or execution-mode approval. Use `artifact_state: not-required`, resolve only material ambiguity, then route implementation and proportionate verification.
 
-## Autonomous Planned
+With `adaptive`, the main agent decides whether isolated review adds material value from scale, uncertainty, novelty, blast radius, and verification strength. Selected read-only review needs no extra user authorization; suggestions, wording, optional detail, and speculation are not blockers.
 
-In `autonomous-planned`, create the same Business and Technical Plan artifacts. Start each as `Draft`, self-review it, decide proportionately whether isolated review adds value, resolve concrete material findings, record/choose the documented recommendation at the Technical Decision Gate without pausing, and mark the artifact `Ready for execution`. Record `Workflow Mode: autonomous-planned` and delegated current-task authorization; never describe it as user-approved. Choose execution mode from task size and independent surfaces and continue.
+Load `itsol-execution-policy` when resource, stop, delegation, or completion state matters. It owns budgets and evidence; never use `maxTurns` or termination as completion. This skill supplements, not replaces, `itsol-workflow-mode`.
 
-## Direct
+## Focused references
 
-In `direct`, do not create or require persistent Business or Technical Plans, plan reviews, approvals, planning Decision Gates, plan paths, or execution-mode approval. Record `artifact_state: not-required`, establish the smallest safe implementation scope from the request and repo evidence, ask only about material ambiguity, then route to `itsol-feature-implementation` and `itsol-tdd-workflow` inline or through `itsol-subagent-workflow` as appropriate.
+- [01-planning-gates.md](./references/01-planning-gates.md) — mode-specific discovery, decision, approval, and execution routing.
+- [02-plan-review.md](./references/02-plan-review.md) — proportional self/Rubber Duck review.
+- [03-deep-planning-interview.md](./references/03-deep-planning-interview.md) — governed discovery and autonomous ambiguity handling.
+- [04-business-plan.md](./references/04-business-plan.md) — Business Plan template.
+- [05-technical-plan.md](./references/05-technical-plan.md) — Technical Plan, verification, and delegation.
 
-## Execution Policy
-
-After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
-
-If the task is not functional implementation, route to the narrower workflow.
-
-This directory supplements the canonical `itsol-workflow-mode` contract; it does not redefine mode selection, authority, or transitions.
-
-## Routing
-
-- [01-planning-gates.md](./references/01-planning-gates.md) — mode-specific discovery, decision, artifact, approval, and execution routing.
-- [02-plan-review.md](./references/02-plan-review.md) — self-review and Rubber Duck Review for planned modes.
-- [03-deep-planning-interview.md](./references/03-deep-planning-interview.md) — governed discovery depth and autonomous material-ambiguity handling.
-- [04-business-plan.md](./references/04-business-plan.md) — Business Plan template with honest workflow and authorization metadata.
-- [05-technical-plan.md](./references/05-technical-plan.md) — Technical Plan template, TDD, delegation, and honest artifact state.
-
-Read only the references needed for the resolved mode. `direct` normally needs no planning reference beyond [01-planning-gates.md](./references/01-planning-gates.md); do not turn implementation notes into substitute plan gates.
+Read only references needed for the resolved mode. `direct` normally needs only [01-planning-gates.md](./references/01-planning-gates.md).

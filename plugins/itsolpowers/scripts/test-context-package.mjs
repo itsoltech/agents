@@ -30,6 +30,18 @@ for (const requiredPath of [
   "scripts/generate-agent-contracts.mjs",
   "scripts/lib/agent-contract.mjs",
   "skills/_shared/references/dotnet-web-api/api-design.md",
+  "evals/schemas/context-eval-case.schema.json",
+  "evals/schemas/model-result.schema.json",
+  "evals/corpus/development.json",
+  "evals/corpus/acceptance.json",
+  "evals/corpus/challenge.json",
+  "evals/frozen-manifest.json",
+  "evals/baseline-manifest.json",
+  "evals/rollback-manifest.json",
+  "evals/baselines/0.23.0-target-red.json",
+  "evals/baselines/0.23.0.json",
+  "evals/canonical-reference-exceptions.json",
+  "evals/results/example-public-result.json",
 ]) {
   assert(packaged.has(requiredPath), `package is missing ${requiredPath}`);
 }

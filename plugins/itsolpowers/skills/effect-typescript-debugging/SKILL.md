@@ -1,18 +1,17 @@
 ---
 name: effect-typescript-debugging
-description: "Debug Effect TS schemas, layers, fibers, typed errors, retries, streams, and resources."
+description: "Diagnose Effect TS failures involving errors, layers, schemas, fibers, retries, or resources."
 ---
 
 # Effect TypeScript Debugging
 
 Trace Effect failures through Cause, Exit, requirements, layer composition, runtime boundaries, concurrency, and resource scope before patching symptoms.
 
-## Process
+## Trigger boundary
 
-1. State expected behavior, actual behavior, impact, and the smallest reproducible symptom.
-2. Gather evidence from code, logs, traces, metrics, generated output, database plans, config, or failing tests before proposing a fix.
-3. Isolate the boundary that fails and compare it with a known working path.
-4. Implement one root-cause fix with focused verification or a regression test where feasible.
+Use this skill when an Effect TS symptom may involve Cause/Exit, typed errors, Context/Layer composition, runtime schemas, fibers, concurrency, retries, streams, or resource scope.
+
+Do not load it for a small local edit with a deterministic cause and no Effect boundary or runtime behavior change; follow the repository's established convention directly.
 
 ## Coordination
 

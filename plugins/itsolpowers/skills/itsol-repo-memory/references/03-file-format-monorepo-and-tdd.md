@@ -1,4 +1,4 @@
-# File Format Monorepo And TDD
+# File Format Monorepo And Verification
 
 Use `itsol-workflow-mode` for the exact schema and resolution semantics below.
 
@@ -65,12 +65,12 @@ Use `off` only as stable repository policy for a project that cannot be meaningf
 
 ## Monorepo Map
 
-| Path | Type | Stack | TDD mode | Verification |
+| Path | Type | Stack | Test support | Verification |
 |---|---|---|---|---|
-| `apps/web` | frontend | SvelteKit | limited | typecheck, build, manual QA |
-| `apps/api` | backend | .NET Web API | full | unit, integration |
+| `apps/web` | frontend | SvelteKit | limited | relevant existing checks, permitted UI QA |
+| `apps/api` | backend | .NET Web API | available | relevant unit/contract checks |
 | `packages/client` | generated client | Hey API | not-applicable | codegen diff, typecheck |
-| `infra` | infrastructure | Nomad/Docker | not-supported | config validation, review |
+| `infra` | infrastructure | Nomad/Docker | unavailable | config validation, review |
 
 ## Default Policy
 
@@ -85,7 +85,7 @@ If a touched path is not listed:
 
 - Owners: unknown
 - Stack:
-- TDD mode: full | limited | not-supported | not-applicable | unknown
+- Test support: available | limited | unavailable | not-applicable | unknown
 - Reason:
 - Supported automated tests:
   - `<command or "none known">`
@@ -93,7 +93,7 @@ If a touched path is not listed:
   - `<command/type or "none known">`
 - Do not spend time on:
   - `<known wasteful action or "none">`
-- Required replacement verification:
+- Verification appropriate to changed behavior:
   - `<manual QA, build, typecheck, smoke test, diagnostic, screenshot, log check>`
 
 ## Verification Commands
@@ -139,20 +139,13 @@ For monorepos, use prefix matching:
 
 Start with one root `.itsol.md`. Add local override files such as `apps/web/.itsol.md` only if the root file becomes too large or the team explicitly wants distributed ownership. If local overrides exist, read root first, then the nearest override for each touched path.
 
-## TDD Modes
+## Verification And Legacy TDD Metadata
 
-- `full`: TDD is expected. Add or update a failing automated test before production code.
-- `limited`: Prefer TDD where existing test harnesses support it; otherwise use the listed replacement verification.
-- `not-supported`: Do not scaffold or introduce a new test framework during normal work. Record a TDD exception and use replacement verification.
-- `not-applicable`: The area is generated code, docs, infra config, or another surface where TDD does not apply.
-- `unknown`: Inspect configs and ask or propose a small discovery step before deciding.
+Describe supported checks and constraints instead of prescribing test-first order. Apply the router's risk-proportionate verification contract: use relevant existing checks, add lasting tests only for meaningful behavior or regressions, and do not create a framework or coverage quota without agreed scope. Do not turn every helper or internal detail into a test contract.
 
-`not-supported` is not permission to skip verification. It means "do not waste time building a test harness for this task." The agent must still document:
+Existing `TDD mode` values (`full`, `limited`, `not-supported`, `not-applicable`, `unknown`) remain readable as historical testing-capability hints. They do not automatically activate TDD, require RED/GREEN, or require an exception before implementation. Use `itsol-tdd-workflow` only when the user explicitly requests test-first development for the task.
 
-- why RED/GREEN TDD was skipped
-- which supported checks were run
-- which manual or diagnostic verification replaced the RED test
-- residual risk from missing automated coverage
+Report checks performed, meaningful evidence, unavailable required verification, and residual risk. A project without supported automated tests still receives verification appropriate to the change and current permissions.
 
 ## Example Legacy Testing Policy
 
@@ -160,17 +153,17 @@ Start with one root `.itsol.md`. Add local override files such as `apps/web/.its
 ## Project: legacy/admin
 
 - Stack: unknown legacy frontend
-- TDD mode: not-supported
+- Test support: unavailable
 - Reason: repository has no maintained automated test harness for this app.
 - Supported automated tests:
   - none known
 - Unsupported automated tests:
   - do not introduce Vitest, Jest, or Playwright during normal feature/bugfix work
 - Do not spend time on:
-  - scaffolding a new test framework only to satisfy TDD workflow
-- Required replacement verification:
+  - scaffolding a new test framework during unrelated feature/bugfix work
+- Verification appropriate to changed behavior:
   - run available build/typecheck if present
   - manually reproduce the changed flow
   - capture screenshots for visible UI changes
-  - document the TDD exception and residual risk
+  - document observed evidence, unverified behavior, and residual risk
 ```

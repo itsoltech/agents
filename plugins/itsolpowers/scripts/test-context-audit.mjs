@@ -77,6 +77,9 @@ try {
   assert.equal(first.metrics.router.file_count, 1);
   assert.equal(first.metrics.router_guide.file_count, 1);
   assert.equal(first.metrics.codex_default_prompt.instruction_count, 2);
+  assert.equal(first.measurement.kind, "deterministic-word-count");
+  assert.equal(first.measurement.provider_token_measurements, "not collected");
+  assert.equal(first.metrics.bootstrap.measurement_kind, "deterministic-word-count");
   assert.equal(first.metrics.skill_descriptions.file_count, 2);
   assert.equal(first.metrics.skill_bodies.file_count, 2);
   assert.equal(first.metrics.references.file_count, 4);

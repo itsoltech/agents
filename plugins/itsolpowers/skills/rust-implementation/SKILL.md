@@ -1,18 +1,17 @@
 ---
 name: rust-implementation
-description: "Implement Rust with sound ownership, errors, async, SQLx, Serde, tracing, and tests."
+description: "Implement Rust changes to ownership, public APIs, errors, async, unsafe code, or persistence."
 ---
 
 # Rust Implementation
 
 Prefer correct, readable Rust first; optimize only where measurements or requirements justify complexity.
 
-## Process
+## Trigger boundary
 
-1. Inspect existing project conventions before introducing new structure.
-2. Define the contract, data flow, error behavior, permissions, observability, and tests before editing.
-3. Make the smallest coherent change that satisfies the behavior.
-4. Run focused verification and use `itsol-self-review` before handoff.
+Use this skill when a Rust change alters ownership or lifetimes, public APIs, error propagation, async/concurrency, unsafe code, persistence/serialization, tracing, or measured performance behavior.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit that does not change those boundaries; follow the repository's established convention directly.
 
 ## Coordination
 

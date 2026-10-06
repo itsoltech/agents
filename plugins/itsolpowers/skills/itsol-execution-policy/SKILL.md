@@ -5,18 +5,14 @@ description: "Resolve model, reasoning, agents, parallelism, review, and stop li
 
 # ITSOL Execution Policy
 
-A commit-only/repository-inspection follow-up or `.itsol.md` initialization is bounded administration. Reuse prior policy when applicable; do not create a new execution policy, agent budget, delegated review cycle, application QA, or completion gate solely for that operation.
+Resource and completion contract; resolve after `itsol-workflow-mode`. Bounded administration reuses prior policy and does not create a new budget, review, QA, or completion gate.
 
-Resolve this policy after `itsol-workflow-mode`. Keep resource limits independent from decision authority and planning gates.
-
-Record and preserve:
+## State
 
 ```yaml
 execution_policy:
   preset: economy | standard | deep | custom
-  policy_sources:
-    base: explicit-user-task-instruction | repo-default | agent-default
-    constraints: []
+  policy_sources: {base: explicit-user-task-instruction | repo-default | agent-default, constraints: []}
   model_profile: economy | balanced | frontier
   model_control: enforced | advisory
   reasoning_profile: low | medium | high
@@ -30,16 +26,15 @@ done_when:
   - <observable criterion with evidence>
 ```
 
-Use `standard` when no explicit or repository policy exists. Preset model/reasoning intent is advisory by default: a harness-specific configured profile+role mapping may override the preset reasoning level. Set `reasoning_control: enforced` only for an explicit user or repository hard ceiling; never infer it from the preset name. `standard` and `deep` default to `max_subagents: unlimited`; do not invent a numeric agent-type ceiling. `max_subagents` counts distinct identities/types, not executions, so one type may handle several independent work items. Keep `max_parallel: 3` as the execution-instance scheduling bound. A numeric identity ceiling is valid only when the user, an explicitly selected restrictive preset, or repository policy requests it. Apply platform constraints and explicit repository restrictions by tightening fields; never expand a resolved enforced ceiling automatically. Native model capability is always authoritative. Report advisory model or reasoning control honestly.
+Use `standard` without explicit/repository policy. Presets are advisory routing intent unless a user/repository ceiling sets `model_control` or `reasoning_control: enforced`; native capability still clamps unsupported levels. `standard`/`deep` default to unlimited distinct identities and `max_parallel: 3`; `economy` disables agents. `max_subagents` counts types, not executions. Never invent a numeric identity ceiling.
 
-Do not set `maxTurns` or use a turn count as completion. Accept `completed` only after validating every `done_when` criterion and required evidence. Preserve `partial`, `blocked`, and `failed` results.
+## Rules
 
-Only the main agent delegates. Count distinct child identities separately from execution instances, reuse stable `work_item_id` values for follow-ups, bound concurrency, keep one writer per file or semantic contract, and prohibit nested delegation. A required independent review that does not fit an explicit numeric policy ends incomplete; do not weaken it. An unlimited identity budget should select all required specialists and schedule them in bounded parallel batches without asking for budget expansion.
+- Never use `maxTurns` or termination as completion; validate every `done_when` and preserve `completed`, `partial`, `blocked`, and `failed`.
+- Record outcome, authority/constraints, `done_when`, focused evidence, unverified gaps, and blockers/next action.
+- Only the main agent delegates. Use children only for independent material work or required independent review, with one writer per file/contract, stable `work_item_id`, bounded concurrency, and no nested delegation.
+- A required review that exceeds policy remains incomplete; do not weaken the policy or ask for expansion unless `budget_escalation: ask` applies.
+- If a hard model/reasoning ceiling cannot be enforced, disable child delegation; inline work must report the limitation.
+- Tighten advisory routing, parallelism, review, or stop stages when useful, but never silently turn advisory model/reasoning intent into an enforced ceiling.
 
-Read:
-
-- [references/policy.md](references/policy.md) for presets, precedence, profiles, and repository policy.
-- [references/stops-and-delegation.md](references/stops-and-delegation.md) for stop ordering, response grammar, retry, compaction, and review-cycle semantics.
-- [references/platform-capabilities.md](references/platform-capabilities.md) before making provider-specific enforcement claims.
-
-Propagate the full execution state through task context, plans, compaction, task packets, continuations, reviews, and final handoff.
+Read [references/policy.md](references/policy.md) for precedence and presets, [references/stops-and-delegation.md](references/stops-and-delegation.md) for stop/retry/review semantics, and [references/platform-capabilities.md](references/platform-capabilities.md) for model-specific effort calibration or provider-specific enforcement claims. Propagate the full state through context, plans, packets, reviews, continuations, and handoff.

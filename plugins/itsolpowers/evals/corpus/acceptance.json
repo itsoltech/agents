@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "corpus_version": "1.0.0",
+  "corpus_version": "1.1.0",
   "set": "acceptance",
   "frozen": true,
   "cases": [
@@ -123,8 +123,8 @@
       "critical": false,
       "expected": {
         "primary_process_skill": "itsol-bug-debugging",
-        "domain_skills": ["tauri-desktop-debugging", "itsol-tdd-workflow"],
-        "forbidden_skills": ["electron-desktop-debugging"],
+        "domain_skills": ["tauri-desktop-debugging"],
+        "forbidden_skills": ["electron-desktop-debugging", "itsol-tdd-workflow"],
         "workflow_requirement": "governed",
         "execution_policy_requirement": "none",
         "delegation": "inline",

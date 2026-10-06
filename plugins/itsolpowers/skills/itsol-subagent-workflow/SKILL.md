@@ -1,24 +1,28 @@
 ---
 name: itsol-subagent-workflow
-description: "Delegate authorized work with bounded packets, ownership, verification, and independent review."
+description: "Delegate authorized work with bounded packets, ownership, verification, and review when required."
 ---
 # ITSOL Subagent Workflow
 
-Validate authorization through `itsol-workflow-mode` before delegation. Every task packet must contain `workflow_mode`, `mode_source`, `decision_authority`, `scope`, `artifact_state`, `execution_mode`, and `protected_constraints`; incomplete, inconsistent, or restriction-conflicting state returns `blocked`.
+Validate `itsol-workflow-mode` before delegation. Every packet includes `workflow_mode`, `mode_source`, `decision_authority`, `scope`, `artifact_state`, `execution_mode`, and `protected_constraints`; invalid or restriction-conflicting state is `blocked`.
 
-Then validate `itsol-execution-policy`. Every packet carries the complete execution state, observable `done_when`, a resolved child `stop_after` no later than the parent, remaining distinct-agent/parallel/review ceilings, and escalation behavior. Missing, expanded, or restriction-conflicting execution state returns `blocked`.
+Validate `itsol-execution-policy` too: propagate execution state, observable `done_when`, child `stop_after` no later than the parent, remaining identity/parallel/review ceilings, and escalation behavior. Missing or expanded state is `blocked`.
 
-Accept `approved` only for genuinely approved `governed` artifacts, `ready-for-execution` for reviewed `autonomous-planned` artifacts, and `not-required` for `direct`. A `Draft` never authorizes execution. Direct mode requires no plan files or paths.
+Accept `approved` only for genuinely approved `governed` artifacts, `ready-for-execution` for reviewed `autonomous-planned`, and `not-required` for `direct`; `Draft` never authorizes execution. Direct needs no plan path.
 
-Build a dependency-aware task graph, set a concurrency limit, and assign every packet a stable `work_item_id`. The same agent type may execute multiple independent packets concurrently or sequentially; identity reuse counts once against `max_subagents`, while every running packet counts against `max_parallel`. Give bounded read/write scope, enforce one writer per file/shared contract, require TDD or documented replacement verification, validate every response, and use independent review for changed surfaces. Initiative phase packets also carry `initiative_id`, `phase_id`, relevant requirement IDs, canonical artifact paths, current decisions, and phase-level evidence obligations; child completion updates neither initiative nor phase state until the main agent validates and records it. Preserve `partial`, `blocked`, `failed`, unverified, and coverage-gap results. Keep integration and final validation with the main agent.
+## Packet and graph
 
-Only the main agent delegates. Delegated agents must not spawn agents or invoke external agent CLIs. Never set `maxTurns`. A child response must use `completed`, `partial`, `blocked`, or `failed`, but the main agent accepts `completed` only after validating packet evidence and every `done_when` criterion. Commit only when separately authorized, using Angular convention and one coherent verified slice; otherwise leave changes uncommitted.
+State outcome, authority/constraints, `done_when`, focused evidence, bounded read/write scope, dependencies, ownership, and stable `work_item_id`. Build a graph only when multiple packets/dependencies need one; otherwise stay inline or use one packet. Identity reuse counts once against `max_subagents`; each running packet counts against `max_parallel`. Keep one writer per file/contract, require proportionate verification evidence, and use independent review only when policy, user request, or material risk warrants it. TDD/RED-GREEN evidence is required only for an explicitly requested test-first task.
 
-## Execution Policy
+Initiative phase packets additionally carry `initiative_id`, `phase_id`, requirement IDs, canonical artifact paths, decisions, and phase evidence obligations. Child completion does not update initiative/phase state until the main agent validates and records it.
 
-After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+## Boundary and response
 
-## Focused References
+Only the main agent delegates. Children do not spawn agents or invoke external agent CLIs. Never set `maxTurns`. Each response reports `completed`, `partial`, `blocked`, or `failed`, achieved evidence, unverified gaps, blockers, and next action; the main agent accepts `completed` only after validating every `done_when`. Commit only when separately authorized, using Angular convention and one coherent verified slice.
 
-- [01-planning-and-delegation.md](./references/01-planning-and-delegation.md) - Planning And Delegation
-- [02-review-commit-validation.md](./references/02-review-commit-validation.md) - Review Commit And Validation
+Load `itsol-execution-policy` after workflow mode and preserve both contracts through plans, context, compaction, packets, continuations, review, and handoff. Resource policy never changes workflow authority.
+
+## Focused references
+
+- [01-planning-and-delegation.md](./references/01-planning-and-delegation.md) — packet planning and delegation.
+- [02-review-commit-validation.md](./references/02-review-commit-validation.md) — review, commit, and validation.

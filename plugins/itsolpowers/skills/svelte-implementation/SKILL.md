@@ -1,18 +1,17 @@
 ---
 name: svelte-implementation
-description: "Implement Svelte UI, routes, loads, forms, APIs, accessibility, states, and tests."
+description: "Implement Svelte/SvelteKit changes to components, routes, data flow, forms, SSR, or accessibility."
 ---
 
 # Svelte Implementation
 
 Build Svelte code around clear component boundaries, typed data, trusted server-side validation, accessible states, and measurable performance.
 
-## Process
+## Trigger boundary
 
-1. Inspect existing project conventions before introducing new structure.
-2. Define the contract, data flow, error behavior, permissions, observability, and tests before editing.
-3. Make the smallest coherent change that satisfies the behavior.
-4. Run focused verification and use `itsol-self-review` before handoff.
+Use this skill when a Svelte/SvelteKit change alters component or route behavior, load/data flow, forms, SSR/hydration, accessibility, browser security, or measured UI performance.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit that does not change user-visible or server/browser boundaries; follow the repository's established convention directly.
 
 ## Coordination
 

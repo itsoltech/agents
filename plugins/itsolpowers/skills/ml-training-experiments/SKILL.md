@@ -1,11 +1,17 @@
 ---
 name: ml-training-experiments
-description: "Design reproducible ML training experiments with tracking, checkpoints, and performance."
+description: "Plan or change ML training experiments, tracking, checkpoints, scaling, evals, or reproducibility."
 ---
 
 # ML Training Experiments
 
 Run ML experiments as reproducible engineering work: scoped hypotheses, pinned code/data/config, tracked results, resumable training, and clear promotion decisions.
+
+## Trigger boundary
+
+Use this skill when planning or changing ML training experiments, datasets/configuration, tracking, checkpoints/resume, scaling, evaluation, promotion, or reproducibility controls.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no training, dataset, experiment, checkpoint, evaluation, or promotion behavior impact; follow the repository's established convention directly.
 
 ## Process
 

@@ -15,11 +15,11 @@ Build React 19 and Next.js frontend changes around clear rendering boundaries, t
 4. Keep `app/` thin: routing, layouts, providers, boundaries, and page composition. Put domain behavior in feature modules and shared primitives in `shared`.
 5. Prefer Server Components by default and move Client Components as low in the tree as possible.
 6. Define loading, empty, error, permission, stale/refetching, mobile, and keyboard behavior before editing visible UI.
-7. Use TDD where repo policy supports it; otherwise document the `.itsol.md` exception and run replacement verification.
+7. Use proportionate checks for changed behavior, starting with maintained tests. Add tests only for meaningful gaps; no test-first or exception gate is required. Use TDD only on explicit user request.
 
 ## Coordination
 
-Use with `itsol-functional-planning`, `itsol-tdd-workflow`, `react-nextjs-app-router-rendering`, `react-nextjs-api-cache-forms`, `react-nextjs-quality-security`, `ui-ux-workflow`, `hey-api-openapi-*`, and `security-frontend-browser-review` as relevant.
+Use with `itsol-functional-planning`, `react-nextjs-app-router-rendering`, `react-nextjs-api-cache-forms`, `react-nextjs-quality-security`, `ui-ux-workflow`, `hey-api-openapi-*`, and `security-frontend-browser-review` as relevant.
 
 ## Scope And Architecture
 
@@ -85,5 +85,5 @@ Use with `itsol-functional-planning`, `itsol-tdd-workflow`, `react-nextjs-app-ro
 ## Verification
 
 - Run the narrowest relevant verification first: typecheck, lint, component/unit tests, generated client check, build, Playwright, accessibility checks, bundle analysis, or smoke testing.
-- For legacy repos without tests, do not scaffold a framework only to satisfy TDD. Document the repo policy exception and run replacement verification.
+- For legacy repos without maintained tests, use proportionate supported verification. Do not scaffold a framework without agreed scope or require a TDD exception.
 - For visible UI, verify important states, mobile/desktop behavior, long text, keyboard access, slow API, and error paths.

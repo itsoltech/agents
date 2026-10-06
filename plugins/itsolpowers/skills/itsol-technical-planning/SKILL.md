@@ -19,7 +19,7 @@ Resolve and preserve the complete task state through `itsol-workflow-mode` befor
 3. For planned modes, map affected modules, data, contracts, cache, events, integrations, permissions, infrastructure, observability, QA, repo policy, and technology-version dependencies.
 4. Load `itsol-current-tech-context` when framework, SDK, runtime, package, generated client, external API, language edition, database driver, or infrastructure tooling affects the decision.
 5. Capture the selected approach, rejected alternatives, risks, open questions, owners, and verification plan. In `autonomous-planned`, ask only when equally plausible choices materially change behavior, permissions, data, rollout, or architecture.
-6. Include concrete files/modules, repo-memory context, current-tech context, required ITSOL skills, logical branches, TDD entry points or documented exception, verification commands, and candidate subagent split.
+6. Include concrete files/modules, repo-memory context, current-tech context, required ITSOL skills, logical branches, proportionate verification evidence/commands, and candidate subagent split. Do not require TDD entry points or exceptions; add a test-first plan only on explicit user request.
 7. For risky release work, document deployment order, validation, monitoring, rollback, and responsibility.
 8. For planned modes, write new Technical Plans as `Draft`, self-review them proportionately, run isolated review only when required or worthwhile, and resolve concrete material findings.
 9. In `governed`, present the specific Technical Plan, obtain explicit user approval, change it to `Approved`, and ask for execution mode. Do not infer approval from the original request, `continue`, silence, or a generic agent statement.
@@ -27,7 +27,7 @@ Resolve and preserve the complete task state through `itsol-workflow-mode` befor
 
 ## Execution Policy
 
-After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+After resolving `itsol-workflow-mode`, load `itsol-execution-policy` whenever resource, stop, or completion state matters; it owns the full execution state and evidence validation. Never use `maxTurns` or termination as completion; preserve `partial`, `blocked`, and `failed` outcomes.
 
 ## Focused References
 

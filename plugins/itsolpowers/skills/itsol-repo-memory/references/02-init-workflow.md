@@ -25,18 +25,18 @@ Before writing `.itsol.md`, show a concise candidate map:
 ```markdown
 I found these candidate projects:
 
-| Path | Type | Detected stack | Detected test/config hints | Proposed TDD mode |
+| Path | Type | Detected stack | Detected test/config hints | Supported verification |
 |---|---|---|---|---|
-| `apps/web` | frontend app | SvelteKit | `npm run check`, no e2e config found | limited |
-| `apps/api` | backend service | .NET Web API | `*.Tests.csproj` found | full |
-| `infra` | infrastructure | Nomad/Docker | no test harness | not-applicable |
+| `apps/web` | frontend app | SvelteKit | `npm run check`, no e2e config found | confirm focused checks |
+| `apps/api` | backend service | .NET Web API | `*.Tests.csproj` found | inspect maintained tests |
+| `infra` | infrastructure | Nomad/Docker | no test harness | config validation and review |
 ```
 
 Then ask the user to confirm or correct:
 
 - which paths are real projects
 - owner/maintainer if known
-- TDD mode for each project
+- maintained test support and proportionate verification per project
 - supported verification commands
 - unsupported or wasteful actions
 - manual QA expectations

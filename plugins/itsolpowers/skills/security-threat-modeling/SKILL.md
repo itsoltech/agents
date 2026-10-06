@@ -1,18 +1,17 @@
 ---
 name: security-threat-modeling
-description: "Threat-model assets, actors, trust boundaries, abuse paths, controls, and residual risk."
+description: "Threat-model new or changed assets, actors, data flows, integrations, trust boundaries, or controls."
 ---
 
 # Security Threat Modeling
 
 Identify assets, actors, trust boundaries, what can go wrong, controls, and tests before implementation or review.
 
-## Process
+## Trigger boundary
 
-1. Inspect the changed behavior and data flow before listing risks.
-2. Check negative paths, bypasses, tenant/object boundaries, logs, cache, async jobs, and release impact where relevant.
-3. For review, report findings by severity with file references and concrete exploit or failure scenarios.
-4. For implementation, add controls and tests in the backend or trusted boundary; do not rely on frontend-only enforcement.
+Use this skill when a new or materially changed system, data flow, actor, asset, integration, trust boundary, abuse path, control, or residual-risk decision needs security modeling.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no asset, actor, trust-boundary, data-flow, abuse, or control impact; follow the repository's established convention directly.
 
 ## Evidence
 

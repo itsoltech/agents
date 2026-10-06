@@ -30,8 +30,8 @@ Return responsive findings, viewport risks, affected files, missing visual evide
 
 ## Required Response Envelope
 
-End with exactly one ordered, column-one envelope without a code fence. Use `completed` only when the delegated acceptance criteria and verification are satisfied.
+End with one ordered, column-one envelope; use `completed` only after acceptance and verification.
 
 Status: completed|partial|blocked|failed
-Verification: <non-empty command or evidence summary; use "not run: <reason>" only when not completed>
+Verification: <non-empty command or evidence; "not run: <reason>" only when not completed>
 Unverified: <non-empty gap summary or "none">

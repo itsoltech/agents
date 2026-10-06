@@ -1,18 +1,17 @@
 ---
 name: effect-typescript-implementation
-description: "Implement Effect TS services, layers, schemas, resources, concurrency, and tests."
+description: "Implement Effect TS changes to typed errors, layers, schemas, resources, or concurrency."
 ---
 
 # Effect TypeScript Implementation
 
 Use Effect to make failures, dependencies, resources, concurrency, and runtime validation explicit at system boundaries.
 
-## Process
+## Trigger boundary
 
-1. Inspect existing project conventions before introducing new structure.
-2. Define the contract, data flow, error behavior, permissions, observability, and tests before editing.
-3. Make the smallest coherent change that satisfies the behavior.
-4. Run focused verification and use `itsol-self-review` before handoff.
+Use this skill when an Effect TS change alters typed errors, Context/Layer dependencies, runtime schemas, resource scope, concurrency, retries, or another system boundary.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit that does not change those boundaries; follow the repository's established convention directly.
 
 ## Coordination
 

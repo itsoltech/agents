@@ -1,11 +1,17 @@
 ---
 name: agent-browser-dogfood-workflow
-description: "Run scoped black-box browser dogfood across user flows, responsive states, and accessibility."
+description: "Test browser user flows, responsive states, or accessibility when broader QA coverage is needed."
 ---
 
 # Agent Browser Dogfood Workflow
 
 Use this skill to run or plan frontend dogfood with `agent-browser` before QA handoff, after bug fixes, for preview deployments, or when collecting evidence for UI findings.
+
+## Trigger boundary
+
+Use it for scoped black-box coverage of user flows, responsive states, accessibility, preview deployments, or fix verification before QA handoff.
+
+Do not load it for a small local interaction check or one deterministic visible assertion that does not need flow coverage; use the browser directly.
 
 ## Process
 

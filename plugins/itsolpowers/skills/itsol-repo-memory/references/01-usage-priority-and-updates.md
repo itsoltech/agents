@@ -10,7 +10,7 @@ Read root `.itsol.md` before:
 
 - task intake or routing
 - writing Business, Technical, or Technical Fix Plans
-- deciding whether TDD is possible
+- selecting proportionate verification from maintained tests and other supported checks
 - adding tests or test frameworks
 - choosing verification commands
 - running subagent-driven implementation

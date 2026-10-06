@@ -1,6 +1,6 @@
 {
   "name": "itsolpowers",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "description": "ITSOL engineering skills and bounded agents for Claude Code, Codex, OpenCode, and Pi",
   "license": "MIT",
   "author": "ITSOL Tech <dev@itsol.tech>",
@@ -22,6 +22,7 @@
     "extensions",
     "hooks",
     "scripts",
+    "evals",
     "skills"
   ],
   "pi": {

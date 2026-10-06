@@ -36,7 +36,7 @@ Rekomendacja: przy korzystaniu z `itsolpowers` wyłącz `superpowers`, żeby nie
 
 #### itsolpowers
 
-Rekomendowany plugin ITSOL. Zawiera skille ITSOL do routingu zadań, konfigurowalnych workflow modes, repo memory `.itsol.md`, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, SQL Server/.NET data access, planowania funkcjonalnego, pracy sub-agentami, TDD, implementacji, debugowania, self-review, security review i infrastruktury.
+Rekomendowany plugin ITSOL. Zawiera skille ITSOL do routingu zadań, konfigurowalnych workflow modes, repo memory `.itsol.md`, aktualnego kontekstu technologii i dokumentacji, UI/UX frontendu, migracji technologii aplikacji, SQL Server/.NET data access, planowania funkcjonalnego, pracy sub-agentami, implementacji, debugowania, self-review, security review i infrastruktury. TDD jest osobnym, opcjonalnym skillem na jawne żądanie.
 
 ```
 /plugin install itsolpowers@itsoltech-agents
@@ -49,6 +49,33 @@ Bootstrap identyfikuje produkt, granice chronionych działań oraz sposób znale
 routera i pamięci repozytorium. Router wybiera jeden główny proces, a następnie
 tylko potrzebne skille domenowe. Szczegółowe workflow nie są ładowane do każdego
 zadania.
+
+Router zawiera wspólną zasadę komunikacji inspirowaną ASD-STE100: język
+użytkownika, wynik na początku, krótkie zdania, proste słowa i stałe nazwy pojęć.
+Typowy update mieści się w 1–2 zdaniach, a zwykłe podsumowanie w krótkim akapicie
+lub 3–5 punktach. To domyślna forma rozmowy; dowody, istotne ograniczenia,
+wymagane formaty odpowiedzi i kompletność planów lub raportów pozostają zachowane.
+Jest to adaptacja zasad jasnego pisania do wielu języków, bez deklaracji formalnej
+zgodności z angielskim standardem.
+
+Agent kontynuuje autoryzowaną pracę do spełnienia `done_when`, w granicach workflow
+i execution policy. Komunikat o postępie nie zastępuje wykonania następnego kroku.
+Niezależna praca może trwać podczas oczekiwania na odpowiedź lub narzędzie.
+Po osiągnięciu wyniku i zakończeniu wymaganych sprawdzeń agent raportuje rezultat;
+dodatkowe rundy wymagają nowej zmiany, błędu, nierozstrzygniętej wątpliwości lub
+wymogu polityki. `Draft` pozwala przygotować plan, ale nie rozpocząć implementacji.
+Osobny reviewer jest uruchamiany tylko zgodnie z polityką, jawnym żądaniem lub
+istotnym ryzykiem.
+
+Workflow nie wymaga TDD, testu przed kodem ani dokumentowania wyjątku od TDD.
+Weryfikacja zaczyna się od istniejących, istotnych sprawdzeń. Nowy trwały test
+ma chronić konkretne zachowanie, kontrakt lub istotną regresję, której obecne
+pokrycie nie chroni. Nie dodawaj testu dla każdej funkcji, liczników wywołań mocków,
+prywatnej struktury ani powielonych asercji. Aktualizuj przestarzałe asercje
+blokujące zamierzoną zmianę, zachowując użyteczne pokrycie zachowania i bezpieczeństwa.
+TDD uruchamiaj tylko na jawne żądanie; starsze pola `TDD mode` w `.itsol.md`
+nie włączają go automatycznie. Drobne edycje nie wymagają nowych testów,
+a doraźna diagnostyka nie musi stawać się kolejnym plikiem testowym.
 
 Dostępne są dwa provider-neutral profile:
 
@@ -82,7 +109,20 @@ npm --prefix plugins/itsolpowers run test:skill-layout
 npm --prefix plugins/itsolpowers run validate:context-engineering
 ```
 
-Korpus ewaluacyjny i baseline pozostają zamrożone. Wynik modelowy jest
+Audyt mierzy słowa, a walidacja offline sprawdza strukturę i kontrakty. Żadne z tych
+sprawdzeń nie dowodzi poprawy jakości na rzeczywistych modelach. Przed taką
+deklaracją porównaj baseline i candidate na tych samych reprezentatywnych
+zadaniach, z tym samym modelem, harness, reasoningiem i warunkami wykonania.
+Zapisz załadowane powierzchnie kontekstu, wynik zadania i dowody, rzeczywiste
+tokeny, czas oraz koszt pomyślnego wykonania. Oprócz routingu uwzględnij zadania
+implementacji i debugowania, wymagania zgody, weryfikację zmian i komunikację
+w używanych językach. Wywołania modeli i testy E2E wymagają właściwej autoryzacji;
+brak wyników raportuj jako niezweryfikowany, a nie jako PASS.
+
+Korpus ewaluacyjny 1.1.0 ma wersjonowane oczekiwania: zwykłe bugfixy i implementacja
+nie wybierają TDD; istniejący przypadek z jawnym żądaniem TDD nadal je wybiera.
+Odświeżony manifest zamraża tę wersję. Archiwalny baseline 0.23.0 pozostaje
+niezmieniony; porównanie wyników wymaga tej samej wersji korpusu. Wynik modelowy jest
 raportowany oddzielnie od deterministycznych kontraktów, dzięki czemu alternatywny
 bezpieczny routing nie ukrywa regresji, ale też nie jest automatycznie
 interpretowany jako naruszenie bezpieczeństwa.
@@ -95,7 +135,7 @@ Centralny skill `itsol-workflow-mode` rozstrzyga poziom ceremonii przed planowan
 | --- | --- | --- |
 | `governed` | Pełne Discovery i Decision Gates, proporcjonalny self-review, opcjonalny lub wymagany polityką review oraz jawna akceptacja każdego konkretnego planu. | `Draft`, potem `Approved` po akceptacji użytkownika |
 | `autonomous-planned` | Agent tworzy i proporcjonalnie sprawdza plany, sam decyduje o wartości izolowanego review, wybiera rekomendację i kontynuuje bez pauz na akceptację. | `Draft`, potem `Ready for execution` |
-| `direct` | Bez trwałych Business, Technical i Technical Fix Planów oraz ich bramek; nadal obowiązują evidence, TDD lub replacement verification i self-review. | `not-required` |
+| `direct` | Bez trwałych Business, Technical i Technical Fix Planów oraz ich bramek; nadal obowiązują evidence, proporcjonalna weryfikacja i self-review. | `not-required` |
 
 Commit-only, `git status`, pokazanie diffu/logu oraz staging już wykonanego spójnego slice'a korzystają z **Administrative Fast Path**. Nie tworzą nowego workflow state, planów, subagentów ani rund review. Agent sprawdza dokładny scope, reuse'uje wcześniejsze verification evidence, stage'uje tylko właściwe pliki, tworzy lokalny commit Angular bez amend i raportuje hash/status. Jeśli scope jest niejednoznaczny lub hook zawiedzie, pyta albo raportuje tylko ten konkretny problem. Push, tag, release i deploy pozostają osobno autoryzowane.
 
@@ -193,6 +233,17 @@ qa:
 ITSOL Powers celowo nie ustawia `maxTurns`. Zakończenie pętli agenta nie oznacza wykonania zadania. Każdy worker zwraca status `completed`, `partial`, `blocked` albo `failed`, weryfikację i braki; orchestrator akceptuje `completed` dopiero po sprawdzeniu `done_when` i dowodów. Claude plugin używa jednego deterministycznego retry dla brakującego envelope, bez nieskończonej pętli.
 
 Modele i reasoning są provider-neutral intent. Claude workers mają overrideable balanced default `sonnet`/`medium`; Codex bez skonfigurowanych ról i OpenCode raportują profil jako advisory. Codex może dostać zarządzane role przez `$itsol-codex-setup`, a ich strukturę sprawdza `$itsol-codex-doctor`. Żaden delegowany agent nie ma prawa uruchamiać kolejnych agentów.
+
+Aktualne identyfikatory domyślne OpenAI to `gpt-6-luna` dla wąskich ról,
+`gpt-6.1-sol` dla workerów/reviewerów economy i balanced oraz `gpt-6-astra`
+dla profilu quality. Definicje Claude używają krótkich aliasów rodzin:
+domyślnie `sonnet`, a dla trudniejszych zadań jawny override `opus` lub `fable`
+zgodnie z polityką. Dzięki temu wydanie nowej wersji nie wymaga aktualizowania
+każdej definicji. Pełny identyfikator stosuj tylko przy jawnym wymaganiu
+przypięcia wersji. Rzeczywisty model zależy od runtime, platformy i konfiguracji;
+zweryfikuj go przed deklaracją konkretnych możliwości. Skille nie wprowadzają
+automatycznego fallbacku ani nie konwertują identyfikatorów na ARN lub deploymenty
+innych platform.
 
 Przykłady:
 
@@ -424,7 +475,8 @@ Po instalacji `itsolpowers` dostępne są skille:
 - `itsol-execution-policy` — niezależny kontrakt kosztu, modeli/reasoningu, delegacji, review, `done_when`, stop pointów i completion evidence bez `maxTurns`
 - `itsol-codex-setup` — jawny dry-run i instalacja czterech zarządzanych ról Codex w profilu `economy`, `balanced` albo `quality`, globalnie lub projektowo
 - `itsol-codex-doctor` — read-only diagnostyka wersji Codex, ról, managed state, limitów i driftu bez płatnego sprawdzania dostępności modeli
-- `itsol-task-intake`, `itsol-repo-memory`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, repo policy `.itsol.md`, aktualnej dokumentacji i migracji technologii, przez zależne od trybu plany lub bezpośrednią realizację, podział pracy na sub-agentów, red-green-refactor albo repo-policy replacement verification, do QA
+- `itsol-task-intake`, `itsol-repo-memory`, `itsol-current-tech-context`, `application-technology-migration`, `itsol-requirements-review`, `itsol-functional-planning`, `itsol-subagent-workflow`, `itsol-feature-implementation`, `itsol-bug-debugging`, `itsol-technical-planning`, `itsol-code-review-workflow`, `itsol-self-review`, `itsol-qa-handoff` — procesowe workflow pracy od wymagań, repo policy `.itsol.md`, aktualnej dokumentacji i migracji technologii, przez zależne od trybu plany lub bezpośrednią realizację, podział pracy na sub-agentów i proporcjonalną weryfikację, do QA
+- `itsol-tdd-workflow` — opcjonalny RED-GREEN-REFACTOR, wyłącznie na jawne żądanie test-first development
 - `security-*` — rozdrobnione skille security dla threat modelingu, auth, authz, API, frontendu, sekretów, supply chain, QA i obsługi podatności
 - `infra-*` — rozdrobnione skille infrastrukturalne dla deploymentu, kontenerów, Nomada, routingu, edge protection, sekretów, obserwowalności, backupów, capacity i incidentów
 - `ui-*` — framework-agnostic UI/UX frontendu: workflow, design system, architektura komponentów, stany i formularze, responsywność, Tailwind/tokeny, accessibility/motion, performance/stability, testy/QA i code review UI

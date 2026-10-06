@@ -19,7 +19,7 @@ Implement Electron desktop apps with explicit process boundaries, narrow preload
 
 ## Coordination
 
-Use with `itsol-current-tech-context`, `itsol-tdd-workflow`, `security-frontend-browser-review`, `security-files-integrations-review`, `security-secrets-config-review`, `ui-frontend-testing-qa`, `ui-accessibility-motion`, and framework-specific frontend skills as relevant.
+Use with `itsol-current-tech-context`, `security-frontend-browser-review`, `security-files-integrations-review`, `security-secrets-config-review`, `ui-frontend-testing-qa`, `ui-accessibility-motion`, and framework-specific frontend skills as relevant.
 
 ## Reference Routing
 

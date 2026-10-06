@@ -1,13 +1,19 @@
 ---
 name: tanstack-query-react-nextjs-debugging
-description: "Debug React/Next TanStack Query v5 stale data, hydration, invalidation, and cache isolation."
+description: "Diagnose React/Next TanStack Query stale data, hydration, invalidation, or cache isolation failures."
 ---
 
 # TanStack Query React Next.js Debugging
 
-For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, proportionate verification, and final review in every mode.
 
 Trace React 19 and Next.js TanStack Query failures from query key to query function, API error mapping, cache state, invalidation, SSR hydration, auth scope, and rendered UI before changing behavior.
+
+## Trigger boundary
+
+Use this skill when React/Next.js TanStack Query behavior diverges across query keys/functions, API errors, cache or invalidation, SSR/hydration, auth/tenant scope, or rendered UI. Detect repo-pinned React/Next/TanStack versions before judging behavior.
+
+Do not load it for a small local edit with a deterministic cause and no query, cache, hydration, auth-scope, reactivity, or rendered-state behavior change; follow the repository's established convention directly.
 
 ## Process
 

@@ -18,7 +18,7 @@ Implement Expo / React Native mobile apps as production mobile software, not gen
 
 ## Coordination
 
-Use with `itsol-current-tech-context`, `itsol-tdd-workflow`, `ui-ux-workflow`, `ui-accessibility-motion`, `ui-performance-stability`, `hey-api-openapi-codegen`, `security-auth-session-review`, `security-files-integrations-review`, and release/security Expo skills when OTA, EAS, permissions, privacy, credentials, or store behavior are in scope. For TanStack Query in mobile apps, use `tanstack-query-react-nextjs-implementation` only for framework-agnostic query keys, cache, mutation, invalidation, and auth-cache patterns; ignore Next.js SSR/App Router guidance unless web/Next.js is also in scope.
+Use with `itsol-current-tech-context`, `ui-ux-workflow`, `ui-accessibility-motion`, `ui-performance-stability`, `hey-api-openapi-codegen`, `security-auth-session-review`, `security-files-integrations-review`, and release/security Expo skills when OTA, EAS, permissions, privacy, credentials, or store behavior are in scope. For TanStack Query in mobile apps, use `tanstack-query-react-nextjs-implementation` only for framework-agnostic query keys, cache, mutation, invalidation, and auth-cache patterns; ignore Next.js SSR/App Router guidance unless web/Next.js is also in scope.
 
 ## Reference Routing
 

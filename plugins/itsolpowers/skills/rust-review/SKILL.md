@@ -1,24 +1,17 @@
 ---
 name: rust-review
-description: "Review Rust ownership, APIs, async, locks, errors, unsafe code, SQLx, and tests."
+description: "Review Rust changes to ownership, APIs, async, unsafe code, errors, persistence, or behavior tests."
 ---
 
 # Rust Review
 
 Review Rust changes for correctness, clear ownership, controlled allocation, async safety, error model, maintainable APIs, and measured performance claims.
 
-## Process
+## Trigger boundary
 
-1. Inspect the diff and surrounding code before applying checklist items.
-2. Check correctness, boundaries, security, data flow, observability, tests, and deployment impact for the changed behavior.
-3. Report concrete findings first, ordered by severity, with file references and affected behavior.
-4. Call out missing tests or residual risk only when it is tied to the reviewed change.
+Use this skill when a Rust diff changes ownership/lifetimes, public APIs, async or locks, unsafe code, errors, SQLx/Serde boundaries, tests, or performance claims.
 
-## Large PR Subagent Review
-
-For broad or materially risky pull requests, recommend focused additional review only when independent expertise is likely to improve the verdict. Judge this from concrete risk, novelty, blast radius, reversibility, and context size—not file count or category matching alone. Small and conventional changes should remain one pragmatic pass.
-
-When additional reviewers add value, split only by independent material surfaces. Each returns concrete evidence-based findings; the main agent removes duplicates and false positives and owns the proportional final verdict.
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no Rust runtime, data, concurrency, safety, or performance impact; follow the repository's established convention directly.
 
 ## Coordination
 

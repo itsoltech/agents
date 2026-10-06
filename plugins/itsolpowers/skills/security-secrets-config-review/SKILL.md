@@ -1,24 +1,17 @@
 ---
 name: security-secrets-config-review
-description: "Review secret exposure across environment, logs, CI/CD, public variables, and rotation."
+description: "Review changes to secret sources, scope, injection, logging, packaging, rotation, or access."
 ---
 
 # Security Secrets Config Review
 
 Check secret source, scope, exposure in logs/builds/images, rotation, environment separation, and least-privilege access.
 
-## Process
+## Trigger boundary
 
-1. Inspect the changed behavior and data flow before listing risks.
-2. Check negative paths, bypasses, tenant/object boundaries, logs, cache, async jobs, and release impact where relevant.
-3. For review, report findings by severity with file references and concrete exploit or failure scenarios.
-4. For implementation, add controls and tests in the backend or trusted boundary; do not rely on frontend-only enforcement.
+Use this skill when a change sources, scopes, injects, logs, builds, packages, rotates, or grants access to secrets or environment configuration, including public variables and CI/CD.
 
-## Large PR Subagent Review
-
-For broad or materially risky pull requests, recommend focused additional review only when independent expertise is likely to improve the verdict. Judge this from concrete risk, novelty, blast radius, reversibility, and context size—not file count or category matching alone. Small and conventional changes should remain one pragmatic pass.
-
-When additional reviewers add value, split only by independent material surfaces. Each returns concrete evidence-based findings; the main agent removes duplicates and false positives and owns the proportional final verdict.
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no secret, configuration, environment, build, logging, or access impact; follow the repository's established convention directly.
 
 ## Evidence
 

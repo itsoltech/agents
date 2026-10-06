@@ -1,24 +1,17 @@
 ---
 name: security-supply-chain-review
-description: "Review supply-chain risk in dependencies, lockfiles, scripts, SBOMs, licenses, and CVEs."
+description: "Review dependency, lockfile, build/release, provenance, license, CVE, or artifact-scan changes."
 ---
 
 # Security Supply Chain Review
 
 Check dependency provenance, lockfiles, generated code, CI gates, artifact integrity, SBOM/provenance, and container scanning.
 
-## Process
+## Trigger boundary
 
-1. Inspect the changed behavior and data flow before listing risks.
-2. Check negative paths, bypasses, tenant/object boundaries, logs, cache, async jobs, and release impact where relevant.
-3. For review, report findings by severity with file references and concrete exploit or failure scenarios.
-4. For implementation, add controls and tests in the backend or trusted boundary; do not rely on frontend-only enforcement.
+Use this skill when a change adds or upgrades dependencies, lockfiles, generated code, build/release scripts, SBOM/provenance, licenses, CVE gates, or artifact/container scanning.
 
-## Large PR Subagent Review
-
-For broad or materially risky pull requests, recommend focused additional review only when independent expertise is likely to improve the verdict. Judge this from concrete risk, novelty, blast radius, reversibility, and context size—not file count or category matching alone. Small and conventional changes should remain one pragmatic pass.
-
-When additional reviewers add value, split only by independent material surfaces. Each returns concrete evidence-based findings; the main agent removes duplicates and false positives and owns the proportional final verdict.
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no dependency, artifact, build, release, license, or scan impact; follow the repository's established convention directly.
 
 ## Evidence
 

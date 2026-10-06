@@ -1,18 +1,17 @@
 ---
 name: mongodb-operations-debugging
-description: "Debug MongoDB queries, indexes, replication, sharding, backups, and hidden Compose state."
+description: "Diagnose MongoDB incidents involving query plans, indexes, replication, sharding, or backups."
 ---
 
 # MongoDB Operations Debugging
 
 Debug MongoDB incidents using explain output, index state, profiler or slow query data, replication metrics, shard state, driver config, and recent schema/index changes.
 
-## Process
+## Trigger boundary
 
-1. State expected behavior, actual behavior, impact, and the smallest reproducible symptom.
-2. Gather evidence from code, logs, traces, metrics, generated output, database plans, config, or failing tests before proposing a fix.
-3. Isolate the boundary that fails and compare it with a known working path.
-4. Implement one root-cause fix with focused verification or a regression test where feasible.
+Use this skill when a MongoDB incident involves query plans or indexes, profiler/slow queries, replication or sharding state, driver configuration, backups, or recent schema/index changes.
+
+Do not load it for a small local edit with a deterministic cause and no database query, index, replication, sharding, backup, or operational-state behavior change; follow the repository's established convention directly.
 
 ## Coordination
 

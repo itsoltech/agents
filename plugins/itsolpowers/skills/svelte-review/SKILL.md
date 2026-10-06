@@ -1,24 +1,17 @@
 ---
 name: svelte-review
-description: "Review Svelte components, routes, stores, forms, security, accessibility, and tests."
+description: "Review Svelte/SvelteKit changes to components, routes, data flow, forms, SSR, or browser security."
 ---
 
 # Svelte Review
 
 Review Svelte changes for correctness, reactivity, data flow, accessibility, security, async UX, and maintainability.
 
-## Process
+## Trigger boundary
 
-1. Inspect the diff and surrounding code before applying checklist items.
-2. Check correctness, boundaries, security, data flow, observability, tests, and deployment impact for the changed behavior.
-3. Report concrete findings first, ordered by severity, with file references and affected behavior.
-4. Call out missing tests or residual risk only when it is tied to the reviewed change.
+Use this skill when a Svelte/SvelteKit diff changes component or route behavior, reactivity/data flow, forms, SSR/hydration, accessibility, browser security, async UX, or deployment behavior.
 
-## Large PR Subagent Review
-
-For broad or materially risky pull requests, recommend focused additional review only when independent expertise is likely to improve the verdict. Judge this from concrete risk, novelty, blast radius, reversibility, and context size—not file count or category matching alone. Small and conventional changes should remain one pragmatic pass.
-
-When additional reviewers add value, split only by independent material surfaces. Each returns concrete evidence-based findings; the main agent removes duplicates and false positives and owns the proportional final verdict.
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no user-visible or server/browser impact; follow the repository's established convention directly.
 
 ## Coordination
 

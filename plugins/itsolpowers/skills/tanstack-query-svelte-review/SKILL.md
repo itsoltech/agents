@@ -1,25 +1,17 @@
 ---
 name: tanstack-query-svelte-review
-description: "Review Svelte TanStack Query v5/v6 runes, keys, cache, SSR, and mutations."
+description: "Review Svelte TanStack Query changes to keys, cache, SSR, mutations, or stores/runes reactivity."
 ---
 
 # TanStack Query Svelte Review
 
 Review server-state behavior for stable keys, correct query functions, version-aware Svelte reactivity, safe mutation side effects, SSR correctness, and security-sensitive cache handling.
 
-## Process
+## Trigger boundary
 
-1. Inspect the diff and surrounding code before applying checklist items.
-2. Detect whether the project uses `@tanstack/svelte-query` v5 or v6 before judging Svelte stores/runes patterns.
-3. Check correctness, boundaries, security, data flow, observability, tests, and deployment impact for the changed behavior.
-4. Report concrete findings first, ordered by severity, with file references and affected behavior.
-5. Call out missing tests or residual risk only when it is tied to the reviewed change.
+Use this skill when a Svelte TanStack Query diff changes query keys/functions, cache or mutation side effects, SSR hydration, auth/tenant-sensitive cache data, or v5/v6 Svelte reactivity. Detect `@tanstack/svelte-query` and `svelte` versions before judging patterns.
 
-## Large PR Subagent Review
-
-For broad or materially risky pull requests, recommend focused additional review only when independent expertise is likely to improve the verdict. Judge this from concrete risk, novelty, blast radius, reversibility, and context size—not file count or category matching alone. Small and conventional changes should remain one pragmatic pass.
-
-When additional reviewers add value, split only by independent material surfaces. Each returns concrete evidence-based findings; the main agent removes duplicates and false positives and owns the proportional final verdict.
+Do not load it for a small local rename, comment, formatting change, or mechanical edit outside query/server-state behavior; follow the repository's established convention directly.
 
 ## Coordination
 

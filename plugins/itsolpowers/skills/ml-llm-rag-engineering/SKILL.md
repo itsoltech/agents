@@ -1,11 +1,17 @@
 ---
 name: ml-llm-rag-engineering
-description: "Engineer LLM/RAG systems with retrieval, structured output, evals, guardrails, and safe tools."
+description: "Engineer LLM/RAG changes to prompts, retrieval, structured output, tools, guardrails, or evals."
 ---
 
 # ML LLM RAG Engineering
 
 Build LLM and RAG systems around explicit trust boundaries: prompts, retrieved context, generated outputs, tool calls, and model artifacts are untrusted until validated.
+
+## Trigger boundary
+
+Use this skill when engineering an LLM/RAG flow with prompts, retrieval, embeddings/reranking, structured output, tool calls, guardrails, model artifacts, or private-domain evals crossing trust boundaries.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no model, prompt, retrieval, output-validation, tool, safety, or evaluation behavior impact; follow the repository's established convention directly.
 
 ## Process
 

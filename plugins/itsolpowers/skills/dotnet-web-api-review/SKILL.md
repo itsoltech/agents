@@ -1,24 +1,17 @@
 ---
 name: dotnet-web-api-review
-description: "Review .NET API contracts, validation, auth, EF Core, jobs, deployment, and tests."
+description: "Review .NET changes to API contracts, auth, persistence, jobs, deployment, or behavior tests."
 ---
 
 # Dotnet Web API Review
 
 Review API changes for proportional architecture, contract clarity, validation, security, data consistency, async behavior, observability, and test coverage.
 
-## Process
+## Trigger boundary
 
-1. Inspect the diff and surrounding code before applying checklist items.
-2. Check correctness, boundaries, security, data flow, observability, tests, and deployment impact for the changed behavior.
-3. Report concrete findings first, ordered by severity, with file references and affected behavior.
-4. Call out missing tests or residual risk only when it is tied to the reviewed change.
+Use this skill when a .NET diff changes an API contract, validation or authorization boundary, EF Core/data consistency, background work, observability, tests, or deployment behavior.
 
-## Large PR Subagent Review
-
-For broad or materially risky pull requests, recommend focused additional review only when independent expertise is likely to improve the verdict. Judge this from concrete risk, novelty, blast radius, reversibility, and context size—not file count or category matching alone. Small and conventional changes should remain one pragmatic pass.
-
-When additional reviewers add value, split only by independent material surfaces. Each returns concrete evidence-based findings; the main agent removes duplicates and false positives and owns the proportional final verdict.
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no API, runtime, data, security, or deployment impact; follow the repository's established convention directly.
 
 ## Coordination
 

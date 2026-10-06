@@ -5,7 +5,7 @@ description: "Debug Expo across Metro, dev/native builds, EAS, OTA runtime, APIs
 
 # Expo React Native Debugging
 
-For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, proportionate verification, and final review in every mode.
 
 Debug Expo / React Native by locating the failing boundary first: JavaScript, Metro, Expo Router, native Android/iOS, CNG/prebuild/config plugin, development build, EAS Build, OTA/runtime/channel, API/network, storage/migration, device lifecycle, or observability.
 
@@ -21,7 +21,7 @@ Debug Expo / React Native by locating the failing boundary first: JavaScript, Me
 
 ## Coordination
 
-Use with `itsol-current-tech-context`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `ui-performance-stability`, `ui-frontend-testing-qa`, `hey-api-openapi-contract-debugging`, `security-auth-session-review`, `infra-observability`, and release/security Expo skills when OTA, EAS, permissions, privacy, credentials, or store behavior are part of the failure. For TanStack Query in mobile apps, use `tanstack-query-react-nextjs-debugging` only for framework-agnostic query keys, cache, mutation, invalidation, and auth-cache behavior; ignore Next.js SSR/App Router guidance unless web/Next.js is also in scope.
+Use with `itsol-current-tech-context`, `itsol-bug-debugging`, `ui-performance-stability`, `ui-frontend-testing-qa`, `hey-api-openapi-contract-debugging`, `security-auth-session-review`, `infra-observability`, and release/security Expo skills when OTA, EAS, permissions, privacy, credentials, or store behavior are part of the failure. For TanStack Query in mobile apps, use `tanstack-query-react-nextjs-debugging` only for framework-agnostic query keys, cache, mutation, invalidation, and auth-cache behavior; ignore Next.js SSR/App Router guidance unless web/Next.js is also in scope.
 
 ## Reference Routing
 

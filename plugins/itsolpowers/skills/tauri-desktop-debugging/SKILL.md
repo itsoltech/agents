@@ -5,7 +5,7 @@ description: "Debug Tauri WebView, Rust commands, IPC, capabilities, sidecars, u
 
 # Tauri Desktop Debugging
 
-For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, proportionate verification, and final review in every mode.
 
 Debug Tauri by locating the failing boundary first: WebView UI, frontend adapter, IPC contract, Rust command/service, capability/permission, storage/filesystem, sidecar/process, updater, bundle, or platform integration.
 
@@ -20,7 +20,7 @@ Debug Tauri by locating the failing boundary first: WebView UI, frontend adapter
 
 ## Coordination
 
-Use with `itsol-current-tech-context`, `itsol-bug-debugging`, `itsol-tdd-workflow`, `security-files-integrations-review`, `security-frontend-browser-review`, `infra-observability`, `ui-performance-stability`, and the frontend framework debugging skill used by the WebView.
+Use with `itsol-current-tech-context`, `itsol-bug-debugging`, `security-files-integrations-review`, `security-frontend-browser-review`, `infra-observability`, `ui-performance-stability`, and the frontend framework debugging skill used by the WebView.
 
 ## Reference Routing
 

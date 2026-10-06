@@ -1,459 +1,457 @@
 {
   "schema_version": 1,
-  "baseline_version": "0.23.0",
-  "baseline_revision": "7c0e5bc9f24c9b393998c2dfdd1e7abb6e2de824",
   "agents": {
     "agent-browser-diagnostics-evidence.md": {
-      "raw_sha256": "105436344db6b85990dc57281bd31f5bdd0c07cbf33dbd62a342a517c65ca977",
-      "semantic_sha256": "2ef8861e4d0fbad4c02708ae2e8464133be1e073280820edc0e7296c31392ab5"
+      "raw_sha256": "1e8568ad169b47a6d31841e628eafe203e8485786356ef6aa456dfe50043884a",
+      "semantic_sha256": "54c76510f2fcdd69c3a54737bf78ff9a627bbfc383545682adc0666eb203be99"
     },
     "agent-browser-dogfood-workflow.md": {
-      "raw_sha256": "4ee2014e49b2a8451b7137be265d7543b0122b48ec96b4693582567cf0962765",
-      "semantic_sha256": "0c9655b0eeee5117fcfc82beb1bc1468a862946990b0c5a131e8cf7b94061e45"
+      "raw_sha256": "9f32a937a28240a52a71b12a3af1f8f00920d21381ad91dda11ed4341ec5040a",
+      "semantic_sha256": "f52f2f88b074c70cf05c9eaf9c46530a9411b22123d6cc4f5a4821e0ceb0e475"
     },
     "agent-browser-interaction-debugging.md": {
-      "raw_sha256": "452d5060e98ab51533043b115a0d3955e4bba1746ce45b66ee0e698bc4f81acd",
-      "semantic_sha256": "2808cc5f443321fdc25f6f22061cbfa8e5bfa730c1831b71fead5998e0f51e6c"
+      "raw_sha256": "190221a3028ce9ab0905c260191bb221d8a3c9b4dc4981359a31495eb4f9d3ec",
+      "semantic_sha256": "763ac8099aa1d60ac2a755f42591dfe8a9a33bb9aa16b89d73c5f8f8b67d525d"
     },
     "agent-browser-qa-reporting.md": {
-      "raw_sha256": "8dd73d15e97ac7022c97e3ac3ea7cde4207b078bdd50c0f4af4e1e9e348a6e8a",
-      "semantic_sha256": "c5bf90f0c77891998f526ff1fc3a910a3d5e9e042f229c80693166c12546656f"
+      "raw_sha256": "75a266200502aac9228451476c5b8b886ee23f8de6fe8ab24653c03f3bd90602",
+      "semantic_sha256": "cd0b2b13132dd9a3142bf03906684721240ed7b357bc3208807ae4acc6307d52"
     },
     "agent-browser-security-production-safety.md": {
-      "raw_sha256": "d4c129077aebadf002b8bdca751fe75255469f7d2ce6caf35d1d6d9281c55b38",
-      "semantic_sha256": "df41cb54f05c1e9df439e4edc9d66d746c8c5eb7c4c33f9718d8a3c45a4d42d3"
+      "raw_sha256": "83e3c33254ef2d91719d7ce28b06b263ea8544d4e8aa09143316e70b11f58339",
+      "semantic_sha256": "d87d7f49ae778316cf2d36deb8f855c43f137cc74155683167e9921ca087766a"
     },
     "application-technology-migration.md": {
-      "raw_sha256": "dcfbb46b4b5f88ad921e346c864f2e02b01285ef5dab20a6c53c9e58c523ebc4",
-      "semantic_sha256": "142cc9192b9097876c53952b246f8153ce87ca9d926cf91faa09970464b83ab8"
+      "raw_sha256": "aaa7c934ccd2568812862a13d2466b7db65a3e7759fa4fa836b89ca4d430cb58",
+      "semantic_sha256": "0357c2ea666f0d2018492eb1ad7db85654b0e7c41e1305fa049acc4152845188"
     },
     "dotnet-web-api-debugging.md": {
-      "raw_sha256": "f8d7c04886246dc4d7e76f1ceddf05211a31df03503303365d7a007466d84249",
-      "semantic_sha256": "df015dcd65728009f90abc723908e4dace36d2eccbb23237044d9c4c69a3c1e4"
+      "raw_sha256": "9e2acff5204a9fdbcdfceabef08f81138d8df419f551c5e7e7a322fac9a345df",
+      "semantic_sha256": "78d73aedc239596d6f2208255ae9b3528ff6434d8ff58ef0b6e95e2142684e03"
     },
     "dotnet-web-api-implementation.md": {
-      "raw_sha256": "1152b6a61f9747f9c5d29b750c2ba46558f879e18d0d0cd680aaa0da178d6e72",
-      "semantic_sha256": "6e16c059867be7e63e235fb14156c68b9318e2c03ea2537024a02a8ba540df5f"
+      "raw_sha256": "71eb72a9036ee3d318b1be3ae9be58401cd19db34d80a669b3d898f065eaabd5",
+      "semantic_sha256": "cb100b26bba14173d7dc801cd3fa56f25b566ca32e701910c5fd7bbe268f4b08"
     },
     "dotnet-web-api-review.md": {
-      "raw_sha256": "f0e5154c73fdd51a45e5b10865d2e50d5784feea8cf7d2fb924beef18dc54d94",
-      "semantic_sha256": "454b190441754268738b0cabf9f36747f4e336e2828ef12b1b2b13175d386a7f"
+      "raw_sha256": "27b4e41e5075e268d93c05b363175a215403e68d68fb44ae079976b9f2eac9dd",
+      "semantic_sha256": "554c342fb9c7bd46bc96b6a99f4092784a3d7f777524af2ccdda45d508f1dd4a"
     },
     "effect-typescript-debugging.md": {
-      "raw_sha256": "5677d32489b6c2aa18b7418b32fd816e921d09d179175b81ea1b0eda7014ce69",
-      "semantic_sha256": "8b5e6fb2859c8fe517c8920a3d449aa9ddb92c080c555c3370f6922a74fffb99"
+      "raw_sha256": "858111eeb852d04eaad84359714743787300459f6563db45af059723a0207e5e",
+      "semantic_sha256": "5725ecf3f1666f73fb5b9a8ad679c2c3cd0a511dfd71e59dbe71a469abd9ed55"
     },
     "effect-typescript-implementation.md": {
-      "raw_sha256": "2680db0b0080c367a9e20cfb7b91ce7ada68f8bf14b66cc12ecaa333f857fe24",
-      "semantic_sha256": "80ccf04fd495092971bbcdebfe4d1d019aade44abb75091f412e3ab6256f80da"
+      "raw_sha256": "b5b8b6ebe012eeeff854f8db807623befb7fdaa06beff972c1b03f9661eff418",
+      "semantic_sha256": "75cc2ee96589d5aa753f75a1a7e5d8b6beffe0e271144743ad6c6bbdf3f1447a"
     },
     "effect-typescript-review.md": {
-      "raw_sha256": "69593dbe1a841c747d8fa3eda7da63c4113ea484158db3b5d951469b885c0450",
-      "semantic_sha256": "8b2313abd81e102a2533aff7772d0447556ffc5501407f3f7e5a51d4c0cae885"
+      "raw_sha256": "e446b4ef2c3fc373e47a30d988c1fb1f8b3c8f1bc63625062a9310176cb5a396",
+      "semantic_sha256": "852c45b27fe637ed4f2513983e8c14cb81708e197b479e495dc57ecd2e88d890"
     },
     "electron-desktop-debugging.md": {
-      "raw_sha256": "551c74fe3a3645dcb206c21cd31ee1052cc515dfa30275a7adf23cd1090a6708",
-      "semantic_sha256": "19bcc8f231769276998f42a138d9b3c79d6a34b31bed88899e48ec04720f2f0a"
+      "raw_sha256": "11362b86097f514737f8cad8d60f16e19664c104fd19e2b1acb54ed4eb2325e4",
+      "semantic_sha256": "259edba4fab131322fe1fb01bd9cf6f96909fe39845779320aab8ebe3dab20d4"
     },
     "electron-desktop-implementation.md": {
-      "raw_sha256": "fcd286d964dc2a68d169dea8cc647fb1b5f7a006ffa5fa9c033dae6abed38b87",
-      "semantic_sha256": "c35df996c2049e8dd34e7dc471e2bd6beda8452fd1c0412dd6918a8a3fdcb981"
+      "raw_sha256": "902cac31f579339b084d38c642bae2f0874da78747698580a86b16ad2fc0aeb5",
+      "semantic_sha256": "7758b876209d31b98a622b29d01ffa909b61ca6e10d060537a4cc88323033b67"
     },
     "electron-desktop-review.md": {
-      "raw_sha256": "7cbc9cede24bfd1bab4da55433b3b9273941d6e1596f8b85bc329e428081cd28",
-      "semantic_sha256": "c564926ae404b2908b5968a4badfd504a6ca5352a752be632082d6cf3882a77c"
+      "raw_sha256": "02734869dd8d14f95356076695208ffff1dbf2df40c6b2e1e18cc55265a7dbaf",
+      "semantic_sha256": "0331acdc3bd0e9c58fd22aa2430d4fc0b00f64814a02f4f0e2de5c847827a0bb"
     },
     "electron-release-distribution.md": {
-      "raw_sha256": "9cd46729144a4afb2efa444d7fb88f7105f3fa09a446b8d36c3efdfc09134a36",
-      "semantic_sha256": "6f8712d430626c7ad2c99e9d8d56db52c8b46f59574e26c129483c730c2b09ed"
+      "raw_sha256": "fb3eef562720494850c01fdcbcb4866f304cc71f07be5507a4596cb566e051e1",
+      "semantic_sha256": "b94ad899dfe6f45e11999528e929b9010d85b1db7708a3293c55857cb0fc72a7"
     },
     "electron-security-hardening.md": {
-      "raw_sha256": "5766abbde8bec70605627536fb11ab6da4677ecc324cfa139b0a8760ea454e4b",
-      "semantic_sha256": "5ef16de139ab36b13b77a42576f2ff6c1a991c2a4552d58d4b34e3fa684b9b47"
+      "raw_sha256": "49f7979aa11f107cc2e3fa7ccd2ac54822e777bb7fe4a4cf450441b2fae959e8",
+      "semantic_sha256": "6267e51d8008c7df01dc306b1df41abcd46944722f664d6e51ba8d7d7e3628fb"
     },
     "expo-eas-release-ota.md": {
-      "raw_sha256": "a88a7bff20ba4524be2484b75d2399c261cdc072a044afb45aad9a8f48d830fa",
-      "semantic_sha256": "0bf04de8957f1a4f601f696bd3c96c23f5c1c00afc656c3fb48943e3719d544c"
+      "raw_sha256": "48dd4b961350b5b388ee69823669d87465c6ec8ce7c681dd650f75f832439711",
+      "semantic_sha256": "1925595b50265da1b15ce8e6c30676bb52a5d6e986143ea49a23122b8fc04753"
     },
     "expo-react-native-debugging.md": {
-      "raw_sha256": "4850acb5c69df347a6c13e0c8e2afdcb93eedff69357094babf3e4efd8ad415c",
-      "semantic_sha256": "dca37723a69b6204ade6b458fcfbed98e74c32b2bd92eb6571edc5ef1db5b9c8"
+      "raw_sha256": "c4908f9f5bade34ec165d14bb1c527537a4a0afec346ae7a990b927704714324",
+      "semantic_sha256": "8745f776813f8ff29b8c4cd10c456a7f0a38ea6ed535f46451875429d6d0c21d"
     },
     "expo-react-native-implementation.md": {
-      "raw_sha256": "d46b02191b22f7a79af959ab2339879b46b4ea6d04b9c494de13eb1b066f4be5",
-      "semantic_sha256": "43778d2c0cbe1274f8f9ae969db4646ecb8cd73c55d8e595a2d1e205ef924976"
+      "raw_sha256": "99e8a355d87f136406abb0c2ecc80bc3b1c0e708ffe530fc1bfcac84ef8bf638",
+      "semantic_sha256": "b8486d9850a10f4e8ba703ae31e8d5e2515ad032b3b4d391e9ff5407ed594ac0"
     },
     "expo-react-native-review.md": {
-      "raw_sha256": "f990469676503cf9f38c8c66caa18a5dcdee34b1fea6de638d4a8c5d9453a03c",
-      "semantic_sha256": "493c5c22213bacb107a0d87c296cabecd1897fa6b010d1fb46f1148992eea07f"
+      "raw_sha256": "9ec0b2e84b0ff47c02c106c3ae453a1a8c6f099572dc9ae3e8427f32a7c261cb",
+      "semantic_sha256": "67990bf9263a4120824462a36cdc29cf0b72bb758031b0a6303cc7fb018ba250"
     },
     "expo-security-permissions.md": {
-      "raw_sha256": "d253333daa49a0255311585002e84fee66f783ed6be6c694fe63069ccbba1a87",
-      "semantic_sha256": "23a9befa66fb3432563e7a038776c30e41d0750c87c6aab56f08f264fa79e7e3"
+      "raw_sha256": "f882eaaeb73e65137cfc7a4fae7d9e0400b18066d4d7702059fc7f2f028a26fa",
+      "semantic_sha256": "f8504e27bd7dca32fdd8d6d55b576c265a9bc6f09669350968605f876ffd6da9"
     },
     "hey-api-openapi-codegen.md": {
-      "raw_sha256": "d7fdda07c3c24aadad0dc33d76d1d1cbc9fd026a71964cc6254d7c4cfd9dbc4c",
-      "semantic_sha256": "c10647a3b26924c594df7d71e1f132180b5f2a4fb792f31804e8bca7d6cdac9a"
+      "raw_sha256": "1baa945071a9891148b5216d0636021ee36f347133059226a8e8a88876c7b0d5",
+      "semantic_sha256": "ee86811b69374927283b31639e004c8763ef7bfcf5f764c40b54ea91fd30dc3c"
     },
     "hey-api-openapi-contract-debugging.md": {
-      "raw_sha256": "753a264be20df21cf95a23f634c6701ffc3c852aa3fff88256b3cbc66d732c52",
-      "semantic_sha256": "07e55f6a6795716d8af06b7c8f5c1dbc39572a0c093739719b8ba9444ccafe8d"
+      "raw_sha256": "45e47c86d06013f17fa2bc5a8cb83813ea88b3957f66c08094697321f0a8bb98",
+      "semantic_sha256": "6cb3fb566a6b4d741aed92bd111d4bd919c1b5d571a5580f67edb29b8af758dd"
     },
     "hey-api-openapi-review.md": {
-      "raw_sha256": "71056c974077397e1f0a7f2e3b6ad3be1e20c7f06edf7f7aa2df3726fb51c671",
-      "semantic_sha256": "30ea5c62dc1c550124204cce610a93f1a541b2486924849512da10fe93d1c549"
+      "raw_sha256": "672d314cd7f7959f71a9ac19b6921c07b4332ea65f3753d49f8582b44c35be96",
+      "semantic_sha256": "1c482bed0bca64f30f8eb4b0345d99e16ae1b32d369834b8b882fd84487b982b"
     },
     "infra-backup-dr.md": {
-      "raw_sha256": "bfa1983aad844cf06c1f9ea64c370ac19199c82e2977b98a9ca46800bcd8f3ea",
-      "semantic_sha256": "d36763493de3aa48cb7ef993ebb994ce9ae87e92788d03617572fc3214d29b5f"
+      "raw_sha256": "f4b45d1e52bfd83223506e7aec416279667c5e5c9f5fbc18e4f7a570663db05b",
+      "semantic_sha256": "ab217f921706bd045c3e24f08e424d3b8e0e48849c253dd3f11e3ea81a463b38"
     },
     "infra-capacity-testing.md": {
-      "raw_sha256": "f7d911dfff9b305b21db073152f4c28696bdd8d0f3ab688cc27f4cda6afd86cf",
-      "semantic_sha256": "a997ebbcf262bb7a790217085a34f2b4c95790db52c24075d86edf52e394311c"
+      "raw_sha256": "72c40f827cf33ce3fdd0df02e817db705986dec56758f02b73e0d41805fbe9c7",
+      "semantic_sha256": "50934618b03ec0a10f46df91ebd9c4260b81117f7b95422efec38bbb24179481"
     },
     "infra-container-build-review.md": {
-      "raw_sha256": "e8c1a0560b420114613204aad3e73c9a823b9bb5a98029538daff57671eff7b3",
-      "semantic_sha256": "a01716187bd983ef82d2af2ea2af64670055007458835fa1873e3fbcf6ef8bcf"
+      "raw_sha256": "440ece40599e0fe94cb238bda8edf1eb27733cca9d801eb2649433c8ed16239d",
+      "semantic_sha256": "e20732648030d6b870e154cb5ea6ee6de47176fbbdbbedd9ead9e631696ddfb9"
     },
     "infra-container-runtime-review.md": {
-      "raw_sha256": "2788468fd5d1fceccb4f932101e84bb2aee8c73085d97b6ad9cc562f296da619",
-      "semantic_sha256": "43a5f4220e0789513383d8c7026f7a791aae204ff657284396c9445fb86d4e6f"
+      "raw_sha256": "b5ffbd6d644d6da37c174db577257c17d9514e8fdf265d4ced3b2b86138b5a60",
+      "semantic_sha256": "95588e13e893dd0f556ff4b13c5bf9e0bd1c506673674ed6b035513f1fd00cc5"
     },
     "infra-deployment-design.md": {
-      "raw_sha256": "19e5e1672791b0620998e5bebc0500e5adb0ab6cec121999313ec9192932d37c",
-      "semantic_sha256": "02840ebfc28d2c2d539cfcad2f3cb1e06d3365f3df35e467c484f59f4762b3a3"
+      "raw_sha256": "16fc041e98b85d37a4dbe81bab5076aa01ca68610293a0bea937a289f0cc8d8d",
+      "semantic_sha256": "b26d6c6bdbf07c85aba3ec72810578e523bf34a92f02580b576b5a94ffd1e5b0"
     },
     "infra-edge-protection.md": {
-      "raw_sha256": "532b5363da19af09b2fab17d54a7dbbe2c6490d9a8e58e7442fa5ddd0a511b0b",
-      "semantic_sha256": "313c7442e90374ab0fcdfca627e09cc6284df27ac449b2a39b74fd46eff2c276"
+      "raw_sha256": "6cf6f2c9922c9acdddf4cd24807bb355ca6fe6c144c2cfc5086a8bf79cb86650",
+      "semantic_sha256": "790540cc263bb47c2c3f87091842b15027c5f57e04c8826659faca6eb0fbecad"
     },
     "infra-incident-debugging.md": {
-      "raw_sha256": "dbf370033764202ae93880574e4f41dfba7c008c988732440b1d16830d58d321",
-      "semantic_sha256": "75e0dd4be15761f703e1f1677045828e7ec1a75647470c37e9eb2ade32db42cd"
+      "raw_sha256": "08c9105df83d9a65951312cefa805fbfb7f2e3f5b4a6ebeca53f39c6d35a0949",
+      "semantic_sha256": "5954286a39ea30c00dfde848f18858a4192a47b0fb0eeba0f965d55393c57a50"
     },
     "infra-nomad-deployment.md": {
-      "raw_sha256": "0365d80857720c2f9717dec3209b0fbf2cc0fbb0b3c2931e5ab4a2fb232926af",
-      "semantic_sha256": "b8df0824b5f37b09bb2b683dc021e5daa93591404e3713bf16bce18659e79909"
+      "raw_sha256": "9da44186fc5be406744cf25ec30ac9e143bd6d5227e56e5258b66961fc20c605",
+      "semantic_sha256": "affa64240f1f79c3c3bacf5fd00e9aeefc6285204dc736f49042490184997609"
     },
     "infra-observability.md": {
-      "raw_sha256": "68112783c6853e6782dbb958529aa89974b64a4b6d25fdbf40454755f4546f43",
-      "semantic_sha256": "68535a50987fc20ebd6d8ae5557bc2f2d3cd618d41ead5d69fe94c040b5f7bf7"
+      "raw_sha256": "8c48da205b41b4a1530aecb13bc443bb66b8fb1d6b044c6d6fd9e930eb246ab4",
+      "semantic_sha256": "95ab3eaf5a6eb59499c27a50c93882bb89c7f6e8d4432210fbb0cc23ec07431f"
     },
     "infra-production-readiness-review.md": {
-      "raw_sha256": "04d02ed650dfae2b15a87663abb82d7f60b0d25a9ff8c71ca510bfc8c4fc16a3",
-      "semantic_sha256": "c3f5817e739fb9d0803a140925dae4c59f7460109fd48d643a95405cce44bfd8"
+      "raw_sha256": "f1126d14f470182612915c42aa5a00aa224b52e902fafb4a93458be6c8cda386",
+      "semantic_sha256": "36079e50cfcc92245f105fdf8775556d76d9cf57779a7a14227703f8af0bb531"
     },
     "infra-routing-proxy-tls.md": {
-      "raw_sha256": "130abe5e1ea02117543168f5ba86ccb93ad1509151b32394f9fbf5ba30a5010b",
-      "semantic_sha256": "3a566d4bd1c9f74f36d393ff6de30d4559363d3796a206a57217e065f42a8dae"
+      "raw_sha256": "7fd2bd6239e176e02f471e12fa49a7afa56d9ee16f008d9fa8ed1b71f241b575",
+      "semantic_sha256": "646f4159bafbe0c474914c7eb1e71e9ca862ad5cf3b4206f8df4055c3a968766"
     },
     "infra-secrets-config.md": {
-      "raw_sha256": "f9544da0169eb5d1ca2f579012030652ac39196d56dbae4fe099a24972aad445",
-      "semantic_sha256": "27aefe06d9ad3f43b493ba96f51dc81b807c74ec066c0e098ddc8da59353b3d2"
+      "raw_sha256": "6f82597031da8a77f85fe58882e9d408ee581f225eca0bb82ce30f5454cc84e6",
+      "semantic_sha256": "d1e406eb3bc2b1a3f066b523542f4dc9c84c9e2f84285d0ebb6414b07d135ec4"
     },
     "itsol-bug-debugging.md": {
-      "raw_sha256": "c302dcf881b8a0f9b41eeddf0c59bac4e3c22459c42e37b94b2deba384470a42",
-      "semantic_sha256": "abb99d1715abfb68134d69f0c21e99370db15e945f43972684e4f96bc9eae7a7"
+      "raw_sha256": "eb9cd549541584693154fd6fbbedd8e216cfb53633fdfd1560b84a1063f4171c",
+      "semantic_sha256": "53f12deb23bb718e9b61548087e639bdacb141fde5fd9c7ab68e001e8e8ce4e3"
     },
     "itsol-code-review-workflow.md": {
-      "raw_sha256": "e5709917df22faccecc6f6e41ec763294b77e27b400641958e774c68180a8d08",
-      "semantic_sha256": "1eded6a4b4b604dd210ee33ef9f75bdd60e4d7c8c26fc5249758f5dc65587e65"
+      "raw_sha256": "7f6056b3368baa88c5ff3ed95a31d3e864d99ab1b1fe1cb8bf372a4b2359239d",
+      "semantic_sha256": "3f24afdecbbdb08834434e7246ef0ce98d6d953a21e2bcf9c7312b2737474a99"
     },
     "itsol-current-tech-context.md": {
-      "raw_sha256": "bd528b9f7b51fdc6d5ed405b9609a35768fd262a1cb1e37316485af5e0a5e584",
-      "semantic_sha256": "251dcf231c19d0be24abc181f37bb7029a7ca06f429566350c5e805144e97e56"
+      "raw_sha256": "b128cf7e60825f377f4fbd4651091810fd42179e047e394da5434461ebd58ba0",
+      "semantic_sha256": "5969934023750098d065b5946eca3c9b2ee7059798c1556982c940e754cc02c2"
     },
     "itsol-execution-policy.md": {
-      "raw_sha256": "3ca8b3af516b4941eb5b13f615939a9d1ac27e7b43e2026aee0bae062cafaf3a",
-      "semantic_sha256": "52ef4d1b951c335d6a2af5db136ac2520ee8ee71c43d7c3334dbbe3be6d422e0"
+      "raw_sha256": "b9c77abd20f87d0dd2a0b543f504db348516330135e4a9d5530748d3ca3fdfe8",
+      "semantic_sha256": "80e119c4c1059da4f6cfdbcf72a6e1f41b48447a31508a9df7bdfeadc3165d94"
     },
     "itsol-feature-implementation.md": {
-      "raw_sha256": "c158180536b456f2b41b9dc71556875b42ddd906af68fde48701938691d609d2",
-      "semantic_sha256": "2a9ad8d2ed5f87d5afe80af04d0a495dd694456d7f7b0bb49e787c1d926ee631"
+      "raw_sha256": "98d8656d2387c985e8b142746652aed017fcf1579a1df3e811fe7e999a2d4c36",
+      "semantic_sha256": "829bdeab94ef81fb6dee436b7d680e2f04b1b2810670c36b622beae3412b3cff"
     },
     "itsol-functional-planning.md": {
-      "raw_sha256": "adce181ac077da07c8c474269cc3bb7629d0a2e0022b856e1538537c4583893e",
-      "semantic_sha256": "7ebf8390215ec21e22665f7fecd7c2da483a44b49c3363e883654f65556a4ed6"
+      "raw_sha256": "434d9fd3a9995d6021fa61b2e3ef6c9f6b710f068612b95a4c1b91b593dd14c4",
+      "semantic_sha256": "21a214d55cf3052741263a82359aa2c5f72e3dac3773969763f81b915f696c71"
     },
     "itsol-qa-handoff.md": {
-      "raw_sha256": "279c04fb600d469a0077c77405cddaa2f6c1cf0b4b3dc6ec1515f59e7ae804af",
-      "semantic_sha256": "78a36958cb10c80a8848334bcbdba703ce0336738854e615db89e0481287b6b8"
+      "raw_sha256": "8ed5c728d2ada52ce640ad68225c533619b6190b876d21ca91015f78a9569c1f",
+      "semantic_sha256": "3d47e9dd1532573c3924d1707958550ba196f4bd9cd729516f6ebf8f7f58882d"
     },
     "itsol-repo-memory.md": {
-      "raw_sha256": "31da5aea24089552cf0e82ab25f5f6206daee009f5334da3a05f828631959d6e",
-      "semantic_sha256": "dd64a654bb73ce2e2c894266673f2e329a04a144c6adc9bc5218ecdb53608960"
+      "raw_sha256": "f413e1daa698957d6f01eb8512ec0d7e95dc2337f783921ea8f690f4afd6355e",
+      "semantic_sha256": "0ba9fb389f6b7fa2d3d9950f2b1eee17a94c90ba9eea6a57903832e36dc6cbe5"
     },
     "itsol-requirements-review.md": {
-      "raw_sha256": "dfe36127b1d60e47da75f8726ef645e17c48ab4632bd15d07ab4668a6383e1b2",
-      "semantic_sha256": "600655f970c9d31704ea15128b6274433a120963b98eb814d7b9f28d04bd8f5c"
+      "raw_sha256": "fbebc9423249f724fb0397e067097650cfa26401e44effc667172fb560acb0a3",
+      "semantic_sha256": "8c18c0592b40327ad23bf21b7caca9173bfb0647039a48549dccce611ebddb72"
     },
     "itsol-self-review.md": {
-      "raw_sha256": "96990e094386ce8d9aaf20ecb70abf29dcb16eefe3e52402448221228685de51",
-      "semantic_sha256": "17aea7b4b4e39a9266eee7037655db2e31ca6f3f4e5f0661afe237e46ff02696"
+      "raw_sha256": "87070b9cc3a574bc52e7ac45b024acb80da17ec9515b238f215a071f0308302a",
+      "semantic_sha256": "ded79c0090dcda9bcb92f3b70a148b2a98f4d61da461d83077c8190860ff07b7"
     },
     "itsol-subagent-workflow.md": {
-      "raw_sha256": "7249a96a7bef1e20397db9e33bf1b14f973e2fe9ef5e759dbdc240038e1f58f6",
-      "semantic_sha256": "9707a7c1e8ee70465f10d5b8b38080ed80fad9f804490cedd9aa3af93eafd70d"
+      "raw_sha256": "3cb3742691b30a7dfc7c9b4f7372357801a9e42a07af3d6ac9cd48a76fb3bd38",
+      "semantic_sha256": "f77323c3deaf331f93befb4dec9d4cf14d64fbc9c6fc77ff0f12ab07cf8b5793"
     },
     "itsol-task-intake.md": {
-      "raw_sha256": "9a62f73b12c152553931fec397ab6c416ae359f777d68344d6c72849c923394e",
-      "semantic_sha256": "3fa840fc1309c6a4a6a0b2f104ad618b182879378d4603abf70f08f5b2b88eca"
+      "raw_sha256": "5872a42e89c5a6f7168599e0814b5070bd1700ade535f93520f20906b895fc2f",
+      "semantic_sha256": "ce16457929690f3ea559e9846ec9fe72ee0f0595a0dd163a34b83a51f340cb99"
     },
     "itsol-tdd-workflow.md": {
-      "raw_sha256": "ab0cae1ad400f238f188bb6ba74589888de5dc09b24301f750f994e627e0332e",
-      "semantic_sha256": "38642960092c541bc7f95870257dfbfe9d22080c43793877146e1a7f5b18e69a"
+      "raw_sha256": "810275dee3146dcd89c398f468e21b721aa6bd79ee093603e19c9429e198e410",
+      "semantic_sha256": "01357756f7bd57370202f352e83434ee0ddc4222173b2a2bd2e1033a19fed146"
     },
     "itsol-technical-planning.md": {
-      "raw_sha256": "3069bc87ff7649b763dbbb3e37e2ac5170768f1326cebb80ee965eb075475aa6",
-      "semantic_sha256": "64a4949ed01df4ea53d10a5fef843bcbc7ece8f0186b12cb627ebd2b7012f847"
+      "raw_sha256": "9a9b11f9a9b68d35ed3bd630dcbfc3ecbd6377b169639b42f82ee12c880cfecd",
+      "semantic_sha256": "ff0c952fa25011491475bbdc789f9b7175ac2e1c5ee19b73c96d4af75d821c3a"
     },
     "itsol-workflow-mode.md": {
-      "raw_sha256": "6d834518bf8199540eaf08c5c9c57c3d5c5ead30cedf43928a0c9c616cc53ec9",
-      "semantic_sha256": "67bf83467d5e31d6e38702b7e476fad752febe7979d683cf7874437cfb483c81"
+      "raw_sha256": "6ca0135dc7b50766453f6ef21682b97c5554b06cc76465c9e2890f2d362e7d3a",
+      "semantic_sha256": "18b2782d48501009e0e2c0ba49b49f0f735fe1b19fa6fad13061479e7e38cff7"
     },
     "ml-ai-project-planning.md": {
-      "raw_sha256": "06c22c9305b3c94e56b69ab52f6c2251f4cfcb0922e542ab7b334941d79c01d0",
-      "semantic_sha256": "cdcf37240485d2115cda9cd0ff8f528ab8519e206b3735d7978886a667c2ddb8"
+      "raw_sha256": "c124bc3b29bb4fb2ce201ded488973f8ae358c14c3b404f6abcca80e633fdf32",
+      "semantic_sha256": "eee6b1dcf52cf5339d72e861e04eeb5c18baae9d6fb176cfc4a74b30a6421966"
     },
     "ml-data-evaluation.md": {
-      "raw_sha256": "13f194018e5031a807115d04042519ee4bf5961a4175090e4d375f7fd9d10b68",
-      "semantic_sha256": "3a01d72c70a3919e2006b05a3d59d6b9cc37e3996c454d1eac2a24f2635cea2d"
+      "raw_sha256": "d6314043d0ccf95ee81f556ab8d358a00759e35dfd1b5fb60782147eed92d916",
+      "semantic_sha256": "20825eab41c19cb949ab4e56616fcb6424aa0395ce14e28c0ed88f4c75d87691"
     },
     "ml-llm-rag-engineering.md": {
-      "raw_sha256": "88a0fbf28fbfb30f54844d7f8cef717d48ac04f4fb8e2709f1bfd054e850e2ae",
-      "semantic_sha256": "c3caa9d9f3b63996a4bc1999b869a7f425f92a5f386fa53c76d5bc2338e4bd6f"
+      "raw_sha256": "0ce151711528af07da0e2b108fa0eb3caae1095a050523dfc90058f95d919a0e",
+      "semantic_sha256": "02fe71169f68cb6b09d19e303b679dd4e3897f4e4d942a2658f0e74e9d804875"
     },
     "ml-serving-mlops-review.md": {
-      "raw_sha256": "6c97d6b55f9369deb0e14eeaefa89bc999a000df0ca4c9d8d028903f2d7ec6e0",
-      "semantic_sha256": "4ea0d8e94bd8cf7bc573ea3979e6632e3384373f3a645e43d16b60150cadd6f7"
+      "raw_sha256": "04b876461e594fb10eb9a64b2a8a7d2993f3ebd0a4e2eb4b355a6b50c7284e81",
+      "semantic_sha256": "ce4ae4dc6c89b681b23e040d39381e0b8aabbac8c7329290e436591c4f4e7121"
     },
     "ml-training-experiments.md": {
-      "raw_sha256": "2c13a43b23611e5061e1a887bf26284b1bad46dd41363d45f4000a2dc3be27dd",
-      "semantic_sha256": "90884d4edc81f8e1cab4991bbb85195ca644e721582261f8db345cce7be461b0"
+      "raw_sha256": "42cccd60bcfefc69d1312da567f149bc840d74ab451fcfb10ab55f0945675aa8",
+      "semantic_sha256": "445ba42c4ff6286641d159f5db2620a25a45317c402c344b4459c723fe565fbb"
     },
     "mongodb-data-modeling.md": {
-      "raw_sha256": "f9c46b6bb04692fa731021649b38a36935d8634964c9ca1bd40a60ea5df90058",
-      "semantic_sha256": "e4d4d56fc1b5ccd4b33396470ffff80bf1654cd070ead8bfbb0e27372c001e68"
+      "raw_sha256": "f043e08fe14026efff3c6b7ca15846d718d5499585e4119c6b97326d241479d5",
+      "semantic_sha256": "d357fa1dc64e939bb37ae290465a9ac31b3a46571d6cbdcacf9e5137d150ef08"
     },
     "mongodb-operations-debugging.md": {
-      "raw_sha256": "ab81d4b153a52cd4b0f6cc22e979e4f4acbe0d7dd3dd00e20ada8e09c04743af",
-      "semantic_sha256": "14a16293619813cd0f181fdb4076d5ea33dd247a23baefa001e101758047617a"
+      "raw_sha256": "eb7f77a89445002d7dd45df2e91513df60790faac24324b65dc8162a398b7077",
+      "semantic_sha256": "d2ed8afd5fc07b2dab56084b550b15bcd053bfeb7f168a5132670f72c5459447"
     },
     "mongodb-review.md": {
-      "raw_sha256": "f9dabda469e957f3df423d3d22c6bc0727e003e7681aa31ce15dd2c71f89ba22",
-      "semantic_sha256": "a02c843ae9061c9d3caf06bb3541258f4162c9c302e9e12c63cdf48cae44d6be"
+      "raw_sha256": "93491cf5a487157274be0bbd8bdaf0cfaa2694d66e98e74f3c93ce366f2d6529",
+      "semantic_sha256": "db0e433591439bec15832964f93ac5c13d73ceffb1eb4290bd60cc6280364a2b"
     },
     "mssql-dotnet-data-access-design.md": {
-      "raw_sha256": "769c6f9375de4d57ba160774b9127de462657b0c16ac5ec963bcc455b0d59934",
-      "semantic_sha256": "c5ab1b79321bfd45db80c88447c28dba6499f9a5140d1ebf530050b7b94240e3"
+      "raw_sha256": "57a764febb10b79d12f6b41b87fb4f450840e773427c7816d1710578ef7ffa8b",
+      "semantic_sha256": "d5b2f13a7a18f2f8c7f83ba20907b3adcbaeb57e1023def937435b58796757dd"
     },
     "mssql-operations-debugging.md": {
-      "raw_sha256": "75995e1fad7699174ffe171184d1ca530dec25eaa044379f96686ba0205c0c8f",
-      "semantic_sha256": "c3e6e58a03f08c3654d092231ce031d79da9b44898aa3f422f4ca33d64273aab"
+      "raw_sha256": "7d0e6eb48279e4ba46762f8184bb0270e2072d2324b01f49ddb0054db71a40dd",
+      "semantic_sha256": "318ac33036251d4a9ea5c82e5fd6950aa05b6c10b492bc0ec0bd00d8bdc2fac7"
     },
     "mssql-review.md": {
-      "raw_sha256": "b52e239a277b159c75fd39d40a9718b6cdd7d15403a887378d90e7af7f490a4e",
-      "semantic_sha256": "18a007b44c2d4a0977ad7cdbfa398129ed4aba4b118d5a3addb2cdd5f5233211"
+      "raw_sha256": "740b3698b7bf5e729cb3d1fc506a92285f0c906e116e8ba33a24d729ce836867",
+      "semantic_sha256": "6889b766b31dcca24807f217dee67dd72c1cd21c75479d6b17e613cf978f6b02"
     },
     "postgres-operations-debugging.md": {
-      "raw_sha256": "b3bfb54be4952252dcdb0aa86df20f7bb189dd4403fd5136031489634ddef3a5",
-      "semantic_sha256": "4ec6a7c4ccb055499d53aadea5c019d63ae57778321e68efd8dcc0261dcd1ea6"
+      "raw_sha256": "cc3377870bdb9c1dad0f422080911591eb76f2e8bcec335868b85e266d6e6e32",
+      "semantic_sha256": "347fe6f139838647c9843e59130f4b1f4a4bcf44aa1925dcde11ead68fb6151a"
     },
     "postgres-review.md": {
-      "raw_sha256": "bbe2a297efef97f1b23c3bb891e706754de2fc94c8a71c49ea2de3cff2b5aa22",
-      "semantic_sha256": "26d1b1e5dd7e5e05ddea98f23c10aea33a50776139b812162c67f4ee440a4b3b"
+      "raw_sha256": "c2431a96f666cfb268c1527cbd3bc66b6b58afcf552a8a22abf21d91ee9c642c",
+      "semantic_sha256": "901ac7705850e642ffab2c18bcabca8b58bcc538cf46f95b49e191d3e764ee4c"
     },
     "postgres-schema-query-design.md": {
-      "raw_sha256": "23b2ea513a907de32c37e7afb59a3772d536cc66dcc15c901cb85101de0c2f6e",
-      "semantic_sha256": "43554750c9774142d98e21e5f609180a9055026fcb89745abc6f55dd55ad9618"
+      "raw_sha256": "62c189f9c4c4a838ba24111a938fe596c7487d5b7f765db7ffdc04d500bb1a53",
+      "semantic_sha256": "9dde12fc677ba3a3b81c3d42f9ef233dceb81a28b48e162a93801654bc1214d7"
     },
     "react-nextjs-api-cache-forms.md": {
-      "raw_sha256": "d0dcc15cc01649bbcf4c05dbc58b45d0f4ed08f90a7897548ac6b06d5b5d2451",
-      "semantic_sha256": "21b33533bf1313c52dba8be82fcdf0e84cc122c5839f6a6f89fcb8cbca38cb97"
+      "raw_sha256": "12ed34a2137c4703dbd4d31bf548ddd051d15c1b54c9413a6863e6bfc8e3ecd6",
+      "semantic_sha256": "124f8370a1a49802125f66694f05cad995b49c87e67b81479b21cad682aa1b47"
     },
     "react-nextjs-app-router-rendering.md": {
-      "raw_sha256": "2d3fd65a89fb4c0528f286f7e946e79cc1f68e1ffc0c2c4cd38e11d83deb6c62",
-      "semantic_sha256": "c128b46d397e098c3daf0a645b8d089b7596bea3a6d7397fff70d0c5db5c940a"
+      "raw_sha256": "8c009ecee3261a203874fffe24d2e163d9d38c9aa0506b5fc9c9842b17ad95e3",
+      "semantic_sha256": "8788cafc429b2b3e7ffebf58e2e89febb3cde1747c77fd3e32aed09c555be6c2"
     },
     "react-nextjs-debugging.md": {
-      "raw_sha256": "885c1d5dcf79bdeb7ad0a77b46d47410b8fe31c6a0d397a2f3cbfaf049ff2545",
-      "semantic_sha256": "b2ab4c46c5777cede337ec3e57984ceeb5de813d9ef03767037bed00a13f2909"
+      "raw_sha256": "666f718c602da5bad5d091674d084565b9b3dc63091d223b744b2d989629745e",
+      "semantic_sha256": "0ab22509f78a0ce7e054ef991e54d7f7fee2ec7502ae446cfb54681c806bfffb"
     },
     "react-nextjs-implementation.md": {
-      "raw_sha256": "3f0447c4ce54668062e8f0b5b0e0f2f4c0ba700097259bcbe9161df66e2f9818",
-      "semantic_sha256": "fcba51ff81acba4a8e8f28b40a9a57957c4f99c09568457127813a5ed1d329b7"
+      "raw_sha256": "b1aac5e346180d22f2db74c54c8a712072315df950dd9221e8db417f6768425c",
+      "semantic_sha256": "45993772497fa53460d3edd7bb5fd79c22b8b5504d30739767bb6fcc7002bf94"
     },
     "react-nextjs-quality-security.md": {
-      "raw_sha256": "ed5834977caed6672461ef853a0bd0f931ce6501a10eac151aef521de926c82f",
-      "semantic_sha256": "229ef44556e21c8590252f3ade58d319226794302b6ee510bd0e02c89fcba947"
+      "raw_sha256": "ee0b0b425a953e670d36aa15ffab305a82500753c1fc78bf9ff76f09a336b171",
+      "semantic_sha256": "f6f18e2cb9a3ee7ff6aca7c2850af9e8c7b3048ac71d1d4d638ffe6b2570533d"
     },
     "react-nextjs-review.md": {
-      "raw_sha256": "aadfd38a5b1f5ebc69d103426232d119a9a958269d7e3ac7a7e620d1021c4be1",
-      "semantic_sha256": "35bd9b311f1dd4ea67bfde5a5a1918685ba29e2f0003d12aa49d442cfc97b691"
+      "raw_sha256": "80c865b6e0fb6b25b2353e71ade019f8c27880994ff6ff9924a4d6d74894ac2e",
+      "semantic_sha256": "0160934bee035f61a7e6e1368a8b675a863b8dbb5d6aa4d80a81af2670b3595f"
     },
     "rust-debugging.md": {
-      "raw_sha256": "620f7e850a095e05443182d7c6f860bf69dd644faab8879b99a9f71565b77d3d",
-      "semantic_sha256": "36010f70400b245508a3af3de0d60f15145864ce2f1a38839263f47300ed309b"
+      "raw_sha256": "583e116fc97dc23236481a9e2a218223202c38fa7b1582fb8785c492e2f94ec4",
+      "semantic_sha256": "e8926c8c5c581fc7e6a580603c11bc10a4b03a71346454d0e0ae55ba90787a24"
     },
     "rust-implementation.md": {
-      "raw_sha256": "24538478d4689011005b4f8919c43623694d9899d5e8e320da2dc900c345ed10",
-      "semantic_sha256": "208aa3d1cfbeb4c008fb076a9cd59b3e80e10c4b9ab0ee514bd2f90b1a2a4c16"
+      "raw_sha256": "021b160ec5066fbdfba8588f51d95a68ddc777ec8b1c456ac7ea5f91c846209d",
+      "semantic_sha256": "c70beda49a9dcb7f73b19f8dd78892f503135e21a774bc6b4cc833e60b23001d"
     },
     "rust-ml-llm-architecture.md": {
-      "raw_sha256": "9c6efb3e668f7107cd44ba06de2ae34806edb4ddbe93c82f7fe0eea25102a2c6",
-      "semantic_sha256": "d6af6101ed5ad38db254cec0e8703488a52ee16b71a8647dcc9ddf1de9ccc909"
+      "raw_sha256": "b2dd273d6f22f3d2640242b4ae019141d3038b8c21ddc865d68255b2300447c4",
+      "semantic_sha256": "da074b9b3384bbd6a0c55e46e0137e16ef7247b33e675e6cad44bdb02e9124c5"
     },
     "rust-ml-llm-debugging.md": {
-      "raw_sha256": "410f692da2860f74c3bd759f84edbf6b79193383d7e2d81b43d8927617fbb529",
-      "semantic_sha256": "9041bf26b3fa99a0ccb85e6850fc73f1f5ce22627f955273bcc8c317c7b3a80f"
+      "raw_sha256": "48e694fb39169a7327a9b801cfd56bf8f2b721030d312578161dbef0194a4142",
+      "semantic_sha256": "343a002ca29644d173677d5a2163ef89ef8ee75db64e71af4cef829ec7ed4b56"
     },
     "rust-ml-llm-review.md": {
-      "raw_sha256": "9c59f15e7b1e7ca5d648d8f40afc6cf7fa2602f749fd0541ec7d908171709fad",
-      "semantic_sha256": "974478d9414eaa403faa5633ed2a24b98a03524dda109bc1f2a5e53fa57fba49"
+      "raw_sha256": "29ffbf44de0e61fe0a0febd33e03fd24f4ca64861e6810e885183c932066eef8",
+      "semantic_sha256": "cb6ece372bee89358a9a40dd02c58b0fbecd4a7e0bae31f5f5a09a63ed01643a"
     },
     "rust-review.md": {
-      "raw_sha256": "5f539f2d360885b604d1daacea0564fbde15b11b7c90dd9992850079628276a4",
-      "semantic_sha256": "6a660cc0deae93a59864f1ec9f830fa19b5ecec6e12ec55afb6785ef7c3fc99d"
+      "raw_sha256": "6232c0d4d6fec290f8e8d7103b8f8a216c848b3f6c49f84eb4ff3b22bdb5879f",
+      "semantic_sha256": "3daf799d2cbd3dd2304e3d3a358649f1980a53dee09f89f1d7fddf75fa7bb1a6"
     },
     "security-api-input-review.md": {
-      "raw_sha256": "bea68d93d1a6c57e6c89c5d2f6b2381e5bdd59ffe65ffee95495fa942f44c9f9",
-      "semantic_sha256": "b705eae3cf190aecd294d4576d15355af50edf10e7e1e0cf0b09edea6fdb2083"
+      "raw_sha256": "875ef579c1db99708b70207e4a77bbdfb5c7f61bdf51761795b9060ffcb57870",
+      "semantic_sha256": "dfb2d48258e35af2a9f493e3c92f4ae2f5b3d845094f136260d538534981ec7a"
     },
     "security-auth-session-review.md": {
-      "raw_sha256": "bb5ec536c5d6c1f9c20a918e628c53ddb194af391258aaa0dfb1a9bc7421d67a",
-      "semantic_sha256": "d4423268b8b4201d60a65cb5adde2cbece79d780bb8de50c5f72563fc90ace30"
+      "raw_sha256": "aee461ff9483c1c61b4abcac2e7af5c588c6b1af91535a422dadc25c68de6c8e",
+      "semantic_sha256": "f2fb063523e3a405fcce4e59e02be9172890d4eb1e9a6e81f5f4e186facce517"
     },
     "security-authz-tenant-review.md": {
-      "raw_sha256": "ebce53f1c0c68e4fb0d3f03c720d27e6f96970ca755a4062b174f76b34c019a9",
-      "semantic_sha256": "f4431386c1c8789c5c0589e7d931b1a29d4c6ebdac98680e714fb629f151e2dd"
+      "raw_sha256": "80e050bacc8cc1a8b311d9eaa1717ab519a07009de8ec02121e239c4644f28b7",
+      "semantic_sha256": "72079b52c73b01da65c7f902bc72d5fda6272ee5f0baf451e3f09a5740fe775c"
     },
     "security-files-integrations-review.md": {
-      "raw_sha256": "81cf7356e33f215c6f856d837c0d3d5999d8c85cad7ff46563913481762401bd",
-      "semantic_sha256": "3913116f1051f29632f4665c7903b02413261e9c51fba3f6145bae7e16249f39"
+      "raw_sha256": "2622591695ff87eefe6f8e4106b502ab6624c5c3e93fa64d2dd88ddaac3fd190",
+      "semantic_sha256": "b217e7b7eb4cf64e0e36f614a68fee41be563dba5d4b8cc3e59ba41759957f56"
     },
     "security-frontend-browser-review.md": {
-      "raw_sha256": "ead84aefa3a62f205925bae320c639ca90ebdc5e02c38152ef42f1e20818b46a",
-      "semantic_sha256": "7edef3d60b4136a733cde9071afd818f2a8c99bd7c8d15157f5b8027ce3d0c38"
+      "raw_sha256": "d1bc9564bafb574808c8403a0063255b9d8880de9f69694271a067a4e2c056ce",
+      "semantic_sha256": "3beaeec61d795404ad71866331cbc9add02e791848ac7d670acf68d3c1454d21"
     },
     "security-qa-scenarios.md": {
-      "raw_sha256": "4bdc2fed45d4eecaf1cb44772885544c4d36a0485a99b2547d853ceb0a735344",
-      "semantic_sha256": "b13203ba0ad1760875c7d8948f5587b71000a7a1ec882b8939d84d636d8b5110"
+      "raw_sha256": "fc4cfd62f561f0132cbe4e2f1c0759eab17eb4afad873604ce759b6ab1095620",
+      "semantic_sha256": "6f08c89a646c9d86615a7f703f577fb1e6449c6f8bf11a7e2994b5fb60f5e0b5"
     },
     "security-secrets-config-review.md": {
-      "raw_sha256": "3233cc46c15f13d8a47c9a27d6be843b3c846ac87ecbe864a8aa8517c597d2c2",
-      "semantic_sha256": "d366c0c21efc46bf94b21b11097a075048fb3dfdc291ba14fef5ca4ffa1f44f8"
+      "raw_sha256": "3307ebefe3db9a18198d813e37e7a45f059b0b11f1a984c23c9eb4c58ac22153",
+      "semantic_sha256": "fc5911f54cfe77c2c12990d339ae18da8976d6ce98bd5c9df0145fc6cb4e1505"
     },
     "security-supply-chain-review.md": {
-      "raw_sha256": "9d3e40c518deb52dbcb151285f8ff4d83e04d39113351682cdb10842b89b5c73",
-      "semantic_sha256": "3d0db5010758eee43908497323f9189d0ee190e98d3a96d4e9ee411b6dd15fbc"
+      "raw_sha256": "5acd421b63b2501e048daafa62c761824d043dd5bc279a80f659a8a0d217a5ff",
+      "semantic_sha256": "66d07cc9167c148a0c1ff4b08e1c3f887ec5f92d3d8a5f9e9fd38e4198de1b44"
     },
     "security-threat-modeling.md": {
-      "raw_sha256": "fb9189529fa4ef6fb991abebd97500cc77f8ce163d12ad4bcbc8e64e77cb3e1a",
-      "semantic_sha256": "f9246b7cf72bf35e16db9af45733f6deabc94155ee62a82592139033ef1aa10f"
+      "raw_sha256": "3c8886610348e3b950632881cd284cc64342a1c7d5696db7967ebd61c88083db",
+      "semantic_sha256": "9602ef17d41136dbca4ace314c81799bd1bd2b73d656ebce38904147e8815d6e"
     },
     "security-vulnerability-response.md": {
-      "raw_sha256": "3bc6208326e7d9c0117ba7d63beee6e5bd2e65d9f75c1e097cc2ed73b47a7be2",
-      "semantic_sha256": "5a16cbdcb571277cc6698cbaa89960609eb5c853a4ea2294a4c7fea8001b7110"
+      "raw_sha256": "ee24f1fd1e6beba1d630dd274cab5bd4ab22effe38f2d6bcd10642b4a00b7c3a",
+      "semantic_sha256": "4f4bedea56116a61dd09d67f263181159902b214529522375d306d4bcd44e237"
     },
     "svelte-debugging.md": {
-      "raw_sha256": "a54d0d05655b8db71d8c32a2ab28aef45e758823de86610e024d297a02190fee",
-      "semantic_sha256": "1053f107522d3262cb7795339a33fb138d7a333a3a7f6eadfb0d0a9b98cfc664"
+      "raw_sha256": "29adc3bc5a68913b4bc7058d7d48fd5349cf3bfb7588aa6b26fff10123634d2b",
+      "semantic_sha256": "2f2f4656f17907ea7720f553798e240f21ec4889a488f0ef9733963b5ba4871c"
     },
     "svelte-implementation.md": {
-      "raw_sha256": "1f4f28136b6c25c213d73a86d449156c0cbe3e0e78189189ce45e32a402b55c5",
-      "semantic_sha256": "d6d247ccaa9bec98fcdc469b54df70c15f6111207ca0e12efb50003232f6ecb0"
+      "raw_sha256": "fe3407a68a4b95d4f33ba9ccb65bff73433c1c84dec3d12c5708088fe7d1e6eb",
+      "semantic_sha256": "9f3759a2c80fd10eb665becf3c1fbd1e67f616b892912e2e3262a2e707443e55"
     },
     "svelte-review.md": {
-      "raw_sha256": "0ad3d3fb3ebe6043bb17b028403e6f388aae708c1cc0c7d90f0f67e7a96b8183",
-      "semantic_sha256": "60388ddf8aa78fdc06ae67de9c301ef62ace7e69980ce3f15efb98fec3eeef2e"
+      "raw_sha256": "00e63c71e3ca409b96103a9d42959db04eb73fd4356b545525325b6d12b226e4",
+      "semantic_sha256": "047cee973ebe74009cc27fe23ccf88c4b68f0ea2495f9328e54b1629a9c7ceb2"
     },
     "tanstack-query-react-nextjs-debugging.md": {
-      "raw_sha256": "f0b53d13257bb73d4c9ebb4bca34589c8233ef485648cf280021fd5a730df3e6",
-      "semantic_sha256": "a22c50307b087f79c550344cf381ff306290286e591da8a0414365ed14f78b42"
+      "raw_sha256": "90b0ea64febda7d167be3e936bcced1b139e0db84a14aed96ca353933b2d085d",
+      "semantic_sha256": "2b9a47d256075257c244ed38a6a0ed36807bba8f01ff896a557304d2ed711a54"
     },
     "tanstack-query-react-nextjs-implementation.md": {
-      "raw_sha256": "b1814c75b70fe93b34d97db5c52a9947ccb34a3409c4aff082f41133ff12591b",
-      "semantic_sha256": "c9dffeeb9c240451ae418f50a99e3ac5eca1e05a1933100d7a311876c83760a2"
+      "raw_sha256": "e85b57d8e7096cc0842db55f6890cb4b76d339e8a3d10635392766dff24e6d10",
+      "semantic_sha256": "4ff50f55ccd66b77f9c77fda8a0625a5a44c9dd56384962cf974e043f9171fab"
     },
     "tanstack-query-react-nextjs-review.md": {
-      "raw_sha256": "cb19e1d9fa90dc138a7881e6f7f99ee8ed2c7a1f0c93286b669e0ee0512d905e",
-      "semantic_sha256": "f113bf94ffe90a3a1ddf1968eff1960c7293dcf34381c8ed453f88a90b1594e5"
+      "raw_sha256": "f9b948a5ba9f252d217a7613347457111616690c05d4096f97687269bc839875",
+      "semantic_sha256": "598fda068beb1ae83de8bec331d6b51ed738259fb33b7d188609f431c7582849"
     },
     "tanstack-query-svelte-debugging.md": {
-      "raw_sha256": "76e881c14c01df65a0f8b8fff2394d0e067d2848b5d6a72d823af43d1e557ac1",
-      "semantic_sha256": "4d02d3f1b51bafcc34e29357d4d14aa61df90702bc40851b7b1eacdcbfdeb13c"
+      "raw_sha256": "2d7e7fae46a7a19bdf7128907ba06a92eb2114938c2ab2d3bcdaabc60e753fac",
+      "semantic_sha256": "e0a27c3b840a2fe510eab5a72f1f67992b5eec1197a7b76d76e72e13e13e7438"
     },
     "tanstack-query-svelte-implementation.md": {
-      "raw_sha256": "fad7b047b7f0e6a391609c83251160e2d68e81e5cc8c11a91fe4525f900e3cc9",
-      "semantic_sha256": "cb038ea9d6fcf2800e7858e583cf5c6f2fb5561a3cdc8d308dda0aa6c4ddcd7f"
+      "raw_sha256": "9f69f5c9e2964a7a25e8fae8552be89085853fe81f36655bd21f727b3b04fbb3",
+      "semantic_sha256": "590f5448af1f814b9f641b892fb9202cedb69ffad87aedf5f66a816717d8861b"
     },
     "tanstack-query-svelte-review.md": {
-      "raw_sha256": "4b5bd27cd3aef72fb575325eb368445acd8b132cea513dd4dc9d56a80707eb69",
-      "semantic_sha256": "93fe81c60a9e5d0075808ab67e6a76e92d06759ce944d8be911001f7686d2db4"
+      "raw_sha256": "2dfb2649161e53db227b8696ab06b90f623db6df80ed076bdcf5bb656fa99d54",
+      "semantic_sha256": "a2a1e0c8ba3afd59a976a686c1dfb7fcccc337c22f5f9471f4e6043beecb0d78"
     },
     "tauri-desktop-debugging.md": {
-      "raw_sha256": "b96321aeaf702befcc96b6155c019fad7b3b314e209513a59cc33029591964b4",
-      "semantic_sha256": "b14f53900a7781a4e3a9cb581621e791dc1321159eb1d7eaafc3309a41a6ed12"
+      "raw_sha256": "5328b9e95d1df61809083919512fa8bd17b1890a10c0aca9bcec397f9ff7f2c6",
+      "semantic_sha256": "f6a528b9ee05630f863a10d9014bbbbb57a0336e6dcb6fbefad7babe8d0d4722"
     },
     "tauri-desktop-implementation.md": {
-      "raw_sha256": "c0f8b9cc854bc1c7c0f9bbde6ff0d65d3b8413ff084b48e917539f47e24071b5",
-      "semantic_sha256": "db664b20bd19926a89b63064aeb52696e92aa6f04d57bcbb6a0cacaf6d0ec251"
+      "raw_sha256": "41be59c378803de5d156b021ed5b6cb0c93c961875da6724cf1f29729f277959",
+      "semantic_sha256": "713d6dce949eb14586c0394b6cff5d3fdcd48b13b9d5c99415cd67222ed65b7c"
     },
     "tauri-desktop-review.md": {
-      "raw_sha256": "3ae5983a751c460e4687b0157cbfc50ad6f28b7243bf7609aac0cc3ffba7e80a",
-      "semantic_sha256": "e66e86603ec5208770815712289e154f6056870e59bca120bbc8912558496d57"
+      "raw_sha256": "a263c39d5dc22002e78ac9d4d32239b78d4de5e9cf49b22e721b3611836ec4ff",
+      "semantic_sha256": "8a0fb0b667be336edda0412b7ef4e60776cd5f1215d05b47b5d740bc280dfcfe"
     },
     "tauri-release-distribution.md": {
-      "raw_sha256": "7c05ac3c5bc23c8221df5c66073799e618397c3f413dfc6a68ebbdb474593bf8",
-      "semantic_sha256": "53ff0e0f41db81e7020556ac73c28c5f80bdf71ca4cca2f8c2d4551c6ad51191"
+      "raw_sha256": "69f910f4da2e14817125ff613b586d9f4153fbe1b209a3cc0199a49d08c03b03",
+      "semantic_sha256": "8ef8b049c4b419478d237dc28d3cd4bfc2a10bedf994725d2d6884b862d07c3e"
     },
     "tauri-security-capabilities.md": {
-      "raw_sha256": "4768f7e0f2bf1efd034a92e186af4cf50198a43d7da8548ac0718ce5bcdc38b0",
-      "semantic_sha256": "fbc7bdf4d3560540e8cb8b120b1d4d9484d85977c76332d636b1edaea42cabd9"
+      "raw_sha256": "e41cb5e155c23510be2e91aa3977a858ceccb87e5e4391aa934cdebc09bd8269",
+      "semantic_sha256": "6ada6a0faf41d3740f5851d308b4ee40e3a833b28e97fdc5bb86b58d24c86ad8"
     },
     "ui-accessibility-motion.md": {
-      "raw_sha256": "f4a6e9072eede1a89467e984aba6849cb554c637b91ce662925a59480f57ecad",
-      "semantic_sha256": "5a8cd5525675ad778a6b0ceadeb4282cbd00efe9b390bfa42de23f64447be743"
+      "raw_sha256": "754cdb927a00aa259a5df481879fe7d0a31558f3ada63861b3df922a2acc4be7",
+      "semantic_sha256": "1d69cf917805d348fbf52181692d89f3224547c3f0c68160b4ba42331998d3b8"
     },
     "ui-code-review.md": {
-      "raw_sha256": "7b5a626b33ebea24073faf5277e4656b0e0dd41d8b17419d20d11097f18bc003",
-      "semantic_sha256": "66ee87d3abcefe009f4e6f59b1c6ba449a2a5d1f2490341a1eae1d70725bfad9"
+      "raw_sha256": "ecec452e49e8205f784ebaea5135236817090325c8184ec18d4178dd4280ed5e",
+      "semantic_sha256": "0e81aaaf989ab30891c7270218bf24abc234544bd1850d6197a2f53cf9335bd2"
     },
     "ui-component-architecture.md": {
-      "raw_sha256": "a1145e6ab902acfda08ff9b89bb7facd53490d1b01596270587329bda79e99ad",
-      "semantic_sha256": "b4bd93555e7b261cc23e1bf01e775f9cb1c810b338cf693e51476bcdf5523437"
+      "raw_sha256": "4df4ffdbe5912cb74bea738d439c5922ba157be1872d249611145ab404d68f1a",
+      "semantic_sha256": "dfb234b8fe96d04dd9d734f6d329d2bcec0e4e006638cce25b7b1ba1f6f0fb1c"
     },
     "ui-design-system.md": {
-      "raw_sha256": "8251c2c460bbbbdb0c1500f603614841737b4705bbafd7551f5c98ae26f69f78",
-      "semantic_sha256": "7c7c16a13b138874e32ed25a07596e18996b966859622f17cdbd77fde8026afa"
+      "raw_sha256": "4099b1d6ef6dcf9910cf9f436665e988d092b5daad1185f38877395b55bd5a81",
+      "semantic_sha256": "4587cca9b17d42f6e4a41647e768d4f91d522c89d2fa503f5201c331bf4ef2d0"
     },
     "ui-frontend-testing-qa.md": {
-      "raw_sha256": "3dc987270f57f9cb8a780458c01f647c6f047764f2403256f4ec20d7b27c9bf1",
-      "semantic_sha256": "6604d19584e1ae8851b9149910aab11809320602d4b3e768609a04d8de5816d9"
+      "raw_sha256": "cc3c93759f5174f294ab4534b890e80c6472f640e782a1957b234be7db638e45",
+      "semantic_sha256": "b4001155784ccdb94b636e7924f51e5dd7d17ff8555089e2ad800fe9f970169f"
     },
     "ui-performance-stability.md": {
-      "raw_sha256": "cf110971ebf472196d24c7cd3b7d19eca6a18526fa497a8d237e8c4cbd964fea",
-      "semantic_sha256": "d164d1a51db9994079cc2a4197dacffe192a0b943f74d32966b0dc82d3f2ad59"
+      "raw_sha256": "9b907a9d299dc72add13e7278ec9d572401b97adb8529009f3c2ead74c3d9fa3",
+      "semantic_sha256": "290df5af7a9621d868bcf91c6addef9383a5b46af156caccadaa726a02eca5a1"
     },
     "ui-responsive-media.md": {
-      "raw_sha256": "621be8e283586c742baafdfdc30fd06c5667bfab61c8b3293f91b6bbf677eb86",
-      "semantic_sha256": "ae468828c367f2ec010612a7517dc06f26623400100346226ee52523043ef12d"
+      "raw_sha256": "e91bbb31089cedf18ae8e5f502a199714fefb2a5579455c115b963fd0c1c6db1",
+      "semantic_sha256": "65e80b972a504be7cac796aacca1361b4a1f83645ea074e3d55dbf738dd69486"
     },
     "ui-tailwind-tokens.md": {
-      "raw_sha256": "097e52391e6e32b7cf2f3bb7e2b51a4a2c804984ae57aa3fe75307b7578b6482",
-      "semantic_sha256": "95d904f34ca4f097b5bcc61502018a80ac95a37529db9386fceb362541f51057"
+      "raw_sha256": "cb436eb732925f9432b0c3f79f4c7c64c7f66e5d6c19ee2595ca844550842295",
+      "semantic_sha256": "e5257bca6aa317d6d787d876b8a4ab2fe09628a1c932fd23a6069b4d5a86d9b0"
     },
     "ui-ux-workflow.md": {
-      "raw_sha256": "fe638de3272aac1e92e3319aff8a55fb6fc86942d2cedbf8eb69f564604aa0a5",
-      "semantic_sha256": "c1f3f6a8186b7538c5a10f45f8f37734f1b59aec2a39eae31d342ffbe4b620f6"
+      "raw_sha256": "5b035cde7c91f05bde5baeef44b20846e42007f39e55d8255251664eb8d79a1b",
+      "semantic_sha256": "a1208d589b13f754180f7fbcbff6eb37ad01923bbf28674439a22b1b785cd27d"
     },
     "ui-view-states-forms.md": {
-      "raw_sha256": "d46516b8363c64279ff4b28605d52b88d685f9795017e1d1cb699daa371148dc",
-      "semantic_sha256": "9314a13c9997d1aaab7cac2a75a25500bd4fdeeef90bfb5ace7008f2fa714af9"
+      "raw_sha256": "2c1f277cf7661a2046b46bf52f33e0a58b18de705ade7e596a801ce91588ba50",
+      "semantic_sha256": "f165d37091821503a4dda3046888e50e6fe51cd77ffc9147b6782a0904195f43"
     },
     "using-itsolpowers.md": {
-      "raw_sha256": "5d463431d830d28447faea0c4fa4323d44c9342794e1c6672140b4bc1cbca282",
-      "semantic_sha256": "d6cf8e6381d8183f309370946128bad8c4f9370280c11f7935a7c9a565a8152b"
+      "raw_sha256": "6352116b4022058d1b4bc81a0d9cda24011bfb2d4dbe6057e51f14ab15eea757",
+      "semantic_sha256": "05eff2701d0a4f1eea1437555b42ac5577cf18c902711715f0fe306d8ca01cb8"
     }
   }
 }

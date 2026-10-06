@@ -13,7 +13,6 @@ import { createHash } from "node:crypto";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { parsePorcelainV1ZPaths } from "./lib/git-status.mjs";
 
 const apply = process.argv.includes("--apply");
 const repositoryRootArgument = process.argv.indexOf("--repository-root");
@@ -72,11 +71,39 @@ function classify(relativePath) {
   return null;
 }
 
+const pluginRelativeRoot = path.relative(
+  path.resolve(pluginRoot, "../.."),
+  pluginRoot,
+).split(path.sep).join("/");
+
+function changedEntries() {
+  const fields = git(["status", "--porcelain=v1", "-z", "--untracked-files=all"]).stdout.split("\0");
+  const entries = [];
+  for (let index = 0; index < fields.length;) {
+    const record = fields[index++];
+    if (!record) continue;
+    if (record.length < 4 || record[2] !== " ") throw new Error(`invalid git status record: ${record}`);
+    const status = record.slice(0, 2);
+    const destination = record.slice(3);
+    const paths = [destination];
+    if (status.includes("R")) {
+      const source = fields[index++];
+      if (!source) throw new Error(`missing rename source for git status record: ${record}`);
+      paths.push(source);
+    } else if (status.includes("C")) {
+      index += 1;
+    }
+    for (const relativePath of paths) {
+      if (relativePath.startsWith(".itsol/")) continue;
+      const inPluginScope = relativePath === pluginRelativeRoot || relativePath.startsWith(`${pluginRelativeRoot}/`);
+      entries.push({ ignore: status === "??" && !inPluginScope, path: relativePath, status });
+    }
+  }
+  return entries;
+}
+
 function changedPaths() {
-  return parsePorcelainV1ZPaths(
-    git(["status", "--porcelain=v1", "-z", "--untracked-files=all"]).stdout,
-  )
-    .filter((entry) => !entry.startsWith(".itsol/"));
+  return changedEntries().filter((entry) => !entry.ignore).map((entry) => entry.path);
 }
 
 function containedPath(relativePath) {

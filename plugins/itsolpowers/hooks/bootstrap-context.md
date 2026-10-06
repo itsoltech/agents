@@ -18,4 +18,8 @@ Destructive data changes, unrequested production publication/deployment, secrets
 ## Enforcement boundary
 
 Canonical skills, repository policy, schemas, tools, hooks, and tests—not a context profile—enforce authority and safety. When relevant, `itsol-workflow-mode` owns `governed`, `autonomous-planned`, `direct` and the fields `workflow_mode`, `mode_source`, `decision_authority`, `scope`, `artifact_state`, `execution_mode`, `protected_constraints`; its values include `draft`, `approved`, `ready-for-execution`, `not-required`, `pending`, `inline`, `subagents`, and `auto`. `itsol-execution-policy` owns resource and stop limits. Adapters may map native capabilities but must not invent them or weaken these contracts.
+
+## Task/result contract
+
+Use the router's outcome, constraints, `done_when`, and evidence contract. Report status and unverified gaps honestly; the parent validates evidence.
 </EXTREMELY_IMPORTANT>

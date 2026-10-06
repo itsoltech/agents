@@ -52,5 +52,5 @@ Classify before changing code:
 
 - Change one boundary at a time and keep evidence before/after.
 - Prefer a minimal reproduction or failing test when practical.
-- Add regression coverage for the bug's boundary: unit, integration, E2E, config plugin test, native module test, or documented manual smoke.
+- Verify the bug's boundary with relevant supported checks. Add lasting regression coverage only for a meaningful gap; use permitted unit, contract, config/native-module checks, or manual evidence as appropriate.
 - For user-facing defects, use `itsol-bug-debugging` and follow any required Technical Fix Plan gate.

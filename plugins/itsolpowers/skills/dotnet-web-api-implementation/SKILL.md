@@ -1,18 +1,17 @@
 ---
 name: dotnet-web-api-implementation
-description: "Implement .NET APIs with contracts, validation, OpenAPI, auth, EF Core, jobs, and tests."
+description: "Implement .NET changes to API contracts, validation, auth, persistence, or background jobs."
 ---
 
 # Dotnet Web API Implementation
 
 Keep architecture proportional: implement a clear API contract, validation, error handling, persistence boundary, observability, and tests without overbuilding patterns.
 
-## Process
+## Trigger boundary
 
-1. Inspect existing project conventions before introducing new structure.
-2. Define the contract, data flow, error behavior, permissions, observability, and tests before editing.
-3. Make the smallest coherent change that satisfies the behavior.
-4. Run focused verification and use `itsol-self-review` before handoff.
+Use this skill when a .NET change alters an API contract, validation or authorization boundary, EF Core/persistence behavior, background work, observability, or deployment-facing behavior.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit that does not change those boundaries; follow the repository's established convention directly.
 
 ## Coordination
 

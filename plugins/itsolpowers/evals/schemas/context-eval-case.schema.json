@@ -73,13 +73,13 @@
           "type": "array",
           "maxItems": 6,
           "uniqueItems": true,
-          "items": { "type": "string" }
+          "items": { "type": "string", "minLength": 1, "maxLength": 120 }
         },
         "forbidden_skills": {
           "type": "array",
           "maxItems": 8,
           "uniqueItems": true,
-          "items": { "type": "string" }
+          "items": { "type": "string", "minLength": 1, "maxLength": 120 }
         },
         "workflow_requirement": {
           "enum": ["none", "governed", "autonomous-planned", "direct"]

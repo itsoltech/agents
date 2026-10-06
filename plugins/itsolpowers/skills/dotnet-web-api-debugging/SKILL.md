@@ -1,18 +1,17 @@
 ---
 name: dotnet-web-api-debugging
-description: "Debug .NET APIs across auth, EF Core, jobs, caching, health, and incidents."
+description: "Diagnose .NET failures across middleware, auth, persistence, jobs, caching, or deployment."
 ---
 
 # Dotnet Web API Debugging
 
 Debug through middleware, endpoint, validation, domain, data, integration, cache, job, and deployment layers using logs and traces before changing code.
 
-## Process
+## Trigger boundary
 
-1. State expected behavior, actual behavior, impact, and the smallest reproducible symptom.
-2. Gather evidence from code, logs, traces, metrics, generated output, database plans, config, or failing tests before proposing a fix.
-3. Isolate the boundary that fails and compare it with a known working path.
-4. Implement one root-cause fix with focused verification or a regression test where feasible.
+Use this skill when a .NET symptom crosses middleware, endpoint, validation, domain, persistence, integration, cache, job, health, or deployment behavior and needs evidence to isolate.
+
+Do not load it for a small local edit with a deterministic cause and no runtime, data, auth, or deployment behavior change; follow the repository's established convention directly.
 
 ## Coordination
 

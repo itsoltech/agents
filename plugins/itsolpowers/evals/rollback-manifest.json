@@ -30,7 +30,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "61e689b34b99a032bc8305dd765a246eee0e9fd4700ef6328bad80f524dd516b"
+        "sha256": "3fb3f144e8ee48ada6aa0a22b8a2b42818db67ea0c453a762ca55702035e0790"
       },
       "baseline": {
         "state": "file",
@@ -43,7 +43,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "1e128fa82f45e5f7d2a2ceabdb8cb7c1f3a6814efa6babde1a87e506e18b1cdf"
+        "sha256": "70b3d7e1137382e8af0de1f0a5384558798f6cdf737900a867f963217104bcaa"
       },
       "baseline": {
         "state": "file",
@@ -56,7 +56,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "99a2500158f8b8e06ce63eeb8af8b14718623783ece1bc1e5dd32d7223c4e761"
+        "sha256": "80429087237af1e33da8831a5ca6753d7f16f843efc4948ac63f8d7c48d05014"
       },
       "baseline": {
         "state": "file",
@@ -69,7 +69,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "cf11746e6e1539200dd22d7153c55f7eb22d77ee399e9c5001525b228081ff46"
+        "sha256": "60c8da431e0d053e1056e2e4bf59c20df3e42f88f8d1644d1aaab11a91cb979e"
       },
       "baseline": {
         "state": "file",
@@ -82,7 +82,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "111ae5d8679c3a9591d88735ee431c8a2fd8eabe12ff927e9c65bdd1150791ba"
+        "sha256": "fbe48c95c3cab2c4ae89e158164f0ccbc00ae7da5aa95c14391e900354988076"
       },
       "baseline": {
         "state": "file",
@@ -95,7 +95,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "105436344db6b85990dc57281bd31f5bdd0c07cbf33dbd62a342a517c65ca977"
+        "sha256": "1e8568ad169b47a6d31841e628eafe203e8485786356ef6aa456dfe50043884a"
       },
       "baseline": {
         "state": "file",
@@ -108,7 +108,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4ee2014e49b2a8451b7137be265d7543b0122b48ec96b4693582567cf0962765"
+        "sha256": "9f32a937a28240a52a71b12a3af1f8f00920d21381ad91dda11ed4341ec5040a"
       },
       "baseline": {
         "state": "file",
@@ -117,11 +117,24 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/agents/agent-browser-interaction-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "190221a3028ce9ab0905c260191bb221d8a3c9b4dc4981359a31495eb4f9d3ec"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "452d5060e98ab51533043b115a0d3955e4bba1746ce45b66ee0e698bc4f81acd"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/agents/agent-browser-qa-reporting.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "8dd73d15e97ac7022c97e3ac3ea7cde4207b078bdd50c0f4af4e1e9e348a6e8a"
+        "sha256": "75a266200502aac9228451476c5b8b886ee23f8de6fe8ab24653c03f3bd90602"
       },
       "baseline": {
         "state": "file",
@@ -134,7 +147,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d4c129077aebadf002b8bdca751fe75255469f7d2ce6caf35d1d6d9281c55b38"
+        "sha256": "83e3c33254ef2d91719d7ce28b06b263ea8544d4e8aa09143316e70b11f58339"
       },
       "baseline": {
         "state": "file",
@@ -147,7 +160,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "dcfbb46b4b5f88ad921e346c864f2e02b01285ef5dab20a6c53c9e58c523ebc4"
+        "sha256": "aaa7c934ccd2568812862a13d2466b7db65a3e7759fa4fa836b89ca4d430cb58"
       },
       "baseline": {
         "state": "file",
@@ -160,7 +173,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f8d7c04886246dc4d7e76f1ceddf05211a31df03503303365d7a007466d84249"
+        "sha256": "9e2acff5204a9fdbcdfceabef08f81138d8df419f551c5e7e7a322fac9a345df"
       },
       "baseline": {
         "state": "file",
@@ -173,7 +186,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "1152b6a61f9747f9c5d29b750c2ba46558f879e18d0d0cd680aaa0da178d6e72"
+        "sha256": "71eb72a9036ee3d318b1be3ae9be58401cd19db34d80a669b3d898f065eaabd5"
       },
       "baseline": {
         "state": "file",
@@ -186,7 +199,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f0e5154c73fdd51a45e5b10865d2e50d5784feea8cf7d2fb924beef18dc54d94"
+        "sha256": "27b4e41e5075e268d93c05b363175a215403e68d68fb44ae079976b9f2eac9dd"
       },
       "baseline": {
         "state": "file",
@@ -199,7 +212,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "5677d32489b6c2aa18b7418b32fd816e921d09d179175b81ea1b0eda7014ce69"
+        "sha256": "858111eeb852d04eaad84359714743787300459f6563db45af059723a0207e5e"
       },
       "baseline": {
         "state": "file",
@@ -212,7 +225,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "2680db0b0080c367a9e20cfb7b91ce7ada68f8bf14b66cc12ecaa333f857fe24"
+        "sha256": "b5b8b6ebe012eeeff854f8db807623befb7fdaa06beff972c1b03f9661eff418"
       },
       "baseline": {
         "state": "file",
@@ -225,7 +238,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "69593dbe1a841c747d8fa3eda7da63c4113ea484158db3b5d951469b885c0450"
+        "sha256": "e446b4ef2c3fc373e47a30d988c1fb1f8b3c8f1bc63625062a9310176cb5a396"
       },
       "baseline": {
         "state": "file",
@@ -238,7 +251,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "551c74fe3a3645dcb206c21cd31ee1052cc515dfa30275a7adf23cd1090a6708"
+        "sha256": "11362b86097f514737f8cad8d60f16e19664c104fd19e2b1acb54ed4eb2325e4"
       },
       "baseline": {
         "state": "file",
@@ -251,7 +264,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fcd286d964dc2a68d169dea8cc647fb1b5f7a006ffa5fa9c033dae6abed38b87"
+        "sha256": "902cac31f579339b084d38c642bae2f0874da78747698580a86b16ad2fc0aeb5"
       },
       "baseline": {
         "state": "file",
@@ -264,7 +277,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7cbc9cede24bfd1bab4da55433b3b9273941d6e1596f8b85bc329e428081cd28"
+        "sha256": "02734869dd8d14f95356076695208ffff1dbf2df40c6b2e1e18cc55265a7dbaf"
       },
       "baseline": {
         "state": "file",
@@ -277,7 +290,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9cd46729144a4afb2efa444d7fb88f7105f3fa09a446b8d36c3efdfc09134a36"
+        "sha256": "fb3eef562720494850c01fdcbcb4866f304cc71f07be5507a4596cb566e051e1"
       },
       "baseline": {
         "state": "file",
@@ -290,7 +303,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "5766abbde8bec70605627536fb11ab6da4677ecc324cfa139b0a8760ea454e4b"
+        "sha256": "49f7979aa11f107cc2e3fa7ccd2ac54822e777bb7fe4a4cf450441b2fae959e8"
       },
       "baseline": {
         "state": "file",
@@ -303,7 +316,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "a88a7bff20ba4524be2484b75d2399c261cdc072a044afb45aad9a8f48d830fa"
+        "sha256": "48dd4b961350b5b388ee69823669d87465c6ec8ce7c681dd650f75f832439711"
       },
       "baseline": {
         "state": "file",
@@ -316,7 +329,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4850acb5c69df347a6c13e0c8e2afdcb93eedff69357094babf3e4efd8ad415c"
+        "sha256": "c4908f9f5bade34ec165d14bb1c527537a4a0afec346ae7a990b927704714324"
       },
       "baseline": {
         "state": "file",
@@ -329,7 +342,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d46b02191b22f7a79af959ab2339879b46b4ea6d04b9c494de13eb1b066f4be5"
+        "sha256": "99e8a355d87f136406abb0c2ecc80bc3b1c0e708ffe530fc1bfcac84ef8bf638"
       },
       "baseline": {
         "state": "file",
@@ -342,7 +355,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f990469676503cf9f38c8c66caa18a5dcdee34b1fea6de638d4a8c5d9453a03c"
+        "sha256": "9ec0b2e84b0ff47c02c106c3ae453a1a8c6f099572dc9ae3e8427f32a7c261cb"
       },
       "baseline": {
         "state": "file",
@@ -355,7 +368,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d253333daa49a0255311585002e84fee66f783ed6be6c694fe63069ccbba1a87"
+        "sha256": "f882eaaeb73e65137cfc7a4fae7d9e0400b18066d4d7702059fc7f2f028a26fa"
       },
       "baseline": {
         "state": "file",
@@ -368,7 +381,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d7fdda07c3c24aadad0dc33d76d1d1cbc9fd026a71964cc6254d7c4cfd9dbc4c"
+        "sha256": "1baa945071a9891148b5216d0636021ee36f347133059226a8e8a88876c7b0d5"
       },
       "baseline": {
         "state": "file",
@@ -381,7 +394,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "753a264be20df21cf95a23f634c6701ffc3c852aa3fff88256b3cbc66d732c52"
+        "sha256": "45e47c86d06013f17fa2bc5a8cb83813ea88b3957f66c08094697321f0a8bb98"
       },
       "baseline": {
         "state": "file",
@@ -394,7 +407,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "71056c974077397e1f0a7f2e3b6ad3be1e20c7f06edf7f7aa2df3726fb51c671"
+        "sha256": "672d314cd7f7959f71a9ac19b6921c07b4332ea65f3753d49f8582b44c35be96"
       },
       "baseline": {
         "state": "file",
@@ -407,7 +420,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "bfa1983aad844cf06c1f9ea64c370ac19199c82e2977b98a9ca46800bcd8f3ea"
+        "sha256": "f4b45d1e52bfd83223506e7aec416279667c5e5c9f5fbc18e4f7a570663db05b"
       },
       "baseline": {
         "state": "file",
@@ -420,7 +433,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f7d911dfff9b305b21db073152f4c28696bdd8d0f3ab688cc27f4cda6afd86cf"
+        "sha256": "72c40f827cf33ce3fdd0df02e817db705986dec56758f02b73e0d41805fbe9c7"
       },
       "baseline": {
         "state": "file",
@@ -433,7 +446,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e8c1a0560b420114613204aad3e73c9a823b9bb5a98029538daff57671eff7b3"
+        "sha256": "440ece40599e0fe94cb238bda8edf1eb27733cca9d801eb2649433c8ed16239d"
       },
       "baseline": {
         "state": "file",
@@ -446,7 +459,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "2788468fd5d1fceccb4f932101e84bb2aee8c73085d97b6ad9cc562f296da619"
+        "sha256": "b5ffbd6d644d6da37c174db577257c17d9514e8fdf265d4ced3b2b86138b5a60"
       },
       "baseline": {
         "state": "file",
@@ -459,7 +472,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "19e5e1672791b0620998e5bebc0500e5adb0ab6cec121999313ec9192932d37c"
+        "sha256": "16fc041e98b85d37a4dbe81bab5076aa01ca68610293a0bea937a289f0cc8d8d"
       },
       "baseline": {
         "state": "file",
@@ -472,7 +485,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "532b5363da19af09b2fab17d54a7dbbe2c6490d9a8e58e7442fa5ddd0a511b0b"
+        "sha256": "6cf6f2c9922c9acdddf4cd24807bb355ca6fe6c144c2cfc5086a8bf79cb86650"
       },
       "baseline": {
         "state": "file",
@@ -485,7 +498,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "dbf370033764202ae93880574e4f41dfba7c008c988732440b1d16830d58d321"
+        "sha256": "08c9105df83d9a65951312cefa805fbfb7f2e3f5b4a6ebeca53f39c6d35a0949"
       },
       "baseline": {
         "state": "file",
@@ -498,7 +511,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "0365d80857720c2f9717dec3209b0fbf2cc0fbb0b3c2931e5ab4a2fb232926af"
+        "sha256": "9da44186fc5be406744cf25ec30ac9e143bd6d5227e56e5258b66961fc20c605"
       },
       "baseline": {
         "state": "file",
@@ -511,7 +524,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "68112783c6853e6782dbb958529aa89974b64a4b6d25fdbf40454755f4546f43"
+        "sha256": "8c48da205b41b4a1530aecb13bc443bb66b8fb1d6b044c6d6fd9e930eb246ab4"
       },
       "baseline": {
         "state": "file",
@@ -524,7 +537,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "04d02ed650dfae2b15a87663abb82d7f60b0d25a9ff8c71ca510bfc8c4fc16a3"
+        "sha256": "f1126d14f470182612915c42aa5a00aa224b52e902fafb4a93458be6c8cda386"
       },
       "baseline": {
         "state": "file",
@@ -537,7 +550,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "130abe5e1ea02117543168f5ba86ccb93ad1509151b32394f9fbf5ba30a5010b"
+        "sha256": "7fd2bd6239e176e02f471e12fa49a7afa56d9ee16f008d9fa8ed1b71f241b575"
       },
       "baseline": {
         "state": "file",
@@ -550,7 +563,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f9544da0169eb5d1ca2f579012030652ac39196d56dbae4fe099a24972aad445"
+        "sha256": "6f82597031da8a77f85fe58882e9d408ee581f225eca0bb82ce30f5454cc84e6"
       },
       "baseline": {
         "state": "file",
@@ -563,7 +576,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c302dcf881b8a0f9b41eeddf0c59bac4e3c22459c42e37b94b2deba384470a42"
+        "sha256": "eb9cd549541584693154fd6fbbedd8e216cfb53633fdfd1560b84a1063f4171c"
       },
       "baseline": {
         "state": "file",
@@ -576,7 +589,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e5709917df22faccecc6f6e41ec763294b77e27b400641958e774c68180a8d08"
+        "sha256": "7f6056b3368baa88c5ff3ed95a31d3e864d99ab1b1fe1cb8bf372a4b2359239d"
       },
       "baseline": {
         "state": "file",
@@ -585,11 +598,37 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/agents/itsol-current-tech-context.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b128cf7e60825f377f4fbd4651091810fd42179e047e394da5434461ebd58ba0"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "bd528b9f7b51fdc6d5ed405b9609a35768fd262a1cb1e37316485af5e0a5e584"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/itsol-execution-policy.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b9c77abd20f87d0dd2a0b543f504db348516330135e4a9d5530748d3ca3fdfe8"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3ca8b3af516b4941eb5b13f615939a9d1ac27e7b43e2026aee0bae062cafaf3a"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/agents/itsol-feature-implementation.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c158180536b456f2b41b9dc71556875b42ddd906af68fde48701938691d609d2"
+        "sha256": "98d8656d2387c985e8b142746652aed017fcf1579a1df3e811fe7e999a2d4c36"
       },
       "baseline": {
         "state": "file",
@@ -598,11 +637,24 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/agents/itsol-functional-planning.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "434d9fd3a9995d6021fa61b2e3ef6c9f6b710f068612b95a4c1b91b593dd14c4"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "adce181ac077da07c8c474269cc3bb7629d0a2e0022b856e1538537c4583893e"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/agents/itsol-qa-handoff.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "279c04fb600d469a0077c77405cddaa2f6c1cf0b4b3dc6ec1515f59e7ae804af"
+        "sha256": "8ed5c728d2ada52ce640ad68225c533619b6190b876d21ca91015f78a9569c1f"
       },
       "baseline": {
         "state": "file",
@@ -615,7 +667,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "31da5aea24089552cf0e82ab25f5f6206daee009f5334da3a05f828631959d6e"
+        "sha256": "f413e1daa698957d6f01eb8512ec0d7e95dc2337f783921ea8f690f4afd6355e"
       },
       "baseline": {
         "state": "file",
@@ -624,11 +676,24 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/agents/itsol-requirements-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "fbebc9423249f724fb0397e067097650cfa26401e44effc667172fb560acb0a3"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "dfe36127b1d60e47da75f8726ef645e17c48ab4632bd15d07ab4668a6383e1b2"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/agents/itsol-self-review.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "96990e094386ce8d9aaf20ecb70abf29dcb16eefe3e52402448221228685de51"
+        "sha256": "87070b9cc3a574bc52e7ac45b024acb80da17ec9515b238f215a071f0308302a"
       },
       "baseline": {
         "state": "file",
@@ -641,7 +706,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7249a96a7bef1e20397db9e33bf1b14f973e2fe9ef5e759dbdc240038e1f58f6"
+        "sha256": "3cb3742691b30a7dfc7c9b4f7372357801a9e42a07af3d6ac9cd48a76fb3bd38"
       },
       "baseline": {
         "state": "file",
@@ -650,11 +715,24 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/agents/itsol-task-intake.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5872a42e89c5a6f7168599e0814b5070bd1700ade535f93520f20906b895fc2f"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9a62f73b12c152553931fec397ab6c416ae359f777d68344d6c72849c923394e"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/agents/itsol-tdd-workflow.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "ab0cae1ad400f238f188bb6ba74589888de5dc09b24301f750f994e627e0332e"
+        "sha256": "810275dee3146dcd89c398f468e21b721aa6bd79ee093603e19c9429e198e410"
       },
       "baseline": {
         "state": "file",
@@ -663,11 +741,37 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/agents/itsol-technical-planning.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9a9b11f9a9b68d35ed3bd630dcbfc3ecbd6377b169639b42f82ee12c880cfecd"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3069bc87ff7649b763dbbb3e37e2ac5170768f1326cebb80ee965eb075475aa6"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/itsol-workflow-mode.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6ca0135dc7b50766453f6ef21682b97c5554b06cc76465c9e2890f2d362e7d3a"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6d834518bf8199540eaf08c5c9c57c3d5c5ead30cedf43928a0c9c616cc53ec9"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/agents/ml-ai-project-planning.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "06c22c9305b3c94e56b69ab52f6c2251f4cfcb0922e542ab7b334941d79c01d0"
+        "sha256": "c124bc3b29bb4fb2ce201ded488973f8ae358c14c3b404f6abcca80e633fdf32"
       },
       "baseline": {
         "state": "file",
@@ -680,7 +784,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "13f194018e5031a807115d04042519ee4bf5961a4175090e4d375f7fd9d10b68"
+        "sha256": "d6314043d0ccf95ee81f556ab8d358a00759e35dfd1b5fb60782147eed92d916"
       },
       "baseline": {
         "state": "file",
@@ -693,7 +797,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "88a0fbf28fbfb30f54844d7f8cef717d48ac04f4fb8e2709f1bfd054e850e2ae"
+        "sha256": "0ce151711528af07da0e2b108fa0eb3caae1095a050523dfc90058f95d919a0e"
       },
       "baseline": {
         "state": "file",
@@ -706,7 +810,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "6c97d6b55f9369deb0e14eeaefa89bc999a000df0ca4c9d8d028903f2d7ec6e0"
+        "sha256": "04b876461e594fb10eb9a64b2a8a7d2993f3ebd0a4e2eb4b355a6b50c7284e81"
       },
       "baseline": {
         "state": "file",
@@ -719,7 +823,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "2c13a43b23611e5061e1a887bf26284b1bad46dd41363d45f4000a2dc3be27dd"
+        "sha256": "42cccd60bcfefc69d1312da567f149bc840d74ab451fcfb10ab55f0945675aa8"
       },
       "baseline": {
         "state": "file",
@@ -732,7 +836,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f9c46b6bb04692fa731021649b38a36935d8634964c9ca1bd40a60ea5df90058"
+        "sha256": "f043e08fe14026efff3c6b7ca15846d718d5499585e4119c6b97326d241479d5"
       },
       "baseline": {
         "state": "file",
@@ -745,7 +849,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "ab81d4b153a52cd4b0f6cc22e979e4f4acbe0d7dd3dd00e20ada8e09c04743af"
+        "sha256": "eb7f77a89445002d7dd45df2e91513df60790faac24324b65dc8162a398b7077"
       },
       "baseline": {
         "state": "file",
@@ -758,7 +862,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f9dabda469e957f3df423d3d22c6bc0727e003e7681aa31ce15dd2c71f89ba22"
+        "sha256": "93491cf5a487157274be0bbd8bdaf0cfaa2694d66e98e74f3c93ce366f2d6529"
       },
       "baseline": {
         "state": "file",
@@ -771,7 +875,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "769c6f9375de4d57ba160774b9127de462657b0c16ac5ec963bcc455b0d59934"
+        "sha256": "57a764febb10b79d12f6b41b87fb4f450840e773427c7816d1710578ef7ffa8b"
       },
       "baseline": {
         "state": "file",
@@ -784,7 +888,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "75995e1fad7699174ffe171184d1ca530dec25eaa044379f96686ba0205c0c8f"
+        "sha256": "7d0e6eb48279e4ba46762f8184bb0270e2072d2324b01f49ddb0054db71a40dd"
       },
       "baseline": {
         "state": "file",
@@ -797,7 +901,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "b52e239a277b159c75fd39d40a9718b6cdd7d15403a887378d90e7af7f490a4e"
+        "sha256": "740b3698b7bf5e729cb3d1fc506a92285f0c906e116e8ba33a24d729ce836867"
       },
       "baseline": {
         "state": "file",
@@ -810,7 +914,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "b3bfb54be4952252dcdb0aa86df20f7bb189dd4403fd5136031489634ddef3a5"
+        "sha256": "cc3377870bdb9c1dad0f422080911591eb76f2e8bcec335868b85e266d6e6e32"
       },
       "baseline": {
         "state": "file",
@@ -823,7 +927,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "bbe2a297efef97f1b23c3bb891e706754de2fc94c8a71c49ea2de3cff2b5aa22"
+        "sha256": "c2431a96f666cfb268c1527cbd3bc66b6b58afcf552a8a22abf21d91ee9c642c"
       },
       "baseline": {
         "state": "file",
@@ -836,7 +940,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "23b2ea513a907de32c37e7afb59a3772d536cc66dcc15c901cb85101de0c2f6e"
+        "sha256": "62c189f9c4c4a838ba24111a938fe596c7487d5b7f765db7ffdc04d500bb1a53"
       },
       "baseline": {
         "state": "file",
@@ -845,11 +949,89 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/agents/react-nextjs-api-cache-forms.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "12ed34a2137c4703dbd4d31bf548ddd051d15c1b54c9413a6863e6bfc8e3ecd6"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d0dcc15cc01649bbcf4c05dbc58b45d0f4ed08f90a7897548ac6b06d5b5d2451"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/react-nextjs-app-router-rendering.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8c009ecee3261a203874fffe24d2e163d9d38c9aa0506b5fc9c9842b17ad95e3"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2d3fd65a89fb4c0528f286f7e946e79cc1f68e1ffc0c2c4cd38e11d83deb6c62"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/react-nextjs-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "666f718c602da5bad5d091674d084565b9b3dc63091d223b744b2d989629745e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "885c1d5dcf79bdeb7ad0a77b46d47410b8fe31c6a0d397a2f3cbfaf049ff2545"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/react-nextjs-implementation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b1aac5e346180d22f2db74c54c8a712072315df950dd9221e8db417f6768425c"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3f0447c4ce54668062e8f0b5b0e0f2f4c0ba700097259bcbe9161df66e2f9818"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/react-nextjs-quality-security.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ee0b0b425a953e670d36aa15ffab305a82500753c1fc78bf9ff76f09a336b171"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ed5834977caed6672461ef853a0bd0f931ce6501a10eac151aef521de926c82f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/react-nextjs-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "80c865b6e0fb6b25b2353e71ade019f8c27880994ff6ff9924a4d6d74894ac2e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "aadfd38a5b1f5ebc69d103426232d119a9a958269d7e3ac7a7e620d1021c4be1"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/agents/rust-debugging.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "620f7e850a095e05443182d7c6f860bf69dd644faab8879b99a9f71565b77d3d"
+        "sha256": "583e116fc97dc23236481a9e2a218223202c38fa7b1582fb8785c492e2f94ec4"
       },
       "baseline": {
         "state": "file",
@@ -862,7 +1044,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "24538478d4689011005b4f8919c43623694d9899d5e8e320da2dc900c345ed10"
+        "sha256": "021b160ec5066fbdfba8588f51d95a68ddc777ec8b1c456ac7ea5f91c846209d"
       },
       "baseline": {
         "state": "file",
@@ -875,7 +1057,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9c6efb3e668f7107cd44ba06de2ae34806edb4ddbe93c82f7fe0eea25102a2c6"
+        "sha256": "b2dd273d6f22f3d2640242b4ae019141d3038b8c21ddc865d68255b2300447c4"
       },
       "baseline": {
         "state": "file",
@@ -888,7 +1070,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "410f692da2860f74c3bd759f84edbf6b79193383d7e2d81b43d8927617fbb529"
+        "sha256": "48e694fb39169a7327a9b801cfd56bf8f2b721030d312578161dbef0194a4142"
       },
       "baseline": {
         "state": "file",
@@ -901,7 +1083,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9c59f15e7b1e7ca5d648d8f40afc6cf7fa2602f749fd0541ec7d908171709fad"
+        "sha256": "29ffbf44de0e61fe0a0febd33e03fd24f4ca64861e6810e885183c932066eef8"
       },
       "baseline": {
         "state": "file",
@@ -914,7 +1096,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "5f539f2d360885b604d1daacea0564fbde15b11b7c90dd9992850079628276a4"
+        "sha256": "6232c0d4d6fec290f8e8d7103b8f8a216c848b3f6c49f84eb4ff3b22bdb5879f"
       },
       "baseline": {
         "state": "file",
@@ -927,7 +1109,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "bea68d93d1a6c57e6c89c5d2f6b2381e5bdd59ffe65ffee95495fa942f44c9f9"
+        "sha256": "875ef579c1db99708b70207e4a77bbdfb5c7f61bdf51761795b9060ffcb57870"
       },
       "baseline": {
         "state": "file",
@@ -940,7 +1122,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "bb5ec536c5d6c1f9c20a918e628c53ddb194af391258aaa0dfb1a9bc7421d67a"
+        "sha256": "aee461ff9483c1c61b4abcac2e7af5c588c6b1af91535a422dadc25c68de6c8e"
       },
       "baseline": {
         "state": "file",
@@ -953,7 +1135,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "ebce53f1c0c68e4fb0d3f03c720d27e6f96970ca755a4062b174f76b34c019a9"
+        "sha256": "80e050bacc8cc1a8b311d9eaa1717ab519a07009de8ec02121e239c4644f28b7"
       },
       "baseline": {
         "state": "file",
@@ -966,7 +1148,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "81cf7356e33f215c6f856d837c0d3d5999d8c85cad7ff46563913481762401bd"
+        "sha256": "2622591695ff87eefe6f8e4106b502ab6624c5c3e93fa64d2dd88ddaac3fd190"
       },
       "baseline": {
         "state": "file",
@@ -979,7 +1161,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "ead84aefa3a62f205925bae320c639ca90ebdc5e02c38152ef42f1e20818b46a"
+        "sha256": "d1bc9564bafb574808c8403a0063255b9d8880de9f69694271a067a4e2c056ce"
       },
       "baseline": {
         "state": "file",
@@ -992,7 +1174,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4bdc2fed45d4eecaf1cb44772885544c4d36a0485a99b2547d853ceb0a735344"
+        "sha256": "fc4cfd62f561f0132cbe4e2f1c0759eab17eb4afad873604ce759b6ab1095620"
       },
       "baseline": {
         "state": "file",
@@ -1005,7 +1187,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "3233cc46c15f13d8a47c9a27d6be843b3c846ac87ecbe864a8aa8517c597d2c2"
+        "sha256": "3307ebefe3db9a18198d813e37e7a45f059b0b11f1a984c23c9eb4c58ac22153"
       },
       "baseline": {
         "state": "file",
@@ -1018,7 +1200,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9d3e40c518deb52dbcb151285f8ff4d83e04d39113351682cdb10842b89b5c73"
+        "sha256": "5acd421b63b2501e048daafa62c761824d043dd5bc279a80f659a8a0d217a5ff"
       },
       "baseline": {
         "state": "file",
@@ -1031,7 +1213,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fb9189529fa4ef6fb991abebd97500cc77f8ce163d12ad4bcbc8e64e77cb3e1a"
+        "sha256": "3c8886610348e3b950632881cd284cc64342a1c7d5696db7967ebd61c88083db"
       },
       "baseline": {
         "state": "file",
@@ -1044,7 +1226,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "3bc6208326e7d9c0117ba7d63beee6e5bd2e65d9f75c1e097cc2ed73b47a7be2"
+        "sha256": "ee24f1fd1e6beba1d630dd274cab5bd4ab22effe38f2d6bcd10642b4a00b7c3a"
       },
       "baseline": {
         "state": "file",
@@ -1057,7 +1239,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "a54d0d05655b8db71d8c32a2ab28aef45e758823de86610e024d297a02190fee"
+        "sha256": "29adc3bc5a68913b4bc7058d7d48fd5349cf3bfb7588aa6b26fff10123634d2b"
       },
       "baseline": {
         "state": "file",
@@ -1070,7 +1252,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "1f4f28136b6c25c213d73a86d449156c0cbe3e0e78189189ce45e32a402b55c5"
+        "sha256": "fe3407a68a4b95d4f33ba9ccb65bff73433c1c84dec3d12c5708088fe7d1e6eb"
       },
       "baseline": {
         "state": "file",
@@ -1083,7 +1265,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "0ad3d3fb3ebe6043bb17b028403e6f388aae708c1cc0c7d90f0f67e7a96b8183"
+        "sha256": "00e63c71e3ca409b96103a9d42959db04eb73fd4356b545525325b6d12b226e4"
       },
       "baseline": {
         "state": "file",
@@ -1092,11 +1274,50 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/agents/tanstack-query-react-nextjs-debugging.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "90b0ea64febda7d167be3e936bcced1b139e0db84a14aed96ca353933b2d085d"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f0b53d13257bb73d4c9ebb4bca34589c8233ef485648cf280021fd5a730df3e6"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tanstack-query-react-nextjs-implementation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e85b57d8e7096cc0842db55f6890cb4b76d339e8a3d10635392766dff24e6d10"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b1814c75b70fe93b34d97db5c52a9947ccb34a3409c4aff082f41133ff12591b"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/tanstack-query-react-nextjs-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f9b948a5ba9f252d217a7613347457111616690c05d4096f97687269bc839875"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cb19e1d9fa90dc138a7881e6f7f99ee8ed2c7a1f0c93286b669e0ee0512d905e"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/agents/tanstack-query-svelte-debugging.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "76e881c14c01df65a0f8b8fff2394d0e067d2848b5d6a72d823af43d1e557ac1"
+        "sha256": "2d7e7fae46a7a19bdf7128907ba06a92eb2114938c2ab2d3bcdaabc60e753fac"
       },
       "baseline": {
         "state": "file",
@@ -1109,7 +1330,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fad7b047b7f0e6a391609c83251160e2d68e81e5cc8c11a91fe4525f900e3cc9"
+        "sha256": "9f69f5c9e2964a7a25e8fae8552be89085853fe81f36655bd21f727b3b04fbb3"
       },
       "baseline": {
         "state": "file",
@@ -1122,7 +1343,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4b5bd27cd3aef72fb575325eb368445acd8b132cea513dd4dc9d56a80707eb69"
+        "sha256": "2dfb2649161e53db227b8696ab06b90f623db6df80ed076bdcf5bb656fa99d54"
       },
       "baseline": {
         "state": "file",
@@ -1135,7 +1356,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "b96321aeaf702befcc96b6155c019fad7b3b314e209513a59cc33029591964b4"
+        "sha256": "5328b9e95d1df61809083919512fa8bd17b1890a10c0aca9bcec397f9ff7f2c6"
       },
       "baseline": {
         "state": "file",
@@ -1148,7 +1369,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c0f8b9cc854bc1c7c0f9bbde6ff0d65d3b8413ff084b48e917539f47e24071b5"
+        "sha256": "41be59c378803de5d156b021ed5b6cb0c93c961875da6724cf1f29729f277959"
       },
       "baseline": {
         "state": "file",
@@ -1161,7 +1382,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "3ae5983a751c460e4687b0157cbfc50ad6f28b7243bf7609aac0cc3ffba7e80a"
+        "sha256": "a263c39d5dc22002e78ac9d4d32239b78d4de5e9cf49b22e721b3611836ec4ff"
       },
       "baseline": {
         "state": "file",
@@ -1174,7 +1395,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7c05ac3c5bc23c8221df5c66073799e618397c3f413dfc6a68ebbdb474593bf8"
+        "sha256": "69f910f4da2e14817125ff613b586d9f4153fbe1b209a3cc0199a49d08c03b03"
       },
       "baseline": {
         "state": "file",
@@ -1187,7 +1408,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4768f7e0f2bf1efd034a92e186af4cf50198a43d7da8548ac0718ce5bcdc38b0"
+        "sha256": "e41cb5e155c23510be2e91aa3977a858ceccb87e5e4391aa934cdebc09bd8269"
       },
       "baseline": {
         "state": "file",
@@ -1196,11 +1417,154 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/agents/ui-accessibility-motion.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "754cdb927a00aa259a5df481879fe7d0a31558f3ada63861b3df922a2acc4be7"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f4a6e9072eede1a89467e984aba6849cb554c637b91ce662925a59480f57ecad"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ui-code-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ecec452e49e8205f784ebaea5135236817090325c8184ec18d4178dd4280ed5e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7b5a626b33ebea24073faf5277e4656b0e0dd41d8b17419d20d11097f18bc003"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ui-component-architecture.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4df4ffdbe5912cb74bea738d439c5922ba157be1872d249611145ab404d68f1a"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a1145e6ab902acfda08ff9b89bb7facd53490d1b01596270587329bda79e99ad"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ui-design-system.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4099b1d6ef6dcf9910cf9f436665e988d092b5daad1185f38877395b55bd5a81"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8251c2c460bbbbdb0c1500f603614841737b4705bbafd7551f5c98ae26f69f78"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ui-frontend-testing-qa.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cc3c93759f5174f294ab4534b890e80c6472f640e782a1957b234be7db638e45"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "3dc987270f57f9cb8a780458c01f647c6f047764f2403256f4ec20d7b27c9bf1"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ui-performance-stability.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "9b907a9d299dc72add13e7278ec9d572401b97adb8529009f3c2ead74c3d9fa3"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cf110971ebf472196d24c7cd3b7d19eca6a18526fa497a8d237e8c4cbd964fea"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ui-responsive-media.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e91bbb31089cedf18ae8e5f502a199714fefb2a5579455c115b963fd0c1c6db1"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "621be8e283586c742baafdfdc30fd06c5667bfab61c8b3293f91b6bbf677eb86"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ui-tailwind-tokens.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "cb436eb732925f9432b0c3f79f4c7c64c7f66e5d6c19ee2595ca844550842295"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "097e52391e6e32b7cf2f3bb7e2b51a4a2c804984ae57aa3fe75307b7578b6482"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ui-ux-workflow.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5b035cde7c91f05bde5baeef44b20846e42007f39e55d8255251664eb8d79a1b"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "fe638de3272aac1e92e3319aff8a55fb6fc86942d2cedbf8eb69f564604aa0a5"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/ui-view-states-forms.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "2c1f277cf7661a2046b46bf52f33e0a58b18de705ade7e596a801ce91588ba50"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d46516b8363c64279ff4b28605d52b88d685f9795017e1d1cb699daa371148dc"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/agents/using-itsolpowers.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6352116b4022058d1b4bc81a0d9cda24011bfb2d4dbe6057e51f14ab15eea757"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5d463431d830d28447faea0c4fa4323d44c9342794e1c6672140b4bc1cbca282"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/context/context-profiles.json",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fc3b7974d715f4fceaea47d8e00e607f101b83618d701a0b764c334a113c8475"
+        "sha256": "dd65d52f1e754bd134f590cc5f0be6aa0c0dbde9a068b45143728f84174b39a2"
       },
       "baseline": {
         "state": "absent"
@@ -1222,7 +1586,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c6002e73e808cdb430ee4d86d994b8e58e8d2ce500ac7d45e331e79f13c9b9c9"
+        "sha256": "c8fe0b967ff545416603fefd14dbb2807ad64814f2531efa9d33fc19249a1fb7"
       },
       "baseline": {
         "state": "file",
@@ -1274,7 +1638,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "b37501357a0ff81d3fa3f4c38c117f015a1af4a1c2f2c044758ad7b4591dac8c"
+        "sha256": "737f8488722ea17c82ecb01049bdb414a14406f2d91fb96f457493e75d4a887a"
       },
       "baseline": {
         "state": "file",
@@ -1287,7 +1651,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "55f54728038dfebef8e231fd62451e062c77720928d948afee0304d72ea3a295"
+        "sha256": "ff0ff025e9c2364fe9b0f9409398e66c731bc188bfac7ce747bc6acc1fb4e6b3"
       },
       "baseline": {
         "state": "file",
@@ -1300,7 +1664,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fc2628dadb9d762da2e73185c0a0aedfaf69d28fadd631fcf3ec9c501639a445"
+        "sha256": "9561461ab943fda897956eef23593ac72f0d21263d05d363baf7973f4102c90a"
       },
       "baseline": {
         "state": "absent"
@@ -1729,7 +2093,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9ff46c596330ffb57b128fc142982ddec8af98f6a889e4f22b658cda919b21eb"
+        "sha256": "8ed67f2e2a0dd1971f2e56b93219c165b8df4cd6a3b8e245c30f9c1add185d41"
       },
       "baseline": {
         "state": "absent"
@@ -1762,7 +2126,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "8a6eb75158b07103b1025e91b20bd5ff804b68915216d3af0a9291f723b7a503"
+        "sha256": "f8ca511ae0ecab0625745f2a5f5200d900481fa119383f3ac2ad14d1d5c0b2b5"
       },
       "baseline": {
         "state": "absent"
@@ -1795,7 +2159,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "bfa51c77954df95cf12d2d1e328454ac298ba9cccd901e35b07a03c348d9db39"
+        "sha256": "4e2cac12adea681752b4ab5baf1c231b56de9d251abffa205ed0aed5dbfeccdd"
       },
       "baseline": {
         "state": "absent"
@@ -1828,7 +2192,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "1ff0f3df022a47caf0e4e8dd785379b4c3a66ef0f05d307f1acf84d3e5560927"
+        "sha256": "3c43f1ee4c332cfa7e42c07aec0fe12e69188a1342ebdabffebb3e09dce3a5f4"
       },
       "baseline": {
         "state": "absent"
@@ -1850,7 +2214,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "63b1b4015c98e52e5929eaac2e3b322b6692466b4c6ccd4142f6b73f198b43c6"
+        "sha256": "9ea06577fbb5dcafbb98f6a9e67ee19a8964ce1c4e9af3be1b835eff701cde01"
       },
       "baseline": {
         "state": "absent"
@@ -1872,7 +2236,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "266f5d89c4ddcfc43858e5ce1bd15a5d661959a87d2452e366a23abc80efd11d"
+        "sha256": "80fffabc5ae7aec8a51a2aec86ebdcdd8a2917c65a0f90bbf80acdf304bd34cf"
       },
       "baseline": {
         "state": "absent"
@@ -2543,7 +2907,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "a789f9ee5d7aae48800ca9b9482f7993a9a06f81f5d30531467c7a1eda594d9e"
+        "sha256": "caf5c6766f6782ab2bec305da439f953567b526598fced9f7c9d5e9bca192f92"
       },
       "baseline": {
         "state": "absent"
@@ -2565,7 +2929,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4830918f679c656726c5b5580011d877aa915db758092af136fb4140ec7016c0"
+        "sha256": "790ca59646b559429984dfbcfc716f4231d51d285912d61d1d45df1e8a88e351"
       },
       "baseline": {
         "state": "absent"
@@ -2587,7 +2951,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "71dc2b45c44eefff17d44f7fb2b34e9e0a329b5031e9db42c5c0889924ac3ac1"
+        "sha256": "11c7038367209a7dbb3122f89335c09da4ae7298363c02ca89a87335d307c8a2"
       },
       "baseline": {
         "state": "absent"
@@ -2605,11 +2969,24 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/scripts/test-codex-agent-setup.mjs",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0d4debf3afaef36bea3b055f77978ca26f433c92f0f144d35a6cfba23a51f631"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "05d7959ff4f3d8908379c48868d4f75280c5daee627053717dd5b6abc7da79b8"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/scripts/test-context-package.mjs",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fdf8edccefef95b35ef57652748dd1a7f33b5c022c33ba68ce3e780f4286d6a9"
+        "sha256": "8c9d1be037599f9617a4da35b706b30266602920ceee9b5b0c10896edc3f0f36"
       },
       "baseline": {
         "state": "absent"
@@ -2633,7 +3010,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d59f6e887e9c87545636ae7604a5837a7b58a12ec0927d1c602d7e549042f36d"
+        "sha256": "9a780f7df885cc9d699c82b23af25da3e5854a9df9bf7a9e67a73b67f25ca976"
       },
       "baseline": {
         "state": "file",
@@ -2668,7 +3045,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7b47d321ffcf880107ca1fccad7ec4a4875654bb53a2bd40f91cab76922491cd"
+        "sha256": "b46334e8d536d126c142a57a380409c4cb132bab9d7a66dd88120356c9fa290b"
       },
       "baseline": {
         "state": "file",
@@ -2894,7 +3271,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "259c43f68fa53333a79d589370e48bc0de4b1e9427c38282e47e7edfc35dfcd4"
+        "sha256": "216df6bb4f93dfad5cf6a467934274edd0170d47e313524d7364b6d942e89038"
       },
       "baseline": {
         "state": "file",
@@ -2918,7 +3295,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "789ab65449aafa308106553789938de52b0b4e7d915293884258ad0b6144704c"
+        "sha256": "29a7741ba7c4b0033c3edd225b35be69bbe9bc36c05711fda67ab8a564272967"
       },
       "baseline": {
         "state": "file",
@@ -2942,7 +3319,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c0446f75997518bfc979b685d56c2eec8c62aefbae629b1d37c474b7c9bf4965"
+        "sha256": "b5dee835975b6dae111c11d15516f5b9f67f5a82b86e67be4448792dffd38677"
       },
       "baseline": {
         "state": "file",
@@ -2966,7 +3343,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d44e6efcc71f6d2f352215d9e571c9938cc8103bb607d21e79bfcdf1de41f4e1"
+        "sha256": "a8dfbbac13a8a7c0093854673477282b5bdd7ed9d090bc081f8ae94869297af5"
       },
       "baseline": {
         "state": "file",
@@ -2990,7 +3367,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "93c92db0832418eb3f8d08524e7ed900ddbe5b777359c5536e3953de3084fe84"
+        "sha256": "379fa1a4c17dde7bd5bc30206ed1e55a22d89037b68622910689120213fe3556"
       },
       "baseline": {
         "state": "file",
@@ -3014,12 +3391,38 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "1c4b4e2437a29491c7d3bba8dac1c6a7adc25e3642b82cd21dfb155f4eb6e384"
+        "sha256": "3d2cda8fcabd63b395968b7fb669455c4edb855fa13c9c0aa5d9f621a79fb95d"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
         "sha256": "aca4212355524fdd6b02cecdd57f7e64cbb6d66b4ebd8813a07ed13e229eefd8"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/application-technology-migration/references/03-implementation-testing-rollout.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ef1d249693bce8577328b84a7103e74934eb037cc0e33b611e146386f28b4e99"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "92feb1ae9734794a00cb38e193f86e474c5ba9b8dfad5645b56be0bdd434cf24"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/application-technology-migration/references/05-planning-templates-and-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0482eab3f9b82e02ccddbcc2f9b5dd1b9fc842f8cf228a4742e459bfec1e0103"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e0f713ce05399769b54377cef99e883d105ac044a684f4d1b676128adbbbad5d"
       }
     },
     {
@@ -3038,7 +3441,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "5f2f8b8bc18724867e4bd71ff1cbd9804c39101320e5f8f46893c3d3b70f9f31"
+        "sha256": "f7849d34176c24a6e8dee0f076c62673ef28cc251de976b43cf2ace8716ab497"
       },
       "baseline": {
         "state": "file",
@@ -3062,7 +3465,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "997f7329d77fcdcb96f4ae7886388d412cb20fef850af13bfaf072f2017e02e3"
+        "sha256": "e65fdf011e3c88b21c53e5e0712f0865789c15f78eeb360d59966be44c9772c2"
       },
       "baseline": {
         "state": "file",
@@ -3108,7 +3511,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fef1deb9df4b7f652503163fbf1bce5c59fdc452a0b99e5f1900a0613bb37674"
+        "sha256": "ba065512add663ccb4a2601e998b4d6f804b7e9a0164f01e0429b5d8839764a0"
       },
       "baseline": {
         "state": "file",
@@ -3154,7 +3557,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "68dc737e63a87b6ecdd4ac8e268cc9a341f8edf28eba3d6190839f8e0bb609f7"
+        "sha256": "ec4ce2a94a7d3fa6b84b7f0f6586d3a6022784a8251b17c6ffe25bf10b6af0a1"
       },
       "baseline": {
         "state": "file",
@@ -3178,7 +3581,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7359b5b11bd3f233fd818804e0f0e1f7d3fbc8afb44cffcc388548448f24feb9"
+        "sha256": "b61eb400653bfad477972334565101096c5cfda00e2bfd52d1b6fc2f78a6e896"
       },
       "baseline": {
         "state": "file",
@@ -3202,7 +3605,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "89122d112a56576f5eed5c105ee07d2cade9ad555b0c5c35d224f04a2ca53147"
+        "sha256": "43abd660f04c2e8693d7d14a7006f6efd9d4585f48326085a66d2314032c8c51"
       },
       "baseline": {
         "state": "file",
@@ -3226,7 +3629,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "a243285da8aa6ce2d1b4777cd55cf3da488e330e3297124d1d13f3962ab2a03b"
+        "sha256": "59493fb79b1db64feb078aaa4ade32a4edc3f5422e9a3f538483ce41a68be79f"
       },
       "baseline": {
         "state": "file",
@@ -3250,7 +3653,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e9b54e5d3cdaeab70bf76264d3e8c78cdd90e28bcc077342fcb11359f500ef13"
+        "sha256": "1c2cf1ae8e9968b5b6c2143278a15c852dc522a116b2f382abd17c7f9bd19b31"
       },
       "baseline": {
         "state": "file",
@@ -3370,12 +3773,25 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "aefaa68c02137052f601d0f8daca7ca946a7d621bcd827042215b224af2f6c49"
+        "sha256": "e7d5ebb444826846c23caf8f1b57608a068257c965382e932f039c5bc2c05f3e"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
         "sha256": "e85ff9c3e6097f171dff647db9e46328ce3590d9d7620a9c0a0cd8aef0656706"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/expo-react-native-debugging/references/01-evidence-and-triage.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "19b19dff0446cb83f499f4e96cc39ccbf9157a567e3421de382bc0982fdd6698"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e6010622bf2f3ddbc3e1e9fc333a208e8ff07759ff32cd043f83b64023a6f19a"
       }
     },
     {
@@ -3394,7 +3810,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7ebc2047bb390d74b455f7ee79e061a6dcdce066622901e7569cda1f16cc67ba"
+        "sha256": "8a77a87c26051d7579dfb77c4bb031ac492d2ae1e684aa1998502de17f8db2f0"
       },
       "baseline": {
         "state": "file",
@@ -3466,7 +3882,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9872caf492d5e0944dabac61d9beffc999cac57a591045d7c4fcae42f49e35d7"
+        "sha256": "25ab8eca33154ea0350b36bfe9e67fb63ecd1a8bfb4b01b9d4e56809b8dc1c7d"
       },
       "baseline": {
         "state": "file",
@@ -3501,7 +3917,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e2bef0378ba9c35d1bef8c63477ffeb364f1c0461d3855311de2245a855eca87"
+        "sha256": "4b0a4c2e5ae676482ef96bd7405f4c17534e3a78e0e76d06c6b14d4a27d1b462"
       },
       "baseline": {
         "state": "file",
@@ -3525,7 +3941,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "58749d055360dad75ee80398b984404a5a0cc2d017db273d0dd2a599be2e7ddf"
+        "sha256": "ed74157718c97c624854b79f4913d52ccdb2258d688e2aefcffb833b8c5375cd"
       },
       "baseline": {
         "state": "file",
@@ -3608,7 +4024,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "830c661d6316e68bf3503efa8ee9968326ce4e477350c331c6b9f899472efc40"
+        "sha256": "c6c2bfa8e75d737564b0331eb3042fdc611d388cfa2f0537e39fc90a97996c0a"
       },
       "baseline": {
         "state": "file",
@@ -3643,7 +4059,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "2c76548ea051cef73ee36ab1ce9d081441a4f3ebdee5d89cd7f4d68c573d4f8a"
+        "sha256": "b41a4b538be6b0fb73f7d514b610f807b7662d2c5e7193e54551c69fb4679b1f"
       },
       "baseline": {
         "state": "file",
@@ -3809,7 +4225,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e6946dd9a3da05931010a781004f1be716539ed3d22b39aa5fef719b46fe0e69"
+        "sha256": "4998680c0cf7c7fa499ae681291642aa884c3a7ecc9955879a30a25e0f57e751"
       },
       "baseline": {
         "state": "file",
@@ -3914,12 +4330,25 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d27e97c8ba529bf866d733280bcc67ac92c8e4bd1afa760c9cc6f3e76bc0c373"
+        "sha256": "fce97ae8231ca8c84f993d65c16f6adfc2a51634e36b8f61f2c926682cf785f2"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
         "sha256": "6e227c907b8dafef4498f2fc58908b041c99b486ea38ecb9f24f32c0a8936a7f"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-bug-debugging/references/07-technical-fix-plan-gate.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "94fd9a598a74f4c19f2fb47c20d536ba025fd35fb60e861650cdeba23e0db821"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0309fbef65cc47e57251897e1c59958a5b6b4d87fb7636363dededebeef42373"
       }
     },
     {
@@ -3938,12 +4367,25 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "098b0f0068f911e426db14949c80295e65f303bbdc5dd07af9b8b8afdd443194"
+        "sha256": "81239cc48953db73645c47322727dd2db3454c1df2d9f2182fe1f26ab6030e3d"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
         "sha256": "344e553837d543e19534a2210418aee3634c05449d9c86c87870fa7cc2a64d06"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-code-review-workflow/references/04-multi-agent-review-gate.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f61abf2749d8f087bbbe0483edc1af872fe673c249640299b95daf2288d8b32e"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "beeed08ee42a9ab66c6d6937d50623f96ef3c455a07db4fdc8c46f37a528371c"
       }
     },
     {
@@ -3984,6 +4426,32 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/skills/itsol-codex-setup/references/presets.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "25aca1456600954012545eac4226376ff8717da287fa1084697b7f3482d8e7fe"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5c3a4a2d64b457dd3e6f2b60f5e49986f8392253adf8c650370e4f6676e0f5cb"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-codex-setup/scripts/configure-codex.mjs",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f86dbf9d46ffe20f726ee818ce7d8acd1414e8ed9cc2865bcf46c4e791c5aae9"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5d6a932d1a23987a1e51150651a9b179ead4b5b60dc458bd216fdf8ad0e3e0d5"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/skills/itsol-current-tech-context/SKILL.md",
       "candidate": {
         "state": "file",
@@ -4012,7 +4480,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "1cdfa113dd5f7075d22ece37746ad897650a4976da0c1d4286e643eab66877af"
+        "sha256": "27584179d32efdc228f514412cd327fa3ee806a0ca8b137e24b36656a4122e5c"
       },
       "baseline": {
         "state": "file",
@@ -4021,11 +4489,24 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/skills/itsol-execution-policy/references/platform-capabilities.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "a31a542382278eea4cc4c984175f347d5cb7ac9b3a07112ec931e2e28a8ba0ea"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "aa7362eb5b84736e1d7c2b52694170476b9f8374d897c187d1f982e79fee4906"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/skills/itsol-feature-implementation/SKILL.md",
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d8558681247846a9e17691de5693f870d43dbc60a5042669b1b7cd5eff1655ed"
+        "sha256": "5a8ded2bb53eb5238f1ce20f99826c40e3d47e99921a63fdb6e43b5d31eed9b2"
       },
       "baseline": {
         "state": "file",
@@ -4049,12 +4530,51 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "5a6f5372c0bc8c702b24ee87fd8d7cdcf43b9aa8f6c3d72f2b74685be17ff3ef"
+        "sha256": "fda3047d4a3d263e288c15778098bcf0aff8ad34d2150c726ba7c5d29574d71c"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
         "sha256": "5540551504507c973b9f15fc796424db124b3cb8d99b018755aac3443020d8cf"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-functional-planning/references/01-planning-gates.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "8a3a62d47e3782e5967ec7de1fbf2cb9e32837ce0a4a1f5b42ae5029fca81f15"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "807ffdec07401231899410d40fa4c41fa1ed50d59e186813b5dfe5674bac2c74"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-functional-planning/references/02-plan-review.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b634f9caa590f73aafebf65f670004688ee4b8b76cf6130f748ef4bc38305cac"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "7eac6a9969fc33d6e597e50ee50a31195da78dd4cd729c3537019057ef18f1c2"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-functional-planning/references/05-technical-plan.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "b9c6fd612aa6ba2029fe7f7b4ce9d5f562537cca736f5ddf87f522c3783a51f1"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "83f4c4fe93f5370b09c42e9bb5639acc7715203f11e4f85de17f66ca1e744267"
       }
     },
     {
@@ -4073,7 +4593,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "08d8ccc48712a0436d0bb46086aca09ae52de15d13f45acfb2ccf83af36b790b"
+        "sha256": "b36b987834f13c8531a9ac544ad5ebe8b19a90efd259e71d7c24743e106d5896"
       },
       "baseline": {
         "state": "file",
@@ -4097,7 +4617,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f350173ea5e0f6c4292b50d61391469df3a79f1a015bb6b787b221e3918bd7cf"
+        "sha256": "7f70e62c5897f86e439d51d26f9bac2febca70fd6af681adaae7a21a49b17b7c"
       },
       "baseline": {
         "state": "file",
@@ -4121,12 +4641,64 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "5c8bc75bad99f49df2563e2a931e89b5e837553f32476c78fd25ee57efc42015"
+        "sha256": "369d8c255d708a1dd3065b71f6508601acc45713c6db278c1a608685b7c3e468"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
         "sha256": "ac60e151181a2c7a78cdca7ff4fb8cd09376eef240ff18225caf093959a1f909"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-repo-memory/agents/openai.yaml",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "669a689b7a4c8e0380a4c321c4b090563d56f0557e4bc2a14e92174845ac7b6d"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "827fc7a4e4a308ca3b77dc621206fc9775ce06a91b119874379b67d3216778b1"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-repo-memory/references/01-usage-priority-and-updates.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d033e67feffa648d7794a8f5e80b8b69a29a8681e8adbbc619f3eac1654e803b"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "ac0937efff04429ad864bcfefdf887f8089ec1e3f8290ad6e049a94628e962ac"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-repo-memory/references/02-init-workflow.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "4a0aa1d34f466cf201236de9d56797c5cb63081a50412a432e8e3719b16d5136"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "57a14e527629a19de396c09baf5dcadbf8c4c0cc9107dccd2615af74d2d87e55"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-repo-memory/references/03-file-format-monorepo-and-tdd.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "e695b06efa7eec2251e623a8c1479102801566864933a040642702b68727fafe"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "07b86091d9029b42f77a6cdbc17a64a0b68a8e21f105bf9a4d67f8a96fea6a1f"
       }
     },
     {
@@ -4145,7 +4717,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "94e57b1fe8d07194ab4a3106e80b0a0aa48c2bd8e0c518a1eceb56e7566136d6"
+        "sha256": "6c1cf3066604f46a2f7a1db73855bccd804a4e44445e81667073626a68b8550c"
       },
       "baseline": {
         "state": "file",
@@ -4169,7 +4741,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "83d5e4912451fa4fb177a712e81afce7cffe7c8cdc14940581fa1c2768ffb315"
+        "sha256": "2814e47b7ca4d90d6312511d5c15c36d6c5f6ee2abed2ffbd5fdf61c12561965"
       },
       "baseline": {
         "state": "file",
@@ -4193,12 +4765,38 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "d03ae37fbdd1b5d82a4dc0a3f34093a293b15b7e26784dcba3680038811df4a5"
+        "sha256": "f1e8c049c718c744d754a24af6ba63c69582f993aece3eab68e755535cb81687"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
         "sha256": "417d616e9a11da7f662a91dcecd641dd1785369a20041f8e2e99d3241c13b6a7"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-subagent-workflow/references/01-planning-and-delegation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "5b95732bb5bca719fdd3a9fe3e94437f94f9dab20188715f713a9ff92521d960"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "1f9069ddd1223efe11093957015413d5552b6db94ad7d7d76aef1cc2e4510567"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-subagent-workflow/references/02-review-commit-validation.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "d549180b52f91e3519485e2719eaf46b0f6546b41fc1c1f3b9f9c566c63ed149"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "f8d955d4b83c1d0a4d54b2aee3644bbe4db381ab5bd46d2449e0e9d00837def1"
       }
     },
     {
@@ -4217,7 +4815,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "2a98de1482c2649e6cd05d7da9df70ffb650b00fc46fae5ba0d0b9b1c88eda00"
+        "sha256": "d58d8f9f49d5c02be9d74c5f99e4d786a6b6379e7477180f84b99eb67a521f88"
       },
       "baseline": {
         "state": "file",
@@ -4241,12 +4839,25 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "67ac21ad1aa14691f018884e29374061543d0415f79760e0df78082096720119"
+        "sha256": "f7fa4f5cc6f0a339c3cbede5d487597a85403aea7e71361f76a16ee048f7534f"
       },
       "baseline": {
         "state": "file",
         "type": "regular",
         "sha256": "de6a7c90835ef0b8aa9657c28913444166d34b40cdcdd577e6dc9da98f4e6fe8"
+      }
+    },
+    {
+      "path": "plugins/itsolpowers/skills/itsol-tdd-workflow/agents/openai.yaml",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "042482cdf8de4907536a0bcd8faada1280ee08ffe542b738025a1e64e61efc1b"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "0ee13c7c08220866297a0f3a0194616eaab2467dda496f576d35fbb0f8cfd0c4"
       }
     },
     {
@@ -4265,7 +4876,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "df169d71b09f66b76b68f7e77f6214a86648aa328a7284f961788fc4753d3de9"
+        "sha256": "7706e96010844daef56aef6fcd1fe8d5da27602760098a4e7300a6c5e1684a61"
       },
       "baseline": {
         "state": "file",
@@ -4289,7 +4900,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "f724e8090b4af7a5ee587c095d7f76a94bfc666d19a8e08074d2b73203d6d34e"
+        "sha256": "8e18f3498ac9379866fdf032dad061fb27b29ca63e6ad7d68631c097dc458dc5"
       },
       "baseline": {
         "state": "file",
@@ -4361,7 +4972,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "6379c271e43c68a6f8a62b938a3d4db1e6e0b0f6d34f26a7d9f348595da5a65c"
+        "sha256": "199fbae6de37aed2dbcc691a9b3e21b333818513f62bf59b517af9095ca5460d"
       },
       "baseline": {
         "state": "file",
@@ -4385,7 +4996,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4065fe867d03e086d41e7f66d765c597013c4f8ba84ece688599b0151a0d9108"
+        "sha256": "06ac79815c36a7b921256fd465b450199aaddb20203a1f3a54eb01c6ef81816a"
       },
       "baseline": {
         "state": "file",
@@ -4409,7 +5020,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "4c797289327fec3ace142fb87b64908ce4dacc78ca900bc0e5279fee41182c50"
+        "sha256": "e1568b11a6fb1ea83674eee07d6ac92bffd2ed68d443c036473ae61606e08c78"
       },
       "baseline": {
         "state": "file",
@@ -4457,7 +5068,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "01b3c461526104584b5c5d659b4b4e08c80868c3751781e551b6ebd16ae96858"
+        "sha256": "ea48f79aee0cd1b5a5c14e43b29b2946d4af1ccf86e1aa15703a571fe707c8ba"
       },
       "baseline": {
         "state": "file",
@@ -4481,7 +5092,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "71f5a090c7d3cba73f4fdeb74bad8ddfe9a0194cca875a90bd2020a5632392d5"
+        "sha256": "a96af192ee6c2a29a9289d4bdfc9e1af5db3f5e7703dd92926b9fc30f0e8ad5e"
       },
       "baseline": {
         "state": "file",
@@ -4529,7 +5140,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "1c276805f9a6b90f091c66237d34c484abce379d4ddae518ad70b24f4f16b6f9"
+        "sha256": "ff78625804da0fc23efabeba27040089e462221d51e2b897729eac616fe93b31"
       },
       "baseline": {
         "state": "file",
@@ -4562,6 +5173,19 @@
       }
     },
     {
+      "path": "plugins/itsolpowers/skills/mssql-review/references/04-security-operations-tests.md",
+      "candidate": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "6b46dcbe3d46636239d20f55595df95a9a88f2b531e5624d2a039d48a7ce1970"
+      },
+      "baseline": {
+        "state": "file",
+        "type": "regular",
+        "sha256": "190b98a28e04fe6d0fabf15f015a7281e5a5f30e9d77aca6a060af4d07bcca99"
+      }
+    },
+    {
       "path": "plugins/itsolpowers/skills/mssql-review/references/guide.md",
       "candidate": {
         "state": "absent"
@@ -4577,7 +5201,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "23af8df2784a9137de9e8f65cbb3183c2235a33f69061250a8812354dd352ae4"
+        "sha256": "b76e44fb1b5f93e82c589c21d12c06b94ea9f7bb4f0122dec0d7c4fb4ca2859c"
       },
       "baseline": {
         "state": "file",
@@ -4623,7 +5247,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "c9f998eef44e48b62c2e4987481ad341e756aa0237f45df9c763fde166ea6c2d"
+        "sha256": "6fae38ab7420ed1ac0390d591610faf18ae0ba30bf6ced2884eca910e2d16570"
       },
       "baseline": {
         "state": "file",
@@ -4785,7 +5409,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "93ef86f29e31533a75cb45d3125626a4fbc80755b2b537887e5247e9c5bc57a1"
+        "sha256": "9172959f5295668c02ef92a825e8b93a8cb62c03fb2c98680c4b6469cbc2a73e"
       },
       "baseline": {
         "state": "file",
@@ -4809,7 +5433,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "3384c3f23efcd29ffb6adc630010256a094d72e0d7dfc4a0969977c10ce11b58"
+        "sha256": "0f867092d436ad51c5aafe3e7b839a773da15afe3988fd6370f9706baced4b62"
       },
       "baseline": {
         "state": "file",
@@ -4881,7 +5505,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9191a2d472f9bc7b1bafc4785537dcc7d77ce1767260125dab09a4b486d9611e"
+        "sha256": "b17d290bf7d141f39bcbd920a7bb853582e23b8625eb61236500b52fe5ae231c"
       },
       "baseline": {
         "state": "file",
@@ -4905,7 +5529,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7c780028aecca160f92ff6e6adb100dbc1bd985651eb33bf894061d54e68cac9"
+        "sha256": "432025d24d7e5a3efb94dba9e18077078308c2c3296994891df247577f290b15"
       },
       "baseline": {
         "state": "file",
@@ -4940,7 +5564,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "0ea392de0f47690fedd37c24bafa763dac5a6bba57da2224a9d74f746d06b4c0"
+        "sha256": "cf068b8a809d343e436c9ba06a1b64b2270f3680a20624b6e2517e06a5e24fab"
       },
       "baseline": {
         "state": "file",
@@ -5019,7 +5643,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "33e88161035b10a58bc8bde9f7dbef567b66c92f114d153149363fe9a79e9dd0"
+        "sha256": "d9854c8844576195193386d519cef721a5ad3d220e0ce5a81412641883a34af7"
       },
       "baseline": {
         "state": "file",
@@ -5078,7 +5702,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "76be62cce403803e05c6b027e5f9e515520a9a626dcefd927b425bc79f42fd71"
+        "sha256": "01b9863fdef6b14105dccbe4ecbca46ba50fd8ddae19eedd201724231ec4b04e"
       },
       "baseline": {
         "state": "file",
@@ -5157,7 +5781,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "2ddabd7767dac1b9f02f2b8d55a9827d54624ccfb173dbb37d091a63e26d1ba6"
+        "sha256": "ab3ec1a6233b73b94f4d5b5f00a58b45143da5636e72b6f6f43dc46e58dc2bc4"
       },
       "baseline": {
         "state": "file",
@@ -5192,7 +5816,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "878e919efd30819ab51d6d21818ef336765dd3f4882c7faf44bbd89991e761ce"
+        "sha256": "8c02f9b4341b046678347aa2e75246e367a038df43dade54a340d2fc27257cfc"
       },
       "baseline": {
         "state": "file",
@@ -5216,7 +5840,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e5bf60acf452c9c1f1d346070a0e1f86a71783e8ea1ad5eb536d54e5897d5a9c"
+        "sha256": "fb89ae37c423361a56c0fc9e9f2075c775e8a359abd8be9994f78820c6b81b88"
       },
       "baseline": {
         "state": "file",
@@ -5240,7 +5864,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "656bc079664d51649a1d417501c06e0f5a9fad41c12d2cc8085e028b0db945f9"
+        "sha256": "a01870531dac385ab74a6584cab94b57d177440a667cdd60d5cd4bd9876c7e6a"
       },
       "baseline": {
         "state": "file",
@@ -5264,7 +5888,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7c1b3aabbd13b52a5d4f444d8be54e62bc565f364f23f7be570c0431956568ed"
+        "sha256": "b342f4de22c1aec55f89f1b0df57e06a1b1f56bf7f44004565dc3390bb790f09"
       },
       "baseline": {
         "state": "file",
@@ -5288,7 +5912,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "37312396c4cdc99f72da47579fa52e8284d505a57331d0f98d18a46541efaf74"
+        "sha256": "1fa2e9efeac3bf16827d2d1cedd5924b062c0f952899d07a311f4d054925cd6a"
       },
       "baseline": {
         "state": "file",
@@ -5312,7 +5936,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "8743b647aa3ecac8f495a6df744fd2063b2b155648165d1ec6fadad3f157af22"
+        "sha256": "4adb4d77e8c9602697f637b8ab83d8152c33304665cac698f0b59331ef882860"
       },
       "baseline": {
         "state": "file",
@@ -5336,7 +5960,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9537fdb0f83f39b806808f69f63bbada3fbed2a85615d4705c561bcd63030853"
+        "sha256": "34bd3778989c160325b9ffbb03ef2e4336cd8fc8e6e96f1e5547c8caad876fcd"
       },
       "baseline": {
         "state": "file",
@@ -5360,7 +5984,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "fbadc08cb8be80303331f3d25f82e1f91e2cf4b9b720c7966f3aa0d0268cdea5"
+        "sha256": "cefae9469cf73b5423f0c8e0417e5c7d5575df04a145c0ded167f3286f5fbb88"
       },
       "baseline": {
         "state": "file",
@@ -5384,7 +6008,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "0214b68c66f68ca282587332c0b535da35fd6ebdc2cc9f801e889407c89832ee"
+        "sha256": "9becd0ca38b8f703ace06acb65e517c153c53280022794d79f7e080970d506ba"
       },
       "baseline": {
         "state": "file",
@@ -5408,7 +6032,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "5d790edc74f110e2e6fdbaeea731a89e2d3b5bc98bb6e9088468f469d23a45dc"
+        "sha256": "4be93280f800db29e35efef7b9a0390ab5c0d612391d02b66c9d5cbca0887ce7"
       },
       "baseline": {
         "state": "file",
@@ -5432,7 +6056,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "21a64415c03ddfa5c72804614d9e4dc5b06f14b0baf6b3b7955af519247bdb6b"
+        "sha256": "7fe32e210013b6bcc279703299ec08d1183531b58704d1c76755a6bae459e1bb"
       },
       "baseline": {
         "state": "file",
@@ -5456,7 +6080,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "953e8043e6ae7068ece4752abc82a6715cf0f90332df07f2dd2246875fc4b3a1"
+        "sha256": "4753dfb300dd151364ac865e500cf8280d37c7c30587d5feb5ac2caee51b4b96"
       },
       "baseline": {
         "state": "file",
@@ -5480,7 +6104,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9ac625eec3582fd195380618d3e9417372e4406c7228bf95aab19202b3ca749c"
+        "sha256": "eb01d0d79985fdfd2b8a1d601d77f3a6e52803ce91d5e9a7a17fa09fe9ac78e5"
       },
       "baseline": {
         "state": "file",
@@ -5504,7 +6128,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "67ffdc471af9f53edc36af8b40171e179c5639be8811351a2de0b1b34bc1046e"
+        "sha256": "3933df3d8b695ea472ed1cf73939bd494d2445f6be72b43428bf3f01b930fc96"
       },
       "baseline": {
         "state": "file",
@@ -5528,7 +6152,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e1852fc30d0839c54e6845abe099413b6072308fafced4cf45ce5c2bbd4b9b10"
+        "sha256": "4405eb621ec3ad18275cd4b94f510f016b08ee21b872fea7364765dd397d06ed"
       },
       "baseline": {
         "state": "file",
@@ -5552,7 +6176,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "0eb2f80e7a584bcf91804deed421c86511c981b280dfc36702abe973ddf999f4"
+        "sha256": "d30d4d6560b3284b569d7e8d91054bceffa57c1514c1f6862210dd33a244a136"
       },
       "baseline": {
         "state": "file",
@@ -5576,7 +6200,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "5e0513cd41b9469990bde42421830bc85be510305362e0d31f03ff541ffd5578"
+        "sha256": "919bfcb1d221b8b4354fb334f9e27076e76b8f42aac876c3458f413701fa8c12"
       },
       "baseline": {
         "state": "file",
@@ -5622,7 +6246,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "9f12e552babead42239d082a21b80ccdd7424721533914174df5b3a84a43e138"
+        "sha256": "114c074799da4ad008059bd103bcdf3452e1f05ae4618f873a766db305465444"
       },
       "baseline": {
         "state": "file",
@@ -5679,7 +6303,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "7921584f15f7bce2e2c3f529b32f19e2e8b5a9367f2552c68579cc609e5bc834"
+        "sha256": "2b0eb57d4441df7144d488cc86d8686b6a6d0b4300a557115176fac60192d79f"
       },
       "baseline": {
         "state": "file",
@@ -5736,7 +6360,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "795f3e5ad0f7c5eb0ecd03f43fe29c56d9ba7f2e914866a3595d8d8cab69cc2c"
+        "sha256": "878e4b6e024529e65a50fae3011f19035db3d043444f9ab7e444a51ad53af82e"
       },
       "baseline": {
         "state": "file",
@@ -5760,7 +6384,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "224166e88de0a20aeae930a770f2182174e76a85903e42f77a0f5cea12e74f72"
+        "sha256": "1c8dd4b0efec014cafe6ade7214e68e21ca702f122716dd71f1c46d4a3d3e167"
       },
       "baseline": {
         "state": "file",
@@ -5904,7 +6528,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "e8e92d5e8cad4200b97f4b45ac3022a6f9b4846e75314a646a22859c592d3702"
+        "sha256": "ff4cefb8ef4a81e44dc6850303ca817a2162996bb34088e2464b2c42ffc376e7"
       },
       "baseline": {
         "state": "file",
@@ -6096,7 +6720,7 @@
       "candidate": {
         "state": "file",
         "type": "regular",
-        "sha256": "0880b8b81ff0a45b45941633af770616cc00ec3c02fc409e05823c5c54518186"
+        "sha256": "3d55de24a2bb6e3caf615da78658083309ad61c45451dda7b739118ed0b37b98"
       },
       "baseline": {
         "state": "file",

@@ -18,7 +18,7 @@ Implement Tauri desktop apps by treating the WebView as UI, Rust as the trusted 
 
 ## Coordination
 
-Use with `itsol-current-tech-context`, `itsol-tdd-workflow`, `security-files-integrations-review`, `security-auth-session-review`, `ui-frontend-testing-qa`, `ui-performance-stability`, the relevant frontend framework skill, and release/distribution skills when packaging, signing, updater, or CI artifacts are in scope.
+Use with `itsol-current-tech-context`, `security-files-integrations-review`, `security-auth-session-review`, `ui-frontend-testing-qa`, `ui-performance-stability`, the relevant frontend framework skill, and release/distribution skills when packaging, signing, updater, or CI artifacts are in scope.
 
 ## Reference Routing
 

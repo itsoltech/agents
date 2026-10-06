@@ -65,6 +65,15 @@ async function runSelfTest() {
       revision: "fixture",
     });
     assert.equal(fixtureReport.status, "expected-red");
+    await writeFixture(
+      fixtureRoot,
+      "context/context-profiles.json",
+      JSON.stringify({ profiles: { frontier: { provider: "claude" }, compatibility: {} } }),
+    );
+    await assert.rejects(
+      () => evaluateTargetArchitecture({ pluginRoot: fixtureRoot, revision: "malformed-profile" }),
+      /invalid context\/context-profiles\.json/,
+    );
 
     await rm(
       path.join(fixtureRoot, "skills/using-itsolpowers/SKILL.md"),

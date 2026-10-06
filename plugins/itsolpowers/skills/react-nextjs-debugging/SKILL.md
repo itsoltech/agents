@@ -5,7 +5,7 @@ description: "Debug React/Next rendering, hydration, App Router, cache, auth, bu
 
 # React Next.js Debugging
 
-For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, TDD/replacement verification, and final review in every mode.
+For bugfix authorization and plan prerequisites, defer to `itsol-workflow-mode`; retain evidence, root-cause analysis, proportionate verification, and final review in every mode.
 
 Debug React 19 and Next.js issues by isolating whether the failure belongs to server render, client render, hydration, App Router, API, cache, auth, CSS, bundle, runtime config, or deployment mode.
 
@@ -20,7 +20,7 @@ Debug React 19 and Next.js issues by isolating whether the failure belongs to se
 
 ## Coordination
 
-Use with `react-nextjs-app-router-rendering`, `react-nextjs-api-cache-forms`, `react-nextjs-quality-security`, `security-frontend-browser-review`, `ui-frontend-testing-qa`, and `itsol-tdd-workflow`.
+Use with `react-nextjs-app-router-rendering`, `react-nextjs-api-cache-forms`, `react-nextjs-quality-security`, `security-frontend-browser-review`, and `ui-frontend-testing-qa`.
 
 ## Focused References
 

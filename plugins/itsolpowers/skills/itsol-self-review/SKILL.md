@@ -5,51 +5,35 @@ description: "Self-review plans or code for correctness, tests, edge cases, secu
 
 # ITSOL Self Review
 
-Resolve and validate artifact authorization through `itsol-workflow-mode`. Preserve all seven workflow-state fields in review handoffs.
+Resolve and validate `itsol-workflow-mode` before review; preserve all seven state fields. Run a concise final review before claiming completion. Use isolated Rubber Duck review for Business/Technical Plans only when policy or material scale, uncertainty, novelty, or risk justifies it.
 
-Run a concise final self-review before saying work is complete. Use isolated Rubber Duck review for Business and Technical Plans only when required by policy or when the main agent judges it proportionate to scale, uncertainty, novelty, and material risk.
+## Review contract
 
-## Process
+1. Re-read the artifact and relevant repo policy; load `itsol-repo-memory` when `.itsol.md` exists.
+2. For plans, challenge only omissions that can change scope, acceptance, correctness, safety, feasibility, rollout, or verification. Do not demand exhaustive detail for conventional work.
+3. Validate authorization: governed requires user-seen `Approved`; autonomous-planned accepts material-blocker-free delegated `Ready for execution`; direct accepts `not-required` and reviews implementation evidence instead. Reject false approval claims.
+4. For code, check requirements, changed behavior, edge cases, permissions, validation, data consistency, errors, observability, rollout, and scope expansion. Confirm proportionate verification of material behavior; missing RED/GREEN or a TDD exception is not a finding. Challenge trivial, duplicated, mock-call, or implementation-detail tests that add maintenance cost without protecting a contract.
+5. For subagent work, validate status, scope/files, evidence, assumptions, unverified items, coverage gaps, risks, blockers, and next review target. Focused domain review is conditional, not default fan-out.
+6. Report blockers, meaningful gaps, verification commands, risks, and `partial`/`blocked`/`failed` items. A blocker needs concrete impact and a plausible failure path introduced by the work.
 
-1. Re-read the artifact under review: plan file, diff, PR, patch, migration, deployment config, or generated artifact.
-2. If `.itsol.md` exists, load `itsol-repo-memory` and check whether the artifact respects matched project policy.
-3. For plans, act as a pragmatic teammate: challenge only omissions that could materially change scope, acceptance, correctness, safety, feasibility, rollout, or verification. Do not demand exhaustive detail for a small conventional task.
-4. In `governed`, treat `Approved` without evidence that the user saw and explicitly approved that specific plan as a blocker. In `autonomous-planned`, accept a material-blocker-free `Ready for execution` artifact with delegated authorization and reject any false user-approval claim. In `direct`, accept `not-required` without plan paths and review the implementation evidence instead.
-5. For Technical Plans with `Execution Mode: Subagent-driven`, verify the `Subagent Plan` reinforces `itsol-subagent-workflow` as the canonical contract and names task packets, write scope, concurrency, review split, response evidence, `partial`/`blocked` handling, unverified items, coverage gaps, and conflict handling.
-6. For code changes, check requirements, edge cases, permissions, validation, data consistency, errors, logs, rollout risk, and invalid scope expansion beyond approved plans or task packet write scope.
-7. Confirm RED/GREEN evidence for code changes, or explain why a TDD test was not practical and what replaced it. If `.itsol.md` says TDD is limited or not supported, verify the required replacement checks were performed.
-8. For subagent-driven work, validate task results against the canonical response contract before handoff: status, changed files or inspected scope, evidence, assumptions, unverified items, coverage gap notes, risks, blockers, and next review target when files changed.
-9. Load focused domain review skills only when the touched risk justifies their cost; do not fan out by default.
-10. Report blockers, important gaps, optional suggestions, verification commands, `partial`, `blocked`, or `failed` items, meaningful unverified items, coverage gaps, and remaining risks. A blocker requires concrete impact and a plausible failure path introduced by the task.
+## Plan review
 
-## Rubber Duck Plan Review
+Do not edit the plan. Return one report containing inspected context, material blockers, invalid authorization, hidden assumptions, weak acceptance/verification, missing technical or subagent packet details, required user questions, sections to update, and the mode-specific verdict:
 
-When reviewing a Business Plan or Technical Plan, do not edit the file. Keep the review proportional and return one consolidated report with:
+- governed: `ready for approval` or `not ready for approval`;
+- autonomous-planned: `ready for execution` or `not ready for execution`;
+- direct: no plan-review verdict.
 
-1. Plan inspected and related context used.
-2. Blockers that make the plan not ready for approval.
-3. Invalid approval status, important gaps, hidden assumptions, weak acceptance criteria, missing technical decisions, or missing verification.
-4. For Technical Plans, whether the `Subagent Plan` is executable without guessing and aligns with the canonical `itsol-subagent-workflow` task packet, write scope, response contract, and `partial`/`blocked` handling.
-5. Questions the main agent must ask the user before approval.
-6. Plan sections that need updates.
-7. Verdict by `itsol-workflow-mode`: governed `ready for approval`/`not ready for approval`; autonomous-planned `ready for execution`/`not ready for execution`; direct has no plan-review verdict.
+Use `not ready` only for a concrete material defect. Wording, style, optional detail, speculation, preferences, and unrelated legacy debt are non-blocking and must not trigger another round.
 
-Use a not-ready verdict only for a concrete material defect that could plausibly lead to wrong, unsafe, infeasible, or unverifiable implementation. Style, wording, optional detail, speculative edge cases, personal preferences, and out-of-scope improvements are non-blocking and must not cause another round.
+## Independent review
 
-## Execution Policy
+Consider focused subagents for material security/data/infra blast radius, broad cross-cutting behavior, novelty, reversibility, or a diff too large for one reliable context. Keep small conventional changes inline. Split only independent surfaces; the main agent consolidates duplicates, false positives, conflicts, and the final verdict. Preserve genuine incomplete statuses and gaps; do not promote harmless uncertainty into blockers.
 
-After resolving `itsol-workflow-mode`, load `itsol-execution-policy`, resolve the complete sibling execution state and observable `done_when`, and preserve both contracts through plans, task context, compaction, delegation, continuation, review, and handoff. Resource policy never changes workflow authority. Do not set `maxTurns`; do not accept agent termination or a `completed` label without validating evidence.
+Load `itsol-execution-policy` when resource, stop, delegation, or completion state matters. It owns budgets and evidence validation; never use `maxTurns` or termination as completion.
 
-## Proportionate Independent Review
+## Focused references
 
-For large or materially risky pull requests, consider focused subagents when independent expertise is likely to improve the verdict. Size alone is not enough: weigh cross-cutting behavior, security/data/infra blast radius, novelty, reversibility, and whether one context can review the diff reliably. Small or conventional changes should remain inline.
-
-When subagents add value, split only by independent material surfaces such as UI, API, database, infrastructure, or security. Each returns concrete findings with file references, severity, affected behavior, and meaningful missing verification. The main agent removes duplicates and false positives, resolves conflicts, and owns the pragmatic final verdict.
-
-For subagent-driven implementation reviews, reuse the canonical `itsol-subagent-workflow` response validation rules. Preserve genuine `partial`, `blocked`, `failed`, unverified, or coverage-gap items, but do not promote harmless uncertainty or optional improvements into blockers.
-
-## Focused References
-
-- [01-overview.md](./references/01-overview.md) - Overview; Etap 7 - self-review; Pull request; Ryzyka
-- [02-checklista-dla-nowej-funkcjonalnosci.md](./references/02-checklista-dla-nowej-funkcjonalnosci.md) - Checklista dla nowej funkcjonalności; Checklista dla bugfixa; Edge case'y, które deweloper powinien sam wymyślać
-- [03-nawyki-dobrego-dewelopera.md](./references/03-nawyki-dobrego-dewelopera.md) - Nawyki dobrego dewelopera; Czerwone flagi podczas pracy; Definicja ukończenia zadania przez dewelopera; Standard pracy dla junior/mid dewelopera
+- [01-overview.md](./references/01-overview.md) — self-review, PR, and risk.
+- [02-checklista-dla-nowej-funkcjonalnosci.md](./references/02-checklista-dla-nowej-funkcjonalnosci.md) — feature/bugfix checklist and edge cases.
+- [03-nawyki-dobrego-dewelopera.md](./references/03-nawyki-dobrego-dewelopera.md) — completion and review habits.

@@ -1,24 +1,17 @@
 ---
 name: mongodb-review
-description: "Review MongoDB schemas, queries, indexes, transactions, security, and migrations."
+description: "Review MongoDB changes to documents, queries, indexes, transactions, tenant isolation, or migrations."
 ---
 
 # MongoDB Review
 
 Review MongoDB changes for access-pattern fit, index coverage, consistency, concurrency, tenant isolation, operational impact, and data lifecycle safety.
 
-## Process
+## Trigger boundary
 
-1. Inspect the diff and surrounding code before applying checklist items.
-2. Check correctness, boundaries, security, data flow, observability, tests, and deployment impact for the changed behavior.
-3. Report concrete findings first, ordered by severity, with file references and affected behavior.
-4. Call out missing tests or residual risk only when it is tied to the reviewed change.
+Use this skill when a MongoDB diff changes document shape, access patterns, indexes, transactions, tenant isolation, migrations, operational behavior, or data lifecycle.
 
-## Large PR Subagent Review
-
-For broad or materially risky pull requests, recommend focused additional review only when independent expertise is likely to improve the verdict. Judge this from concrete risk, novelty, blast radius, reversibility, and context size—not file count or category matching alone. Small and conventional changes should remain one pragmatic pass.
-
-When additional reviewers add value, split only by independent material surfaces. Each returns concrete evidence-based findings; the main agent removes duplicates and false positives and owns the proportional final verdict.
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no MongoDB schema, query, consistency, security, or operational impact; follow the repository's established convention directly.
 
 ## Coordination
 

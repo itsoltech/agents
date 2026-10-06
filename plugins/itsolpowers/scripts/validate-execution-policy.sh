@@ -90,7 +90,7 @@ fi
 agent_count=0
 while IFS= read -r agent; do
   agent_count=$((agent_count + 1))
-  rg -q '^model: sonnet$' "${agent}" || fail "agent must use balanced Claude default model: ${agent}"
+  rg -q '^model: sonnet$' "${agent}" || fail "agent must use balanced Claude model alias: ${agent}"
   rg -q '^effort: medium$' "${agent}" || fail "agent must use medium effort: ${agent}"
   if rg -q '^maxTurns:' "${agent}"; then
     fail "agent must not define maxTurns: ${agent}"
@@ -131,7 +131,7 @@ if ! node plugins/itsolpowers/scripts/test-execution-policy.mjs; then
 fi
 
 for path in package.json plugins/itsolpowers/package.json plugins/itsolpowers/.claude-plugin/plugin.json plugins/itsolpowers/.codex-plugin/plugin.json; do
-  require_token "${path}" '"version": "0.25.0"'
+ require_token "${path}" '"version": "0.26.0"'
 done
 require_token ".claude-plugin/marketplace.json" '"version": "1.23.0"'
 

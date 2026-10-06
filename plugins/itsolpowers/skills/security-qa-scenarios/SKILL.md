@@ -1,18 +1,17 @@
 ---
 name: security-qa-scenarios
-description: "Design security QA for abuse, negative paths, permissions, tenant isolation, and evidence."
+description: "Design security QA for changed permissions, tenant boundaries, inputs, state, or abuse paths."
 ---
 
 # Security QA Scenarios
 
 Generate concrete negative and abuse-case tests from actors, objects, trust boundaries, state, inputs, time, and limits.
 
-## Process
+## Trigger boundary
 
-1. Inspect the changed behavior and data flow before listing risks.
-2. Check negative paths, bypasses, tenant/object boundaries, logs, cache, async jobs, and release impact where relevant.
-3. For review, report findings by severity with file references and concrete exploit or failure scenarios.
-4. For implementation, add controls and tests in the backend or trusted boundary; do not rely on frontend-only enforcement.
+Use this skill when a feature or incident needs security QA for abuse cases, negative paths, permissions, tenant isolation, malformed inputs, state transitions, rate limits, or evidence.
+
+Do not load it for a small local rename, comment, formatting change, or mechanical edit with no security-relevant behavior, trust-boundary, permission, input, state, or limit impact; follow the repository's established convention directly.
 
 ## Evidence
 

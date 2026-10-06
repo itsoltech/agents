@@ -33,4 +33,4 @@ Expected verification can include:
 - query plan or Query Store evidence for hot paths.
 - tenant isolation tests.
 - concurrency/deadlock scenarios.
-- manual QA for legacy projects with `.itsol.md` TDD exceptions.
+- permitted manual or diagnostic verification for legacy projects according to `.itsol.md` constraints.

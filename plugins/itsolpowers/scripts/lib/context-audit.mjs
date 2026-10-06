@@ -91,6 +91,8 @@ function parseFrontmatter(markdown) {
 function fileMeasurement(relativePath, text) {
   const normalized = normalizeContextText(text);
   return {
+    measurement_kind: "deterministic-word-count",
+    measurement_method: "unicode-word-regexp-v1",
     path: relativePath,
     sha256: sha256(normalized),
     words: countWords(text),
@@ -99,6 +101,8 @@ function fileMeasurement(relativePath, text) {
 
 function metric(files, extra = {}) {
   return {
+    measurement_kind: "deterministic-word-count",
+    measurement_method: "unicode-word-regexp-v1",
     file_count: files.length,
     word_count: files.reduce((total, file) => total + file.words, 0),
     files,
@@ -434,6 +438,11 @@ export async function auditContext({ pluginRoot, revision }) {
 
   return {
     audit_schema_version: "1.0.0",
+    measurement: {
+      kind: "deterministic-word-count",
+      method: "unicode-word-regexp-v1",
+      provider_token_measurements: "not collected",
+    },
     duplicates: duplicateFindings(referenceDocuments),
     links: {
       finding_count: findings.length,
@@ -462,6 +471,7 @@ export function formatAuditHuman(report) {
     `Plugin root: ${report.plugin_root}`,
     `Total measured files: ${report.totals.measured_files}`,
     `Total measured words: ${report.totals.measured_words}`,
+    `Measurement: ${report.measurement.kind} (${report.measurement.method}); provider token measurements ${report.measurement.provider_token_measurements}`,
     "",
     "Surface metrics:",
   ];

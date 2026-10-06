@@ -1,6 +1,6 @@
 # Technical Fix Planning By Workflow Mode
 
-Resolve all seven fields through `itsol-workflow-mode`. Always gather reproduction/log/test/data/config/API evidence, separate facts from hypotheses, establish root cause, and preserve TDD or replacement verification.
+Resolve all seven fields through `itsol-workflow-mode`. Always gather reproduction/log/test/data/config/API evidence, separate facts from hypotheses, establish root cause, and use proportionate verification. TDD is explicitly opt-in.
 
 ## Mode Flow And Fix Decision
 
@@ -51,8 +51,7 @@ Default: `.itsol/plans/YYYY-MM-DD-<bug-slug>-fix.md`. Use another path only for 
 | --- | --- | --- |
 | `itsol-bug-debugging` | whole fix | evidence-first workflow |
 | `itsol-workflow-mode` | authorization | validate artifact state |
-| `itsol-repo-memory` | planning/implementation | apply TDD and verification policy |
-| `itsol-tdd-workflow` | before production changes | regression RED gate |
+| `itsol-repo-memory` | planning/implementation | apply verification constraints and supported checks |
 | `<focused-domain-skill>` | implementation/review | affected surface |
 
 ## Files And Ownership
@@ -65,21 +64,14 @@ Default: `.itsol/plans/YYYY-MM-DD-<bug-slug>-fix.md`. Use another path only for 
 - `if <condition>` then <behavior>; else <behavior>
 - <validation, authorization/tenant, error, retry, idempotency, concurrency, and compatibility rules>
 
-## TDD Regression Plan
-**TDD Mode:** full | limited | not-supported | not-applicable | unknown
-**Policy Source:** <project/root/none>
-### RED
-- <Failing test or diagnostic and expected failure>
-### GREEN
-- <Minimal root-cause change expected to pass>
-### REFACTOR
-- <Cleanup allowed while checks remain green>
-<For limited/non-supported/not-applicable, explain exception, replacement checks, and residual risk; do not scaffold a framework solely for TDD.>
-
 ## Verification Plan
-- <Focused command and expected result>
-- <Manual failing-path smoke scenario>
-- <Related-path and compatibility regression checks>
+- <Observed behavior/contract and material regression risk>
+- <Relevant existing checks, permitted commands, and expected evidence>
+- <New regression coverage only for a meaningful gap not already covered>
+- <Related-path and compatibility checks when risk warrants them>
+- <Unverified behavior and practical limitations>
+
+No failing-test prerequisite or TDD exception is required. Add `itsol-tdd-workflow` and RED/GREEN proof only if the user explicitly requested test-first development.
 
 ## Risk And Rollback
 - <Regression/data/deployment risk, rollback or roll-forward mitigation, monitoring>
@@ -90,7 +82,7 @@ Default: `.itsol/plans/YYYY-MM-DD-<bug-slug>-fix.md`. Use another path only for 
 
 ## Bug Plan Self-Review
 
-Check for placeholders/empty sections; concrete expected/actual/impact/environment; evidence-backed or honestly suspected root cause; one coherent bug; complete focused skills; exact ownership; executable RED or documented exception; smallest root-cause strategy; explicit branches and security/data behavior; verification of failing and related paths; and credible risks/rollback. Resolve material gaps before readiness or approval.
+Check for placeholders/empty sections; concrete expected/actual/impact/environment; evidence-backed or honestly suspected root cause; one coherent bug; focused skills; exact ownership; meaningful verification evidence; smallest root-cause strategy; explicit branches and security/data behavior; verification of failing and relevant related paths; and credible risks/rollback. Resolve material gaps before readiness or approval.
 
 ## Rubber Duck Review Questions And Report
 
@@ -100,7 +92,7 @@ The read-only `itsol-self-review` reviewer should ask:
 - Which alternative layer or hypothesis remains untested?
 - Is the strategy the smallest root-cause fix, and what regression could it introduce?
 - Which old-data, permission/tenant, concurrency, retry, compatibility, or failure path is missing?
-- Is RED/GREEN executable, or is the replacement verification sufficient?
+- Does the planned verification prove the repaired behavior and protect material contracts without low-value tests?
 - Which file, skill, related path, rollback, monitoring, or deployment concern is absent?
 - Does status/authorization honestly match the selected mode?
 

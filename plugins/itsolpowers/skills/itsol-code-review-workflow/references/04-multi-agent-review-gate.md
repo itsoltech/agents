@@ -13,7 +13,7 @@ Każdy wymagany lub jawnie zlecony code review zaczyna się od krótkiej mapy ob
 - dane, migracje, schematy, zapytania, spójność i kompatybilność;
 - infrastruktura, deployment, routing, TLS, runtime, observability, backup, capacity i rollback;
 - frontend, backend, generated clients, API contracts i integracje między warstwami;
-- testy, TDD RED/GREEN evidence, edge cases, performance i release/QA readiness;
+- istotne dowody weryfikacji zachowania, testy regresji, edge cases, performance i release/QA readiness; TDD tylko na jawne żądanie;
 - maintainability, czytelność, architektura i dług techniczny.
 
 Sprawdź wszystkie materialne obszary dotknięte zmianą, ale nie traktuj kompletności checklisty jako celu samego w sobie.

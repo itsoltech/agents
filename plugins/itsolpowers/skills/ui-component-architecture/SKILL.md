@@ -15,7 +15,7 @@ Keep components understandable, testable, and aligned with ownership boundaries.
 4. Keep presentational components free of HTTP clients, cache details, route loaders and backend assumptions; pass data and callbacks as props.
 5. Move formatting, mapping and validation helpers out of large render bodies.
 6. Keep base components domain-free; domain components may know business types.
-7. Add or preserve tests before risky UI refactors, then separate refactor commits from feature commits when possible.
+7. Verify risky UI refactors with relevant existing checks; add tests only for meaningful behavior gaps, without locking private component structure. Separate refactor commits from feature commits when useful.
 
 ## When A Component Is Too Large
 
